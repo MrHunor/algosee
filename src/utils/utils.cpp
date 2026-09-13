@@ -15,7 +15,17 @@
 #include <thread>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <random>
 namespace fs = std::filesystem;
+
+
+int randomInt(int lower, int upper) {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(lower, upper);
+
+    return dist(gen);
+}
 
 std::filesystem::path getExecutableDir() {
   char buffer[PATH_MAX];
