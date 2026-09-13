@@ -10,6 +10,10 @@
 #include <chrono>
 #include <iostream>
 
+
+#define VERSION 0.2
+
+
 #define DEFAULT_CAPTURE_TIME 5
 #define DEFAULT_SAMPLE_RATE 44100
 #define HDH 720
@@ -84,7 +88,7 @@ std::ofstream logFile{"log.txt"};
     int resX;
     int resY;
     int resYRequested=HDH;
-    void out(const std::string &output, int importance, std::source_location location = std::source_location::current(),const std::string& colour = DEFAULT_COLOUR)
+    void out(const std::string &output, int importance,const std::string& colour = DEFAULT_COLOUR, std::source_location location = std::source_location::current())
     {
         if (importance > verbose)
             return;

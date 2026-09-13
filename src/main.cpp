@@ -14,6 +14,7 @@ using json = nlohmann::json;
 
 int main(int argc, char *argv[]) {
   stateClass state;
+  state.out("algosee @ https://github.com/MrHunor/algosee\nGNU General Public License v3 (GPLv3) © 2026 MrHunor,siryanni (as equals)\nThis Program is provided \"AS IS\" without warranty of any kind.",0,RED);
   state.out("Starting...", 0);
 
   httplib::Server server;
