@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">AlgoSee - Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="navbar">
+        <a href="index.html" class="logo-link"><h1 class="logo">AlgoSee</h1></a>
+    </header>
+
+    <main class="algo-detail-container">
+        <!-- Left side: Title, Image, Play -->
+        <div class="algo-left-column">
+            <div class="algo-preview-box">
+                <span class="preview-text">Preview</span>
+            </div>
+            
+            <a id="visualizer-link" href="#" class="play-button">
+                <svg class="play-icon" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="currentColor" d="M8 5v14l11-7z"/>
+                </svg>
+                <span>start visualization</span>
+            </a>
+
+            <h2 id="algo-name" class="algo-main-title">lading...</h2>
+        </div>
+
+        <!-- right: long ass description against whitespace -->
+        <div class="algo-right-column">
+            <div class="description-card">
+                <h3>description</h3>
+                <p id="algo-description">Info to alogrithm loading...</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // read URL-parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const algoKey = urlParams.get('algo') || 'bogo'; // Fallback
+
+        // central DB for infos
+        const algoDatabase = {
+            bogo: {
+                name: "BogoSort",
+                description: "Bogosort (also known as permutation sort and stupid sort is a sorting algorithm based on the generate and test paradigm. The function successively generates permutations of its input until it finds one that is sorted. It is not considered useful for sorting, but may be used for educational purposes, to contrast it with more efficient algorithms. The algorithm's name is a portmanteau of the words bogus and sort."
+            },
+            miracle: {
+                name: "MiracleSort",
+                description: "The Most Reliably Unreliable Sorting Method: Create an array; Check to see if array is sorted; Wait a while; Check again to see if array is sorted; Repeat until array happens to be sorted by a miracle"
+            },
+            selection: {
+                name: "SelectionSort",
+                description: "Selection sort is an in-place comparison sorting algorithm. It has a O time complexity, which makes it inefficient on large lists, and generally performs worse than the similar insertion sort. Selection sort is noted for its simplicity and has performance advantages over more complicated algorithms in certain situations, particularly where auxiliary memory is limited."
+            }
+        };
+
+        // paste data in html-set
+        const data = algoDatabase[algoKey] || {
+            name: "Unbekannter Algorithmus",
+            description: "No Details for this Algorithm"
+        };
+
+        document.getElementById('page-title').innerText = `AlgoSee - ${data.name}`;
+        document.getElementById('algo-name').innerText = data.name;
+        document.getElementById('algo-description').innerText = data.description;
+        
+        // Set Play-Button link to vis. site
+        document.getElementById('visualizer-link').href = `visualizer.html?algo=${algoKey}`;
+    </script>
+</body>
+</html>

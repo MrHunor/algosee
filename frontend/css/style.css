@@ -1,0 +1,176 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: #0b0b0b;
+    color: #ffffff;
+    padding: 2.5rem;
+}
+
+.navbar {
+    margin-bottom: 3.5rem;
+}
+
+.logo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    letter-spacing: -1px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: #2a2a2a;
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    background-color: #333333;
+}
+
+.card-img {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: #888888;
+    background-color: #1f1f1f;
+    letter-spacing: 1px;
+}
+
+.card-divider {
+    height: 2px;
+    background-color: #ffffff;
+    width: 100%;
+}
+
+.card-title {
+    padding: 1.2rem;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Logo-Link Reset */
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Layout für die Detailseite */
+.algo-detail-container {
+    display: flex;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 2rem auto 0 auto;
+    align-items: flex-start;
+}
+
+/* Linke Spalte */
+.algo-left-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.algo-preview-box {
+    width: 100%;
+    height: 320px;
+    background-color: #1a1a1a;
+    border: 2px solid #2a2a2a;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Moderner, harmonischer Play-Button */
+.play-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.9rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    transition: all 0.2s ease;
+}
+
+.play-button:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+.play-icon {
+    fill: currentColor;
+}
+
+.algo-main-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+/* Rechte Spalte (Beschreibung gegen White Space) */
+.algo-right-column {
+    flex: 1.2;
+}
+
+.description-card {
+    background-color: #161616;
+    border: 1px solid #262626;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.description-card h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    color: #3b82f6; /* Dezenter blauer Akzent für die Überschrift */
+}
+
+.description-card p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #cbd5e1; /* Angenehmes Hellgrau statt stechendem Weiß */
+}
+
+/* Responsive Anpassung für kleinere Bildschirme */
+@media (max-width: 850px) {
+    .algo-detail-container {
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+}
