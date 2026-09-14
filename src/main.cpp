@@ -29,27 +29,21 @@ int main(int argc, char *argv[]) {
     server.Post("/sortalgo",
         [&](const httplib::Request& req, httplib::Response& res) {
 
-            std::cout << ">>> REQUEST RECEIVED" << std::endl;
-            std::cout << "Target: " << req.target << std::endl;
-            std::cout << "Body: " << req.body << std::endl;
+            state.out("Recived Request:\nTarget:"+req.target+"\nBody:"+req.body,0);
+            
 
             auto parsed = json::parse(req.body);
             std::vector<int> values = parsed["values"];
 
             std::vector<std::pair<int, int>> moves;
-            moves.clear();
             if (!req.has_param("algo")) {
-                res.status = 400;
-                res.set_content(
-                    R"({"error":"Missing algo parameter"})",
-                    "application/json"
-                );
+                returnFailedAnswer(res, "Request URL does not contain a algo parameter.");
                 return;
             }
 
             std::string algo = req.get_param_value("algo");
 
-            std::cout << "Algorithm: " << algo << std::endl;
+            state.out("Parsed algo:"+algo,0);
 
             if (algo == "selection") {
                 selectionSort(values, moves);
@@ -62,16 +56,15 @@ int main(int argc, char *argv[]) {
             }
 
             if (algo == "bogo") {
-                std::cout << "Recognised bogo" << std::endl;
-
+            
                 std::vector<std::vector<int>> tries;
-                tries.clear();
+                state.out("Values.size():"+std::to_string(values.size()),0);
+                if(values.size()>12)
+                {
+                    returnFailedAnswer(res,"Aborted early:Too many elements specified, request would be too big. (>12 Elements = 479.001.600 Possibility; which is rougly 26GB in RAM for recording tries)");
+                    return;
+                }
                 bogoSort(values, tries);
-
-                std::cout << "Returning "
-                          << tries.size()
-                          << " tries"
-                          << std::endl;
 
                 res.set_content(
                     json(tries).dump(),
@@ -80,21 +73,15 @@ int main(int argc, char *argv[]) {
                 return;
             }
 
-            res.status = 400;
-            res.set_content(
-                R"({"error":"Unknown algorithm"})",
-                "application/json"
-            );
+returnFailedAnswer(res,"Unknown Algorithm");
         }
     );
 
-    std::cout << "Listening on 127.0.0.1:8080..." << std::endl;
+    state.out("Listening on 127.0.0.1:8080...",0);
 
     if (!server.listen("127.0.0.1", 8080)) {
-        std::cerr << "ERROR: Could not listen on 127.0.0.1:8080"
-                  << std::endl;
-        return 1;
-    }
+    InvalidInputMessage("Failed to liten on 127.0.0.1:8080");
+}
 
     return 0;
 }

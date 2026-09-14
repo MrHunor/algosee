@@ -16,8 +16,10 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <random>
+#include <nlohmann/json.hpp>
+#include <httplib.h>
 namespace fs = std::filesystem;
-
+using json = nlohmann::json;
 
 int randomInt(int lower, int upper) {
     static std::random_device rd;
@@ -152,6 +154,17 @@ std::string findFileByID(const std::string &dirPath, const std::string &id) {
   }
   return "";
 }
+
+void returnFailedAnswer(httplib::Response& res,const std::string& Details,int exitCode)
+{
+  std::cout<<"returnFailedAnswer called:"+Details;
+res.status = exitCode;
+res.set_content(json(Details),"application/json");
+
+
+}
+
+
 void InvalidInputMessage(const std::string &details,
                          std::source_location location) {
   // yes i thought of making this state out for colour but that would require

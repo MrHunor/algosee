@@ -7,6 +7,7 @@
 #include <filesystem>
 #include <source_location>
 #include <string>
+#include <httplib.h>
 int randomInt(int lower, int upper);
 std::filesystem::path getExecutableDir();
 std::string removeNewLineAndReturnCharacters(const std::string &inputString);
@@ -20,4 +21,5 @@ void restartSong();
 std::string getRidOfESCCharactersinAstrics(const std::string &str);
 std::string scaleImage(const std::string Inputimage, const std::string outputImage, int height);
 std::string SecToMinAndSec(int num);
+void returnFailedAnswer(httplib::Response& res,const std::string& Details,int exitCode=400);
 #endif
