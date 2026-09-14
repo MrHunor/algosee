@@ -119,3 +119,18 @@ std::vector<int> mergeSort(const std::vector<int>& unsorted, std::vector<std::pa
  return merge(left,right);
 
 }
+
+std::vector<int> cycleSort(const std::vector<int>& unsorted, std::vector<std::pair<int,int>>& moves)
+{
+int correctPos=0;  
+for(int i = 0; i<unsorted.size(); i++)
+{
+for(int z = 1; z<unsorted.size();z++)
+{
+if(unsorted[0]>unsorted[z])correctPos++;
+}
+std::swap(unsorted[0],unsorted[correctPos]);
+}
+
+
+}
