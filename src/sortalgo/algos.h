@@ -8,6 +8,9 @@
 
 #include <vector>
 
-std::vector<int> selectionSort(std::vector<int> unsorted, std::vector<std::pair<int,int>>& moves);
-std::vector<int> bogoSort(std::vector<int> unsorted,std::vector<std::vector<int>>& tries);
+std::vector<int> selectionSort(std::vector<int> unsorted,
+                               std::vector<std::pair<int, int>> &moves);
+std::vector<int> bogoSort(std::vector<int> unsorted,
+                          std::vector<std::vector<int>> &tries);
+                          std::vector<int> bubbleSort(std::vector<int> unsorted, std::vector<std::pair<int,int>> &moves);
 #endif

@@ -6,27 +6,27 @@
 #include <chrono>
 #include <cstdlib>
 #include <filesystem>
+#include <httplib.h>
 #include <iostream>
 #include <limits.h>
+#include <nlohmann/json.hpp>
 #include <portaudio.h>
+#include <random>
 #include <source_location>
 #include <stacktrace>
 #include <string>
+#include <sys/wait.h>
 #include <thread>
 #include <unistd.h>
-#include <sys/wait.h>
-#include <random>
-#include <nlohmann/json.hpp>
-#include <httplib.h>
 namespace fs = std::filesystem;
 using json = nlohmann::json;
 
 int randomInt(int lower, int upper) {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> dist(lower, upper);
+  static std::random_device rd;
+  static std::mt19937 gen(rd());
+  std::uniform_int_distribution<int> dist(lower, upper);
 
-    return dist(gen);
+  return dist(gen);
 }
 
 std::filesystem::path getExecutableDir() {
@@ -64,9 +64,11 @@ std::string getRidOfESCCharactersinAstrics(const std::string &str) {
   return result;
 }
 
-std::string scaleImage(const std::string Inputimage, const std::string outputImage, int height)
-{
-return executeCommand(std::format("ffmpeg -i \"{}\" -vf \"scale=-1:{}\" \"{}\"",Inputimage,height,outputImage));
+std::string scaleImage(const std::string Inputimage,
+                       const std::string outputImage, int height) {
+  return executeCommand(
+      std::format("ffmpeg -i \"{}\" -vf \"scale=-1:{}\" \"{}\"", Inputimage,
+                  height, outputImage));
 }
 
 std::string SecToMinAndSec(int num) {
@@ -85,11 +87,11 @@ std::string SecToMinAndSec(int num) {
   return retval;
 }
 
-
 std::string executeCommand(const std::string &command) {
   int exitCode;
   FILE *pipe = popen(command.c_str(), "r");
-  if(!pipe) InvalidInputMessage("Failed to open Pipe for executing command:"+command);
+  if (!pipe)
+    InvalidInputMessage("Failed to open Pipe for executing command:" + command);
 
   char buffer[256];
   std::string result;
@@ -101,14 +103,15 @@ std::string executeCommand(const std::string &command) {
     result += buffer;
   }
 
-  //i know the reference exit code is kinda ugly but the other option would be to return an pair or struct which would require a lot of work and im lazy
+  // i know the reference exit code is kinda ugly but the other option would be
+  // to return an pair or struct which would require a lot of work and im lazy
   int status = pclose(pipe);
-  exitCode = -1; 
-  if(WIFEXITED(status))
-  {
-  exitCode = WEXITSTATUS(status);  
+  exitCode = -1;
+  if (WIFEXITED(status)) {
+    exitCode = WEXITSTATUS(status);
   }
-  if(exitCode!=0)InvalidInputMessage("Shell Command:'"+command+"' has failed.");
+  if (exitCode != 0)
+    InvalidInputMessage("Shell Command:'" + command + "' has failed.");
   return result;
 }
 
@@ -124,10 +127,9 @@ std::string extractID(const std::string &filename) {
 }
 
 void restartSong() {
-  
+
   executeCommand("playerctl pause");
   executeCommand("playerctl position 0");
-  
 
   // Wait until the seek has actually taken effect.
   while (true) {
@@ -142,7 +144,6 @@ void restartSong() {
   }
 
   executeCommand("playerctl play");
-  
 }
 
 std::string findFileByID(const std::string &dirPath, const std::string &id) {
@@ -155,15 +156,12 @@ std::string findFileByID(const std::string &dirPath, const std::string &id) {
   return "";
 }
 
-void returnFailedAnswer(httplib::Response& res,const std::string& Details,int exitCode)
-{
-  std::cout<<"returnFailedAnswer called:"+Details;
-res.status = exitCode;
-res.set_content(json(Details),"application/json");
-
-
+void returnFailedAnswer(httplib::Response &res, const std::string &Details,
+                        int exitCode) {
+  std::cout << "returnFailedAnswer called:" + Details;
+  res.status = exitCode;
+  res.set_content(json(Details), "application/json");
 }
-
 
 void InvalidInputMessage(const std::string &details,
                          std::source_location location) {

@@ -9,4 +9,4 @@
 3. `cmake --build build` to build 
 
 ## To test the backend:
-Use curl to make a request while the server is running, e.g. `curl -X POST "http://127.0.0.1:8080/sortalgo?algo=selection" -H "Content-Type: application/json" -d '{"values":[5,3,8,1,2]}'`
+Use curl to make a request while the server is running, e.g. ` curl -X POST "http://127.0.0.1:8080/sortalgo?algo=selection" -H "Content-Type: application/json" -d "{\"values\":[$(seq 1 n | shuf | paste -sd, -)]}" ` where n = number of values

@@ -3,85 +3,87 @@
  * LICENSE:GNU General Public License v3 (GPLv3)
  */
 
+#include "sortalgo/algos.h"
 #include "utils/defs.h"
 #include "utils/utils.h"
 #include <httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
-#include "sortalgo/algos.h"
 
 using json = nlohmann::json;
 int main(int argc, char *argv[]) {
-    stateClass state;
+  stateClass state;
 
-    state.out(
-        "algosee @ https://github.com/MrHunor/algosee\n"
-        "GNU General Public License v3 (GPLv3) © 2026 MrHunor,siryanni "
-        "(as equals)\n"
-        "This Program is provided \"AS IS\" without warranty of any kind.",
-        0, RED
-    );
+  state.out("algosee @ https://github.com/MrHunor/algosee\n"
+            "GNU General Public License v3 (GPLv3) © 2026 MrHunor,siryanni "
+            "(as equals)\n"
+            "This Program is provided \"AS IS\" without warranty of any kind.",
+            0, RED);
 
-    state.out("Starting...", 0);
+  state.out("Starting...", 0);
 
-    httplib::Server server;
+  httplib::Server server;
 
-    server.Post("/sortalgo",
-        [&](const httplib::Request& req, httplib::Response& res) {
+  server.Post("/sortalgo", [&](const httplib::Request &req,
+                               httplib::Response &res) {
+    state.out("Recived Request:\nTarget:" + req.target + "\nBody:" + req.body,
+              0);
 
-            state.out("Recived Request:\nTarget:"+req.target+"\nBody:"+req.body,0);
-            
+    auto parsed = json::parse(req.body);
+    std::vector<int> values = parsed["values"];
+    if(values.empty())
+    {
+      returnFailedAnswer(res,"No values specified. (values.empty()==true)");
+      return;
+    }
 
-            auto parsed = json::parse(req.body);
-            std::vector<int> values = parsed["values"];
+    std::vector<std::pair<int, int>> moves;
+    if (!req.has_param("algo")) {
+      returnFailedAnswer(res, "Request URL does not contain a algo parameter.");
+      return;
+    }
 
-            std::vector<std::pair<int, int>> moves;
-            if (!req.has_param("algo")) {
-                returnFailedAnswer(res, "Request URL does not contain a algo parameter.");
-                return;
-            }
+    std::string algo = req.get_param_value("algo");
 
-            std::string algo = req.get_param_value("algo");
+    state.out("Parsed algo:" + algo, 0);
+    if (algo == "selection") {
+      selectionSort(values, moves);
 
-            state.out("Parsed algo:"+algo,0);
+      res.set_content(json(moves).dump(), "application/json");
+      return;
+    }
 
-            if (algo == "selection") {
-                selectionSort(values, moves);
+    if (algo == "bogo") {
 
-                res.set_content(
-                    json(moves).dump(),
-                    "application/json"
-                );
-                return;
-            }
+      std::vector<std::vector<int>> tries;
+      if (values.size() > 12) {
+        returnFailedAnswer(
+            res, "Aborted early:Too many elements specified, request would be "
+                 "too big. (>12 Elements = 479.001.600 Possibility; which is "
+                 "rougly 26GB in RAM for recording tries)");
+        return;
+      }
+      bogoSort(values, tries);
 
-            if (algo == "bogo") {
-            
-                std::vector<std::vector<int>> tries;
-                state.out("Values.size():"+std::to_string(values.size()),0);
-                if(values.size()>12)
-                {
-                    returnFailedAnswer(res,"Aborted early:Too many elements specified, request would be too big. (>12 Elements = 479.001.600 Possibility; which is rougly 26GB in RAM for recording tries)");
-                    return;
-                }
-                bogoSort(values, tries);
+      res.set_content(json(tries).dump(), "application/json");
+      return;
+    }
+    if(algo == "bubble")
+    {
+      bubbleSort(values,moves);
+      res.set_content(json(moves).dump(),"application/json");
+      return;
+    }
 
-                res.set_content(
-                    json(tries).dump(),
-                    "application/json"
-                );
-                return;
-            }
 
-returnFailedAnswer(res,"Unknown Algorithm");
-        }
-    );
+    returnFailedAnswer(res, "Unknown Algorithm");
+  });
 
-    state.out("Listening on 127.0.0.1:8080...",0);
+  state.out("Listening on 127.0.0.1:8080...", 0);
 
-    if (!server.listen("127.0.0.1", 8080)) {
+  if (!server.listen("127.0.0.1", 8080)) {
     InvalidInputMessage("Failed to liten on 127.0.0.1:8080");
-}
+  }
 
-    return 0;
+  return 0;
 }
