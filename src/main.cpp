@@ -44,11 +44,11 @@ int main(int argc, char *argv[]) {
     }
 
     std::string algo = req.get_param_value("algo");
-
     state.out("Parsed algo:" + algo, 0);
+
     if (algo == "selection") {
       selectionSort(values, moves);
-
+      state.out("Finished sorting, sending reply...",0);
       res.set_content(json(moves).dump(), "application/json");
       return;
     }
@@ -64,17 +64,27 @@ int main(int argc, char *argv[]) {
         return;
       }
       bogoSort(values, tries);
-
+state.out("Finished sorting, sending reply...",0);
       res.set_content(json(tries).dump(), "application/json");
       return;
     }
+
     if(algo == "bubble")
     {
       bubbleSort(values,moves);
+      state.out("Finished sorting, sending reply...",0);
       res.set_content(json(moves).dump(),"application/json");
       return;
     }
 
+    if(algo =="merge")
+    {
+      //currently moves is not yet implemented so it just returns the sorted vector
+      auto retval = mergeSort(values,moves);
+      state.out("Finished sorting, sending reply...",0);
+      res.set_content(json(retval).dump(),"application/json");
+      return;
+    }
 
     returnFailedAnswer(res, "Unknown Algorithm");
   });
