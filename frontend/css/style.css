@@ -174,3 +174,82 @@ body {
         gap: 2.5rem;
     }
 }
+
+/* Visualisierer Layout */
+.visualizer-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    background-color: #161616;
+    border: 1px solid #262626;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.visualizer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+}
+
+.control-btn {
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.control-btn.primary {
+    background-color: #2563eb;
+    color: #fff;
+}
+
+.control-btn.primary:hover {
+    background-color: #1d4ed8;
+}
+
+.control-btn.secondary {
+    background-color: #262626;
+    color: #cbd5e1;
+}
+
+.control-btn.secondary:hover {
+    background-color: #333333;
+}
+
+/* Container für die Balken */
+.array-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 8px;
+    height: 350px;
+    background-color: #0b0b0b;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid #222;
+}
+
+/* Einzelner Balken */
+.array-bar {
+    width: 35px;
+    background-color: #3b82f6;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.1s ease, background-color 0.1s ease;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #ffffff;
+}
