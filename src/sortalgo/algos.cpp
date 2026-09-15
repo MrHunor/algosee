@@ -120,17 +120,24 @@ std::vector<int> mergeSort(const std::vector<int>& unsorted, std::vector<std::pa
 
 }
 
-std::vector<int> cycleSort(const std::vector<int>& unsorted, std::vector<std::pair<int,int>>& moves)
+std::vector<int> countingSort(const std::vector<int>& unsorted, std::vector<std::pair<int,int>> &moves)
 {
-int correctPos=0;  
+    if(unsorted.size()<=1)return unsorted; //an array of the size one is already sorted
+  int countI=0;
+std::vector<int> count(*std::max_element(unsorted.begin(),unsorted.end())+1);
+std::vector<int> retval;
+retval.reserve(unsorted.size());
+for(int i : unsorted)
+{
+count[i]++;
+}
 for(int i = 0; i<unsorted.size(); i++)
 {
-for(int z = 1; z<unsorted.size();z++)
-{
-if(unsorted[0]>unsorted[z])correctPos++;
-}
-std::swap(unsorted[0],unsorted[correctPos]);
+while(count[countI]==0)countI++;
+retval.push_back(countI);
+count[countI]--;
 }
 
-
+return retval;
 }
+

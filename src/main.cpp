@@ -86,6 +86,15 @@ state.out("Finished sorting, sending reply...",0);
       return;
     }
 
+    if(algo =="counting")
+    {
+           //currently moves is not yet implemented so it just returns the sorted vector
+      auto retval = countingSort(values,moves);
+      state.out("Finished sorting, sending reply...",0);
+      res.set_content(json(retval).dump(),"application/json");
+      return;
+    }
+
     returnFailedAnswer(res, "Unknown Algorithm");
   });
 
