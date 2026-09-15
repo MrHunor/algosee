@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
   httplib::Server server;
 
 
- //needed for siryanis code to work somehow
+ //handle a preflight request from a diffrent origin; firefox considers diffrent ports on the same computer to be diffrent origins so this fix is needed to work
 server.Options(R"(/sortalgo)", [](const httplib::Request &req, httplib::Response &res) {
   res.set_header("Access-Control-Allow-Origin", "*");
   res.set_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
@@ -115,10 +115,13 @@ state.out("Finished sorting, sending reply...",0);
     returnFailedAnswer(res, "Unknown Algorithm");
   });
 
-  state.out("Listening on 127.0.0.1:8080...", 0);
+  //renderer port detection magic
+const char* port_env = std::getenv("PORT");
+int port = port_env ? std::stoi(port_env) : 8080;
 
-  if (!server.listen("127.0.0.1", 8080)) {
-    InvalidInputMessage("Failed to liten on 127.0.0.1:8080");
+  state.out("Listining on:0.0.0.0:"+std::to_string(port),0);
+  if (!server.listen("0.0.0.0", port)) {
+    InvalidInputMessage("Failed to listen on 0.0.0.0:"+std::to_string(port));
   }
 
   return 0;

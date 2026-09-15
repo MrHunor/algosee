@@ -10,7 +10,6 @@
 #include <iostream>
 #include <limits.h>
 #include <nlohmann/json.hpp>
-#include <portaudio.h>
 #include <random>
 #include <source_location>
 #include <stacktrace>

@@ -9,4 +9,4 @@
 3. `cmake --build build` to build 
 
 ## To test the backend:
-Use curl to make a request while the server is running, e.g. ` curl -X POST "http://127.0.0.1:8080/sortalgo?algo=selection" -H "Content-Type: application/json" -d "{\"values\":[$(seq 1 n | shuf | paste -sd, -)]}" ` where n = number of values
+Use curl to make a request while the server is running, e.g. ` curl -v -X POST "http://127.0.0.1:8080/sortalgo?algo=selection" -H "Content-Type: application/json" -d "{\"values\":[$(seq 1 n | shuf | paste -sd, -)]}" ` where n = number of values (be careful of the actual port when running through docker)
