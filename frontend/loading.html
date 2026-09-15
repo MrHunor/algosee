@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlgoSee - server's warming up</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+       <header class="navbar">
+        <a href="index.html" class="logo-link"><h1 class="logo">AlgoSee</h1></a>
+    </header>
+            <!--main info text-->
+    <main class="visualizer-container" style="text-align: center; padding: 4rem 2.5rem;">
+        <h2 style="font-size: 1.8rem; margin-bottom: 1rem; color: #3b82f6;">The server is waking up...</h2>
+        <p style="color: #cbd5e1; font-size: 1.1rem; line-height: 1.6; max-width: 600px; margin: 0 auto 2rem auto;">
+            Because our backend is hosted on a free server, it shuts off after inactivity.
+            Start-up now takes aprox. <strong>1 minute</strong>. You'll be automatically forwarded asap!
+        </p>
+        <!-- Small optic hint with spinning container -->
+        <div style="font-size: 0.9rem; color: #888888; letter-spacing: 1px;">
+            CONNECTING TO BACKEND...
+        </div>
+    </main>
+
+    <!--script handles the pinging to check if server is online-->
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const algoKey = urlParams.get('algo') || 'selection';
+        const backendPingUrl = 'https://idktheurlyet.com'; // which url get's pinged
+
+        async function checkServer() {
+            try {
+                const response = await fetch(backendPingUrl);
+                if (response.ok) {
+                    window.location.href = `visualizer.html?algo=${algoKey}`;
+                }
+            } catch (e) {
+                console.log("server's still sleeping");   //console log for debugging
+            }
+        }
+
+        checkServer();
+        setInterval(checkServer, 3000);
+    </script>
+</body>
+</html>
