@@ -38,7 +38,7 @@ generateArray();
 resetBtn.addEventListener('click', generateArray);
 
 // start-button 
-startBtn.addEventlistener('click', async () => {
+startBtn.addEventListener('click', async () => {
     // FOR CODESPACE: 
     // either c++ server runs local or use port-forwarding (P8080)
     // path for testing:
@@ -65,7 +65,7 @@ startBtn.addEventlistener('click', async () => {
 
     } catch (error) {
         console.error("Connection-Error:", error);
-        alert("Couldn't connect to C++ Backend. Is Port Port forwarding to Port8080 acitve?");
+        alert("Couldn't connect to C++ Backend. Is Port Port forwarding to Port8080 active?");
     } finally {
         startBtn.disabled = false;
         resetBtn.disabled = false;
