@@ -42,7 +42,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const algoKey = urlParams.get('algo') || 'bogo'; // Fallback
 
-        // central DB for infos
+        // central db for infos
         const algoDatabase = {
             bogo: {
                 name: "BogoSort",
@@ -65,7 +65,7 @@
 
         // paste data in html-set
         const data = algoDatabase[algoKey] || {
-            name: "Unbekannter Algorithmus",
+            name: "unknown algorithm",
             description: "No Details for this Algorithm"
         };
 

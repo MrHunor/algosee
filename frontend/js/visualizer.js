@@ -1,14 +1,14 @@
-// URL-Parameter auslesen (welcher Algorithmus?)
+// read URL-parameters (choose backend function+information displayed)
 const urlParams = new URLSearchParams(window.location.search);
 const algoKey = urlParams.get('algo') || 'selection';
 
-// Titel anpassen
+// adjust title
 const algoNames = {
     bogo: "BogoSort",
     miracle: "MiracleSort",
     selection: "SelectionSort"
 };
-document.getElementById('algo-title').innerText = algoNames[algoKey] || "Visualisierung";
+document.getElementById('algo-title').innerText = algoNames[algoKey] || "Visualization";
 
 const container = document.getElementById('array-container');
 const startBtn = document.getElementById('start-btn');
@@ -17,7 +17,7 @@ const resetBtn = document.getElementById('reset-btn');
 let array = [];
 const arraySize = 15;
 
-// Zufälliges Array generieren und Balken zeichnen
+// generate random array and draw bars
 function generateArray() {
     container.innerHTML = '';
     array = [];
@@ -33,15 +33,15 @@ function generateArray() {
     }
 }
 
-// Direkt beim Laden ausführen
+// run asap 
 generateArray();
 resetBtn.addEventListener('click', generateArray);
 
-// Start-Button Logik
+// start-button 
 startBtn.addEventlistener('click', async () => {
-    // WICHTIG FÜR CODESPACES: 
-    // Entweder läuft der C++ Server lokal oder du musst die Port-Weiterleitung nutzen.
-    // Für den Test nutzen wir hier erst mal den direkten Pfad:
+    // FOR CODESPACE: 
+    // either c++ server runs local or use port-forwarding (P8080)
+    // path for testing:
     const backendUrl = `http://localhost:8080/sortalgo?algo=${algoKey}`;
 
     startBtn.disabled = true;
@@ -57,22 +57,22 @@ startBtn.addEventlistener('click', async () => {
         });
 
         if (!response.ok) {
-            throw new Error('Fehler bei der Kommunikation mit dem C++ Server');
+            throw new Error('Error while communication with Backend');
         }
 
         const moves = await response.json();
         await visualizeMoves(moves);
 
     } catch (error) {
-        console.error("Verbindungsfehler:", error);
-        alert("Konnte keine Verbindung zum C++-Backend herstellen. Läuft der Server im Codespace und ist Port 8080 freigegeben?");
+        console.error("Connection-Error:", error);
+        alert("Couldn't connect to C++ Backend. Is Port Port forwarding to Port8080 acitve?");
     } finally {
         startBtn.disabled = false;
         resetBtn.disabled = false;
     }
 });
 
-// Animieren der Tausch-Operationen
+// animation of moves
 async function visualizeMoves(moves) {
     const bars = container.children;
 
@@ -82,7 +82,7 @@ async function visualizeMoves(moves) {
         bars[i].style.backgroundColor = '#ef4444';
         bars[j].style.backgroundColor = '#ef4444';
 
-        // Höhe und Text zwischenspeichern und tauschen
+        // save and move position of text
         let tempHeight = bars[i].style.height;
         let tempText = bars[i].innerText;
         let tempValue = array[i];

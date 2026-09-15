@@ -76,7 +76,7 @@ body {
     color: inherit;
 }
 
-/* Layout für die Detailseite */
+/* layout for detail-view */
 .algo-detail-container {
     display: flex;
     gap: 4rem;
@@ -85,7 +85,7 @@ body {
     align-items: flex-start;
 }
 
-/* Linke Spalte */
+/* left bar */
 .algo-left-column {
     flex: 1;
     display: flex;
@@ -107,7 +107,7 @@ body {
     letter-spacing: 1px;
 }
 
-/* Moderner, harmonischer Play-Button */
+/* play-button */
 .play-button {
     display: flex;
     align-items: center;
@@ -141,7 +141,7 @@ body {
     letter-spacing: -0.5px;
 }
 
-/* Rechte Spalte (Beschreibung gegen White Space) */
+/* right bar */
 .algo-right-column {
     flex: 1.2;
 }
@@ -158,16 +158,16 @@ body {
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: 1.2rem;
-    color: #3b82f6; /* Dezenter blauer Akzent für die Überschrift */
+    color: #3b82f6; /* accents */
 }
 
 .description-card p {
     font-size: 1.05rem;
     line-height: 1.7;
-    color: #cbd5e1; /* Angenehmes Hellgrau statt stechendem Weiß */
+    color: #cbd5e1; 
 }
 
-/* Responsive Anpassung für kleinere Bildschirme */
+/* screen-adjustments */
 @media (max-width: 850px) {
     .algo-detail-container {
         flex-direction: column;
@@ -175,7 +175,7 @@ body {
     }
 }
 
-/* Visualisierer Layout */
+/* visualizer layout */
 .visualizer-container {
     max-width: 900px;
     margin: 2rem auto;
@@ -226,7 +226,7 @@ body {
     background-color: #333333;
 }
 
-/* Container für die Balken */
+/* container for bars */
 .array-container {
     display: flex;
     align-items: flex-end;
@@ -239,7 +239,7 @@ body {
     border: 1px solid #222;
 }
 
-/* Einzelner Balken */
+/* bar */
 .array-bar {
     width: 35px;
     background-color: #3b82f6;
