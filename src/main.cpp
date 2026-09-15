@@ -24,6 +24,18 @@ int main(int argc, char *argv[]) {
 
   httplib::Server server;
 
+
+ //needed for siryanis code to work somehow
+server.Options(R"(/sortalgo)", [](const httplib::Request &req, httplib::Response &res) {
+  res.set_header("Access-Control-Allow-Origin", "*");
+  res.set_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+  res.set_header("Access-Control-Allow-Headers", "Content-Type");
+  res.status = 200;
+});
+
+
+
+
   server.Post("/sortalgo", [&](const httplib::Request &req,
                                httplib::Response &res) {
     state.out("Recived Request:\nTarget:" + req.target + "\nBody:" + req.body,
@@ -49,6 +61,7 @@ int main(int argc, char *argv[]) {
     if (algo == "selection") {
       selectionSort(values, moves);
       state.out("Finished sorting, sending reply...",0);
+      res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(json(moves).dump(), "application/json");
       return;
     }
@@ -65,6 +78,7 @@ int main(int argc, char *argv[]) {
       }
       bogoSort(values, tries);
 state.out("Finished sorting, sending reply...",0);
+      res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(json(tries).dump(), "application/json");
       return;
     }
@@ -73,6 +87,7 @@ state.out("Finished sorting, sending reply...",0);
     {
       bubbleSort(values,moves);
       state.out("Finished sorting, sending reply...",0);
+            res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(json(moves).dump(),"application/json");
       return;
     }
@@ -82,6 +97,7 @@ state.out("Finished sorting, sending reply...",0);
       //currently moves is not yet implemented so it just returns the sorted vector
       auto retval = mergeSort(values,moves);
       state.out("Finished sorting, sending reply...",0);
+            res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(json(retval).dump(),"application/json");
       return;
     }
@@ -91,6 +107,7 @@ state.out("Finished sorting, sending reply...",0);
            //currently moves is not yet implemented so it just returns the sorted vector
       auto retval = countingSort(values,moves);
       state.out("Finished sorting, sending reply...",0);
+            res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(json(retval).dump(),"application/json");
       return;
     }

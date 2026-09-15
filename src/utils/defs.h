@@ -76,6 +76,8 @@
 
 #define DEFAULT_COLOUR MAGENTA
 
+#define VERBOSE_LEVEL_NEEDED_FOR_TIME 0 
+
 class stateClass {
 public:
   std::ofstream logFile{"log.txt"};
@@ -91,7 +93,7 @@ public:
     if (importance > verbose)
       return;
     std::string message = colour;
-    if (verbose >= 4) {
+    if (verbose >= VERBOSE_LEVEL_NEEDED_FOR_TIME) {
       auto now = std::chrono::system_clock::now();
       message += std::format("@{} -> ", now);
     }
