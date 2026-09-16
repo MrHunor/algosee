@@ -9,6 +9,7 @@
 #include <httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
+#include <chrono>
 
 using json = nlohmann::json;
 int main(int argc, char *argv[]) {
@@ -45,7 +46,7 @@ server.Get("/status", [&](const httplib::Request &req,
     res.set_content(status.dump(4), "application/json");
 });
 
-
+  
   server.Post("/sortalgo", [&](const httplib::Request &req,
                                httplib::Response &res) {
     state.out("Recived Request:\nTarget:" + req.target + "\nBody:" + req.body,
@@ -59,20 +60,29 @@ server.Get("/status", [&](const httplib::Request &req,
       return;
     }
 
-    std::vector<std::pair<int, int>> moves;
+
     if (!req.has_param("algo")) {
       returnFailedAnswer(res, "Request URL does not contain a algo parameter.");
       return;
     }
 
+    json response;
+    response["VERSION"]=VERSION;
+    std::vector<std::pair<int, int>> moves;
     std::string algo = req.get_param_value("algo");
     state.out("Parsed algo:" + algo, 0);
+    state.out("Starting time mesurement...",0);
+    auto startTime = std::chrono::steady_clock::now();
 
     if (algo == "selection") {
       selectionSort(values, moves);
+      auto endTime = std::chrono::steady_clock::now();
+      auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
       state.out("Finished sorting, sending reply...",0);
       res.set_header("Access-Control-Allow-Origin", "*");
-      res.set_content(json(moves).dump(), "application/json");
+      response["TIME"] = elapsed.count();
+      response["MOVES"] = moves;
+      res.set_content(response, "application/json");
       return;
     }
 
@@ -86,19 +96,28 @@ server.Get("/status", [&](const httplib::Request &req,
                  "rougly 26GB in RAM for recording tries)");
         return;
       }
+
       bogoSort(values, tries);
-state.out("Finished sorting, sending reply...",0);
+  auto endTime = std::chrono::steady_clock::now();
+      auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+      state.out("Finished sorting, sending reply...",0);
       res.set_header("Access-Control-Allow-Origin", "*");
-      res.set_content(json(tries).dump(), "application/json");
+      response["TIME"]=elapsed.count();
+      response["TRIES"]=tries;
+      res.set_content(response, "application/json");
       return;
     }
 
     if(algo == "bubble")
     {
       bubbleSort(values,moves);
+        auto endTime = std::chrono::steady_clock::now();
+      auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
       state.out("Finished sorting, sending reply...",0);
             res.set_header("Access-Control-Allow-Origin", "*");
-      res.set_content(json(moves).dump(),"application/json");
+      response["TIME"]=elapsed.count();
+      response["MOVES"]=moves;
+      res.set_content(response,"application/json");
       return;
     }
 
