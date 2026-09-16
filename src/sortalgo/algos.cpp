@@ -8,9 +8,11 @@
 #include <bits/stdc++.h>
 #include <random>
 #include <string>
+#include <nlohmann/json.hpp>
 #include <utility>
 #include <vector>
-#include <chrono>
+
+using json = nlohmann::json;
 
 void randomise(std::vector<int> &vec) {
   static std::random_device rd;
@@ -103,7 +105,7 @@ return retval;
 
 }
 
-std::vector<int> mergeSort(const std::vector<int>& unsorted, std::vector<std::pair<int,int>> &moves)
+std::vector<int> mergeSort(const std::vector<int>& unsorted, json response)
 {
   if(unsorted.size()<=1)return unsorted; //an array of the size one is already sorted
 
@@ -111,16 +113,19 @@ std::vector<int> mergeSort(const std::vector<int>& unsorted, std::vector<std::pa
 
   std::vector<int> left(unsorted.begin(),unsorted.begin()+mid);//fun fact; last iterator is the one NOT to copy anymore, so actually the last one to copy is last-1
   std::vector<int> right(unsorted.begin()+mid,unsorted.end()); 
+  response["SPLIT (ORIGIN,LEFT,RIGHT)"].push_back({unsorted,left,right});
 
   //recursion magic
-  left = mergeSort(left,moves);
-  right = mergeSort(right,moves);
-
- return merge(left,right);
+  left = mergeSort(left,response);
+  right = mergeSort(right,response);
+  response["SORTED (LEFT,RIGHT)"].push_back({left,right});
+  std::vector<int> retval =merge(left,right); 
+  response["MERGED (LEFT,RIGHT,RESULT)"].push_back({left,right,retval});
+ return retval;
 
 }
 
-std::vector<int> countingSort(const std::vector<int>& unsorted, std::vector<std::pair<int,int>> &moves)
+std::vector<int> countingSort(const std::vector<int>& unsorted, json response)
 {
     if(unsorted.size()<=1)return unsorted; //an array of the size one is already sorted
   int countI=0;
@@ -131,6 +136,7 @@ for(int i : unsorted)
 {
 count[i]++;
 }
+response["COUNT ARRAY:"]= count;
 for(size_t i = 0; i<unsorted.size(); i++)
 {
 while(count[countI]==0)countI++;

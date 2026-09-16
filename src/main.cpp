@@ -124,20 +124,28 @@ server.Get("/status", [&](const httplib::Request &req,
     if(algo =="merge")
     {
       //currently moves is not yet implemented so it just returns the sorted vector
-      auto retval = mergeSort(values,moves);
+      auto retval = mergeSort(values,response);
+         auto endTime = std::chrono::steady_clock::now();
+      auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+      response["TIME"]=elapsed.count();
+      response["SORTED"]=retval;
       state.out("Finished sorting, sending reply...",0);
             res.set_header("Access-Control-Allow-Origin", "*");
-      res.set_content(json(retval).dump(),"application/json");
+      res.set_content(response.dump(),"application/json");
       return;
     }
 
     if(algo =="counting")
     {
            //currently moves is not yet implemented so it just returns the sorted vector
-      auto retval = countingSort(values,moves);
+      auto retval = countingSort(values,response);
+               auto endTime = std::chrono::steady_clock::now();
+      auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+            response["TIME"]=elapsed.count();
+                  response["SORTED"]=retval;
       state.out("Finished sorting, sending reply...",0);
             res.set_header("Access-Control-Allow-Origin", "*");
-      res.set_content(json(retval).dump(),"application/json");
+      res.set_content(response.dump(),"application/json");
       return;
     }
 
