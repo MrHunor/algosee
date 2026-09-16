@@ -45,7 +45,6 @@ return lowerPivotIndexBoundry+1;
 
 std::vector<int> quickSort(std::vector<int> unsorted,int low, int high, std::vector<std::pair<int,int>>& moves)
 {
-    return unsorted; // an array of the size one is already sorted 
 if(low<high)//otherwise already sorted
 {
 int pivot = findQuickSortPivot(unsorted, low, high, moves);
