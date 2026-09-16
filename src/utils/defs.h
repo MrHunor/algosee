@@ -10,7 +10,7 @@
 #include <iostream>
 #include <source_location>
 
-#define VERSION 0.3
+#define VERSION 0.4
 
 #define DEFAULT_CAPTURE_TIME 5
 #define DEFAULT_SAMPLE_RATE 44100
