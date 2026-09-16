@@ -35,7 +35,7 @@
                 <h3>description</h3>
                 <p id="algo-description">Info to alogrithm loading...</p>
                 
-                <!-- Sehr kompakter Wikipedia-Quellverweis -->
+                <!-- wiki credits -->
                 <div class="wiki-source">
                     Source: <a id="wiki-link" href="#" target="_blank" rel="noopener noreferrer">Wikipedia</a>
                 </div>
@@ -96,7 +96,7 @@
         // Set Wikipedia Link
         const wikiLinkElement = document.getElementById('wiki-link');
         wikiLinkElement.href = data.wikiUrl;
-        wikiLinkElement.innerText = "Wikipedia"; // Schlicht "Wikipedia" hält es minimal
+        wikiLinkElement.innerText = "Wikipedia";
 
         // Set Play-Button link to vis. site
         document.getElementById('visualizer-link').href = `visualizer.html?algo=${algoKey}`;

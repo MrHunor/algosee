@@ -22,7 +22,7 @@ const sizeValSpan = document.getElementById('size-val');
 let array = [];
 let arraySize = 15;
 
-// --- Issue 1 & 2: BogoSort Einschränkung & Dynamische Größe ---
+// bogo-limiter
 if (algoKey === 'bogo') {
     arraySize = 10;
     if (sizeSlider) {
@@ -31,7 +31,7 @@ if (algoKey === 'bogo') {
     }
 } else {
     if (sizeSlider) {
-        sizeSlider.max = 50; // Standard-Maximalgröße für andere Algorithmen
+        sizeSlider.max = 50; // default max size
         sizeSlider.value = 15;
     }
 }
@@ -40,12 +40,12 @@ if (sizeValSpan) {
     sizeValSpan.innerText = sizeSlider ? sizeSlider.value : arraySize;
 }
 
-// Event-Listener für den Slider (Dynamische Anpassung)
+// slider listener
 if (sizeSlider) {
     sizeSlider.addEventListener('input', (e) => {
         let val = parseInt(e.target.value);
         
-        // Sicherheits-Check falls jemand via DevTools manipuliert bei BogoSort
+        //security check (incase of devtool mani)
         if (algoKey === 'bogo' && val > 10) {
             val = 10;
             sizeSlider.value = 10;
@@ -63,7 +63,7 @@ function generateArray() {
     container.innerHTML = '';
     array = [];
     
-    // Dynamische Breitenberechnung, damit viele Balken auch gut ins Design passen
+    // dynamic width too correctly fit up to 50b
     const gap = arraySize > 25 ? 4 : 8;
     container.style.gap = `${gap}px`;
 
@@ -74,12 +74,12 @@ function generateArray() {
         const bar = document.createElement('div');
         bar.classList.add('array-bar');
         
-        // Dynamische Bar-Breite bei sehr großen Arrays, damit sie nicht überlaufen
+        // overflow prot
         const calculatedWidth = Math.max(8, Math.floor(700 / arraySize) - gap);
         bar.style.width = `${calculatedWidth}px`;
         bar.style.height = `${value * 3}px`;
         
-        // Text ab einer bestimmten Anzahl an Elementen ausblenden, damit es lesbar bleibt
+        // hide size-text and 20 ar
         if (arraySize <= 20) {
             bar.innerText = value;
         } else {
@@ -97,7 +97,7 @@ resetBtn.addEventListener('click', generateArray);
 
 // start-button 
 startBtn.addEventListener('click', async () => {
-    // Doppelte Absicherung vor dem Absenden
+    // double check
     if (algoKey === 'bogo' && array.length > 10) {
         alert("BogoSort ist auf maximal 10 Elemente beschränkt!");
         return;
@@ -124,16 +124,16 @@ startBtn.addEventListener('click', async () => {
 
         const data = await response.json();
         
-        // NEU: Da das Backend nun ein Objekt {"MOVES": [...], "TIME": ..., "VERSION": ...} liefert,
-        // extrahieren wir hier das MOVES-Array und können optional die Metadaten nutzen.
+        //MOVE array extraction (new server structure)
+
         const moves = data.MOVES;
         
         if (!Array.isArray(moves)) {
             throw new Error('Invalid response structure: "MOVES" array missing');
         }
 
-        // Optional: Falls du die Zeit oder Version irgendwo anzeigen möchtest:
-        console.log(`Sortierung beendet in ${data.TIME}ms (Backend Version: ${data.VERSION})`);
+        // future: show time it took 
+        console.log(`Sorting finished in ${data.TIME}ms (backend version: ${data.VERSION})`);
 
         await visualizeMoves(moves);
 
@@ -154,7 +154,7 @@ async function visualizeMoves(moves) {
     for (let k = 0; k < moves.length; k++) {
         const [i, j] = moves[k];
 
-        // Sicherheitsprüfung, falls Indizes außerhalb des Arrays liegen
+        // sec-check incase of indizes out of array
         if (!bars[i] || !bars[j]) continue;
 
         bars[i].style.backgroundColor = '#ef4444';

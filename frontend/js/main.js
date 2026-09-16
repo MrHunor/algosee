@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = `visualizer.html?algo=${algoKey}`;
                 return;
             } else {
-                // server antwortet nicht mit 200 OK -> loading screen
+                // server doesn't respond with 200 OK -> loading screen
                 window.location.href = `loading.html?algo=${algoKey}`;
             }
         } catch (error) {
