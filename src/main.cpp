@@ -82,7 +82,7 @@ server.Get("/status", [&](const httplib::Request &req,
       res.set_header("Access-Control-Allow-Origin", "*");
       response["TIME"] = elapsed.count();
       response["MOVES"] = moves;
-      res.set_content(response, "application/json");
+      res.set_content(response.dump(), "application/json");
       return;
     }
 
@@ -104,7 +104,7 @@ server.Get("/status", [&](const httplib::Request &req,
       res.set_header("Access-Control-Allow-Origin", "*");
       response["TIME"]=elapsed.count();
       response["TRIES"]=tries;
-      res.set_content(response, "application/json");
+      res.set_content(response.dump(), "application/json");
       return;
     }
 
@@ -117,7 +117,7 @@ server.Get("/status", [&](const httplib::Request &req,
             res.set_header("Access-Control-Allow-Origin", "*");
       response["TIME"]=elapsed.count();
       response["MOVES"]=moves;
-      res.set_content(response,"application/json");
+      res.set_content(response.dump(),"application/json");
       return;
     }
 
