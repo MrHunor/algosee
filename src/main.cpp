@@ -33,7 +33,15 @@ server.Options(R"(/sortalgo)", [](const httplib::Request &req, httplib::Response
   res.status = 200;
 });
 
-
+// Server status endpoint
+server.Get("/status", [&](const httplib::Request &req,
+                         httplib::Response &res) {
+    json status = {
+        {"status", "online"}
+    };
+    res.set_header("Access-Control-Allow-Origin", "*");
+    res.set_content(status.dump(4), "application/json");
+});
 
 
   server.Post("/sortalgo", [&](const httplib::Request &req,
