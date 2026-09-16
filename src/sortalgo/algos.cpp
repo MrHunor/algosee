@@ -105,7 +105,7 @@ return retval;
 
 }
 
-std::vector<int> mergeSort(const std::vector<int>& unsorted, json response)
+std::vector<int> mergeSort(const std::vector<int>& unsorted, json& response)
 {
   if(unsorted.size()<=1)return unsorted; //an array of the size one is already sorted
 
@@ -125,7 +125,7 @@ std::vector<int> mergeSort(const std::vector<int>& unsorted, json response)
 
 }
 
-std::vector<int> countingSort(const std::vector<int>& unsorted, json response)
+std::vector<int> countingSort(const std::vector<int>& unsorted, json& response)
 {
     if(unsorted.size()<=1)return unsorted; //an array of the size one is already sorted
   int countI=0;
