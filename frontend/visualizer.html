@@ -14,10 +14,17 @@
     <main class="visualizer-container">
         <div class="visualizer-header">
             <h2 id="algo-title">loading...</h2>
+          <!-- Neu: Steuerelement für die Array-Größe -->
+            <div class="size-control" style="display: flex; align-items: center; gap: 0.5rem; color: #cbd5e1;">
+                <label for="array-size-slider">Größe: <span id="size-val">15</span></label>
+                <input type="range" id="array-size-slider" min="3" max="50" value="15" style="cursor: pointer;">
+            </div>
+
             <div class="controls">
                 <button id="start-btn" class="control-btn primary">start sorting</button>
                 <button id="reset-btn" class="control-btn secondary">generate new array</button>
             </div>
+        </div>
         </div>
 
         <!-- Draws the bars-->
