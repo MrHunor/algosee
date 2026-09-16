@@ -90,8 +90,8 @@ int main(int argc, char *argv[]) {
       if (values.size() > 12) {
         returnFailedAnswer(
             res, "Aborted early:Too many elements specified, request would be "
-                 "too big. (>12 Elements = 479.001.600 Possibility; which is "
-                 "rougly 26GB in RAM for recording tries)");
+                 "too big. (>12 Elements > 479.001.600 Possibility; which is "
+                 "rougly >26GB in RAM for recording tries)");
         return;
       }
 
@@ -148,6 +148,21 @@ int main(int argc, char *argv[]) {
       res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(response.dump(), "application/json");
       return;
+    }
+
+    if(algo == "quick")
+    {
+      quickSort(values,0,values.size()-1, moves);
+      auto endTime = std::chrono::steady_clock::now();
+      auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
+          endTime - startTime);
+      response["TIME"] = elapsed.count();
+      response["MOVES"] = moves;
+            state.out("Finished sorting, sending reply...", 0);
+      res.set_header("Access-Control-Allow-Origin", "*");
+      res.set_content(response.dump(), "application/json");
+      return;
+
     }
 
     returnFailedAnswer(res, "Unknown Algorithm");
