@@ -76,7 +76,7 @@
 
 #define DEFAULT_COLOUR MAGENTA
 
-#define VERBOSE_LEVEL_NEEDED_FOR_TIME 0 
+#define VERBOSE_LEVEL_NEEDED_FOR_TIME 0
 
 class stateClass {
 public:
