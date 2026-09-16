@@ -39,6 +39,8 @@ server.Get("/status", [&](const httplib::Request &req,
     json status = {
         {"status", "online"}
     };
+    state.out("Send status signal.",0);
+    res.status = 200;
     res.set_header("Access-Control-Allow-Origin", "*");
     res.set_content(status.dump(4), "application/json");
 });

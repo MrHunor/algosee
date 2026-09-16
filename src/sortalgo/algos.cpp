@@ -25,7 +25,7 @@ std::vector<int> selectionSort(std::vector<int> unsorted,
                                   if(unsorted.size()<=1)return unsorted; //an array of the size one is already sorted
   int index;
 
-  for (int i = 0; i < unsorted.size() - 1;
+  for (size_t i = 0; i < unsorted.size() - 1;
        i++) // unsorted.size() is valid because the last element is sorted due
             // to the other elements already being sorted
   {
@@ -53,8 +53,8 @@ std::vector<int> bogoSort(std::vector<int> unsorted,
 std::vector<int> bubbleSort(std::vector<int> unsorted, std::vector<std::pair<int,int>> &moves)
 {
     if(unsorted.size()<=1)return unsorted; //an array of the size one is already sorted
-for (int i = 0; i<unsorted.size(); i++) {
-for(int z = 0; z<unsorted.size()-1-i; z++)//you can subtract i because the last elements have already been orderd before, this saves you some time but doesnt make the horrible O(n^2) much better
+for (size_t i = 0; i<unsorted.size(); i++) {
+for(size_t z = 0; z<unsorted.size()-1-i; z++)//you can subtract i because the last elements have already been orderd before, this saves you some time but doesnt make the horrible O(n^2) much better
 {
   if(unsorted[z]>unsorted[z+1])
   {
@@ -71,8 +71,8 @@ std::vector<int> merge(const std::vector<int>& arr1, const std::vector<int>& arr
 {
 int arr1point=0;
 int arr2point=0;
-int mid = arr1.size()-1;
-int end = arr2.size()-1;
+size_t mid = arr1.size()-1;
+size_t end = arr2.size()-1;
 std::vector<int> retval;
 retval.reserve(arr1.size()+arr2.size());
 
@@ -107,7 +107,7 @@ std::vector<int> mergeSort(const std::vector<int>& unsorted, std::vector<std::pa
 {
   if(unsorted.size()<=1)return unsorted; //an array of the size one is already sorted
 
-  int mid = unsorted.size()/2;//beg to god rounding logic works
+  size_t mid = unsorted.size()/2;//beg to god rounding logic works
 
   std::vector<int> left(unsorted.begin(),unsorted.begin()+mid);//fun fact; last iterator is the one NOT to copy anymore, so actually the last one to copy is last-1
   std::vector<int> right(unsorted.begin()+mid,unsorted.end()); 
@@ -131,7 +131,7 @@ for(int i : unsorted)
 {
 count[i]++;
 }
-for(int i = 0; i<unsorted.size(); i++)
+for(size_t i = 0; i<unsorted.size(); i++)
 {
 while(count[countI]==0)countI++;
 retval.push_back(countI);
