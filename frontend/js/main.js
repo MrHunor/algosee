@@ -14,16 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         const algoKey = urlParams.get('algo') === null ? 'selection' : urlParams.get('algo');
 
-        // URL to be replaced
-        const backendPingUrl = 'https://algosee.onrender.com';
+        // URL incl. /status endpoint
+        const backendPingUrl = 'https://algosee.onrender.com/status';
 
         // optional: give user feedback
         playButton.innerText = "checking server...";
 
         try {
-            // ping get's max 2 secs
+            // ping get's max 3 secs
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 2000);
+            const timeoutId = setTimeout(() => controller.abort(), 3000);
 
             const response = await fetch(backendPingUrl, { 
                 method: 'GET',
@@ -35,9 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 // server awake -> redir to visualizer
                 window.location.href = `visualizer.html?algo=${algoKey}`;
                 return;
+            } else {
+                // server antwortet nicht mit 200 OK -> loading screen
+                window.location.href = `loading.html?algo=${algoKey}`;
             }
         } catch (error) {
-            // server sleeping (timout/error) -> loading screen
+            // server sleeping (timeout/error) -> loading screen
             window.location.href = `loading.html?algo=${algoKey}`;
         }
     });
