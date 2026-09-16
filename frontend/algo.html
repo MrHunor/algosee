@@ -34,6 +34,11 @@
             <div class="description-card">
                 <h3>description</h3>
                 <p id="algo-description">Info to alogrithm loading...</p>
+                
+                <!-- Sehr kompakter Wikipedia-Quellverweis -->
+                <div class="wiki-source">
+                    Source: <a id="wiki-link" href="#" target="_blank" rel="noopener noreferrer">Wikipedia</a>
+                </div>
             </div>
         </div>
     </main>
@@ -43,37 +48,56 @@
         const urlParams = new URLSearchParams(window.location.search);
         const algoKey = urlParams.get('algo') || 'bogo'; // Fallback
 
-        // central db for infos
+        // central db for infos + wikiUrl
         const algoDatabase = {
             bogo: {
                 name: "BogoSort",
-                description: "Bogosort (also known as permutation sort and stupid sort is a sorting algorithm based on the generate and test paradigm. The function successively generates permutations of its input until it finds one that is sorted. It is not considered useful for sorting, but may be used for educational purposes, to contrast it with more efficient algorithms. The algorithm's name is a portmanteau of the words bogus and sort."
+                description: "Bogosort (also known as permutation sort and stupid sort is a sorting algorithm based on the generate and test paradigm. The function successively generates permutations of its input until it finds one that is sorted. It is not considered useful for sorting, but may be used for educational purposes, to contrast it with more efficient algorithms. The algorithm's name is a portmanteau of the words bogus and sort.",
+                wikiUrl: "https://en.wikipedia.org/wiki/Bogosort"
             },
             miracle: {
                 name: "MiracleSort",
-                description: "The Most Reliably Unreliable Sorting Method: Create an array; Check to see if array is sorted; Wait a while; Check again to see if array is sorted; Repeat until array happens to be sorted by a miracle"
+                description: "The Most Reliably Unreliable Sorting Method: Create an array; Check to see if array is sorted; Wait a while; Check again to see if array is sorted; Repeat until array happens to be sorted by a miracle",
+                wikiUrl: "https://en.wikipedia.org/wiki/Bogosort#Miracle_sort"
             },
             selection: {
                 name: "SelectionSort",
-                description: "Selection sort is an in-place comparison sorting algorithm. It has a O time complexity, which makes it inefficient on large lists, and generally performs worse than the similar insertion sort. Selection sort is noted for its simplicity and has performance advantages over more complicated algorithms in certain situations, particularly where auxiliary memory is limited."
+                description: "Selection sort is an in-place comparison sorting algorithm. It has a O time complexity, which makes it inefficient on large lists, and generally performs worse than the similar insertion sort. Selection sort is noted for its simplicity and has performance advantages over more complicated algorithms in certain situations, particularly where auxiliary memory is limited.",
+                wikiUrl: "https://en.wikipedia.org/wiki/Selection_sort"
             },
             merge: {
                 name: "MergeSort",
-                description: "Merge sort (also commonly spelled as mergesort or merge-sort) is an efficient, general-purpose, comparison-based sorting algorithm. Most implementations of merge sort are stable, which means that the relative order of equal elements is the same between the input and output. Merge sort is a divide-and-conquer algorithm that was invented by John von Neumann in 1945. A detailed description and analysis of bottom-up merge sort appeared in a report by Goldstine and von Neumann as early as 1948."
+                description: "Merge sort (also commonly spelled as mergesort or merge-sort) is an efficient, general-purpose, comparison-based sorting algorithm. Most implementations of merge sort are stable, which means that the relative order of equal elements is the same between the input and output. Merge sort is a divide-and-conquer algorithm that was invented by John von Neumann in 1945. A detailed description and analysis of bottom-up merge sort appeared in a report by Goldstine and von Neumann as early as 1948.",
+                wikiUrl: "https://en.wikipedia.org/wiki/Merge_sort"
+            },
+            bubble: {
+                name: "BubbleSort",
+                description: "Bubble sort, sometimes referred to as sinking sort, is a simple sorting algorithm that repeatedly steps through the input list element by element, comparing the current element with the one after it, swapping their values if needed. These passes through the list are repeated until no swaps have to be performed during a pass, meaning that the list has become fully sorted. The algorithm, which is a comparison sort, is named for the way the larger elements bubble up to the top of the list.",
+                wikiUrl: "https://en.wikipedia.org/wiki/Bubble_sort"
+            },
+            counting: {
+                name: "counting",
+                description: "Counting sort is an algorithm for sorting a collection of objects according to keys that are small positive integers; that is, it is an integer sorting algorithm. It operates by counting the number of objects that possess distinct key values, and applying prefix sum on those counts to determine the positions of each key value in the output sequence. Its running time is linear in the number of items and the difference between the maximum key value and the minimum key value, so it is only suitable for direct use in situations where the variation in keys is not significantly greater than the number of items. It is often used as a subroutine in radix sort, another sorting algorithm, which can handle larger keys more efficiently.",
+                wikiUrl: "https://en.wikipedia.org/wiki/Counting_sort"
             }
-        
         };
 
         // paste data in html-set
         const data = algoDatabase[algoKey] || {
             name: "unknown algorithm",
-            description: "No Details for this Algorithm"
+            description: "No Details for this Algorithm",
+            wikiUrl: "https://www.wikipedia.org"
         };
 
         document.getElementById('page-title').innerText = `AlgoSee - ${data.name}`;
         document.getElementById('algo-name').innerText = data.name;
         document.getElementById('algo-description').innerText = data.description;
         
+        // Set Wikipedia Link
+        const wikiLinkElement = document.getElementById('wiki-link');
+        wikiLinkElement.href = data.wikiUrl;
+        wikiLinkElement.innerText = "Wikipedia"; // Schlicht "Wikipedia" hält es minimal
+
         // Set Play-Button link to vis. site
         document.getElementById('visualizer-link').href = `visualizer.html?algo=${algoKey}`;
     </script>

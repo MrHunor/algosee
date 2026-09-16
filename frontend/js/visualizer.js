@@ -42,7 +42,7 @@ startBtn.addEventListener('click', async () => {
     // FOR CODESPACE: 
     // either c++ server runs local or use port-forwarding (P8080)
     // path for testing:
-    const backendUrl = `http://localhost:8080/sortalgo?algo=${algoKey}`;
+    const backendUrl = `https://algosee.onrender.com/sortalgo?algo=${algoKey}`;
 
     startBtn.disabled = true;
     resetBtn.disabled = true;

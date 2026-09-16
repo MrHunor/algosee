@@ -1,3 +1,6 @@
+//main.js will mainly be used for the backend-server communication (pinging for loading screen)
+//and other network-related stuff
+
 document.addEventListener('DOMContentLoaded', () => {
     //searches for start-vis. button on algo.html
     const playButton = document.querySelector('.play-button'); 
@@ -12,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const algoKey = urlParams.get('algo') === null ? 'selection' : urlParams.get('algo');
 
         // URL to be replaced
-        const backendPingUrl = 'https://idktheurlyet.com';
+        const backendPingUrl = 'https://algosee.onrender.com';
 
         // optional: give user feedback
         playButton.innerText = "checking server...";
