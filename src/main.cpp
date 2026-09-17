@@ -103,6 +103,7 @@ int main(int argc, char *argv[]) {
       res.set_header("Access-Control-Allow-Origin", "*");
       response["TIME"] = elapsed.count();
       response["TRIES"] = tries;
+      response["SORTED"] = values;
       res.set_content(response.dump(), "application/json");
       return;
     }
@@ -116,6 +117,7 @@ int main(int argc, char *argv[]) {
       res.set_header("Access-Control-Allow-Origin", "*");
       response["TIME"] = elapsed.count();
       response["MOVES"] = moves;
+      response["SORTED"] = values;
       res.set_content(response.dump(), "application/json");
       return;
     }
@@ -123,12 +125,12 @@ int main(int argc, char *argv[]) {
     if (algo == "merge") {
       // currently moves is not yet implemented so it just returns the sorted
       // vector
-      auto retval = mergeSort(values, response);
+      mergeSort(values, response);
       auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
           endTime - startTime);
       response["TIME"] = elapsed.count();
-      response["SORTED"] = retval;
+      response["SORTED"] = values;
       state.out("Finished sorting, sending reply...", 0);
       res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(response.dump(), "application/json");
@@ -138,12 +140,12 @@ int main(int argc, char *argv[]) {
     if (algo == "counting") {
       // currently moves is not yet implemented so it just returns the sorted
       // vector
-      auto retval = countingSort(values, response);
+      countingSort(values, response);
       auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
           endTime - startTime);
       response["TIME"] = elapsed.count();
-      response["SORTED"] = retval;
+      response["SORTED"] = values;
       state.out("Finished sorting, sending reply...", 0);
       res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(response.dump(), "application/json");
@@ -157,6 +159,7 @@ int main(int argc, char *argv[]) {
           endTime - startTime);
       response["TIME"] = elapsed.count();
       response["MOVES"] = moves;
+      response["SORTED"]=values;
       state.out("Finished sorting, sending reply...", 0);
       res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(response.dump(), "application/json");
