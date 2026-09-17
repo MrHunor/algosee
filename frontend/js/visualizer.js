@@ -124,18 +124,22 @@ startBtn.addEventListener('click', async () => {
 
         const data = await response.json();
         
-        //MOVE array extraction (new server structure)
-
-        const moves = data.MOVES;
-        
-        if (!Array.isArray(moves)) {
-            throw new Error('Invalid response structure: "MOVES" array missing');
+        // Unterscheidung je nach Algorithmus (Bogo liefert TRIES, andere MOVES)
+        if (algoKey === 'bogo') {
+            const tries = data.TRIES;
+            if (!Array.isArray(tries)) {
+                throw new Error('Invalid response structure: "TRIES" array missing');
+            }
+            console.log(`BogoSort finished in ${data.TIME}ms with ${tries.length} tries (backend version: ${data.VERSION})`);
+            await visualizeTries(tries);
+        } else {
+            const moves = data.MOVES;
+            if (!Array.isArray(moves)) {
+                throw new Error('Invalid response structure: "MOVES" array missing');
+            }
+            console.log(`Sorting finished in ${data.TIME}ms (backend version: ${data.VERSION})`);
+            await visualizeMoves(moves);
         }
-
-        // future: show time it took 
-        console.log(`Sorting finished in ${data.TIME}ms (backend version: ${data.VERSION})`);
-
-        await visualizeMoves(moves);
 
     } catch (error) {
         console.error("Connection-Error:", error);
@@ -147,7 +151,7 @@ startBtn.addEventListener('click', async () => {
     }
 });
 
-// animation of moves
+// animation of MOVES
 async function visualizeMoves(moves) {
     const bars = container.children;
 
@@ -179,6 +183,38 @@ async function visualizeMoves(moves) {
         bars[j].style.backgroundColor = '#3b82f6';
     }
 
+    for (let bar of bars) {
+        bar.style.backgroundColor = '#22c55e';
+    }
+}
+
+// animation of TRIES (specifically for bogo) - JETZT SEPARAT AUßERHALB
+async function visualizeTries(tries) {
+    const bars = container.children;
+
+    for (let k = 0; k < tries.length; k++) {
+        const currentTry = tries[k];
+
+        for (let i = 0; i < currentTry.length; i++) {
+            if (!bars[i]) continue;
+            
+            const val = currentTry[i];
+            bars[i].style.height = `${val * 3}px`;
+            
+            if (arraySize <= 20) {
+                bars[i].innerText = val;
+            }
+            
+            bars[i].style.backgroundColor = '#3b82f6';
+        }
+
+        array = [...currentTry];
+        
+        // short pause between tries 
+        await new Promise(resolve => setTimeout(resolve, 50));
+    }
+
+    // green marking
     for (let bar of bars) {
         bar.style.backgroundColor = '#22c55e';
     }
