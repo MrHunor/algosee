@@ -21,41 +21,39 @@ void randomise(std::vector<int> &vec) {
   std::shuffle(vec.begin(), vec.end(), gen);
 }
 
-//caution, you have to pass the vector as a reference here because the vector is being modified
-int findQuickSortPivot(std::vector<int>& unsorted, int low, int high,std::vector<std::pair<int,int>>& moves)
-{
+// caution, you have to pass the vector as a reference here because the vector
+// is being modified
+int findQuickSortPivot(std::vector<int> &unsorted, int low, int high,
+                       std::vector<std::pair<int, int>> &moves) {
   int index;
   int pivot = unsorted[high];
-  int lowerPivotIndexBoundry=low -1;
-  for(int i = low; i<high;i++)
-  {
-    if(unsorted[i]<pivot)
-    {
+  int lowerPivotIndexBoundry = low - 1;
+  for (int i = low; i < high; i++) {
+    if (unsorted[i] < pivot) {
       lowerPivotIndexBoundry++;
-      std::swap(unsorted[i],unsorted[lowerPivotIndexBoundry]);
-      moves.push_back({i,lowerPivotIndexBoundry});
+      std::swap(unsorted[i], unsorted[lowerPivotIndexBoundry]);
+      moves.push_back({i, lowerPivotIndexBoundry});
     }
   }
-  //move pivot to correct pos;
-  std::swap(unsorted[high],unsorted[lowerPivotIndexBoundry+1]);
-  moves.push_back({high,lowerPivotIndexBoundry+1});
-return lowerPivotIndexBoundry+1;
+  // move pivot to correct pos;
+  std::swap(unsorted[high], unsorted[lowerPivotIndexBoundry + 1]);
+  moves.push_back({high, lowerPivotIndexBoundry + 1});
+  return lowerPivotIndexBoundry + 1;
 }
 
+std::vector<int> quickSort(std::vector<int> unsorted, int low, int high,
+                           std::vector<std::pair<int, int>> &moves) {
+  if (low < high) // otherwise already sorted
+  {
+    int pivot = findQuickSortPivot(unsorted, low, high, moves);
 
-std::vector<int> quickSort(std::vector<int> unsorted,int low, int high, std::vector<std::pair<int,int>>& moves)
-{
-if(low<high)//otherwise already sorted
-{
-int pivot = findQuickSortPivot(unsorted, low, high, moves);
-
-unsorted= quickSort(unsorted,low,pivot-1,moves);//sort left side recursivly 
-unsorted = quickSort(unsorted,pivot+1,high,moves);//sort right side recursivly 
+    unsorted =
+        quickSort(unsorted, low, pivot - 1, moves); // sort left side recursivly
+    unsorted = quickSort(unsorted, pivot + 1, high,
+                         moves); // sort right side recursivly
+  }
+  return unsorted;
 }
-return unsorted;
-}
-
-
 
 std::vector<int> selectionSort(std::vector<int> unsorted,
                                std::vector<std::pair<int, int>> &moves) {

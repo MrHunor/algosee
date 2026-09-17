@@ -150,19 +150,17 @@ int main(int argc, char *argv[]) {
       return;
     }
 
-    if(algo == "quick")
-    {
-      quickSort(values,0,values.size()-1, moves);
+    if (algo == "quick") {
+      quickSort(values, 0, values.size() - 1, moves);
       auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
           endTime - startTime);
       response["TIME"] = elapsed.count();
       response["MOVES"] = moves;
-            state.out("Finished sorting, sending reply...", 0);
+      state.out("Finished sorting, sending reply...", 0);
       res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(response.dump(), "application/json");
       return;
-
     }
 
     returnFailedAnswer(res, "Unknown Algorithm");
