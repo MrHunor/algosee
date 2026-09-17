@@ -1,0 +1,2 @@
+algorithm,n,runs,median_ns,min_ns,max_ns,median_ms
+selection,10,5,760,680,1030,0.000760

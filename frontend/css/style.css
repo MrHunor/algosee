@@ -269,3 +269,28 @@ body {
 .wiki-source a:hover {
     text-decoration: underline;
 }
+
+/* complexity information */
+.complexity {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #262626;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.complexity p {
+    margin: 0;
+    padding: 0.9rem 1rem;
+    background-color: #1f1f1f;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #cbd5e1;
+}
+
+.complexity strong {
+    color: #3b82f6;
+    font-weight: 600;
+}
