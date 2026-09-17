@@ -19,6 +19,27 @@ const resetBtn = document.getElementById('reset-btn');
 const sizeSlider = document.getElementById('array-size-slider');
 const sizeValSpan = document.getElementById('size-val');
 
+// speed&stop logic
+const speedSlider = document.getElementById('speed-slider');
+const speedValSpan = document.getElementById('speed-val');
+const stopBtn = document.getElementById('stop-btn');
+
+let animationSpeed = 200;
+let isCancelled = false;
+
+// speed listener
+if (speedSlider) {
+    speedSlider.addEventListener('input', (e) => {
+        animationSpeed = parseInt(e.target.value);
+        speedValSpan.innerText = animationSpeed;
+    });
+}
+
+// stop listener
+stopBtn.addEventListener('click', () => {
+    isCancelled = true;
+});
+
 let array = [];
 let arraySize = 15;
 
@@ -91,15 +112,14 @@ function generateArray() {
     }
 }
 
-// run asap 
-generateArray();
+//new array listener
 resetBtn.addEventListener('click', generateArray);
 
-// start-button 
+//Start-button (!!!)
+// run asap 
 startBtn.addEventListener('click', async () => {
-    // double check
     if (algoKey === 'bogo' && array.length > 10) {
-        alert("BogoSort ist auf maximal 10 Elemente beschränkt!");
+        alert("Bogo is capped at 10 Arrays (our server's boutta blow)");
         return;
     }
 
@@ -108,46 +128,37 @@ startBtn.addEventListener('click', async () => {
     startBtn.disabled = true;
     resetBtn.disabled = true;
     if (sizeSlider) sizeSlider.disabled = true;
+    if (speedSlider) speedSlider.disabled = true;
+    stopBtn.disabled = false; // acces stop button
+    isCancelled = false;      // reset cancel flag
 
     try {
         const response = await fetch(backendUrl, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ values: array })
         });
 
-        if (!response.ok) {
-            throw new Error('Error while communication with Backend');
-        }
+        if (!response.ok) throw new Error('Error while communication with Backend');
 
         const data = await response.json();
         
-        // Unterscheidung je nach Algorithmus (Bogo liefert TRIES, andere MOVES)
         if (algoKey === 'bogo') {
-            const tries = data.TRIES;
-            if (!Array.isArray(tries)) {
-                throw new Error('Invalid response structure: "TRIES" array missing');
-            }
-            console.log(`BogoSort finished in ${data.TIME}ms with ${tries.length} tries (backend version: ${data.VERSION})`);
-            await visualizeTries(tries);
+            await visualizeTries(data.TRIES);
         } else {
-            const moves = data.MOVES;
-            if (!Array.isArray(moves)) {
-                throw new Error('Invalid response structure: "MOVES" array missing');
-            }
-            console.log(`Sorting finished in ${data.TIME}ms (backend version: ${data.VERSION})`);
-            await visualizeMoves(moves);
+            await visualizeMoves(data.MOVES);
         }
 
     } catch (error) {
         console.error("Connection-Error:", error);
         alert("Sorry, this algorithm isn't quite implemented yet");
     } finally {
+        // unlock UI (this'll clean up)
         startBtn.disabled = false;
         resetBtn.disabled = false;
         if (sizeSlider) sizeSlider.disabled = false;
+        if (speedSlider) speedSlider.disabled = false;
+        stopBtn.disabled = true;
     }
 });
 
@@ -156,6 +167,12 @@ async function visualizeMoves(moves) {
     const bars = container.children;
 
     for (let k = 0; k < moves.length; k++) {
+        // cancel check via stop button
+        if (isCancelled) {
+            generateArray(); 
+            return;
+        }
+
         const [i, j] = moves[k];
 
         // sec-check incase of indizes out of array
@@ -177,27 +194,35 @@ async function visualizeMoves(moves) {
         array[i] = array[j];
         array[j] = tempValue;
 
-        await new Promise(resolve => setTimeout(resolve, 200));
+        // ts uses slider logic
+        await new Promise(resolve => setTimeout(resolve, animationSpeed));
 
         bars[i].style.backgroundColor = '#3b82f6';
         bars[j].style.backgroundColor = '#3b82f6';
     }
 
-    for (let bar of bars) {
-        bar.style.backgroundColor = '#22c55e';
+    if (!isCancelled) {
+        for (let bar of bars) {
+            bar.style.backgroundColor = '#22c55e';
+        }
     }
 }
 
-// animation of TRIES (specifically for bogo) - JETZT SEPARAT AUßERHALB
+// animation of TRIES (specifically for bogo)
 async function visualizeTries(tries) {
     const bars = container.children;
 
     for (let k = 0; k < tries.length; k++) {
+        // again, cancel check via stop button
+        if (isCancelled) {
+            generateArray(); 
+            return;
+        }
         const currentTry = tries[k];
 
         for (let i = 0; i < currentTry.length; i++) {
             if (!bars[i]) continue;
-            
+
             const val = currentTry[i];
             bars[i].style.height = `${val * 3}px`;
             
@@ -207,15 +232,19 @@ async function visualizeTries(tries) {
             
             bars[i].style.backgroundColor = '#3b82f6';
         }
-
+            
         array = [...currentTry];
-        
-        // short pause between tries 
-        await new Promise(resolve => setTimeout(resolve, 50));
-    }
 
-    // green marking
-    for (let bar of bars) {
-        bar.style.backgroundColor = '#22c55e';
+        await new Promise(resolve => setTimeout(resolve, animationSpeed));
+    }
+        
+
+    // green marking (only if not cancelled)
+    if (!isCancelled) {
+        for (let bar of bars) {
+            bar.style.backgroundColor = '#22c55e';
+        }
     }
 }
+
+//if you've understood allat, you're better than me lol 
