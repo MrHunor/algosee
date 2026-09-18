@@ -10,7 +10,7 @@ void afterSelfTestRun(std::string algorithmName,std::vector<int>& paramPassValue
                       std::vector<std::pair<int, int>>& moves,
                         std::vector<std::vector<int>>& tries,
                          json& response,
-                      json& parampassTest, auto& startTime) {
+                      json& parampassTest, const std::chrono::steady_clock::time_point& startTime) {
   //end time measurement
   auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
@@ -25,11 +25,11 @@ void afterSelfTestRun(std::string algorithmName,std::vector<int>& paramPassValue
   if(paramPassValues==sortedValues)
    {
     response[algorithmName+" STATUS"]="SUCESS";
-    response[algorithmName+" TIME"]=elapsed.count;
+    response[algorithmName+" TIME"]=elapsed.count();
    }
    else {
        response[algorithmName+" STATUS"]="FAILED";
-    response[algorithmName+" TIME"]=elapsed.count;
+    response[algorithmName+" TIME"]=elapsed.count();
    }
 
    //reset passvalues to testvalues

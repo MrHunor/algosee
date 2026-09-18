@@ -10,8 +10,8 @@ void afterSelfTestRun(std::string algorithmName,std::vector<int>& paramPassValue
                       std::vector<int>& testvalues,
                       std::vector<int>& sortedValues,
                       std::vector<std::pair<int, int>>& moves,
-                      std::vector<std::vector<int>>& tries,
-                      json& response,
-                      json& parampassTest, auto& startTime);
+                        std::vector<std::vector<int>>& tries,
+                         json& response,
+                      json& parampassTest, const std::chrono::steady_clock::time_point& startTime);
 
 #endif

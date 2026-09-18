@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
     afterSelfTestRun("Bubble Sort", passParamValues, testvalues, sortedvalues, moves,tries, response, passParamTest, startTime);
    
     startTime = std::chrono::steady_clock::now();
-    quickSort(passParamValues, 0, passParamValues.size(), moves);
+    quickSort(passParamValues, 0, passParamValues.size()-1, moves);
     afterSelfTestRun("Quick Sort", passParamValues, testvalues, sortedvalues, moves,tries, response, passParamTest, startTime);
     
     startTime = std::chrono::steady_clock::now();
