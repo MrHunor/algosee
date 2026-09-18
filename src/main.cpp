@@ -10,6 +10,7 @@
 #include <httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
+#include "server/server.h"
 
 using json = nlohmann::json;
 int main(int argc, char *argv[]) {
@@ -46,6 +47,45 @@ int main(int argc, char *argv[]) {
                res.set_content(status.dump(4), "application/json");
              });
 
+  server.Get("/selftest",[&](const httplib::Request &req, httplib::Response &res)     {      
+    state.out("Initating selftest...",0);
+    json response;
+    response["VERSION"]= VERSION;
+    std::vector<int> testvalues = {5,3,1,2,6,4};
+    std::vector<int> passParamValues = testvalues;
+    std::vector<int> sortedvalues = {1,2,3,4,5,6};
+    std::vector<std::vector<int>> tries; 
+    std::vector<std::pair<int,int>> moves;
+    json passParamTest;
+
+    auto startTime = std::chrono::steady_clock::now();
+    selectionSort(passParamValues,moves);
+    afterSelfTestRun("Selection Sort", passParamValues, testvalues, sortedvalues, moves,tries, response, passParamTest, startTime);
+
+    startTime = std::chrono::steady_clock::now();
+    bogoSort(passParamValues, tries);
+    afterSelfTestRun("Bogo Sort", passParamValues, testvalues, sortedvalues, moves,tries, response, passParamTest, startTime);
+
+    startTime = std::chrono::steady_clock::now();
+    bubbleSort(passParamValues, moves);
+    afterSelfTestRun("Bubble Sort", passParamValues, testvalues, sortedvalues, moves,tries, response, passParamTest, startTime);
+   
+    startTime = std::chrono::steady_clock::now();
+    quickSort(passParamValues, 0, passParamValues.size(), moves);
+    afterSelfTestRun("Quick Sort", passParamValues, testvalues, sortedvalues, moves,tries, response, passParamTest, startTime);
+    
+    startTime = std::chrono::steady_clock::now();
+    mergeSort(passParamValues, passParamTest);
+    afterSelfTestRun("Merge Sort", passParamValues, testvalues, sortedvalues, moves,tries, response, passParamTest, startTime);
+    
+        startTime = std::chrono::steady_clock::now();
+    passParamValues = countingSort(passParamValues,passParamTest);
+    afterSelfTestRun("Counting Sort", passParamValues, testvalues, sortedvalues, moves,tries, response, passParamTest, startTime);
+    
+    res.status=400;
+    res.set_content(response.dump(),"application/json");
+    return;  
+  });
   server.Post("/sortalgo", [&](const httplib::Request &req,
                                httplib::Response &res) {
     state.out("Recived Request:\nTarget:" + req.target + "\nBody:" + req.body,
@@ -123,8 +163,6 @@ int main(int argc, char *argv[]) {
     }
 
     if (algo == "merge") {
-      // currently moves is not yet implemented so it just returns the sorted
-      // vector
       mergeSort(values, response);
       auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
@@ -138,8 +176,6 @@ int main(int argc, char *argv[]) {
     }
 
     if (algo == "counting") {
-      // currently moves is not yet implemented so it just returns the sorted
-      // vector
       countingSort(values, response);
       auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(

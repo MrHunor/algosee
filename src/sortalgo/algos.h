@@ -18,6 +18,7 @@ void bubbleSort(std::vector<int>& unsorted,
 void quickSort(std::vector<int>& unsorted, int low, int high,
                            std::vector<std::pair<int, int>> &moves);
 void mergeSort(std::vector<int> &unsorted, json &response);
+
 std::vector<int> countingSort(const std::vector<int> &unsorted,
                               json &response);
 #endif
