@@ -115,8 +115,10 @@ function generateArray() {
 //new array listener
 resetBtn.addEventListener('click', generateArray);
 
+//--------------------------------------
+
 //Start-button (!!!)
-// run asap 
+//run asap 
 startBtn.addEventListener('click', async () => {
     if (algoKey === 'bogo' && array.length > 10) {
         alert("Bogo is capped at 10 Arrays (our server's boutta blow)");
@@ -145,6 +147,10 @@ startBtn.addEventListener('click', async () => {
         
         if (algoKey === 'bogo') {
             await visualizeTries(data.TRIES);
+        } else if (algoKey === 'merge') {
+            await visualizeMerge(data["MERGED (LEFT,RIGHT,RESULT)"]);
+        } else if (algoKey === 'counting') {
+            await visualizeCounting(data.SORTED);
         } else {
             await visualizeMoves(data.MOVES);
         }
@@ -161,6 +167,21 @@ startBtn.addEventListener('click', async () => {
         stopBtn.disabled = true;
     }
 });
+
+// wave-green function 
+async function playSuccessWave() {
+    const bars = container.children;
+
+    for (let i = 0; i < bars.length; i++) {
+        if (isCancelled) return;
+
+        // turn single bar green
+        bars[i].style.backgroundColor = '#22c55e';
+        
+        // wait (small time)
+        await new Promise(resolve => setTimeout(resolve, Math.max(20, animationSpeed / 3)));
+    }
+}
 
 // animation of MOVES
 async function visualizeMoves(moves) {
@@ -202,9 +223,7 @@ async function visualizeMoves(moves) {
     }
 
     if (!isCancelled) {
-        for (let bar of bars) {
-            bar.style.backgroundColor = '#22c55e';
-        }
+    await playSuccessWave();
     }
 }
 
@@ -241,9 +260,75 @@ async function visualizeTries(tries) {
 
     // green marking (only if not cancelled)
     if (!isCancelled) {
-        for (let bar of bars) {
-            bar.style.backgroundColor = '#22c55e';
+    await playSuccessWave();
+    }
+}
+
+//MergeSort animation
+async function visualizeMerge(mergeSteps) {
+    const bars = container.children;
+
+    for (let k = 0; k < mergeSteps.length; k++) {
+        if (isCancelled) {
+            generateArray();
+            return;
         }
+
+        // mergeSteps[k] includes [left, right, result]
+        const result = mergeSteps[k][2];
+
+        for (let i = 0; i < result.length; i++) {
+            if (!bars[i]) continue;
+
+            const val = result[i];
+            bars[i].style.height = `${val * 3}px`;
+            if (arraySize <= 20) {
+                bars[i].innerText = val;
+            }
+            bars[i].style.backgroundColor = '#3b82f6';
+        }
+
+        array = [...result];
+        await new Promise(resolve => setTimeout(resolve, animationSpeed));
+    }
+
+    if (!isCancelled) {
+    await playSuccessWave();
+    }
+}
+
+// CountingSort Animation
+async function visualizeCounting(sortedArray) {
+    const bars = container.children;
+
+    for (let i = 0; i < sortedArray.length; i++) {
+        if (isCancelled) {
+            generateArray();
+            return;
+        }
+
+        if (!bars[i]) continue;
+
+        const val = sortedArray[i];
+        
+        // mark Bar red
+        bars[i].style.backgroundColor = '#ef4444';
+        await new Promise(resolve => setTimeout(resolve, animationSpeed / 2));
+
+        // height and numb
+        bars[i].style.height = `${val * 3}px`;
+        if (arraySize <= 20) {
+            bars[i].innerText = val;
+        }
+        array[i] = val;
+
+        // set green
+        bars[i].style.backgroundColor = '#22c55e';
+        await new Promise(resolve => setTimeout(resolve, animationSpeed / 2));
+    }
+
+    if (!isCancelled) {
+    await playSuccessWave();
     }
 }
 
