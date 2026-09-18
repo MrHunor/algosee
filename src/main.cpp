@@ -41,11 +41,11 @@ int main(int argc, char *argv[]) {
   server.Get("/status",
              [&](const httplib::Request &req, httplib::Response &res) {
                json response = {{"status", "online"}};
-                   if (req.has_header("X-Forwarded-For")) {
-               response["CLIENT-IP"] = req.get_header_value("X-Forwarded-For");
-               } else {
-               response["CLIENT-IP"] = req.remote_addr;
-                }
+                        if (req.has_header("X-Forwarded-For")) {
+        state.out(req.get_header_value("X-Forwarded-For"),0);
+    } else {
+        state.out( req.remote_addr,0);
+    }
                state.out("Send status signal.", 0);
                res.status = 200;
                res.set_header("Access-Control-Allow-Origin", "*");
@@ -55,10 +55,10 @@ int main(int argc, char *argv[]) {
   server.Get("/selftest",[&](const httplib::Request &req, httplib::Response &res)     {      
     state.out("Initating selftest...",0);
     json response;
-    if (req.has_header("X-Forwarded-For")) {
-        response["CLIENT-IP"] = req.get_header_value("X-Forwarded-For");
+        if (req.has_header("X-Forwarded-For")) {
+        state.out(req.get_header_value("X-Forwarded-For"),0);
     } else {
-        response["CLIENT-IP"] = req.remote_addr;
+        state.out( req.remote_addr,0);
     }
     response["VERSION"]= VERSION;
     std::vector<int> testvalues = {5,3,1,2,6,4};
@@ -116,9 +116,9 @@ int main(int argc, char *argv[]) {
 
     json response;
         if (req.has_header("X-Forwarded-For")) {
-        response["CLIENT-IP"] = req.get_header_value("X-Forwarded-For");
+        state.out(req.get_header_value("X-Forwarded-For"),0);
     } else {
-        response["CLIENT-IP"] = req.remote_addr;
+        state.out( req.remote_addr,0);
     }
     response["VERSION"] = VERSION;
     std::vector<std::pair<int, int>> moves;

@@ -52,7 +52,7 @@ if (algoKey === 'bogo') {
     }
 } else {
     if (sizeSlider) {
-        sizeSlider.max = 50; // default max size
+        sizeSlider.max = 140; // default max size
         sizeSlider.value = 15;
     }
 }
@@ -129,7 +129,7 @@ startBtn.addEventListener('click', async () => {
     resetBtn.disabled = true;
     if (sizeSlider) sizeSlider.disabled = true;
     if (speedSlider) speedSlider.disabled = true;
-    stopBtn.disabled = false; // acces stop button
+    stopBtn.disabled = false; // accses stop button
     isCancelled = false;      // reset cancel flag
 
     try {
@@ -151,7 +151,7 @@ startBtn.addEventListener('click', async () => {
 
     } catch (error) {
         console.error("Connection-Error:", error);
-        alert("Sorry, this algorithm isn't quite implemented yet");
+        alert("Error connecting to backend.");
     } finally {
         // unlock UI (this'll clean up)
         startBtn.disabled = false;
