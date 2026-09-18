@@ -40,16 +40,26 @@ int main(int argc, char *argv[]) {
   // Server status endpoint
   server.Get("/status",
              [&](const httplib::Request &req, httplib::Response &res) {
-               json status = {{"status", "online"}};
+               json response = {{"status", "online"}};
+                   if (req.has_header("X-Forwarded-For")) {
+               response["CLIENT-IP"] = req.get_header_value("X-Forwarded-For");
+               } else {
+               response["CLIENT-IP"] = req.remote_addr;
+                }
                state.out("Send status signal.", 0);
                res.status = 200;
                res.set_header("Access-Control-Allow-Origin", "*");
-               res.set_content(status.dump(4), "application/json");
+               res.set_content(response.dump(), "application/json");
              });
 
   server.Get("/selftest",[&](const httplib::Request &req, httplib::Response &res)     {      
     state.out("Initating selftest...",0);
     json response;
+    if (req.has_header("X-Forwarded-For")) {
+        response["CLIENT-IP"] = req.get_header_value("X-Forwarded-For");
+    } else {
+        response["CLIENT-IP"] = req.remote_addr;
+    }
     response["VERSION"]= VERSION;
     std::vector<int> testvalues = {5,3,1,2,6,4};
     std::vector<int> passParamValues = testvalues;
@@ -83,6 +93,7 @@ int main(int argc, char *argv[]) {
     afterSelfTestRun("Counting Sort", passParamValues, testvalues, sortedvalues, moves,tries, response, passParamTest, startTime);
     
     res.status=400;
+    state.out("Sending reply...",0);
     res.set_content(response.dump(),"application/json");
     return;  
   });
@@ -104,6 +115,11 @@ int main(int argc, char *argv[]) {
     }
 
     json response;
+        if (req.has_header("X-Forwarded-For")) {
+        response["CLIENT-IP"] = req.get_header_value("X-Forwarded-For");
+    } else {
+        response["CLIENT-IP"] = req.remote_addr;
+    }
     response["VERSION"] = VERSION;
     std::vector<std::pair<int, int>> moves;
     std::string algo = req.get_param_value("algo");
@@ -176,7 +192,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (algo == "counting") {
-      countingSort(values, response);
+      values = countingSort(values, response);
       auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
           endTime - startTime);
