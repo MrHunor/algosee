@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2026 MrHunor, siryanni
+ * LICENSE:GNU General Public License v3 (GPLv3)
+ */
 #ifndef SERVER_H
 #define SERVER_H
 #include <chrono>

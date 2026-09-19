@@ -5,6 +5,7 @@
 
 #include "server/server.h"
 #include "sortalgo/algos.h"
+#include "pathalgo/algos.h"
 #include "utils/defs.h"
 #include "utils/utils.h"
 #include <chrono>
@@ -159,7 +160,7 @@ int main(int argc, char *argv[]) {
       response["TIME"] = elapsed.count();
       response["MOVES"] = moves;
       res.set_header("Access-Control-Allow-Origin", "*");
-      res.status = 400;
+      res.status = 200;
       res.set_content(response.dump(), "application/json");
       state.out("Finished.", 0);
       state.out("Sending response...", 0);
@@ -267,6 +268,54 @@ int main(int argc, char *argv[]) {
     returnFailedAnswer(res, "Unknown Algorithm", 404);
   });
 
+
+  server.Post("/pathalgo",[&](const httplib::Request &req,
+                               httplib::Response &res) {
+
+    std::string ip;
+    if (req.has_header("X-Forwarded-For")) {
+      ip = req.get_header_value("X-Forwarded-For");
+    } else {
+      ip = req.remote_addr;
+    }
+    state.out("Recived Request:\nClientIP:" + ip + "\nTarget:" + req.target +
+                  "\nBody:" + req.body,
+              0);
+
+    state.out("parasing values....", 0);
+    auto parsed = json::parse(req.body);
+    std::vector<std::vector<bool>> map = parsed["MAP"];
+    std::pair<int,int> start = parsed["START"];
+    std::pair<int,int> end = parsed["end"];
+   
+
+    if (map.empty()) {
+      returnFailedAnswer(res, "No values specified. (values.empty()==true)",
+                         400);
+      return;
+    }
+
+    if (!req.has_param("algo")) {
+      returnFailedAnswer(res, "Request URL does not contain a algo parameter.",
+                         400);
+      return;
+    }
+
+    state.out("Finished.", 0);
+
+    std::string algo = req.get_param_value("algo");
+
+    if(algo=="BFS")
+    {
+      auto retval =BreadthFirstSearch(map, start, end);
+      res.status= 200;
+      res.set_content(json(retval).dump(),"application/json");
+      return;
+    }
+
+
+
+                               });
   // renderer port detection magic
   const char *port_env = std::getenv("PORT");
   int port = port_env ? std::stoi(port_env) : 8080;

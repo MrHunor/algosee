@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2026 MrHunor, siryanni
+ * LICENSE:GNU General Public License v3 (GPLv3)
+ */
 #include <chrono>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
