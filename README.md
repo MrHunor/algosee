@@ -82,3 +82,18 @@ Use curl to make a request while the server is running, e.g.: `curl -v -X POST "
 
 ## To test the backend online (linux):
 Use curl to make a request to the render server, e.g.: `curl -v -X POST "https://algosee.onrender.com/sortalgo?algo=quick" -H "Content-Type: application/json" -d "{\"values\":[$(seq 1 n | shuf | paste -sd, -)]}"`
+
+
+
+quick note, for pathfinding use:` curl -X POST "https://algosee.onrender.com/pathalgo?algo=BFS" \
+        -H "Content-Type: application/json" \
+        -d '{
+      "MAP": [
+        [false, false, true,  false],
+        [true,  false, true,  false],
+        [false, false, false, false],
+        [false, true,  true,  false]
+      ],
+      "START": [0, 0],
+      "end":   [3, 3]
+    }' `
