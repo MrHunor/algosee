@@ -51,6 +51,23 @@ Current plans invlove expanding into other areas of algorithms, like wayfinding 
 
 # ----------------For Contributers-------------------------- 
 
+## Project structure:
+- `./assets` Contains images for this ReadME
+- `./benchmarks` Contains the benchmark script and results
+- `./frontend` Root folder of the Frontend side  
+   -> `/assets/` Contains the images seen in the index.html  
+   -> `/css/` contains the main css file  
+   -> `/js/` Contains JS files  
+   -> `/` Contains all html files  
+- `./src` Root folder of the Backend side  
+   -> `/server/` Contains server logic  
+   -> `/sortalgo/` Contains sort algorithms   
+   -> `/utils/` Contains usefull tools  
+   -> `/` Contains main.cpp
+- `/` Contains all files needed for building the executable as well as this readME and the LICENSE file
+
+
+
 ## To build the Project:  
 **DISCLAIMER: Technically, this project could build on windows but it has not been tested. The compilation has been verified on Linux Mint and CachyOS.**  
 0. `cmake --version` >= **4.4.3**  

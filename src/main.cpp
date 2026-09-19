@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 
   httplib::Server server;
 
-  // handle a preflight request from a diffrent origin; firefox considers
+  // handle a preflight request from a diffrent origin; firefox & co. considers
   // diffrent ports on the same computer to be diffrent origins so this fix is
   // needed to work
   server.Options(
@@ -37,29 +37,34 @@ int main(int argc, char *argv[]) {
         res.status = 200;
       });
 
-  // Server status endpoint
-  server.Get("/status",
-             [&](const httplib::Request &req, httplib::Response &res) {
-               json response = {{"status", "online"}};
-               if (req.has_header("X-Forwarded-For")) {
-                 state.out(req.get_header_value("X-Forwarded-For"), 0);
-               } else {
-                 state.out(req.remote_addr, 0);
-               }
-               state.out("Send status signal.", 0);
-               res.status = 200;
-               res.set_header("Access-Control-Allow-Origin", "*");
-               res.set_content(response.dump(), "application/json");
-             });
+  //---------------------------STATUS---------------------------------------------------------------------
+  server.Get("/status", [&](const httplib::Request &req,
+                            httplib::Response &res) {
+    json response = {{"status", "online"}};
+    if (req.has_header("X-Forwarded-For")) {
+      state.out(
+          "Status request from:" + req.get_header_value("X-Forwarded-For"), 0);
+    } else {
+      state.out(req.remote_addr, 0);
+    }
+    state.out("Send status signal.", 0);
+    res.status = 200;
+    res.set_header("Access-Control-Allow-Origin", "*");
+    res.set_content(response.dump(), "application/json");
+  });
+
+  //------------------------------SELFTEST---------------------------------------------------------------
 
   server.Get("/selftest", [&](const httplib::Request &req,
                               httplib::Response &res) {
     state.out("Initating selftest...", 0);
     json response;
     if (req.has_header("X-Forwarded-For")) {
-      state.out(req.get_header_value("X-Forwarded-For"), 0);
+      state.out("recived selftest request from:" +
+                    req.get_header_value("X-Forwarded-For"),
+                0);
     } else {
-      state.out(req.remote_addr, 0);
+      state.out("recived selftest request from:" + req.remote_addr, 0);
     }
     response["VERSION"] = VERSION;
     std::vector<int> testvalues = {5, 3, 1, 2, 6, 4};
@@ -105,29 +110,38 @@ int main(int argc, char *argv[]) {
     res.set_content(response.dump(), "application/json");
     return;
   });
+
+  //------------------------------SORTALGO-------------------------------------------------
   server.Post("/sortalgo", [&](const httplib::Request &req,
                                httplib::Response &res) {
-    state.out("Recived Request:\nTarget:" + req.target + "\nBody:" + req.body,
+    std::string ip;
+    if (req.has_header("X-Forwarded-For")) {
+      ip = req.get_header_value("X-Forwarded-For");
+    } else {
+      ip = req.remote_addr;
+    }
+    state.out("Recived Request:\nClientIP:" + ip + "\nTarget:" + req.target +
+                  "\nBody:" + req.body,
               0);
 
+    state.out("parasing values....", 0);
     auto parsed = json::parse(req.body);
     std::vector<int> values = parsed["values"];
     if (values.empty()) {
-      returnFailedAnswer(res, "No values specified. (values.empty()==true)");
+      returnFailedAnswer(res, "No values specified. (values.empty()==true)",
+                         400);
       return;
     }
 
     if (!req.has_param("algo")) {
-      returnFailedAnswer(res, "Request URL does not contain a algo parameter.");
+      returnFailedAnswer(res, "Request URL does not contain a algo parameter.",
+                         400);
       return;
     }
 
+    state.out("Finished.", 0);
+
     json response;
-    if (req.has_header("X-Forwarded-For")) {
-      state.out(req.get_header_value("X-Forwarded-For"), 0);
-    } else {
-      state.out(req.remote_addr, 0);
-    }
     response["VERSION"] = VERSION;
     std::vector<std::pair<int, int>> moves;
     std::string algo = req.get_param_value("algo");
@@ -140,22 +154,25 @@ int main(int argc, char *argv[]) {
       auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
           endTime - startTime);
-      state.out("Finished sorting, sending reply...", 0);
-      res.set_header("Access-Control-Allow-Origin", "*");
+      state.out("Ended Time mesurement.", 0);
+      state.out("Crafting response...", 0);
       response["TIME"] = elapsed.count();
       response["MOVES"] = moves;
+      res.set_header("Access-Control-Allow-Origin", "*");
+      res.status = 400;
       res.set_content(response.dump(), "application/json");
+      state.out("Finished.", 0);
+      state.out("Sending response...", 0);
       return;
     }
 
     if (algo == "bogo") {
 
       std::vector<std::vector<int>> tries;
-      if (values.size() > 12) {
+      if (values.size() > 9) {
         returnFailedAnswer(
-            res, "Aborted early:Too many elements specified, request would be "
-                 "too big. (>12 Elements > 479.001.600 Possibility; which is "
-                 "rougly >26GB in RAM for recording tries)");
+            res, "Aborted early:Too many elements specified, answer would "
+                 "likely exceed the memory limit of the server");
         return;
       }
 
@@ -163,12 +180,16 @@ int main(int argc, char *argv[]) {
       auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
           endTime - startTime);
-      state.out("Finished sorting, sending reply...", 0);
-      res.set_header("Access-Control-Allow-Origin", "*");
+      state.out("Ended Time mesurement.", 0);
+      state.out("Crafting response...", 0);
       response["TIME"] = elapsed.count();
       response["TRIES"] = tries;
       response["SORTED"] = values;
+      res.set_header("Access-Control-Allow-Origin", "*");
+      res.status = 200;
       res.set_content(response.dump(), "application/json");
+      state.out("Finished.", 0);
+      state.out("Sending response...", 0);
       return;
     }
 
@@ -177,12 +198,16 @@ int main(int argc, char *argv[]) {
       auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
           endTime - startTime);
-      state.out("Finished sorting, sending reply...", 0);
-      res.set_header("Access-Control-Allow-Origin", "*");
+      state.out("Ended Time mesurement.", 0);
+      state.out("Crafting response...", 0);
       response["TIME"] = elapsed.count();
       response["MOVES"] = moves;
       response["SORTED"] = values;
+      res.status = 200;
+      res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(response.dump(), "application/json");
+      state.out("Finished.", 0);
+      state.out("Sending response...", 0);
       return;
     }
 
@@ -191,11 +216,15 @@ int main(int argc, char *argv[]) {
       auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
           endTime - startTime);
+      state.out("Ended Time mesurement.", 0);
+      state.out("Crafting response...", 0);
       response["TIME"] = elapsed.count();
       response["SORTED"] = values;
-      state.out("Finished sorting, sending reply...", 0);
+      res.status = 200;
       res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(response.dump(), "application/json");
+      state.out("Finished.", 0);
+      state.out("Sending response...", 0);
       return;
     }
 
@@ -204,11 +233,15 @@ int main(int argc, char *argv[]) {
       auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
           endTime - startTime);
+      state.out("Ended Time mesurement.", 0);
+      state.out("Crafting response...", 0);
       response["TIME"] = elapsed.count();
       response["SORTED"] = values;
-      state.out("Finished sorting, sending reply...", 0);
+      res.status = 200;
       res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(response.dump(), "application/json");
+      state.out("Finished.", 0);
+      state.out("Sending response...", 0);
       return;
     }
 
@@ -217,16 +250,21 @@ int main(int argc, char *argv[]) {
       auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
           endTime - startTime);
+      state.out("Ended Time mesurement.", 0);
+      state.out("Crafting response...", 0);
       response["TIME"] = elapsed.count();
       response["MOVES"] = moves;
       response["SORTED"] = values;
       state.out("Finished sorting, sending reply...", 0);
+      res.status = 200;
       res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(response.dump(), "application/json");
+      state.out("Finished.", 0);
+      state.out("Sending response...", 0);
       return;
     }
 
-    returnFailedAnswer(res, "Unknown Algorithm");
+    returnFailedAnswer(res, "Unknown Algorithm", 404);
   });
 
   // renderer port detection magic
