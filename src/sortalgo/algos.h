@@ -9,16 +9,14 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 using json = nlohmann::json;
-void selectionSort(std::vector<int>& unsorted,
-                               std::vector<std::pair<int, int>> &moves);
-void bogoSort(std::vector<int>& unsorted,
-                          std::vector<std::vector<int>> &tries);
-void bubbleSort(std::vector<int>& unsorted,
-                            std::vector<std::pair<int, int>> &moves);
-void quickSort(std::vector<int>& unsorted, int low, int high,
-                           std::vector<std::pair<int, int>> &moves);
+void selectionSort(std::vector<int> &unsorted,
+                   std::vector<std::pair<int, int>> &moves);
+void bogoSort(std::vector<int> &unsorted, std::vector<std::vector<int>> &tries);
+void bubbleSort(std::vector<int> &unsorted,
+                std::vector<std::pair<int, int>> &moves);
+void quickSort(std::vector<int> &unsorted, int low, int high,
+               std::vector<std::pair<int, int>> &moves);
 void mergeSort(std::vector<int> &unsorted, json &response);
 
-std::vector<int> countingSort(const std::vector<int> &unsorted,
-                              json &response);
+std::vector<int> countingSort(const std::vector<int> &unsorted, json &response);
 #endif

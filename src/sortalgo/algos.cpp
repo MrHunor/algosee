@@ -41,20 +41,20 @@ int findQuickSortPivot(std::vector<int> &unsorted, int low, int high,
   return lowerPivotIndexBoundry + 1;
 }
 
-void quickSort(std::vector<int>& unsorted, int low, int high,
-                           std::vector<std::pair<int, int>> &moves) {
+void quickSort(std::vector<int> &unsorted, int low, int high,
+               std::vector<std::pair<int, int>> &moves) {
   if (low < high) // otherwise already sorted
   {
     int pivot = findQuickSortPivot(unsorted, low, high, moves);
 
-        quickSort(unsorted, low, pivot - 1, moves); // sort left side recursivly
-        quickSort(unsorted, pivot + 1, high,
-                         moves); // sort right side recursivly
+    quickSort(unsorted, low, pivot - 1, moves); // sort left side recursivly
+    quickSort(unsorted, pivot + 1, high,
+              moves); // sort right side recursivly
   }
 }
 
-void selectionSort(std::vector<int>& unsorted,
-                               std::vector<std::pair<int, int>> &moves) {
+void selectionSort(std::vector<int> &unsorted,
+                   std::vector<std::pair<int, int>> &moves) {
   if (unsorted.size() <= 1)
     return; // an array of the size one is already sorted
   int index;
@@ -68,22 +68,20 @@ void selectionSort(std::vector<int>& unsorted,
     moves.push_back({i, index});
     std::swap(unsorted[i], unsorted[index]);
   }
-
 }
 
-void bogoSort(std::vector<int>& unsorted,
-                          std::vector<std::vector<int>> &tries) {
+void bogoSort(std::vector<int> &unsorted,
+              std::vector<std::vector<int>> &tries) {
   if (unsorted.size() == 1)
     return; // an array of the size one is already sorted
   while (!std::is_sorted(unsorted.begin(), unsorted.end())) {
     randomise(unsorted);
     tries.push_back(unsorted);
   }
-
 }
 
-void bubbleSort(std::vector<int>& unsorted,
-                            std::vector<std::pair<int, int>> &moves) {
+void bubbleSort(std::vector<int> &unsorted,
+                std::vector<std::pair<int, int>> &moves) {
   if (unsorted.size() <= 1)
     return; // an array of the size one is already sorted
   for (size_t i = 0; i < unsorted.size(); i++) {
@@ -98,7 +96,6 @@ void bubbleSort(std::vector<int>& unsorted,
       }
     }
   }
-  
 }
 
 std::vector<int> merge(const std::vector<int> &arr1,
@@ -136,7 +133,6 @@ std::vector<int> merge(const std::vector<int> &arr1,
   return retval;
 }
 
-
 void mergeSort(std::vector<int> &unsorted, json &response) {
   if (unsorted.size() <= 1)
     return; // an array of the size one is already sorted
@@ -157,11 +153,10 @@ void mergeSort(std::vector<int> &unsorted, json &response) {
   response["SORTED (LEFT,RIGHT)"].push_back({left, right});
   unsorted = merge(left, right);
   response["MERGED (LEFT,RIGHT,RESULT)"].push_back({left, right, unsorted});
-  
 }
 
-
-//you could pass this by reference but that would indeed be a pain because it create a completely new array instead of modyfiying in place
+// you could pass this by reference but that would indeed be a pain because it
+// create a completely new array instead of modyfiying in place
 std::vector<int> countingSort(const std::vector<int> &unsorted,
                               json &response) {
   if (unsorted.size() <= 1)

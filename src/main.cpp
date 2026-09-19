@@ -3,6 +3,7 @@
  * LICENSE:GNU General Public License v3 (GPLv3)
  */
 
+#include "server/server.h"
 #include "sortalgo/algos.h"
 #include "utils/defs.h"
 #include "utils/utils.h"
@@ -10,7 +11,6 @@
 #include <httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
-#include "server/server.h"
 
 using json = nlohmann::json;
 int main(int argc, char *argv[]) {
@@ -41,61 +41,69 @@ int main(int argc, char *argv[]) {
   server.Get("/status",
              [&](const httplib::Request &req, httplib::Response &res) {
                json response = {{"status", "online"}};
-                        if (req.has_header("X-Forwarded-For")) {
-        state.out(req.get_header_value("X-Forwarded-For"),0);
-    } else {
-        state.out( req.remote_addr,0);
-    }
+               if (req.has_header("X-Forwarded-For")) {
+                 state.out(req.get_header_value("X-Forwarded-For"), 0);
+               } else {
+                 state.out(req.remote_addr, 0);
+               }
                state.out("Send status signal.", 0);
                res.status = 200;
                res.set_header("Access-Control-Allow-Origin", "*");
                res.set_content(response.dump(), "application/json");
              });
 
-  server.Get("/selftest",[&](const httplib::Request &req, httplib::Response &res)     {      
-    state.out("Initating selftest...",0);
+  server.Get("/selftest", [&](const httplib::Request &req,
+                              httplib::Response &res) {
+    state.out("Initating selftest...", 0);
     json response;
-        if (req.has_header("X-Forwarded-For")) {
-        state.out(req.get_header_value("X-Forwarded-For"),0);
+    if (req.has_header("X-Forwarded-For")) {
+      state.out(req.get_header_value("X-Forwarded-For"), 0);
     } else {
-        state.out( req.remote_addr,0);
+      state.out(req.remote_addr, 0);
     }
-    response["VERSION"]= VERSION;
-    std::vector<int> testvalues = {5,3,1,2,6,4};
+    response["VERSION"] = VERSION;
+    std::vector<int> testvalues = {5, 3, 1, 2, 6, 4};
     std::vector<int> passParamValues = testvalues;
-    std::vector<int> sortedvalues = {1,2,3,4,5,6};
-    std::vector<std::vector<int>> tries; 
-    std::vector<std::pair<int,int>> moves;
+    std::vector<int> sortedvalues = {1, 2, 3, 4, 5, 6};
+    std::vector<std::vector<int>> tries;
+    std::vector<std::pair<int, int>> moves;
     json passParamTest;
 
     auto startTime = std::chrono::steady_clock::now();
-    selectionSort(passParamValues,moves);
-    afterSelfTestRun("Selection Sort", passParamValues, testvalues, sortedvalues, moves,tries, response, passParamTest, startTime);
+    selectionSort(passParamValues, moves);
+    afterSelfTestRun("Selection Sort", passParamValues, testvalues,
+                     sortedvalues, moves, tries, response, passParamTest,
+                     startTime);
 
     startTime = std::chrono::steady_clock::now();
     bogoSort(passParamValues, tries);
-    afterSelfTestRun("Bogo Sort", passParamValues, testvalues, sortedvalues, moves,tries, response, passParamTest, startTime);
+    afterSelfTestRun("Bogo Sort", passParamValues, testvalues, sortedvalues,
+                     moves, tries, response, passParamTest, startTime);
 
     startTime = std::chrono::steady_clock::now();
     bubbleSort(passParamValues, moves);
-    afterSelfTestRun("Bubble Sort", passParamValues, testvalues, sortedvalues, moves,tries, response, passParamTest, startTime);
-   
+    afterSelfTestRun("Bubble Sort", passParamValues, testvalues, sortedvalues,
+                     moves, tries, response, passParamTest, startTime);
+
     startTime = std::chrono::steady_clock::now();
-    quickSort(passParamValues, 0, passParamValues.size()-1, moves);
-    afterSelfTestRun("Quick Sort", passParamValues, testvalues, sortedvalues, moves,tries, response, passParamTest, startTime);
-    
+    quickSort(passParamValues, 0, passParamValues.size() - 1, moves);
+    afterSelfTestRun("Quick Sort", passParamValues, testvalues, sortedvalues,
+                     moves, tries, response, passParamTest, startTime);
+
     startTime = std::chrono::steady_clock::now();
     mergeSort(passParamValues, passParamTest);
-    afterSelfTestRun("Merge Sort", passParamValues, testvalues, sortedvalues, moves,tries, response, passParamTest, startTime);
-    
-        startTime = std::chrono::steady_clock::now();
-    passParamValues = countingSort(passParamValues,passParamTest);
-    afterSelfTestRun("Counting Sort", passParamValues, testvalues, sortedvalues, moves,tries, response, passParamTest, startTime);
-    
-    res.status=400;
-    state.out("Sending reply...",0);
-    res.set_content(response.dump(),"application/json");
-    return;  
+    afterSelfTestRun("Merge Sort", passParamValues, testvalues, sortedvalues,
+                     moves, tries, response, passParamTest, startTime);
+
+    startTime = std::chrono::steady_clock::now();
+    passParamValues = countingSort(passParamValues, passParamTest);
+    afterSelfTestRun("Counting Sort", passParamValues, testvalues, sortedvalues,
+                     moves, tries, response, passParamTest, startTime);
+
+    res.status = 400;
+    state.out("Sending reply...", 0);
+    res.set_content(response.dump(), "application/json");
+    return;
   });
   server.Post("/sortalgo", [&](const httplib::Request &req,
                                httplib::Response &res) {
@@ -115,10 +123,10 @@ int main(int argc, char *argv[]) {
     }
 
     json response;
-        if (req.has_header("X-Forwarded-For")) {
-        state.out(req.get_header_value("X-Forwarded-For"),0);
+    if (req.has_header("X-Forwarded-For")) {
+      state.out(req.get_header_value("X-Forwarded-For"), 0);
     } else {
-        state.out( req.remote_addr,0);
+      state.out(req.remote_addr, 0);
     }
     response["VERSION"] = VERSION;
     std::vector<std::pair<int, int>> moves;
@@ -211,7 +219,7 @@ int main(int argc, char *argv[]) {
           endTime - startTime);
       response["TIME"] = elapsed.count();
       response["MOVES"] = moves;
-      response["SORTED"]=values;
+      response["SORTED"] = values;
       state.out("Finished sorting, sending reply...", 0);
       res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(response.dump(), "application/json");
