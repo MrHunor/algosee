@@ -1,7 +1,11 @@
-# algosee © 2026 MrHunor, siryanni (as equals) GPLv3
+# algosee
 
-# A 0815 Algorithm Visulizer.
+**A 0815 Algorithm Visulizer**
 
+*© 2026 MrHunor, siryanni (as equals) · GPLv3*
+
+
+## Demo:
 ![Demo](./assets/Screenshot_Bubble_140.png)
 ![Demo](./assets/Screenshot_Overview.png)    
 
@@ -11,17 +15,43 @@
 - **Simulate sorting an array from sizes 3 to 140 in varying speeds with single swap animations**
 - **Make curl requests to the server yourself**
 
-## Supported Algorithms:
-- Selection sort
-- Bogo sort 
-- Bubble sort
-- Quick sort
-- Merge sort
-- Counting sort
+## Algorithms
+The implementation will roughly follow the order given in the table.  
+
+### Sorting
+
+| Algorithm | Status |
+|-----------|--------|
+| Selection | Supported |
+| Bogo      | Supported |
+| Bubble    | Supported |
+| Quick     | Supported |
+| Merge     | Supported |
+| Counting  | Supported | 
+| Cycle Sort | TBD |
+| Radix Sort | TBD |
+| Intro Sort | TBD |
+-> More ideas? Suggest them [here](https://github.com/MrHunor/algosee/issues)
+
+### Pathfinding 
+
+| Algorithm | Status |
+|-----------|--------|
+| Breadth first search (BFS) | Supported |
+| Depth first search (DFS) | TBD |
+| Dijkstra | TBD |
+| A* | TBD | 
+| Bidirectional Breadth first search (BI-BFS) | TBD |
+| Greedy Best-First-Search | TBD |
+| Jump point search (JPS) | TBD |
+| D* | TBD |
+| Bellman-Ford | TBD |
+| Floyd-Warshall | TBD |
+-> More ideas? Suggest them [here](https://github.com/MrHunor/algosee/issues)
 
 ## Test it out yourself!
 Click [here](https://mrhunor.github.io/algosee) to test if out yourself!
-To test the backend via a curl command [go here](#to-test-the-backend-online-linux)
+To test the backend via a curl command [go here](#to-test-the-backend-online-linux).
 
 ## Tech Stack:
 - **Frontend:** HTML,CSS,JS
