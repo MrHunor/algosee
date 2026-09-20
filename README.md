@@ -118,7 +118,7 @@ Use curl to make a request to the render server, e.g.: `curl -v -X POST "https:/
 ## To test the beckend pathfinding locally (linux):
 Use curl to make a request while the server is runningm e.g.:`curl -X POST "https://127.0.0.1:8080/pathalgo?algo=BFS" -H "Content-Type: application/json" -d '{"MAP": [[false, false, true,  false],[true,  false, true,  false],[false, false, false, false],[false, true,  true,  false]],"START": [0, 0],"end":   [3, 3]}'`
 
-## To test the backend pathfinding online(linux):
+## To test the backend pathfinding online (linux):
 Use curl to make request to the render server, e.g.: `curl -X POST "https://algosee.onrender.com/pathalgo?algo=BFS" -H "Content-Type: application/json" -d '{"MAP": [[false, false, true,  false],[true,  false, true,  false],[false, false, false, false],[false, true,  true,  false]],"START": [0, 0],"end":   [3, 3]}'`
 
 
