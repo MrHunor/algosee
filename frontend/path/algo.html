@@ -1,0 +1,154 @@
+<!-- again, mostly same architecture as sorting -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">AlgoSee - Details</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../sorting/js/main.js"></script>
+</head>
+<body>
+    <header class="navbar">
+        <a href="index.html" class="logo-link"><h1 class="logo">AlgoSee</h1></a>
+    </header>
+
+    <main class="algo-detail-container">
+        <!-- Left side: Title, Image, Play -->
+        <div class="algo-left-column">
+            <div class="algo-preview-box">
+                <span class="preview-text">Preview</span>
+            </div>
+            
+            <a id="visualizer-link" href="#" class="play-button">
+                <svg class="play-icon" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="currentColor" d="M8 5v14l11-7z"/>
+                </svg>
+                <span>start visualization</span>
+            </a>
+
+            <h2 id="algo-name" class="algo-main-title">loading...</h2>
+        </div>
+
+        <!-- right: long ass description against whitespace -->
+        <div class="algo-right-column">
+            <div class="description-card">
+                <h3>description</h3>
+<p id="algo-description">Info to alogrithm loading...</p>
+
+<div class="complexity">
+    <p><strong>Time Complexity:</strong> <span id="time-complexity"></span></p>
+    <p><strong>Space Complexity:</strong> <span id="space-complexity"></span></p>
+</div>
+                <!-- wiki credits -->
+                <div class="wiki-source">
+                    Source: <a id="wiki-link" href="#" target="_blank" rel="noopener noreferrer">Wikipedia</a>
+                </div>
+            </div>
+        </div>
+    </main>
+ 
+   <script>
+        // read URL-parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const algoKey = urlParams.get('algo') || 'bogo'; // Fallback
+
+        // central db for infos + wikiUrl
+        const algoDatabase = {
+            bfs: {
+                name: "Breadth first search",
+                description: "breadth-first search (BFS) is an algorithm for searching a tree data structure for a node that satisfies a given property. It starts at the tree root and explores all nodes at the present depth prior to moving on to the nodes at the next depth level. Extra memory, usually a queue, is needed to keep track of the child nodes that were encountered but not yet explored. ",
+                wikiUrl: "https://en.wikipedia.org/wiki/Breadth-first_search",
+                timeComplexity:"",
+                spaceComplexity:""
+            },
+            dfs: {
+                name: "Depth first search",
+                description: "depth-first search (DFS) is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root node (selecting some arbitrary node as the root node in the case of a graph) and explores as far as possible along each branch before backtracking. Extra memory, usually a stack, is needed to keep track of the nodes discovered so far along a specified branch which helps in backtracking of the graph.",
+                wikiUrl: "https://en.wikipedia.org/wiki/Depth-first_search",
+                timeComplexity:"",
+                spaceComplexity:""
+            },
+            dij: {
+                name: "Dijkstra",
+                description: "Dijkstra's algorithm finds the shortest path from a given source node to every other node.[7]: 196–206  It can be used to find the shortest path to a specific destination node, by terminating the algorithm after determining the shortest path to that node. For example, if the nodes of the graph represent cities, and the costs of edges represent the distances between pairs of cities connected by a direct road, then Dijkstra's algorithm can be used to find the shortest route between one city and all other cities.",
+                wikiUrl: "https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm",
+                timeComplexity:"",
+                spaceComplexity:""
+            },
+            bibfs: {
+                name: "Bidirectional Breadth first search",
+                description: "Bidirectional search is a graph search algorithm that finds a shortest path from an initial vertex to a goal vertex in a directed graph. It runs two simultaneous searches: one forward from the initial state, and one backward from the goal, stopping when the two meet. The reason for this approach is that in many cases it is faster: for instance, in a simplified model of search problem complexity in which both searches expand a tree with branching factor b, and the distance from start to goal is d, each of the two searches has complexity O(bd/2) (in Big O notation), and the sum of these two search times is much less than the O(bd) complexity that would result from a single search from the beginning to the goal.",
+                wikiUrl: "https://en.wikipedia.org/wiki/Bidirectional_search",
+                timeComplexity:"",
+                spaceComplexity:""
+            },
+            greedy: {
+                name: "Greedy Best-First-Search",
+                description: "Best-first search is a class of search algorithms which explores a graph by expanding the most promising node chosen according to a specified rule.",
+                wikiUrl: "https://en.wikipedia.org/wiki/Best-first_search",
+                timeComplexity:"",
+                spaceComplexity:""
+            },
+            jps: {
+                name: "Jump point search",
+                description: "Jump point search (JPS) is an optimization to the A* search algorithm for uniform-cost grids. It reduces symmetries in the search procedure by means of graph pruning,[1] eliminating certain nodes in the grid based on assumptions that can be made about the current node's neighbors, as long as certain conditions relating to the grid are satisfied. As a result, the algorithm can consider long jumps along straight (horizontal, vertical and diagonal) lines in the grid, rather than the small steps from one grid position to the next that ordinary A* considers.",
+                wikiUrl: "https://en.wikipedia.org/wiki/Jump_point_search",
+                timeComplexity:"",
+                spaceComplexity:""
+            },
+            ds: {
+                name: "D*",
+                description: "D* and its variants have been widely used for mobile robot and autonomous vehicle navigation. Current systems are typically based on D* Lite rather than the original D* or Focused D*. In fact, even Stentz's lab uses D* Lite rather than D* in some implementations.[8] Such navigation systems include a prototype system tested on the Mars rovers Opportunity and Spirit and the navigation system of the winning entry in the DARPA Urban Challenge, both developed at Carnegie Mellon University.",
+                wikiUrl: "https://en.wikipedia.org/wiki/D*",
+                timeComplexity:"",
+                spaceComplexity:""
+            },
+            bf: {
+                name: "Bellman-Ford",
+                description: "The Bellman–Ford algorithm is an algorithm that computes shortest paths from a single source vertex to all of the other vertices in a weighted digraph.[1] It is slower than Dijkstra's algorithm for the same problem, but more versatile, as it is capable of handling graphs in which some of the edge weights are negative numbers. The algorithm was first proposed by Alfonso Shimbel (1955), but is instead named after Richard Bellman and Lester Ford Jr., who published it in 1958 and 1956, respectively.[3] Edward F. Moore also published a variation of the algorithm in 1959, and for this reason it is also sometimes called the Bellman–Ford–Moore algorithm.",
+                wikiUrl: "https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm",
+                timeComplexity:"",
+                spaceComplexity:""
+            },
+            fw: {
+                name: "Floyd-Warshall",
+                description: "Floyd–Warshall algorithm (also known as Floyd's algorithm, the Roy–Warshall algorithm, the Roy–Floyd algorithm, or the WFI algorithm) is an algorithm for finding shortest paths in a directed weighted graph with positive or negative edge weights (but with no negative cycles).[1][2] A single execution of the algorithm will find the lengths (summed weights) of shortest paths between all pairs of vertices. Although it does not return details of the paths themselves, it is possible to reconstruct the paths with simple modifications to the algorithm. Versions of the algorithm can also be used for finding the transitive closure of a relation, or (in connection with the Schulze voting system) widest paths between all pairs of vertices in a weighted graph.",
+                wikiUrl: "https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm",
+                timeComplexity:"",
+                spaceComplexity:""
+            }
+        };
+
+        // paste data in html-set
+        const data = algoDatabase[algoKey] || {
+            name: "unknown algorithm",
+            description: "No Details for this Algorithm",
+            wikiUrl: "https://www.wikipedia.org"
+        };
+
+        document.getElementById('page-title').innerText = `AlgoSee - ${data.name}`;
+        document.getElementById('algo-name').innerText = data.name;
+        document.getElementById('algo-description').innerText = data.description;
+        document.getElementById('time-complexity').innerText = data.timeComplexity;
+        document.getElementById('space-complexity').innerText = data.spaceComplexity;
+        // Set Wikipedia Link
+        const wikiLinkElement = document.getElementById('wiki-link');
+        wikiLinkElement.href = data.wikiUrl;
+        wikiLinkElement.innerText = "Wikipedia";
+
+        // Set Play-Button link to vis. site
+        document.getElementById('visualizer-link').href = `visualizer.html?algo=${algoKey}`;
+    </script>
+</body>
+</html>
+ 
+ 
+ 
+ 
+ 
+ 
+    <!-- aktueller stand: 
+  Ich muss noch die main.js für path schreiben, sonst bringt es nichts script 
+  jetzt schon anzufertigen. 
+  referenz siehe algo.html in sorting-->

@@ -53,8 +53,14 @@ body {
     justify-content: center;
     font-size: 1.25rem;
     color: #888888;
-    background-color: #1f1f1f;
+    background-color: #353535;
     letter-spacing: 1px;
+}
+
+.card-img img {
+    height: 64px; 
+    width: auto;
+    filter: contrast(1.5);
 }
 
 .card-divider {
@@ -344,4 +350,31 @@ body {
 .visualizer-header input[type="range"]::-moz-range-thumb:hover {
     background: #2563eb;
     transform: scale(1.1);
+}
+
+/*Footer Styling*/
+footer {             
+    background-color: #1a1a1a; 
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px; 
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px; 
+    margin-top: 10px;
+}
+
+footer a {
+    color: #4CAF50; 
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }
