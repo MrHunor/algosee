@@ -30,7 +30,8 @@ The implementation will roughly follow the order given in the table.
 | Counting  | Supported | 
 | Cycle Sort | TBD |
 | Radix Sort | TBD |
-| Intro Sort | TBD |
+| Intro Sort | TBD |  
+
 -> More ideas? Suggest them [here](https://github.com/MrHunor/algosee/issues)
 
 ### Pathfinding 
@@ -46,7 +47,8 @@ The implementation will roughly follow the order given in the table.
 | Jump point search (JPS) | TBD |
 | D* | TBD |
 | Bellman-Ford | TBD |
-| Floyd-Warshall | TBD |
+| Floyd-Warshall | TBD |  
+
 -> More ideas? Suggest them [here](https://github.com/MrHunor/algosee/issues)
 
 ## Test it out yourself!
