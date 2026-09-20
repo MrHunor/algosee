@@ -16,7 +16,7 @@
 using json = nlohmann::json;
 int main(int argc, char *argv[]) {
   stateClass state;
-
+  state.verbose=0;
   state.out("algosee @ https://github.com/MrHunor/algosee\n"
             "GNU General Public License v3 (GPLv3) © 2026 MrHunor,siryanni "
             "(as equals)\n"
@@ -37,6 +37,14 @@ int main(int argc, char *argv[]) {
         res.set_header("Access-Control-Allow-Headers", "Content-Type");
         res.status = 200;
       });
+ server.Options(
+      R"(/pathalgo)", [](const httplib::Request &req, httplib::Response &res) {
+        res.set_header("Access-Control-Allow-Origin", "*");
+        res.set_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+        res.set_header("Access-Control-Allow-Headers", "Content-Type");
+        res.status = 200;
+      });
+
 
   //---------------------------STATUS---------------------------------------------------------------------
   server.Get("/status", [&](const httplib::Request &req,
@@ -106,7 +114,7 @@ int main(int argc, char *argv[]) {
     afterSelfTestRun("Counting Sort", passParamValues, testvalues, sortedvalues,
                      moves, tries, response, passParamTest, startTime);
 
-    res.status = 400;
+    res.status = 200;
     state.out("Sending reply...", 0);
     res.set_content(response.dump(), "application/json");
     return;
@@ -329,6 +337,7 @@ int main(int argc, char *argv[]) {
       }
       res.status=200;
       response["PATH"]=retval;
+            res.set_header("Access-Control-Allow-Origin", "*");
       res.set_content(response.dump(),"application/json");
       return;
     }
