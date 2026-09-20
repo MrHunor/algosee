@@ -54,7 +54,7 @@ frontier.push({xNeigbour,yNeigbour});
 }
 //being out of the while loop means every possible tile was explored
 
-if(!visited[goal.first][goal.second]) return path;
+if(!visited[goal.first][goal.second]) return {};//never once reached the goal means there was no path found to the goal
 
 //retrace the steps via parent
 std::pair<int,int> current = goal;

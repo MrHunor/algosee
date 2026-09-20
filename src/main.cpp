@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
     return;
   });
 
-  //------------------------------SORTALGO-------------------------------------------------
+  //------------------------------SORTALGO---------------------------------------------------------------
   server.Post("/sortalgo", [&](const httplib::Request &req,
                                httplib::Response &res) {
     std::string ip;
@@ -265,10 +265,10 @@ int main(int argc, char *argv[]) {
       return;
     }
 
-    returnFailedAnswer(res, "Unknown Algorithm", 404);
+    returnFailedAnswer(res, "Unknown Algorithm", 501);
   });
 
-
+  //------------------------------PATHALGO----------------------------------------------------------------
   server.Post("/pathalgo",[&](const httplib::Request &req,
                                httplib::Response &res) {
 
@@ -283,10 +283,19 @@ int main(int argc, char *argv[]) {
               0);
 
     state.out("parasing values....", 0);
+    json response;
+    response["VERSION"]=VERSION;
     auto parsed = json::parse(req.body);
+    if(!parsed.contains("MAP")||!parsed.contains("START")||!parsed.contains("GOAL"))
+    {
+      returnFailedAnswer(res, "Request does not include needed values. Either MAP,START or GOAL is missing",400);
+      return;
+    }
+
     std::vector<std::vector<bool>> map = parsed["MAP"];
     std::pair<int,int> start = parsed["START"];
-    std::pair<int,int> end = parsed["end"];
+    std::pair<int,int> end = parsed["GOAL"];
+    state.out("Finished.", 0);
    
 
     if (map.empty()) {
@@ -301,21 +310,32 @@ int main(int argc, char *argv[]) {
       return;
     }
 
-    state.out("Finished.", 0);
-
     std::string algo = req.get_param_value("algo");
+    state.out("Parsed algo:" + algo, 0);
+    state.out("Starting time mesurement...", 0);
+    auto startTime = std::chrono::steady_clock::now();
 
     if(algo=="BFS")
     {
-      auto retval =BreadthFirstSearch(map, start, end);
-      res.status= 200;
-      res.set_content(json(retval).dump(),"application/json");
+      auto retval = BreadthFirstSearch(map, start, end);
+      auto endTime = std::chrono::steady_clock::now();
+      auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
+      endTime - startTime);
+      state.out("Ended time measurement.",0);
+      response["TIME"]=elapsed.count();
+      if(retval.empty()){
+      returnFailedAnswer(res,"No Valid path from start to goal could be found.",500);
+      return;
+      }
+      res.status=200;
+      response["PATH"]=retval;
+      res.set_content(response.dump(),"application/json");
       return;
     }
 
 
 
-                               });
+  });
   // renderer port detection magic
   const char *port_env = std::getenv("PORT");
   int port = port_env ? std::stoi(port_env) : 8080;
