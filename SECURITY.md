@@ -7,4 +7,6 @@ Always use the newest version.
 
 ## Reporting a Vulnerability
 
-Please report all Vulnerabilitys to /issues/ . If you belive discretion is advice, contact the authors via email.
+Please report all Vulnerabilitys to /issues/ . If you belive discretion is advice, contact the authors via email:
+siryanni:yannick3311@yahoo.com
+mrhunor: moldpolice@tutamail.com
