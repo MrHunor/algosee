@@ -77,23 +77,21 @@ Current plans invlove expanding into other areas of algorithms, like wayfinding 
 2. `cmake --preset conan-release` to automaticall configure the build with conan dependencies (-> **if this fails** and you have to rerun the command you HAVE to delete the build Folder and restart from scratch because cmakeCache has already been written)  
 3. `cmake --build build` to build 
 
-## To test the backend locally (linux):
+## To test the backend sorting locally (linux):
 Use curl to make a request while the server is running, e.g.: `curl -v -X POST "http://127.0.0.1:8080/sortalgo?algo=selection" -H "Content-Type: application/json" -d "{\"values\":[$(seq 1 n | shuf | paste -sd, -)]}" ` where n = number of values (be careful of the actual port when running through docker)  
 
-## To test the backend online (linux):
-Use curl to make a request to the render server, e.g.: `curl -v -X POST "https://algosee.onrender.com/sortalgo?algo=quick" -H "Content-Type: application/json" -d "{\"values\":[$(seq 1 n | shuf | paste -sd, -)]}"`
+## To test the backend sorting online (linux):
+Use curl to make a request to the render server, e.g.: `curl -v -X POST "https://algosee.onrender.com/sortalgo?algo=quick" -H "Content-Type: application/json" -d "{\"values\":[$(seq 1 n | shuf | paste -sd, -)]}"` where n = number of values (be careful of the actual port when running through docker)
+
+## To test the beckend pathfinding locally (linux):
+Use curl to make a request while the server is runningm e.g.:`curl -X POST "https://127.0.0.1:8080/pathalgo?algo=BFS" -H "Content-Type: application/json" -d '{"MAP": [[false, false, true,  false],[true,  false, true,  false],[false, false, false, false],[false, true,  true,  false]],"START": [0, 0],"end":   [3, 3]}'`
+
+## To test the backend pathfinding online(linux):
+Use curl to make request to the render server, e.g.: `curl -X POST "https://algosee.onrender.com/pathalgo?algo=BFS" -H "Content-Type: application/json" -d '{"MAP": [[false, false, true,  false],[true,  false, true,  false],[false, false, false, false],[false, true,  true,  false]],"START": [0, 0],"end":   [3, 3]}'`
 
 
 
-quick note, for pathfinding use:` curl -X POST "https://algosee.onrender.com/pathalgo?algo=BFS" \
-        -H "Content-Type: application/json" \
-        -d '{
-      "MAP": [
-        [false, false, true,  false],
-        [true,  false, true,  false],
-        [false, false, false, false],
-        [false, true,  true,  false]
-      ],
-      "START": [0, 0],
-      "end":   [3, 3]
-    }' `
+<br>
+
+# Big :heart: to the following:
+- [Render](https://render.com/), for their free tier hosting which the online Backend relies on.
