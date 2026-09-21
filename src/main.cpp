@@ -32,10 +32,10 @@ using json = nlohmann::json;
 int main(int argc, char *argv[]) {
   stateClass state;
   state.verbose=0;
-  state.out("algosee @ https://github.com/MrHunor/algosee\n"
-            "GNU General Public License v3 (GPLv3) © 2026 MrHunor,siryanni "
-            "(as equals)\n"
-            "This Program is provided \"AS IS\" without warranty of any kind.",
+  state.out("algosee Copyright (C) 2026  MrHunor, siryanni (as equals)\n"
+    "This program comes with ABSOLUTELY NO WARRANTY; for details visit:'https://www.gnu.org/licenses/gpl-3.0.en.html'.\n"
+    "This is free software, and you are welcome to redistribute it\n"
+    "under certain conditions; visit 'https://www.gnu.org/licenses/gpl-3.0.en.html' for details.\n",
             0, RED);
 
   state.out("Starting...", 0);
