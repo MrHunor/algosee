@@ -78,6 +78,10 @@
 
 #define VERBOSE_LEVEL_NEEDED_FOR_TIME 0
 
+#define MAX_ELEMENT_COUNT 2500 //you could customise this for every algo, but thats a future issue (Issue #38)
+
+#define MAX_ELEMENT_COUNT_BOGO 9 
+
 class stateClass {
 public:
   std::ofstream logFile{"log.txt"};

@@ -5,11 +5,11 @@
 #include "utils.h"
 #include <chrono>
 #include <cstdlib>
-#include <filesystem>
 #include <httplib.h>
 #include <iostream>
 #include <limits.h>
 #include <nlohmann/json.hpp>
+#include <ostream>
 #include <random>
 #include <source_location>
 #include <stacktrace>
@@ -26,64 +26,6 @@ int randomInt(int lower, int upper) {
   std::uniform_int_distribution<int> dist(lower, upper);
 
   return dist(gen);
-}
-
-std::filesystem::path getExecutableDir() {
-  char buffer[PATH_MAX];
-
-  ssize_t len = readlink("/proc/self/exe", buffer, sizeof(buffer) - 1);
-
-  if (len == -1)
-    InvalidInputMessage("Failed to get executable directory.");
-
-  buffer[len] = '\0';
-
-  return std::filesystem::path(buffer).parent_path();
-}
-
-std::string removeNewLineAndReturnCharacters(const std::string &inputString) {
-  std::string retval = inputString;
-  while (!retval.empty() && (retval.back() == '\n' || retval.back() == '\r')) {
-    retval.pop_back(); // delete last character
-  }
-  return retval;
-}
-
-std::string getRidOfESCCharactersinAstrics(const std::string &str) {
-  std::string result = "'";
-
-  for (char c : str) {
-    if (c == '\'')
-      result += "'\\''";
-    else
-      result += c;
-  }
-
-  result += "'";
-  return result;
-}
-
-std::string scaleImage(const std::string Inputimage,
-                       const std::string outputImage, int height) {
-  return executeCommand(
-      std::format("ffmpeg -i \"{}\" -vf \"scale=-1:{}\" \"{}\"", Inputimage,
-                  height, outputImage));
-}
-
-std::string SecToMinAndSec(int num) {
-  std::string retval = "";
-  int min = 0;
-  int sec = 0;
-  while (num > 59) {
-    num = num - 60;
-    min++;
-  }
-  sec = num;
-  retval += std::to_string(min) + ":";
-  if (sec < 10)
-    retval += "0";
-  retval += std::to_string(sec);
-  return retval;
 }
 
 std::string executeCommand(const std::string &command) {
@@ -114,49 +56,11 @@ std::string executeCommand(const std::string &command) {
   return result;
 }
 
-std::string extractID(const std::string &filename) {
-  size_t start = filename.rfind('[');
-  size_t end = filename.rfind(']');
 
-  if (start != std::string::npos && end != std::string::npos &&
-      (end - start - 1) == 11) {
-    return filename.substr(start + 1, 11);
-  }
-  return "";
-}
-
-void restartSong() {
-
-  executeCommand("playerctl pause");
-  executeCommand("playerctl position 0");
-
-  // Wait until the seek has actually taken effect.
-  while (true) {
-    std::string output = executeCommand("playerctl position");
-
-    double position = std::stod(output);
-
-    if (position <= 0.01)
-      break;
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(5));
-  }
-
-  executeCommand("playerctl play");
-}
-
-std::string findFileByID(const std::string &dirPath, const std::string &id) {
-  for (const auto &entry : fs::directory_iterator(dirPath)) {
-    std::string filename = entry.path().string();
-    if (filename.find(id) != std::string::npos) {
-      return filename;
-    }
-  }
-  return "";
-}
 
 void returnFailedAnswer(httplib::Response &res, const std::string &Details,
                         int exitCode) {
+                        
   std::cout << "returnFailedAnswer called:" + Details;
   res.status = exitCode;
   res.set_header("Access-Control-Allow-Origin", "*");
@@ -169,6 +73,8 @@ void InvalidInputMessage(const std::string &details,
   // yes i thought of making this state out for colour but that would require
   // passing state (which is not always present), or make state global which is
   // not pretty
+  auto now = std::chrono::system_clock::now();
+  std::cout<< "TIME:"<<now<<std::endl;
   std::cout << std::stacktrace::current() << std::endl;
   std::cout << "Filename:" << location.file_name() << std::endl;
   std::cout << "Function:" << location.function_name() << std::endl;

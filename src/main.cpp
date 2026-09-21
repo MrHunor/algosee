@@ -11,6 +11,8 @@
 #include <chrono>
 #include <httplib.h>
 #include <nlohmann/json.hpp>
+#include <string>
+#include <numeric>
 #include <vector>
 
 using json = nlohmann::json;
@@ -75,10 +77,27 @@ int main(int argc, char *argv[]) {
     } else {
       state.out("recived selftest request from:" + req.remote_addr, 0);
     }
+
+    if(!req.has_param("n"))
+    {
+      returnFailedAnswer(res, "No amount parameter n provided.",400);
+      return;
+    }
+    
+    int n = std::stoi(req.get_param_value("n"));
+
+    if(n> MAX_ELEMENT_COUNT)
+    {
+      returnFailedAnswer(res, "Provided n value exceeds the max limit set for algorithms ("+std::to_string(MAX_ELEMENT_COUNT)+")",413);
+      return;
+    }
+
     response["VERSION"] = VERSION;
-    std::vector<int> testvalues = {5, 3, 1, 2, 6, 4};
+    std::vector<int> testvalues(n);
+    std::iota(testvalues.begin(),testvalues.end(),0);//fill with testvalues
     std::vector<int> passParamValues = testvalues;
-    std::vector<int> sortedvalues = {1, 2, 3, 4, 5, 6};
+    std::vector<int> sortedvalues=testvalues;
+    std::sort(sortedvalues.begin(),sortedvalues.end());
     std::vector<std::vector<int>> tries;
     std::vector<std::pair<int, int>> moves;
     json passParamTest;
@@ -89,10 +108,13 @@ int main(int argc, char *argv[]) {
                      sortedvalues, moves, tries, response, passParamTest,
                      startTime);
 
+    if(n<MAX_ELEMENT_COUNT_BOGO)
+    {
     startTime = std::chrono::steady_clock::now();
     bogoSort(passParamValues, tries);
     afterSelfTestRun("Bogo Sort", passParamValues, testvalues, sortedvalues,
                      moves, tries, response, passParamTest, startTime);
+    }else response["Bogo Sort"]="N too large to execute bogo sort without likely running out of memory, skipped this test.";
 
     startTime = std::chrono::steady_clock::now();
     bubbleSort(passParamValues, moves);
@@ -116,6 +138,7 @@ int main(int argc, char *argv[]) {
 
     res.status = 200;
     state.out("Sending reply...", 0);
+    res.set_header("Access-Control-Allow-Origin", "*");
     res.set_content(response.dump(), "application/json");
     return;
   });
@@ -140,6 +163,10 @@ int main(int argc, char *argv[]) {
       returnFailedAnswer(res, "No values specified. (values.empty()==true)",
                          400);
       return;
+    }
+    if(values.size()>MAX_ELEMENT_COUNT)
+    {
+      returnFailedAnswer(res, "Too many elements specified. Max element count:"+std::to_string(MAX_ELEMENT_COUNT),413);
     }
 
     if (!req.has_param("algo")) {
@@ -178,7 +205,7 @@ int main(int argc, char *argv[]) {
     if (algo == "bogo") {
 
       std::vector<std::vector<int>> tries;
-      if (values.size() > 9) {
+      if (values.size() > MAX_ELEMENT_COUNT_BOGO) {
         returnFailedAnswer(
             res, "Aborted early:Too many elements specified, answer would "
                  "likely exceed the memory limit of the server");
@@ -238,6 +265,14 @@ int main(int argc, char *argv[]) {
     }
 
     if (algo == "counting") {
+    bool hasNegNumbers   = std::any_of(values.begin(), values.end(), [](int x) {//some weird callback shit
+    return x < 0;
+    });
+    if(hasNegNumbers)
+    {
+      returnFailedAnswer(res,"Counting sort does not allow negative numbers. See Issue #39 on github.com/mrhunor/algosee/issues for more info.",501);
+      return;
+    }
       values = countingSort(values, response);
       auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(

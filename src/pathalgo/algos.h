@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2026 MrHunor, siryanni
+ * LICENSE:GNU General Public License v3 (GPLv3)
+ */
 #ifndef PALGOS_H
 #define PALGOS_H
 #include <vector>
