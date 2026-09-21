@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Algosee sorting benchmark
+# this is made fully from ai as this is just meant to be a little benchmark, because of this it also contains no license
 #
 # Requirements:
 #   curl jq seq shuf paste awk sort head tail wc sleep
@@ -21,7 +22,7 @@
 # TIME is the C++ server-side sorting time in nanoseconds.
 # Network latency is NOT included in TIME.
 #
-# this is made fully from ai as this is just meant to be a little benchmark
+
 
 
 export LC_ALL=C
