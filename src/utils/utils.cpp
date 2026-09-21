@@ -1,4 +1,4 @@
-/* 
+/*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
  *
@@ -13,7 +13,8 @@
  *   GNU General Public License for more details.
  *
  *   You should have received a copy of the GNU General Public License
- *   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
+ *   along with this program.(root/LICENSE)  If not, see
+ * <https://www.gnu.org/licenses/>.
  */
 #include "utils.h"
 #include <chrono>
@@ -69,11 +70,9 @@ std::string executeCommand(const std::string &command) {
   return result;
 }
 
-
-
 void returnFailedAnswer(httplib::Response &res, const std::string &Details,
                         int exitCode) {
-                        
+
   std::cout << "returnFailedAnswer called:" + Details;
   res.status = exitCode;
   res.set_header("Access-Control-Allow-Origin", "*");
@@ -87,7 +86,7 @@ void InvalidInputMessage(const std::string &details,
   // passing state (which is not always present), or make state global which is
   // not pretty
   auto now = std::chrono::system_clock::now();
-  std::cout<< "TIME:"<<now<<std::endl;
+  std::cout << "TIME:" << now << std::endl;
   std::cout << std::stacktrace::current() << std::endl;
   std::cout << "Filename:" << location.file_name() << std::endl;
   std::cout << "Function:" << location.function_name() << std::endl;

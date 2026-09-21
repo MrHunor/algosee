@@ -1,4 +1,4 @@
-/* 
+/*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
  *
@@ -13,7 +13,8 @@
  *   GNU General Public License for more details.
  *
  *   You should have received a copy of the GNU General Public License
- *   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
+ *   along with this program.(root/LICENSE)  If not, see
+ * <https://www.gnu.org/licenses/>.
  */
 #ifndef DEFS_H
 #define DEFS_H
@@ -91,9 +92,11 @@
 
 #define VERBOSE_LEVEL_NEEDED_FOR_TIME 0
 
-#define MAX_ELEMENT_COUNT 2500 //you could customise this for every algo, but thats a future issue (Issue #38)
+#define MAX_ELEMENT_COUNT                                                      \
+  2500 // you could customise this for every algo, but thats a future issue
+       // (Issue #38)
 
-#define MAX_ELEMENT_COUNT_BOGO 9 
+#define MAX_ELEMENT_COUNT_BOGO 9
 
 class stateClass {
 public:

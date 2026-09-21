@@ -1,4 +1,4 @@
-/* 
+/*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
  *
@@ -13,29 +13,32 @@
  *   GNU General Public License for more details.
  *
  *   You should have received a copy of the GNU General Public License
- *   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
+ *   along with this program.(root/LICENSE)  If not, see
+ * <https://www.gnu.org/licenses/>.
  */
 
+#include "pathalgo/algos.h"
 #include "server/server.h"
 #include "sortalgo/algos.h"
-#include "pathalgo/algos.h"
 #include "utils/defs.h"
 #include "utils/utils.h"
 #include <chrono>
 #include <httplib.h>
 #include <nlohmann/json.hpp>
-#include <string>
 #include <numeric>
+#include <string>
 #include <vector>
 
 using json = nlohmann::json;
 int main(int argc, char *argv[]) {
   stateClass state;
-  state.verbose=0;
+  state.verbose = 0;
   state.out("algosee Copyright (C) 2026  MrHunor, siryanni (as equals)\n"
-    "This program comes with ABSOLUTELY NO WARRANTY; for details visit:'https://www.gnu.org/licenses/gpl-3.0.en.html'.\n"
-    "This is free software, and you are welcome to redistribute it\n"
-    "under certain conditions; visit 'https://www.gnu.org/licenses/gpl-3.0.en.html' for details.\n",
+            "This program comes with ABSOLUTELY NO WARRANTY; for details "
+            "visit:'https://www.gnu.org/licenses/gpl-3.0.en.html'.\n"
+            "This is free software, and you are welcome to redistribute it\n"
+            "under certain conditions; visit "
+            "'https://www.gnu.org/licenses/gpl-3.0.en.html' for details.\n",
             0, RED);
 
   state.out("Starting...", 0);
@@ -52,14 +55,13 @@ int main(int argc, char *argv[]) {
         res.set_header("Access-Control-Allow-Headers", "Content-Type");
         res.status = 200;
       });
- server.Options(
+  server.Options(
       R"(/pathalgo)", [](const httplib::Request &req, httplib::Response &res) {
         res.set_header("Access-Control-Allow-Origin", "*");
         res.set_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
         res.set_header("Access-Control-Allow-Headers", "Content-Type");
         res.status = 200;
       });
-
 
   //---------------------------STATUS---------------------------------------------------------------------
   server.Get("/status", [&](const httplib::Request &req,
@@ -91,26 +93,28 @@ int main(int argc, char *argv[]) {
       state.out("recived selftest request from:" + req.remote_addr, 0);
     }
 
-    if(!req.has_param("n"))
-    {
-      returnFailedAnswer(res, "No amount parameter n provided.",400);
+    if (!req.has_param("n")) {
+      returnFailedAnswer(res, "No amount parameter n provided.", 400);
       return;
     }
-    
+
     int n = std::stoi(req.get_param_value("n"));
 
-    if(n> MAX_ELEMENT_COUNT)
-    {
-      returnFailedAnswer(res, "Provided n value exceeds the max limit set for algorithms ("+std::to_string(MAX_ELEMENT_COUNT)+")",413);
+    if (n > MAX_ELEMENT_COUNT) {
+      returnFailedAnswer(
+          res,
+          "Provided n value exceeds the max limit set for algorithms (" +
+              std::to_string(MAX_ELEMENT_COUNT) + ")",
+          413);
       return;
     }
 
     response["VERSION"] = VERSION;
     std::vector<int> testvalues(n);
-    std::iota(testvalues.begin(),testvalues.end(),0);//fill with testvalues
+    std::iota(testvalues.begin(), testvalues.end(), 0); // fill with testvalues
     std::vector<int> passParamValues = testvalues;
-    std::vector<int> sortedvalues=testvalues;
-    std::sort(sortedvalues.begin(),sortedvalues.end());
+    std::vector<int> sortedvalues = testvalues;
+    std::sort(sortedvalues.begin(), sortedvalues.end());
     std::vector<std::vector<int>> tries;
     std::vector<std::pair<int, int>> moves;
     json passParamTest;
@@ -121,13 +125,14 @@ int main(int argc, char *argv[]) {
                      sortedvalues, moves, tries, response, passParamTest,
                      startTime);
 
-    if(n<MAX_ELEMENT_COUNT_BOGO)
-    {
-    startTime = std::chrono::steady_clock::now();
-    bogoSort(passParamValues, tries);
-    afterSelfTestRun("Bogo Sort", passParamValues, testvalues, sortedvalues,
-                     moves, tries, response, passParamTest, startTime);
-    }else response["Bogo Sort"]="N too large to execute bogo sort without likely running out of memory, skipped this test.";
+    if (n < MAX_ELEMENT_COUNT_BOGO) {
+      startTime = std::chrono::steady_clock::now();
+      bogoSort(passParamValues, tries);
+      afterSelfTestRun("Bogo Sort", passParamValues, testvalues, sortedvalues,
+                       moves, tries, response, passParamTest, startTime);
+    } else
+      response["Bogo Sort"] = "N too large to execute bogo sort without likely "
+                              "running out of memory, skipped this test.";
 
     startTime = std::chrono::steady_clock::now();
     bubbleSort(passParamValues, moves);
@@ -177,9 +182,11 @@ int main(int argc, char *argv[]) {
                          400);
       return;
     }
-    if(values.size()>MAX_ELEMENT_COUNT)
-    {
-      returnFailedAnswer(res, "Too many elements specified. Max element count:"+std::to_string(MAX_ELEMENT_COUNT),413);
+    if (values.size() > MAX_ELEMENT_COUNT) {
+      returnFailedAnswer(res,
+                         "Too many elements specified. Max element count:" +
+                             std::to_string(MAX_ELEMENT_COUNT),
+                         413);
     }
 
     if (!req.has_param("algo")) {
@@ -278,14 +285,18 @@ int main(int argc, char *argv[]) {
     }
 
     if (algo == "counting") {
-    bool hasNegNumbers   = std::any_of(values.begin(), values.end(), [](int x) {//some weird callback shit
-    return x < 0;
-    });
-    if(hasNegNumbers)
-    {
-      returnFailedAnswer(res,"Counting sort does not allow negative numbers. See Issue #39 on github.com/mrhunor/algosee/issues for more info.",501);
-      return;
-    }
+      bool hasNegNumbers = std::any_of(values.begin(), values.end(),
+                                       [](int x) { // some weird callback shit
+                                         return x < 0;
+                                       });
+      if (hasNegNumbers) {
+        returnFailedAnswer(
+            res,
+            "Counting sort does not allow negative numbers. See Issue #39 on "
+            "github.com/mrhunor/algosee/issues for more info.",
+            501);
+        return;
+      }
       values = countingSort(values, response);
       auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
@@ -325,9 +336,8 @@ int main(int argc, char *argv[]) {
   });
 
   //------------------------------PATHALGO----------------------------------------------------------------
-  server.Post("/pathalgo",[&](const httplib::Request &req,
+  server.Post("/pathalgo", [&](const httplib::Request &req,
                                httplib::Response &res) {
-
     std::string ip;
     if (req.has_header("X-Forwarded-For")) {
       ip = req.get_header_value("X-Forwarded-For");
@@ -340,19 +350,21 @@ int main(int argc, char *argv[]) {
 
     state.out("parasing values....", 0);
     json response;
-    response["VERSION"]=VERSION;
+    response["VERSION"] = VERSION;
     auto parsed = json::parse(req.body);
-    if(!parsed.contains("MAP")||!parsed.contains("START")||!parsed.contains("GOAL"))
-    {
-      returnFailedAnswer(res, "Request does not include needed values. Either MAP,START or GOAL is missing",400);
+    if (!parsed.contains("MAP") || !parsed.contains("START") ||
+        !parsed.contains("GOAL")) {
+      returnFailedAnswer(res,
+                         "Request does not include needed values. Either "
+                         "MAP,START or GOAL is missing",
+                         400);
       return;
     }
 
     std::vector<std::vector<bool>> map = parsed["MAP"];
-    std::pair<int,int> start = parsed["START"];
-    std::pair<int,int> end = parsed["GOAL"];
+    std::pair<int, int> start = parsed["START"];
+    std::pair<int, int> end = parsed["GOAL"];
     state.out("Finished.", 0);
-   
 
     if (map.empty()) {
       returnFailedAnswer(res, "No values specified. (values.empty()==true)",
@@ -371,27 +383,24 @@ int main(int argc, char *argv[]) {
     state.out("Starting time mesurement...", 0);
     auto startTime = std::chrono::steady_clock::now();
 
-    if(algo=="BFS")
-    {
+    if (algo == "BFS") {
       auto retval = BreadthFirstSearch(map, start, end);
       auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
-      endTime - startTime);
-      state.out("Ended time measurement.",0);
-      response["TIME"]=elapsed.count();
-      if(retval.empty()){
-      returnFailedAnswer(res,"No Valid path from start to goal could be found.",500);
-      return;
+          endTime - startTime);
+      state.out("Ended time measurement.", 0);
+      response["TIME"] = elapsed.count();
+      if (retval.empty()) {
+        returnFailedAnswer(
+            res, "No Valid path from start to goal could be found.", 500);
+        return;
       }
-      res.status=200;
-      response["PATH"]=retval;
-            res.set_header("Access-Control-Allow-Origin", "*");
-      res.set_content(response.dump(),"application/json");
+      res.status = 200;
+      response["PATH"] = retval;
+      res.set_header("Access-Control-Allow-Origin", "*");
+      res.set_content(response.dump(), "application/json");
       return;
     }
-
-
-
   });
   // renderer port detection magic
   const char *port_env = std::getenv("PORT");

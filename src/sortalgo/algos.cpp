@@ -1,4 +1,4 @@
-/* 
+/*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
  *
@@ -13,7 +13,8 @@
  *   GNU General Public License for more details.
  *
  *   You should have received a copy of the GNU General Public License
- *   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
+ *   along with this program.(root/LICENSE)  If not, see
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "../utils/utils.h"
@@ -111,7 +112,8 @@ void bubbleSort(std::vector<int> &unsorted,
   }
 }
 
-//NEVER EVER CALL THIS FUNCTION DIRECTLY IF YOU DIDNT CHECK FOR arr1.size() & arr2.size()>=1
+// NEVER EVER CALL THIS FUNCTION DIRECTLY IF YOU DIDNT CHECK FOR arr1.size() &
+// arr2.size()>=1
 std::vector<int> merge(const std::vector<int> &arr1,
                        const std::vector<int> &arr2) {
   int arr1point = 0;
