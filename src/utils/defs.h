@@ -24,6 +24,8 @@
 #include <iostream>
 #include <source_location>
 
+#include <nlohmann/json.hpp>
+
 #define VERSION 0.6
 
 #define DEFAULT_CAPTURE_TIME 5
@@ -97,6 +99,10 @@
        // (Issue #38)
 
 #define MAX_ELEMENT_COUNT_BOGO 9
+
+
+
+using json = nlohmann::json;
 
 class stateClass {
 public:

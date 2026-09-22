@@ -19,8 +19,14 @@
 #ifndef PALGOS_H
 #define PALGOS_H
 #include <vector>
+#include <nlohmann/json.hpp>
+#include "../utils/defs.h"
 
 std::vector<std::pair<int, int>>
 BreadthFirstSearch(std::vector<std::vector<bool>> map,
-                   std::pair<int, int> start, std::pair<int, int> goal);
+                   std::pair<int, int> start, std::pair<int, int> goal, json response
+                  );
+std::vector<std::pair<int, int>>
+Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
+         std::pair<int, int> goal, json response);
 #endif

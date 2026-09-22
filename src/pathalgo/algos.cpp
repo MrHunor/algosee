@@ -21,10 +21,12 @@
 #include <queue>
 #include <utility>
 #include <vector>
+#include <nlohmann/json.hpp>
+#include "../utils/defs.h"
 
 std::vector<std::pair<int, int>>
 Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
-         std::pair<int, int> goal) {
+         std::pair<int, int> goal, json response) {
   const int rows = map.size();
   const int collums = map[0].size();
   const int INFINTY = std::numeric_limits<int>::max();
@@ -99,6 +101,9 @@ Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
 
   // Explored all possible tiles
 
+
+  response["DISTANCE"]=distance;
+
   // checking if the goal was ever reached, be careful this could theoretically
   // be a false positive if the addition of tiles matches exatly the intmax, but
   // the likelyhood is very small
@@ -124,7 +129,8 @@ Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
 
 std::vector<std::pair<int, int>>
 BreadthFirstSearch(std::vector<std::vector<bool>> map,
-                   std::pair<int, int> start, std::pair<int, int> goal) {
+                   std::pair<int, int> start, std::pair<int, int> goal, json response
+                  ) {
   // Frontier means what is it going to explore next, hence it being a queue
 
   const int rows = map.size();
@@ -176,6 +182,8 @@ BreadthFirstSearch(std::vector<std::vector<bool>> map,
     }
   }
   // being out of the while loop means every possible tile was explored
+
+  response["VISITED"]=visited;
 
   if (!visited[goal.first][goal.second])
     return {}; // never once reached the goal means there was no path found to

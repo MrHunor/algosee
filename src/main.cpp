@@ -29,7 +29,6 @@
 #include <string>
 #include <vector>
 
-using json = nlohmann::json;
 int main(int argc, char *argv[]) {
   stateClass state;
   state.verbose = 0;
@@ -361,16 +360,12 @@ int main(int argc, char *argv[]) {
       return;
     }
 
-    std::vector<std::vector<bool>> map = parsed["MAP"];
+
     std::pair<int, int> start = parsed["START"];
-    std::pair<int, int> end = parsed["GOAL"];
+    std::pair<int, int> goal = parsed["GOAL"];
     state.out("Finished.", 0);
 
-    if (map.empty()) {
-      returnFailedAnswer(res, "No values specified. (values.empty()==true)",
-                         400);
-      return;
-    }
+
 
     if (!req.has_param("algo")) {
       returnFailedAnswer(res, "Request URL does not contain a algo parameter.",
@@ -384,8 +379,41 @@ int main(int argc, char *argv[]) {
     auto startTime = std::chrono::steady_clock::now();
 
     if (algo == "BFS") {
-      auto retval = BreadthFirstSearch(map, start, end);
+          std::vector<std::vector<bool>> map = parsed["MAP"];
+              if (map.empty()) {
+      returnFailedAnswer(res, "No values specified. (map.empty()==true)",
+                         400);
+      return;
+    }
+      auto retval = BreadthFirstSearch(map, start, goal, response);
       auto endTime = std::chrono::steady_clock::now();
+      auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
+          endTime - startTime);
+      state.out("Ended time measurement.", 0);
+      response["TIME"] = elapsed.count();
+      if (retval.empty()) {
+        returnFailedAnswer(
+            res, "No Valid path from start to goal could be found.", 500);
+        return;
+      }
+      res.status = 200;
+      response["PATH"] = retval;
+      res.set_header("Access-Control-Allow-Origin", "*");
+      res.set_content(response.dump(), "application/json");
+      return;
+    }
+ 
+
+    if(algo == "dijkstra")
+    {
+                std::vector<std::vector<int>> map = parsed["MAP"];
+                 if (map.empty()) {
+      returnFailedAnswer(res, "No values specified. (map.empty()==true)",
+                         400);
+      return;
+    }
+    auto retval = Dijkstra(map,  start,goal, response);
+          auto endTime = std::chrono::steady_clock::now();
       auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
           endTime - startTime);
       state.out("Ended time measurement.", 0);

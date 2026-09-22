@@ -39,8 +39,8 @@ The implementation will roughly follow the order given in the table.
 | Algorithm | Status |
 |-----------|--------|
 | Breadth first search (BFS) | Supported |
+| Dijkstra | Supported |
 | Depth first search (DFS) | TBD |
-| Dijkstra | TBD |
 | A* | TBD | 
 | Bidirectional Breadth first search (BI-BFS) | TBD |
 | Greedy Best-First-Search | TBD |
