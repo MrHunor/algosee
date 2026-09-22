@@ -1,4 +1,4 @@
- #   algosee; a algorithm visulizer
+ #   algosee; A algorithm visulizer
  #   Copyright (C) 2026  MrHunor, siryanni (as equals)
  #
  #   This program is free software: you can redistribute it and/or modify
@@ -13,7 +13,6 @@
  #
  #   You should have received a copy of the GNU General Public License
  #   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
- 
 cmake_minimum_required(VERSION 3.20)
 
 project(algosee VERSION 0.2 LANGUAGES CXX)
@@ -22,23 +21,11 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-file(GLOB SRC_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/#.cpp")
-
-file(GLOB UTI_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/utils/#.cpp")
-
-file(GLOB SAL_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/sortalgo/#.cpp")
-
-file(GLOB SVR_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/server/#.cpp")
-
-file(GLOB PAL_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/pathalgo/#.cpp")
-
-set(ALL_SOURCES
-${SRC_FILES}
-${UTI_FILES}
-${SAL_FILES}
-${SVR_FILES}
-${PAL_FILES}
+file(GLOB_RECURSE ALL_SOURCES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
 )
+
+
 
 add_executable(algosee
 ${ALL_SOURCES}

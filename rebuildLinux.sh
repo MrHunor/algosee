@@ -1,4 +1,4 @@
- #   algosee; a algorithm visulizer
+ #   algosee; A algorithm visulizer
  #   Copyright (C) 2026  MrHunor, siryanni (as equals)
  #
  #   This program is free software: you can redistribute it and/or modify
