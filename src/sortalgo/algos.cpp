@@ -22,7 +22,6 @@
 #include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
 #include <random>
-#include <string>
 #include <utility>
 #include <vector>
 
@@ -38,7 +37,7 @@ void randomise(std::vector<int> &vec) {
 // caution, you have to pass the vector as a reference here because the vector
 // is being modified
 int findQuickSortPivot(std::vector<int> &unsorted, int low, int high,
-                       std::vector<std::pair<int, int>> &moves) {
+                       json& response) {
   int index;
   int pivot = unsorted[high];
   int lowerPivotIndexBoundry = low - 1;
@@ -46,29 +45,29 @@ int findQuickSortPivot(std::vector<int> &unsorted, int low, int high,
     if (unsorted[i] < pivot) {
       lowerPivotIndexBoundry++;
       std::swap(unsorted[i], unsorted[lowerPivotIndexBoundry]);
-      moves.push_back({i, lowerPivotIndexBoundry});
+      response["MOVES"].push_back({i, lowerPivotIndexBoundry});
     }
   }
   // move pivot to correct pos;
   std::swap(unsorted[high], unsorted[lowerPivotIndexBoundry + 1]);
-  moves.push_back({high, lowerPivotIndexBoundry + 1});
+  response["MOVES"].push_back({high, lowerPivotIndexBoundry + 1});
   return lowerPivotIndexBoundry + 1;
 }
 
 void quickSort(std::vector<int> &unsorted, int low, int high,
-               std::vector<std::pair<int, int>> &moves) {
+               json& response) {
   if (low < high) // otherwise already sorted
   {
-    int pivot = findQuickSortPivot(unsorted, low, high, moves);
+    int pivot = findQuickSortPivot(unsorted, low, high, response);
 
-    quickSort(unsorted, low, pivot - 1, moves); // sort left side recursivly
+    quickSort(unsorted, low, pivot - 1, response); // sort left side recursivly
     quickSort(unsorted, pivot + 1, high,
-              moves); // sort right side recursivly
+              response); // sort right side recursivly
   }
 }
 
 void selectionSort(std::vector<int> &unsorted,
-                   std::vector<std::pair<int, int>> &moves) {
+                   json& response) {
   if (unsorted.size() <= 1)
     return; // an array of the size one is already sorted
   int index;
@@ -79,23 +78,23 @@ void selectionSort(std::vector<int> &unsorted,
   {
     auto minT = std::min_element(unsorted.begin() + i, unsorted.end());
     index = minT - unsorted.begin();
-    moves.push_back({i, index});
+    response["MOVES"].push_back({i, index});
     std::swap(unsorted[i], unsorted[index]);
   }
 }
 
 void bogoSort(std::vector<int> &unsorted,
-              std::vector<std::vector<int>> &tries) {
+              json& response) {
   if (unsorted.size() == 1)
     return; // an array of the size one is already sorted
   while (!std::is_sorted(unsorted.begin(), unsorted.end())) {
     randomise(unsorted);
-    tries.push_back(unsorted);
+    response["TRIES"].push_back(unsorted);
   }
 }
 
 void bubbleSort(std::vector<int> &unsorted,
-                std::vector<std::pair<int, int>> &moves) {
+                json& response) {
   if (unsorted.size() <= 1)
     return; // an array of the size one is already sorted
   for (size_t i = 0; i < unsorted.size(); i++) {
@@ -105,7 +104,7 @@ void bubbleSort(std::vector<int> &unsorted,
               // horrible O(n^2) much better
     {
       if (unsorted[z] > unsorted[z + 1]) {
-        moves.push_back({z, z + 1});
+        response["MOVES"].push_back({z, z + 1});
         std::swap(unsorted[z], unsorted[z + 1]);
       }
     }
@@ -173,10 +172,10 @@ void mergeSort(std::vector<int> &unsorted, json &response) {
 
 // you could pass this by reference but that would indeed be a pain because it
 // create a completely new array instead of modyfiying in place
-std::vector<int> countingSort(const std::vector<int> &unsorted,
+void countingSort(std::vector<int> &unsorted,
                               json &response) {
   if (unsorted.size() <= 1)
-    return unsorted; // an array of the size one is already sorted
+    return; // an array of the size one is already sorted
   int countI = 0;
   std::vector<int> count(*std::max_element(unsorted.begin(), unsorted.end()) +
                          1);
@@ -193,5 +192,5 @@ std::vector<int> countingSort(const std::vector<int> &unsorted,
     count[countI]--;
   }
 
-  return retval;
+unsorted = retval;
 }

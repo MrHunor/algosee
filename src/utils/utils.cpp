@@ -29,7 +29,6 @@
 #include <stacktrace>
 #include <string>
 #include <sys/wait.h>
-#include <thread>
 #include <unistd.h>
 namespace fs = std::filesystem;
 using json = nlohmann::json;

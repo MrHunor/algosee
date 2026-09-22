@@ -25,6 +25,8 @@
 #include <source_location>
 
 #include <nlohmann/json.hpp>
+#include <string>
+#include <unordered_set>
 
 #define VERSION 0.6
 
@@ -103,6 +105,11 @@
 
 
 using json = nlohmann::json;
+
+const std::unordered_set<std::string> implementedSortAlgos = {
+"selection","bogo","bubble","quick","merge","counting"  
+};
+
 
 class stateClass {
 public:

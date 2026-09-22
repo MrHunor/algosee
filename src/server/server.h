@@ -18,11 +18,11 @@
  */
 #ifndef SERVER_H
 #define SERVER_H
+#include "../utils/defs.h"
 #include <chrono>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
-using json = nlohmann::json;
 
 void afterSelfTestRun(std::string algorithmName,
                       std::vector<int> &paramPassValues,
@@ -32,5 +32,17 @@ void afterSelfTestRun(std::string algorithmName,
                       std::vector<std::vector<int>> &tries, json &response,
                       json &parampassTest,
                       const std::chrono::steady_clock::time_point &startTime);
+
+void RunStatus(const httplib::Request &req, httplib::Response &res,
+               stateClass &state);
+
+void RunSelftest(const httplib::Request &req, httplib::Response &res,
+                 stateClass &state);
+
+void runSortalgo(const httplib::Request &req, httplib::Response &res,
+                 stateClass &state);
+
+void RunPathalgo(const httplib::Request &req, httplib::Response &res,
+                 stateClass &state);
 
 #endif
