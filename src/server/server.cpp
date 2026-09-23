@@ -195,13 +195,16 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res,
 
   std::string algo = req.get_param_value("algo");
   state.out("Parsed algo:" + algo, 0);
-  state.out("Starting time mesurement...", 0);
-  auto startTime = std::chrono::steady_clock::now();
 
   if (!implementedSortAlgos.contains(algo)) {
      returnFailedAnswer(res, "The provided algo could no be found.",501);
   return;
   }
+
+  state.out("Starting time mesurement...", 0);
+  auto startTime = std::chrono::steady_clock::now();
+
+  
 
     if (algo == "selection")
       selectionSort(values, response);
@@ -261,18 +264,27 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res,
 
 void RunPathalgo(const httplib::Request &req, httplib::Response &res,
                  stateClass &state) {
+  
+  //variables
   std::string ip;
+  std::vector<std::pair<int,int>> path;
+  json response;
+  std::string algo;
+  bool sameRowLength=true;
+  int collums;
+  //log ip 
   if (req.has_header("X-Forwarded-For")) {
     ip = req.get_header_value("X-Forwarded-For");
   } else {
     ip = req.remote_addr;
   }
+
   state.out("Recived Request:\nClientIP:" + ip + "\nTarget:" + req.target +
                 "\nBody:" + req.body,
             0);
 
-  state.out("parasing values....", 0);
-  json response;
+  //parsing            
+  state.out("parsing values....", 0);
   response["VERSION"] = VERSION;
   auto parsed = json::parse(req.body);
   if (!parsed.contains("MAP") || !parsed.contains("START") ||
@@ -284,20 +296,55 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
     return;
   }
 
-  std::pair<int, int> start = parsed["START"];
-  std::pair<int, int> goal = parsed["GOAL"];
-  state.out("Finished.", 0);
-
   if (!req.has_param("algo")) {
     returnFailedAnswer(res, "Request URL does not contain a algo parameter.",
                        400);
     return;
   }
 
-  std::string algo = req.get_param_value("algo");
+  std::pair<int, int> start = parsed["START"];
+  std::pair<int, int> goal = parsed["GOAL"];
+  state.out("Finished.", 0);
+
+  //input validation
+  if(start.first<0||start.first>parsed["MAP"][0].size()
+   ||start.second<0 || start.second>parsed["MAP"].size()
+   ||goal.first<0||goal.first>parsed["MAP"][0].size()
+   ||goal.second<0 || goal.second>parsed["MAP"].size()
+  )
+  {
+   returnFailedAnswer(res, "Start or goal coordinates invalid (out of map).",422);
+   return;
+  }
+
+  collums= parsed["MAP"][0].size();
+  for(int i = 1; i<parsed["MAP"].size();i++)
+  {
+   if(parsed["MAP"][i]!=collums)
+   {
+    sameRowLength=false;
+    break;
+   }
+  }
+  if(!sameRowLength)
+  {
+    returnFailedAnswer(res, "Map contains rows of diffrent lengths.",442);
+  }
+
+   algo = req.get_param_value("algo");
   state.out("Parsed algo:" + algo, 0);
+
+  if (!implementedPathAlgos.contains(algo)) {
+     returnFailedAnswer(res, "The provided algo could no be found.",442);
+  return;
+  }
+  
   state.out("Starting time mesurement...", 0);
   auto startTime = std::chrono::steady_clock::now();
+
+  
+
+
 
   if (algo == "BFS") {
     std::vector<std::vector<bool>> map = parsed["MAP"];
@@ -305,45 +352,33 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
       returnFailedAnswer(res, "No values specified. (map.empty()==true)", 400);
       return;
     }
-    auto retval = BreadthFirstSearch(map, start, goal, response);
-    auto endTime = std::chrono::steady_clock::now();
-    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
-        endTime - startTime);
-    state.out("Ended time measurement.", 0);
-    response["TIME"] = elapsed.count();
-    if (retval.empty()) {
-      returnFailedAnswer(
-          res, "No Valid path from start to goal could be found.", 500);
-      return;
-    }
-    res.status = 200;
-    response["PATH"] = retval;
-    res.set_header("Access-Control-Allow-Origin", "*");
-    res.set_content(response.dump(), "application/json");
-    return;
-  }
+    path = BreadthFirstSearch(map, start, goal, response);
 
-  if (algo == "dijkstra") {
+  }
+  if(algo == "dijkstra")
+  {
     std::vector<std::vector<int>> map = parsed["MAP"];
     if (map.empty()) {
       returnFailedAnswer(res, "No values specified. (map.empty()==true)", 400);
       return;
     }
-    auto retval = Dijkstra(map, start, goal, response);
+    path = Dijkstra(map, start, goal, response);
+  }
+
+
     auto endTime = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
         endTime - startTime);
     state.out("Ended time measurement.", 0);
     response["TIME"] = elapsed.count();
-    if (retval.empty()) {
+    if (path.empty()) {
       returnFailedAnswer(
           res, "No Valid path from start to goal could be found.", 500);
       return;
     }
     res.status = 200;
-    response["PATH"] = retval;
+    response["PATH"] = path;
     res.set_header("Access-Control-Allow-Origin", "*");
     res.set_content(response.dump(), "application/json");
     return;
-  }
 }

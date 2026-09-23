@@ -110,6 +110,8 @@ const std::unordered_set<std::string> implementedSortAlgos = {
 "selection","bogo","bubble","quick","merge","counting"  
 };
 
+const std::unordered_set<std::string> implementedPathAlgos = {"BFS","dijkstra"}; 
+
 
 class stateClass {
 public:
