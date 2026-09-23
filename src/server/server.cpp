@@ -31,8 +31,7 @@ void afterSelfTestRun(std::string algorithmName,
                       std::vector<int> &paramPassValues,
                       std::vector<int> &testvalues,
                       std::vector<int> &sortedValues,
-                      std::vector<std::pair<int, int>> &moves,
-                      std::vector<std::vector<int>> &tries, json &response,
+                      json &response,
                       json &parampassTest,
                       const std::chrono::steady_clock::time_point &startTime) {
   // end time measurement
@@ -40,10 +39,7 @@ void afterSelfTestRun(std::string algorithmName,
   auto elapsed =
       std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
   // cleanup
-  moves.clear();
-  tries.clear();
   parampassTest.clear();
-
   // check if sort worked
   if (paramPassValues == sortedValues) {
     response[algorithmName + " STATUS"] = "SUCESS";
@@ -74,9 +70,8 @@ void RunStatus(const httplib::Request &req, httplib::Response &res,
 
 void RunSelftest(const httplib::Request &req, httplib::Response &res,
                  stateClass &state) {
-                  returnFailedAnswer(res, "Selftest is currently not implemented",501);
-                  return;
-/*                  
+ 
+    
   state.out("Initating selftest...", 0);
   json response;
   if (req.has_header("X-Forwarded-For")) {
@@ -111,47 +106,47 @@ void RunSelftest(const httplib::Request &req, httplib::Response &res,
   std::sort(sortedvalues.begin(), sortedvalues.end());
   std::vector<std::vector<int>> tries;
   std::vector<std::pair<int, int>> moves;
-  json passParamTest;
+  json passParamResponse;
 
   auto startTime = std::chrono::steady_clock::now();
-  selectionSort(passParamValues, moves);
+  selectionSort(passParamValues,passParamResponse );
   afterSelfTestRun("Selection Sort", passParamValues, testvalues, sortedvalues,
-                   moves, tries, response, passParamTest, startTime);
+                    response, passParamResponse, startTime);
 
   if (n < MAX_ELEMENT_COUNT_BOGO) {
     startTime = std::chrono::steady_clock::now();
-    bogoSort(passParamValues, tries);
+    bogoSort(passParamValues, passParamResponse);
     afterSelfTestRun("Bogo Sort", passParamValues, testvalues, sortedvalues,
-                     moves, tries, response, passParamTest, startTime);
+                      response, passParamResponse, startTime);
   } else
     response["Bogo Sort"] = "N too large to execute bogo sort without likely "
                             "running out of memory, skipped this test.";
 
   startTime = std::chrono::steady_clock::now();
-  bubbleSort(passParamValues, moves);
+  bubbleSort(passParamValues, passParamResponse);
   afterSelfTestRun("Bubble Sort", passParamValues, testvalues, sortedvalues,
-                   moves, tries, response, passParamTest, startTime);
+                    response, passParamResponse, startTime);
 
   startTime = std::chrono::steady_clock::now();
-  quickSort(passParamValues, 0, passParamValues.size() - 1, moves);
+  quickSort(passParamValues, 0, passParamValues.size() - 1,passParamResponse);
   afterSelfTestRun("Quick Sort", passParamValues, testvalues, sortedvalues,
-                   moves, tries, response, passParamTest, startTime);
+                    response, passParamResponse, startTime);
 
   startTime = std::chrono::steady_clock::now();
-  mergeSort(passParamValues, passParamTest);
+  mergeSort(passParamValues, passParamResponse);
   afterSelfTestRun("Merge Sort", passParamValues, testvalues, sortedvalues,
-                   moves, tries, response, passParamTest, startTime);
+                    response, passParamResponse, startTime);
 
   startTime = std::chrono::steady_clock::now();
-  passParamValues = countingSort(passParamValues, passParamTest);
+  countingSort(passParamValues, passParamResponse);
   afterSelfTestRun("Counting Sort", passParamValues, testvalues, sortedvalues,
-                   moves, tries, response, passParamTest, startTime);
+                    response, passParamResponse, startTime);
 
   res.status = 200;
   state.out("Sending reply...", 0);
   res.set_header("Access-Control-Allow-Origin", "*");
   res.set_content(response.dump(), "application/json");
-  */
+  
 }
 
 void runSortalgo(const httplib::Request &req, httplib::Response &res,
