@@ -1,0 +1,75 @@
+name: Build executable and publish
+
+on: 
+  push:
+    branches:
+      - main 
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    container:
+      image: archlinux:latest
+
+    steps:
+     - name: Checkout repository
+       uses: actions/checkout@v6
+
+     - name: Update outputs
+       shell: bash
+       run: | 
+         pacman -Syu --noconfirm
+
+     - name: Install Build Tools
+       shell: bash 
+       run: |
+        pacman -S --noconfirm \
+        base-devel \
+        cmake \
+        git \
+        curl \
+        github-cli \
+        python \
+        python-pipx
+
+     - name: Install conan and configure
+       shell: bash
+       run: | 
+        pipx install conan && pipx ensurepath && conan profile detect
+
+     - name: Install Build dependencies via conan 
+       shell: bash
+       run: |
+        conan install . --output-folder=build --build=missing
+
+     - name: Configure cmake with conan preset 
+       shell: bash
+       run: | 
+        cmake --preset conan-release
+
+     - name: Build executable 
+       shell: bash
+       run: |
+        cmake --build build
+
+     - name: Create new GitHub release
+       shell: bash
+       env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       run: |
+          TAG="build-${{ github.run_number }}"
+          TITLE="Algosee Nightly Build ${{ github.run_number }}"
+
+          gh release create "$TAG" \
+            build/algosee \
+            --repo "${{ github.repository }}" \
+            --title "$TITLE" \
+            --notes "Nightly build from commit ${{ github.sha }}.
+
+            Commit message:
+            ${{ github.event.head_commit.message }}"
