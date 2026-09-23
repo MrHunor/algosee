@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
 
   server.Get("/selftest",
              [&](const httplib::Request &req, httplib::Response &res) {
-               RunStatus(req, res, state);
+               RunSelftest(req,res, state);
                return;
              });
 
