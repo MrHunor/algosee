@@ -28,15 +28,8 @@
 #include <string>
 #include <unordered_set>
 
-#define VERSION 0.6
+#define VERSION 0.7
 
-#define DEFAULT_CAPTURE_TIME 5
-#define DEFAULT_SAMPLE_RATE 44100
-#define HDH 720
-#define FHDH 1080
-#define WQHDH 1440
-#define QHDPLUSH 1800
-#define UHDH 2160
 
 // Colors
 //  Reset
@@ -117,11 +110,6 @@ class stateClass {
 public:
   std::ofstream logFile{"log.txt"};
   int verbose;
-  bool deleteOverflow;
-  int CaptureTime = DEFAULT_CAPTURE_TIME; // in seconds
-  int resX;
-  int resY;
-  int resYRequested = HDH;
   void out(const std::string &output, int importance,
            const std::string &colour = DEFAULT_COLOUR,
            std::source_location location = std::source_location::current()) {

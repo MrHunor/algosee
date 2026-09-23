@@ -74,6 +74,7 @@ void RunSelftest(const httplib::Request &req, httplib::Response &res,
     
   state.out("Initating selftest...", 0);
   json response;
+  int n = 1;
   if (req.has_header("X-Forwarded-For")) {
     state.out("recived selftest request from:" +
                   req.get_header_value("X-Forwarded-For"),
@@ -87,8 +88,17 @@ void RunSelftest(const httplib::Request &req, httplib::Response &res,
     return;
   }
 
-  int n = std::stoi(req.get_param_value("n"));
+  try {
+  n = std::stoi(req.get_param_value("n"));
 
+  } catch (const std::invalid_argument&) {
+    returnFailedAnswer(res, "Provided n is not a valid integer",422);
+    return;
+   } catch (const std::out_of_range&) {
+    returnFailedAnswer(res, "Provided n is too big",422);
+    return;
+  }
+  
   if (n > MAX_ELEMENT_COUNT) {
     returnFailedAnswer(
         res,
@@ -302,20 +312,11 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
   state.out("Finished.", 0);
 
   //input validation
-  if(start.first<0||start.first>parsed["MAP"][0].size()
-   ||start.second<0 || start.second>parsed["MAP"].size()
-   ||goal.first<0||goal.first>parsed["MAP"][0].size()
-   ||goal.second<0 || goal.second>parsed["MAP"].size()
-  )
-  {
-   returnFailedAnswer(res, "Start or goal coordinates invalid (out of map).",422);
-   return;
-  }
 
-  collums= parsed["MAP"][0].size();
+collums= parsed["MAP"][0].size();
   for(int i = 1; i<parsed["MAP"].size();i++)
   {
-   if(parsed["MAP"][i]!=collums)
+   if(parsed["MAP"][i].size()!=collums)
    {
     sameRowLength=false;
     break;
@@ -324,7 +325,20 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
   if(!sameRowLength)
   {
     returnFailedAnswer(res, "Map contains rows of diffrent lengths.",442);
+    return;
   }
+
+  if(start.first<0||start.first>=parsed["MAP"][0].size()
+   ||start.second<0 || start.second>=parsed["MAP"].size()
+   ||goal.first<0||goal.first>=parsed["MAP"][0].size()
+   ||goal.second<0 || goal.second>=parsed["MAP"].size()
+  )
+  {
+   returnFailedAnswer(res, "Start or goal coordinates invalid (out of map).",422);
+   return;
+  }
+
+  
 
    algo = req.get_param_value("algo");
   state.out("Parsed algo:" + algo, 0);
