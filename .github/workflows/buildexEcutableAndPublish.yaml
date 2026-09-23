@@ -37,10 +37,13 @@ jobs:
         python \
         python-pipx
 
-     - name: Install conan and configure
+     - name: Install Conan and configure # weird command syntax but should work like this
        shell: bash
-       run: | 
-        pipx install conan && pipx ensurepath && conan profile detect
+       run: |
+        pipx install conan
+        export PATH="$HOME/.local/bin:$PATH"
+        echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+        conan profile detect --force
 
      - name: Install Build dependencies via conan 
        shell: bash
