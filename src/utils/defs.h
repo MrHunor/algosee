@@ -28,7 +28,7 @@
 #include <string>
 #include <unordered_set>
 
-#define VERSION 0.7
+#define VERSION 0.8
 
 
 // Colors

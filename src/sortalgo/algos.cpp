@@ -34,10 +34,49 @@ void randomise(std::vector<int> &vec) {
   std::shuffle(vec.begin(), vec.end(), gen);
 }
 
+void cycleSort(std::vector<int> &unsorted, json &response) {
+  int NewPosition = 0;
+  int current = 0;
+  for (size_t i = 0; i < unsorted.size(); i++) {
+    current = unsorted[i];
+    NewPosition = 0;
+    for (size_t z = i+1; z < unsorted.size(); z++) {
+      if (current > unsorted[z])
+        NewPosition++;
+    }
+    // already sorted?
+    if (NewPosition == 0)
+      continue;
+
+    // is current swap position a duplicate?
+    while (current == unsorted[NewPosition])
+      NewPosition++;
+
+      //intresing about this: it does not swap two items in the array, it swaps one OUT with another one; so remember this takes the displaced one OUT of the array and back into current and swaps in the correct value for the index
+    std::swap(current, unsorted[NewPosition]);
+    response["SWAPED"].push_back({current,NewPosition});
+
+    //sort the displaced 
+    while(NewPosition!=i)
+    {
+      NewPosition=i;
+      for(size_t z = i; z<unsorted.size();z++ )
+      {
+        if(current>unsorted[z])NewPosition++;
+      }
+        // check For duplicates once again
+        while (current == unsorted[NewPosition])      NewPosition++;
+    std::swap(current,unsorted[NewPosition]);
+    response["SWAPED"].push_back({current,NewPosition});
+    }
+
+  }
+}
+
 // caution, you have to pass the vector as a reference here because the vector
 // is being modified
 int findQuickSortPivot(std::vector<int> &unsorted, int low, int high,
-                       json& response) {
+                       json &response) {
   int index;
   int pivot = unsorted[high];
   int lowerPivotIndexBoundry = low - 1;
@@ -54,8 +93,7 @@ int findQuickSortPivot(std::vector<int> &unsorted, int low, int high,
   return lowerPivotIndexBoundry + 1;
 }
 
-void quickSort(std::vector<int> &unsorted, int low, int high,
-               json& response) {
+void quickSort(std::vector<int> &unsorted, int low, int high, json &response) {
   if (low < high) // otherwise already sorted
   {
     int pivot = findQuickSortPivot(unsorted, low, high, response);
@@ -66,8 +104,7 @@ void quickSort(std::vector<int> &unsorted, int low, int high,
   }
 }
 
-void selectionSort(std::vector<int> &unsorted,
-                   json& response) {
+void selectionSort(std::vector<int> &unsorted, json &response) {
   if (unsorted.size() <= 1)
     return; // an array of the size one is already sorted
   int index;
@@ -83,8 +120,7 @@ void selectionSort(std::vector<int> &unsorted,
   }
 }
 
-void bogoSort(std::vector<int> &unsorted,
-              json& response) {
+void bogoSort(std::vector<int> &unsorted, json &response) {
   if (unsorted.size() == 1)
     return; // an array of the size one is already sorted
   while (!std::is_sorted(unsorted.begin(), unsorted.end())) {
@@ -93,8 +129,7 @@ void bogoSort(std::vector<int> &unsorted,
   }
 }
 
-void bubbleSort(std::vector<int> &unsorted,
-                json& response) {
+void bubbleSort(std::vector<int> &unsorted, json &response) {
   if (unsorted.size() <= 1)
     return; // an array of the size one is already sorted
   for (size_t i = 0; i < unsorted.size(); i++) {
@@ -172,8 +207,7 @@ void mergeSort(std::vector<int> &unsorted, json &response) {
 
 // you could pass this by reference but that would indeed be a pain because it
 // create a completely new array instead of modyfiying in place
-void countingSort(std::vector<int> &unsorted,
-                              json &response) {
+void countingSort(std::vector<int> &unsorted, json &response) {
   if (unsorted.size() <= 1)
     return; // an array of the size one is already sorted
   int countI = 0;
@@ -192,5 +226,5 @@ void countingSort(std::vector<int> &unsorted,
     count[countI]--;
   }
 
-unsorted = retval;
+  unsorted = retval;
 }

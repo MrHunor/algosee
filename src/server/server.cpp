@@ -213,6 +213,8 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res,
 
     if (algo == "selection")
       selectionSort(values, response);
+    else if (algo =="cycle")
+       cycleSort(values,response);
     else if (algo == "bubble")
       bubbleSort(values, response);
     else if (algo == "quick")

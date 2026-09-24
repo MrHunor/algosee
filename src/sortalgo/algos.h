@@ -34,4 +34,5 @@ void mergeSort(std::vector<int> &unsorted, json &response);
 
 void countingSort(std::vector<int> &unsorted,
                               json &response);
+void cycleSort(std::vector<int> &unsorted, json &response);
 #endif
