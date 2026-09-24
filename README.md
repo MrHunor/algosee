@@ -28,7 +28,7 @@ The implementation will roughly follow the order given in the table.
 | Quick     | Supported |
 | Merge     | Supported |
 | Counting  | Supported | 
-| Cycle Sort | TBD |
+| Cycle Sort | Supported |
 | Radix Sort | TBD |
 | Intro Sort | TBD |  
 
