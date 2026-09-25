@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2026 MrHunor, siryanni
+ * LICENSE:GNU General Public License v3 (GPLv3)
+ */
+
 //main.js will mainly be used for the backend-server communication (pinging for loading screen)
 //and other network-related stuff
 

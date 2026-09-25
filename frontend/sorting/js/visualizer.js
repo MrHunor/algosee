@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2026 MrHunor, siryanni
+ * LICENSE:GNU General Public License v3 (GPLv3)
+ */
+
 // read URL-parameters (choose backend function+information displayed)
 const urlParams = new URLSearchParams(window.location.search);
 const algoKey = urlParams.get('algo') || 'selection';
