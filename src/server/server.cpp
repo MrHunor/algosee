@@ -24,6 +24,7 @@
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
+#include <thread>
 
 using json = nlohmann::json;
 
@@ -55,7 +56,9 @@ void afterSelfTestRun(std::string algorithmName,
 
 void RunStatus(const httplib::Request &req, httplib::Response &res,
                stateClass &state) {
-  json response = {{"status", "online"}};
+  json response;
+  response["STATUS"]="ONLINE";
+  response["VERION"]="VERSION";
   if (req.has_header("X-Forwarded-For")) {
     state.out("Status request from:" + req.get_header_value("X-Forwarded-For"),
               0);
@@ -74,6 +77,7 @@ void RunSelftest(const httplib::Request &req, httplib::Response &res,
     
   state.out("Initating selftest...", 0);
   json response;
+  response["VERSION"]=VERSION;
   int n = 1;
   if (req.has_header("X-Forwarded-For")) {
     state.out("recived selftest request from:" +

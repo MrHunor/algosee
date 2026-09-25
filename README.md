@@ -6,8 +6,8 @@
 
 
 ## Demo:
-![Demo](./assets/Screenshot_Bubble_140.png)
 ![Demo](./assets/Screenshot_Overview.png)    
+![Demo](./assets/Screenshot_Bubble_140.png)
 
 ## Features:
 - **Choose between 6 sorting algorithms**
@@ -68,7 +68,7 @@ Current plans invlove expanding into other areas of algorithms, like wayfinding 
 ## Workflow:
 1. Currently a visitor on https://mrhunor.github.io/algosee is shown the newest version of the fronend (./frontend).
 2. Via clicking on any algorithm they are sending a status request to the backend server (algosee.onrender.com), depending on its outcome the frontend displays a loading screen in the time of the server waking up.
-3. By pressing the "start" button on the viszulizer.html they are sending a html POST request [like this](#to-test-the-backend-online-linux) to the backend.
+3. By pressing the "start" button on the viszulizer.html they are sending a html POST request [like this](#To-test-the-backend-sorting-online-(linux)) to the backend.
 4. The backend extracts the algorithm Name from the URL and performs the sorting.
 5. The backend return the sorted array, a set of instructions on how to visulise the sorting and metadata like backend version and time in nanoseconds.
 6. The frontend visulises the instructions returned by the backend.   
@@ -92,8 +92,9 @@ Current plans invlove expanding into other areas of algorithms, like wayfinding 
    -> `/js/` Contains JS files  
    -> `/` Contains all html files  
 - `./src` Root folder of the Backend side  
+   -> `pathalgo` Contains pathfinding algorithms
    -> `/server/` Contains server logic  
-   -> `/sortalgo/` Contains sort algorithms   
+   -> `/sortalgo/` Contains sorting algorithms   
    -> `/utils/` Contains usefull tools  
    -> `/` Contains main.cpp
 - `/` Contains all files needed for building the executable as well as this readME and the LICENSE file
@@ -108,6 +109,12 @@ Current plans invlove expanding into other areas of algorithms, like wayfinding 
 1. `conan install . --output-folder=build --build=missing` to install dependencies  
 2. `cmake --preset conan-release` to automaticall configure the build with conan dependencies (-> **if this fails** and you have to rerun the command you HAVE to delete the build Folder and restart from scratch because cmakeCache has already been written)  
 3. `cmake --build build` to build 
+
+## Syntax  
+`[SERVERIP]/status` **->** Responds with a json with STATUS and VERSION paramter, of which the status parameter should return 'ONLINE' if the server is online and reachable.  
+`[SERVERIP]/selftest` **->** Runs a selftest on all sorting algorithms that are [currently implemented](#Sorting), and returns a json with VERSION, and a STATUS & TIME (in ns) paramter for every algorithm.  
+`[SERVERIP]/sortalgo?algo=X` (where x is a search algorithm name, for valid names look in `src/utils/defs.h`) **->** Run a sorting algorithm of your choice on the values provided in the body of the request under the name 'values' (formatted in json).  
+`[SERVERIP]/pathalgo?algo=X` (where x is a search algorithm name, for valid names look in `src/utils/defs.h`) **->** Run a pathfinding algorithm of your choice, you have to provide the MAP (in boolean or integer depending on algorithm) in a array(rows) format, a START in pair format, and a GOAL in the same format (view the examples under this section).  
 
 ## To test the backend sorting locally (linux):
 Use curl to make a request while the server is running, e.g.: `curl -v -X POST "http://127.0.0.1:8080/sortalgo?algo=selection" -H "Content-Type: application/json" -d "{\"values\":[$(seq 1 n | shuf | paste -sd, -)]}" ` where n = number of values (be careful of the actual port when running through docker)  

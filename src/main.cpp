@@ -17,17 +17,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#include "pathalgo/algos.h"
 #include "server/server.h"
-#include "sortalgo/algos.h"
 #include "utils/defs.h"
 #include "utils/utils.h"
-#include <chrono>
 #include <httplib.h>
 #include <nlohmann/json.hpp>
-#include <numeric>
 #include <string>
-#include <vector>
 
 int main(int argc, char *argv[]) {
   stateClass state;
