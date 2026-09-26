@@ -39,13 +39,13 @@ void cycleSort(std::vector<int> &unsorted, json &response) {
   int current = 0;
   for (size_t i = 0; i < unsorted.size(); i++) {
     current = unsorted[i];
-    NewPosition = 0;
+    NewPosition = i;
     for (size_t z = i+1; z < unsorted.size(); z++) {
       if (current > unsorted[z])
         NewPosition++;
     }
     // already sorted?
-    if (NewPosition == 0)
+    if (NewPosition == i)
       continue;
 
     // is current swap position a duplicate?
@@ -60,7 +60,7 @@ void cycleSort(std::vector<int> &unsorted, json &response) {
     while(NewPosition!=i)
     {
       NewPosition=i;
-      for(size_t z = i; z<unsorted.size();z++ )
+      for(size_t z = i+1; z<unsorted.size();z++ )
       {
         if(current>unsorted[z])NewPosition++;
       }
