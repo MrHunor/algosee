@@ -60,6 +60,11 @@ jobs:
        run: |
         cmake --build build --parallel
 
+     - name: Test sortalgos via testserver.sh
+       shell: bash
+       run: | 
+        ./testserver
+
      - name: Create new GitHub release
        shell: bash
        env:
