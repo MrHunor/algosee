@@ -16,19 +16,18 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#ifndef DEFS_H
-#define DEFS_H
+
+#ifndef LOGGER_H
+#define LOGGER_H
 #include <chrono>
 #include <format>
 #include <fstream>
 #include <iostream>
 #include <source_location>
-
 #include <nlohmann/json.hpp>
 #include <string>
-#include <unordered_set>
+#include "../config.h"
 
-#define VERSION 0.8
 
 
 // Colors
@@ -84,26 +83,6 @@
 #define REVERSE "\033[7m"
 #define HIDDEN "\033[8m"
 #define STRIKE "\033[9m"
-
-#define DEFAULT_COLOUR MAGENTA
-
-#define VERBOSE_LEVEL_NEEDED_FOR_TIME 0
-
-#define MAX_ELEMENT_COUNT                                                      \
-  2500 // you could customise this for every algo, but thats a future issue
-       // (Issue #38)
-
-#define MAX_ELEMENT_COUNT_BOGO 9
-
-
-
-using json = nlohmann::json;
-
-const std::unordered_set<std::string> implementedSortAlgos = {
-"selection","bogo","bubble","quick","merge","counting","cycle"
-};
-
-const std::unordered_set<std::string> implementedPathAlgos = {"BFS","dijkstra"}; 
 
 
 class stateClass {

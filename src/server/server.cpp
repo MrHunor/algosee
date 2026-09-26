@@ -18,13 +18,12 @@
  */
 #include "../pathalgo/algos.h"
 #include "../sortalgo/algos.h"
-#include "../utils/defs.h"
+#include "../logger/logger.h"
 #include "../utils/utils.h"
 #include <chrono>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
-#include <thread>
 
 using json = nlohmann::json;
 
@@ -357,18 +356,16 @@ collums= parsed["MAP"][0].size();
   state.out("Starting time mesurement...", 0);
   auto startTime = std::chrono::steady_clock::now();
 
-  
 
-
-
-  if (algo == "BFS") {
+  if (algo == "BFS"||algo =="DFS") {
     std::vector<std::vector<bool>> map = parsed["MAP"];
     if (map.empty()) {
       returnFailedAnswer(res, "No values specified. (map.empty()==true)", 400);
       return;
     }
-    path = BreadthFirstSearch(map, start, goal, response);
-
+    if(algo=="BFS")path = BreadthFirstSearch(map, start, goal, response);
+    else if (algo == "DFS")path = DepthFirstSearch(map, start, goal, response);
+  
   }
   if(algo == "dijkstra")
   {

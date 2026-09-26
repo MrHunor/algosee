@@ -22,7 +22,8 @@
 #include <utility>
 #include <vector>
 #include <nlohmann/json.hpp>
-#include "../utils/defs.h"
+#include "../logger/logger.h"
+#include <stack>
 
 std::vector<std::pair<int, int>>
 Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
@@ -63,6 +64,7 @@ Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
     int x = frontier.top().second.first;
     int y = frontier.top().second.second;
 
+    
     // because the info fron the first frontier element is now stored in the
     // above declared variables, we can delete the first element from frontier
     frontier.pop();
@@ -152,6 +154,86 @@ BreadthFirstSearch(std::vector<std::vector<bool>> map,
   while (!frontier.empty()) {
     int x = frontier.front().first;
     int y = frontier.front().second;
+    // because the first frontier element is now in x,y the first element of
+    // frontier can be deleted
+    frontier.pop();
+
+    if (std::make_pair(x, y) == goal)
+      break; // reached goal
+
+    for (int i = 0; i < 4; i++) // check all possible neighbors
+    {
+      int xNeighbour = x + directionsRows[i];
+      int yNeighbour = y + directionsCollums[i];
+
+      if (xNeighbour < 0 || xNeighbour > rows - 1 || yNeighbour < 0 ||
+          yNeighbour > collums - 1)
+        continue; // current neighboor out of map, skip this iteration
+
+      if (map[xNeighbour][yNeighbour] == true)
+        continue; // current Neighboor not a valid tile, skip
+
+      if (visited[xNeighbour][yNeighbour] == true)
+        continue; // been there done that, so skip
+
+      // if everything thus far was negative that means we have a valid
+      // unvisited tile
+      visited[xNeighbour][yNeighbour] = true;
+      parent[xNeighbour][yNeighbour] = {x, y};
+      frontier.push({xNeighbour, yNeighbour});
+    }
+  }
+  // being out of the while loop means every possible tile was explored
+
+  response["VISITED"]=visited;
+
+  if (!visited[goal.first][goal.second])
+    return {}; // never once reached the goal means there was no path found to
+               // the goal
+
+  // retrace the steps via parent
+  std::pair<int, int> current = goal;
+
+  while (current != start) {
+    path.push_back(current);
+    current = parent[current.first][current.second];
+  }
+
+  // push back start pour fini
+  path.push_back(start);
+
+  // due to starting with goal, the path must be reversed to start from start
+  std::reverse(path.begin(), path.end());
+
+  return path;
+}
+
+
+
+//you can just copy the BFS and change the logic which takes the frontier element from "first of queue" to "last added" and boom you have DFS (and replace queue with stack)
+std::vector<std::pair<int,int>> DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int,int> start, std::pair<int,int> goal,json response)
+{
+ // Frontier means what is it going to explore next, hence it being a queue
+
+  const int rows = map.size();
+  const int collums = map[0].size();
+
+  std::vector<std::vector<bool>> visited(
+      rows, std::vector<bool>(collums, false)); // weird ass constructor
+  std::vector<std::vector<std::pair<int, int>>> parent(
+      rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
+  std::vector<std::pair<int, int>> path;
+
+  std::stack<std::pair<int, int>> frontier;
+  frontier.push(start);
+  visited[start.first][start.second] = true;
+
+  std::vector<int> directionsRows = {-1, 1, 0, 0};
+  std::vector<int> directionsCollums = {0, 0, 1, -1};
+
+  while (!frontier.empty()) {
+    int x = frontier.top().first;
+    int y = frontier.top().second;
     // because the first frontier element is now in x,y the first element of
     // frontier can be deleted
     frontier.pop();

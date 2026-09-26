@@ -16,18 +16,29 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#ifndef PALGOS_H
-#define PALGOS_H
-#include <vector>
+#ifndef CONFIG_H
+#define CONFIG_H
 #include <nlohmann/json.hpp>
-#include "../logger/logger.h"
+#include <unordered_set>
 
-std::vector<std::pair<int, int>>
-BreadthFirstSearch(std::vector<std::vector<bool>> map,
-                   std::pair<int, int> start, std::pair<int, int> goal, json response
-                  );
-std::vector<std::pair<int, int>>
-Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
-         std::pair<int, int> goal, json response);
-         std::vector<std::pair<int,int>> DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int,int> start, std::pair<int,int> goal,json response);
+#define VERSION 0.8
+
+#define DEFAULT_COLOUR MAGENTA
+
+#define VERBOSE_LEVEL_NEEDED_FOR_TIME 0
+
+#define MAX_ELEMENT_COUNT                                                      \
+  2500 // you could customise this for every algo, but thats a future issue
+       // (Issue #38)
+
+#define MAX_ELEMENT_COUNT_BOGO 9
+
+using json = nlohmann::json;
+
+const std::unordered_set<std::string> implementedSortAlgos = {
+"selection","bogo","bubble","quick","merge","counting","cycle"
+};
+
+const std::unordered_set<std::string> implementedPathAlgos = {"BFS","dijkstra","DFS"}; 
+
 #endif

@@ -18,7 +18,7 @@
  */
 #ifndef SERVER_H
 #define SERVER_H
-#include "../utils/defs.h"
+#include "../logger/logger.h"
 #include <chrono>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>

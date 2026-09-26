@@ -18,7 +18,7 @@
  */
 
 #include "server/server.h"
-#include "utils/defs.h"
+#include "logger/logger.h"
 #include "utils/utils.h"
 #include <httplib.h>
 #include <nlohmann/json.hpp>

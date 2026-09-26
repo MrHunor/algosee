@@ -40,7 +40,7 @@ The implementation will roughly follow the order given in the table.
 |-----------|--------|
 | Breadth first search (BFS) | Supported |
 | Dijkstra | Supported |
-| Depth first search (DFS) | TBD |
+| Depth first search (DFS) | Supported |
 | A* | TBD | 
 | Bidirectional Breadth first search (BI-BFS) | TBD |
 | Greedy Best-First-Search | TBD |
@@ -92,7 +92,7 @@ Current plans invlove expanding into other areas of algorithms, like wayfinding 
    -> `/js/` Contains JS files  
    -> `/` Contains all html files  
 - `./src` Root folder of the Backend side  
-   -> `pathalgo` Contains pathfinding algorithms
+   -> `pathalgo` Contains pathfinding algorithms  
    -> `/server/` Contains server logic  
    -> `/sortalgo/` Contains sorting algorithms   
    -> `/utils/` Contains usefull tools  
