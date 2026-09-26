@@ -32,6 +32,32 @@ const stopBtn = document.getElementById('stop-btn');
 let animationSpeed = 200;
 let isCancelled = false;
 
+//webaudio api 
+let audioCtx = null;
+
+function playTone(frequency) {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    const osc = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+
+    osc.type = 'sine'; // Weicher "Plop"-Ton
+    osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+
+    // Lautstärke regeln und nach 80ms leise ausklingen lassen (verhindert Knacken)
+    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.08);
+
+    osc.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.08);
+}
+// --------------------------------------------------------
+
 // speed listener
 if (speedSlider) {
     speedSlider.addEventListener('input', (e) => {
@@ -189,6 +215,9 @@ async function playSuccessWave() {
         // turn single bar green
         bars[i].style.backgroundColor = '#22c55e';
         
+        //audio wave
+        playTone(200 + (i * 40));
+
         // wait (small time)
         await new Promise(resolve => setTimeout(resolve, Math.max(20, animationSpeed / 3)));
     }
@@ -213,6 +242,9 @@ async function visualizeMoves(moves) {
         bars[i].style.backgroundColor = '#ef4444';
         bars[j].style.backgroundColor = '#ef4444';
 
+        //play sinus for every sort 
+        playTone(150 + (array[i] * 6));
+        
         let tempHeight = bars[i].style.height;
         let tempText = bars[i].innerText;
         let tempValue = array[i];
