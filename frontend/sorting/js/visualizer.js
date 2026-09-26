@@ -32,6 +32,7 @@ const stopBtn = document.getElementById('stop-btn');
 let animationSpeed = 200;
 let isCancelled = false;
 
+//---------------------------------------
 //webaudio api 
 let audioCtx = null;
 
@@ -177,7 +178,7 @@ startBtn.addEventListener('click', async () => {
         const data = await response.json();
 
         if (data.TIME !== undefined) {
-            // Umrechnung von Nanosekunden in Millisekunden (mit 2 Nachkommastellen)
+            // ns->ms
             const timeMs = (data.TIME / 1_000_000).toFixed(2);
             document.getElementById('time-val').innerText = timeMs;
         }
@@ -294,7 +295,11 @@ async function visualizeTries(tries) {
             
             bars[i].style.backgroundColor = '#3b82f6';
         }
-            
+           
+        if (currentTry.length > 0) {
+        playTone(150 + (currentTry[0] * 6));
+        }
+    
         array = [...currentTry];
 
         await new Promise(resolve => setTimeout(resolve, animationSpeed));
@@ -331,6 +336,10 @@ async function visualizeMerge(mergeSteps) {
             bars[i].style.backgroundColor = '#3b82f6';
         }
 
+        if (result.length > 0) {
+            playTone(150 + (result[0] * 6));
+        }
+
         array = [...result];
         await new Promise(resolve => setTimeout(resolve, animationSpeed));
     }
@@ -364,6 +373,8 @@ async function visualizeCounting(sortedArray) {
             bars[i].innerText = val;
         }
         array[i] = val;
+
+        playTone(150 + (val * 6));
 
         // set green
         bars[i].style.backgroundColor = '#22c55e';
