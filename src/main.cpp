@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
             0, RED);
 
   state.out("Starting...", 0);
-
+  state.out("VERSION:"+std::to_string(VERSION),0);
   httplib::Server server;
 
   //--------------------------OPTIONS-----------------------------------------
