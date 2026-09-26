@@ -149,7 +149,13 @@ startBtn.addEventListener('click', async () => {
         if (!response.ok) throw new Error('Error while communication with Backend');
 
         const data = await response.json();
-        
+
+        if (data.TIME !== undefined) {
+            // Umrechnung von Nanosekunden in Millisekunden (mit 2 Nachkommastellen)
+            const timeMs = (data.TIME / 1_000_000).toFixed(2);
+            document.getElementById('time-val').innerText = timeMs;
+        }
+
         if (algoKey === 'bogo') {
             await visualizeTries(data.TRIES);
         } else if (algoKey === 'merge') {
