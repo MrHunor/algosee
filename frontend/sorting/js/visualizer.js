@@ -178,19 +178,27 @@ startBtn.addEventListener('click', async () => {
         const data = await response.json();
 
         if (data.TIME !== undefined) {
-            // ns->ms
+            // ns->ms (wieder korrekt durch 1_000_000 geteilt)
             const timeMs = (data.TIME / 1_000_000).toFixed(2);
             document.getElementById('time-val').innerText = timeMs;
         }
 
         if (algoKey === 'bogo') {
-            await visualizeTries(data.TRIES);
+            const steps = data.TRIES.length;
+            const dynamicSpeed = Math.max(5, Math.floor((animationSpeed * 20) / steps));
+            await visualizeTries(data.TRIES, dynamicSpeed);
         } else if (algoKey === 'merge') {
-            await visualizeMerge(data["MERGED (LEFT,RIGHT,RESULT)"]);
+            const steps = data["MERGED (LEFT,RIGHT,RESULT)"].length;
+            const dynamicSpeed = Math.max(5, Math.floor((animationSpeed * 50) / steps));
+            await visualizeMerge(data["MERGED (LEFT,RIGHT,RESULT)"], dynamicSpeed);
         } else if (algoKey === 'counting') {
-            await visualizeCounting(data.SORTED);
+            const steps = data.SORTED.length;
+            const dynamicSpeed = Math.max(5, Math.floor((animationSpeed * 10) / steps));
+            await visualizeCounting(data.SORTED, dynamicSpeed);
         } else {
-            await visualizeMoves(data.MOVES);
+            const steps = data.MOVES.length;
+            const dynamicSpeed = steps > 0 ? Math.max(5, Math.floor((animationSpeed * 20) / steps)) : animationSpeed;
+            await visualizeMoves(data.MOVES, dynamicSpeed);
         }
 
     } catch (error) {
@@ -225,7 +233,7 @@ async function playSuccessWave() {
 }
 
 // animation of MOVES
-async function visualizeMoves(moves) {
+async function visualizeMoves(moves, speed) {
     const bars = container.children;
 
     for (let k = 0; k < moves.length; k++) {
@@ -259,20 +267,20 @@ async function visualizeMoves(moves) {
         array[i] = array[j];
         array[j] = tempValue;
 
-        // ts uses slider logic
-        await new Promise(resolve => setTimeout(resolve, animationSpeed));
+        // nutzt jetzt den dynamischen speed
+        await new Promise(resolve => setTimeout(resolve, speed));
 
         bars[i].style.backgroundColor = '#3b82f6';
         bars[j].style.backgroundColor = '#3b82f6';
     }
 
     if (!isCancelled) {
-    await playSuccessWave();
+        await playSuccessWave();
     }
 }
 
 // animation of TRIES (specifically for bogo)
-async function visualizeTries(tries) {
+async function visualizeTries(tries, speed) {
     const bars = container.children;
 
     for (let k = 0; k < tries.length; k++) {
@@ -297,23 +305,22 @@ async function visualizeTries(tries) {
         }
            
         if (currentTry.length > 0) {
-        playTone(150 + (currentTry[0] * 6));
+            playTone(150 + (currentTry[0] * 6));
         }
     
         array = [...currentTry];
 
-        await new Promise(resolve => setTimeout(resolve, animationSpeed));
+        await new Promise(resolve => setTimeout(resolve, speed));
     }
         
-
     // green marking (only if not cancelled)
     if (!isCancelled) {
-    await playSuccessWave();
+        await playSuccessWave();
     }
 }
 
 //MergeSort animation
-async function visualizeMerge(mergeSteps) {
+async function visualizeMerge(mergeSteps, speed) {
     const bars = container.children;
 
     for (let k = 0; k < mergeSteps.length; k++) {
@@ -341,16 +348,16 @@ async function visualizeMerge(mergeSteps) {
         }
 
         array = [...result];
-        await new Promise(resolve => setTimeout(resolve, animationSpeed));
+        await new Promise(resolve => setTimeout(resolve, speed));
     }
 
     if (!isCancelled) {
-    await playSuccessWave();
+        await playSuccessWave();
     }
 }
 
 // CountingSort Animation
-async function visualizeCounting(sortedArray) {
+async function visualizeCounting(sortedArray, speed) {
     const bars = container.children;
 
     for (let i = 0; i < sortedArray.length; i++) {
@@ -365,7 +372,7 @@ async function visualizeCounting(sortedArray) {
         
         // mark Bar red
         bars[i].style.backgroundColor = '#ef4444';
-        await new Promise(resolve => setTimeout(resolve, animationSpeed / 2));
+        await new Promise(resolve => setTimeout(resolve, speed / 2));
 
         // height and numb
         bars[i].style.height = `${val * 3}px`;
@@ -378,11 +385,11 @@ async function visualizeCounting(sortedArray) {
 
         // set green
         bars[i].style.backgroundColor = '#22c55e';
-        await new Promise(resolve => setTimeout(resolve, animationSpeed / 2));
+        await new Promise(resolve => setTimeout(resolve, speed / 2));
     }
 
     if (!isCancelled) {
-    await playSuccessWave();
+        await playSuccessWave();
     }
 }
 
