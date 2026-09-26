@@ -19,16 +19,14 @@
 
 #ifndef LOGGER_H
 #define LOGGER_H
+#include "../config.h"
 #include <chrono>
 #include <format>
 #include <fstream>
 #include <iostream>
-#include <source_location>
 #include <nlohmann/json.hpp>
+#include <source_location>
 #include <string>
-#include "../config.h"
-
-
 
 // Colors
 //  Reset
@@ -83,7 +81,6 @@
 #define REVERSE "\033[7m"
 #define HIDDEN "\033[8m"
 #define STRIKE "\033[9m"
-
 
 class stateClass {
 public:

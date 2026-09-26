@@ -41,8 +41,8 @@ The implementation will roughly follow the order given in the table.
 | Breadth first search (BFS) | Supported |
 | Dijkstra | Supported |
 | Depth first search (DFS) | Supported |
+| Bidirectional Breadth first search (BIBFS) | Supported |
 | A* | TBD | 
-| Bidirectional Breadth first search (BI-BFS) | TBD |
 | Greedy Best-First-Search | TBD |
 | Jump point search (JPS) | TBD |
 | D* | TBD |
@@ -123,7 +123,7 @@ Use curl to make a request while the server is running, e.g.: `curl -v -X POST "
 Use curl to make a request to the render server, e.g.: `curl -v -X POST "https://algosee.onrender.com/sortalgo?algo=quick" -H "Content-Type: application/json" -d "{\"values\":[$(seq 1 n | shuf | paste -sd, -)]}"` where n = number of values (be careful of the actual port when running through docker)
 
 ## To test the beckend pathfinding locally (linux):
-Use curl to make a request while the server is runningm e.g.:`curl -X POST "https://127.0.0.1:8080/pathalgo?algo=BFS" -H "Content-Type: application/json" -d '{"MAP": [[false, false, true,  false],[true,  false, true,  false],[false, false, false, false],[false, true,  true,  false]],"START": [0, 0],"GOAL":   [3, 3]}'`
+Use curl to make a request while the server is runningm e.g.:`curl -X POST "http://127.0.0.1:8080/pathalgo?algo=BFS" -H "Content-Type: application/json" -d '{"MAP": [[false, false, true,  false],[true,  false, true,  false],[false, false, false, false],[false, true,  true,  false]],"START": [0, 0],"GOAL":   [3, 3]}'`
 
 ## To test the backend pathfinding online (linux):
 Use curl to make request to the render server, e.g.: `curl -X POST "https://algosee.onrender.com/pathalgo?algo=BFS" -H "Content-Type: application/json" -d '{"MAP": [[false, false, true,  false],[true,  false, true,  false],[false, false, false, false],[false, true,  true,  false]],"START": [0, 0],"GOAL":   [3, 3]}'`

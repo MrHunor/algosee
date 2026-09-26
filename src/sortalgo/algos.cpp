@@ -40,7 +40,7 @@ void cycleSort(std::vector<int> &unsorted, json &response) {
   for (size_t i = 0; i < unsorted.size(); i++) {
     current = unsorted[i];
     NewPosition = i;
-    for (size_t z = i+1; z < unsorted.size(); z++) {
+    for (size_t z = i + 1; z < unsorted.size(); z++) {
       if (current > unsorted[z])
         NewPosition++;
     }
@@ -52,24 +52,26 @@ void cycleSort(std::vector<int> &unsorted, json &response) {
     while (current == unsorted[NewPosition])
       NewPosition++;
 
-      //intresing about this: it does not swap two items in the array, it swaps one OUT with another one; so remember this takes the displaced one OUT of the array and back into current and swaps in the correct value for the index
+    // intresing about this: it does not swap two items in the array, it swaps
+    // one OUT with another one; so remember this takes the displaced one OUT of
+    // the array and back into current and swaps in the correct value for the
+    // index
     std::swap(current, unsorted[NewPosition]);
-    response["SWAPED"].push_back({current,NewPosition});
+    response["SWAPED"].push_back({current, NewPosition});
 
-    //sort the displaced 
-    while(NewPosition!=i)
-    {
-      NewPosition=i;
-      for(size_t z = i+1; z<unsorted.size();z++ )
-      {
-        if(current>unsorted[z])NewPosition++;
+    // sort the displaced
+    while (NewPosition != i) {
+      NewPosition = i;
+      for (size_t z = i + 1; z < unsorted.size(); z++) {
+        if (current > unsorted[z])
+          NewPosition++;
       }
-        // check For duplicates once again
-        while (current == unsorted[NewPosition])      NewPosition++;
-    std::swap(current,unsorted[NewPosition]);
-    response["SWAPED"].push_back({current,NewPosition});
+      // check For duplicates once again
+      while (current == unsorted[NewPosition])
+        NewPosition++;
+      std::swap(current, unsorted[NewPosition]);
+      response["SWAPED"].push_back({current, NewPosition});
     }
-
   }
 }
 

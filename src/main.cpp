@@ -17,8 +17,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#include "server/server.h"
 #include "logger/logger.h"
+#include "server/server.h"
 #include "utils/utils.h"
 #include <httplib.h>
 #include <nlohmann/json.hpp>
@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
             0, RED);
 
   state.out("Starting...", 0);
-  state.out("VERSION:"+std::to_string(VERSION),0);
+  state.out("VERSION:" + std::to_string(VERSION), 0);
   httplib::Server server;
 
   //--------------------------OPTIONS-----------------------------------------
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
 
   server.Get("/selftest",
              [&](const httplib::Request &req, httplib::Response &res) {
-               RunSelftest(req,res, state);
+               RunSelftest(req, res, state);
                return;
              });
 
