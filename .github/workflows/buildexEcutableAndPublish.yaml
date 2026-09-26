@@ -62,9 +62,8 @@ jobs:
 
      - name: Test sortalgos via testserver.sh
        shell: bash
-       working-directory: ${{ github.workspace }}
        run: | 
-        ./testserver
+        ./testserver.sh
 
      - name: Create new GitHub release
        shell: bash
