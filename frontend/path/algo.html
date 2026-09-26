@@ -64,29 +64,29 @@
                 name: "Breadth first search",
                 description: "breadth-first search (BFS) is an algorithm for searching a tree data structure for a node that satisfies a given property. It starts at the tree root and explores all nodes at the present depth prior to moving on to the nodes at the next depth level. Extra memory, usually a queue, is needed to keep track of the child nodes that were encountered but not yet explored. ",
                 wikiUrl: "https://en.wikipedia.org/wiki/Breadth-first_search",
-                timeComplexity:"",
-                spaceComplexity:""
+                timeComplexity:"O(V+E); where V = number of Verticles (=nodes) and E = number of edges",
+                spaceComplexity:"O(V)"
             },
             dfs: {
                 name: "Depth first search",
                 description: "depth-first search (DFS) is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root node (selecting some arbitrary node as the root node in the case of a graph) and explores as far as possible along each branch before backtracking. Extra memory, usually a stack, is needed to keep track of the nodes discovered so far along a specified branch which helps in backtracking of the graph.",
                 wikiUrl: "https://en.wikipedia.org/wiki/Depth-first_search",
-                timeComplexity:"",
-                spaceComplexity:""
+                timeComplexity:"O(V+E); where V = number of Verticles (=nodes) and E = number of edges",
+                spaceComplexity:"O(V)"
             },
             dij: {
                 name: "Dijkstra",
                 description: "Dijkstra's algorithm finds the shortest path from a given source node to every other node.[7]: 196–206  It can be used to find the shortest path to a specific destination node, by terminating the algorithm after determining the shortest path to that node. For example, if the nodes of the graph represent cities, and the costs of edges represent the distances between pairs of cities connected by a direct road, then Dijkstra's algorithm can be used to find the shortest route between one city and all other cities.",
                 wikiUrl: "https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm",
-                timeComplexity:"",
-                spaceComplexity:""
+                timeComplexity:"O(E log V); where V = number of Verticles (=nodes) and E = number of edges",
+                spaceComplexity:"O(V)"
             },
             bibfs: {
                 name: "Bidirectional Breadth first search",
                 description: "Bidirectional search is a graph search algorithm that finds a shortest path from an initial vertex to a goal vertex in a directed graph. It runs two simultaneous searches: one forward from the initial state, and one backward from the goal, stopping when the two meet. The reason for this approach is that in many cases it is faster: for instance, in a simplified model of search problem complexity in which both searches expand a tree with branching factor b, and the distance from start to goal is d, each of the two searches has complexity O(bd/2) (in Big O notation), and the sum of these two search times is much less than the O(bd) complexity that would result from a single search from the beginning to the goal.",
                 wikiUrl: "https://en.wikipedia.org/wiki/Bidirectional_search",
-                timeComplexity:"",
-                spaceComplexity:""
+                timeComplexity:"O(b^(d/2)); where b = is the branching factor and d = is the shortest distance to the goal",
+                spaceComplexity:"O(b^(d/2))"
             },
             greedy: {
                 name: "Greedy Best-First-Search",
