@@ -213,7 +213,7 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res,
 
   state.out("Parasing values....", 0);
   
-  std::vector<int> values = {};
+  std::vector<int> values;
   try
   {
   auto parsed = json::parse(req.body);
