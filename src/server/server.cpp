@@ -218,7 +218,7 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res,
   {
   auto parsed = json::parse(req.body);
 
-  std::vector<int> values = parsed["values"];
+ values = parsed["values"].get<std::vector<int>>();
   if (values.empty()) {
     returnFailedAnswer(res, "No values specified. (values.empty()==true)", 400);
     return;
@@ -331,8 +331,8 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
   state.out("Parsing values....", 0);
   
   json parsed; 
-  std::pair<int, int> start={-1,-1};
-  std::pair<int, int> goal={-1,-1}; 
+  std::pair<int, int> start;
+  std::pair<int, int> goal; 
   try
   {
   parsed = json::parse(req.body);
@@ -382,7 +382,7 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
     //this could very likely throw 
     std::vector<std::vector<bool>> map;
     try {
-    std::vector<std::vector<bool>> map = castIntToBool(parsed);
+     map = castIntToBool(parsed);
     } catch (const std::exception& e ) {
     returnFailedAnswer(res, "Failed to read map from req into vector. Exception details:"+std::string(e.what()),500);
     }
