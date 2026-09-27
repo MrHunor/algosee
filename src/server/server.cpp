@@ -217,11 +217,7 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res,
   try
   {
   auto parsed = json::parse(req.body);
-  if (!req.has_param("values")) {
-    returnFailedAnswer(res, "Request URL does not contain a algo parameter.",
-                       400);
-    return;
-  }  
+
   std::vector<int> values = parsed["values"];
   if (values.empty()) {
     returnFailedAnswer(res, "No values specified. (values.empty()==true)", 400);
