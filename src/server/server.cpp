@@ -339,7 +339,7 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
   auto startTime = std::chrono::steady_clock::now();
 
   if (algo == "BFS" || algo == "DFS" || algo == "BIBFS") {
-    std::vector<std::vector<bool>> map = parsed["MAP"];
+    std::vector<std::vector<bool>> map = parsed["MAP"].get<std::vector<std::vector<bool>>>();//this attempts to cast input to bool
     if (map.empty()) {
       returnFailedAnswer(res, "No values specified. (map.empty()==true)", 400);
       return;
