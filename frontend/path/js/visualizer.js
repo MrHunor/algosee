@@ -126,7 +126,6 @@ document.addEventListener('mouseup', () => {
 });
 
 function handleCellInteraction(r, c) {
-    // Prevent overwriting start or goal nodes with walls for now
     if ((r === startPos.r && c === startPos.c) || (r === goalPos.r && c === goalPos.c)) {
         return;
     }
@@ -149,7 +148,7 @@ generateGrid();
 // Start-button 
 startBtn.addEventListener('click', async () => {
     // Backend expects uppercase or matching exact string depending on backend routing (e.g. "BFS" or "dijkstra")
-    // Euer C++ Code prüft: algo == "BFS" || algo == "DFS" || algo == "dijkstra"
+    // algo == "BFS" || algo == "DFS" || algo == "dijkstra"
     let apiAlgo = algoKey.toUpperCase();
     if (algoKey === 'dij' || algoKey === 'dijkstra') apiAlgo = 'dijkstra';
 

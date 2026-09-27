@@ -1,0 +1,71 @@
+<!--
+ Copyright (C) 2026 MrHunor, siryanni
+  LICENSE:GNU General Public License v3 (GPLv3)
+-->
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">AlgoSee - Algorithm-Comparison</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header class="navbar">
+        <a href="index.html" class="logo-link"><h1 class="logo">AlgoSee</h1></a>
+    </header>
+
+    <main class="visualizer-container compare-main-container">
+        <!-- standart bar -->
+        <div class="visualizer-header">
+            <div>
+                <h2 style="margin-bottom: 0.3rem;">Algorithm-Comparison</h2>
+                <p style="font-size: 0.9rem; color: #888;">direct duell: <span id="algo1-name-label" style="color:#3b82f6; font-weight:600;">...</span> vs <span id="algo2-name-label" style="color:#3b82f6; font-weight:600;">...</span></p>
+            </div>
+            
+            <!-- Size & Speed -->
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <div class="size-control" style="display: flex; align-items: center; gap: 0.5rem; color: #cbd5e1;">
+                    <label for="array-size-slider">sz: <span id="size-val">15</span></label>
+                    <input type="range" id="array-size-slider" min="3" max="40" value="15" style="cursor: pointer;">
+                </div>
+                <div class="size-control" style="display: flex; align-items: center; gap: 0.5rem; color: #cbd5e1;">
+                    <label for="speed-slider">spd: <span id="speed-val">200</span>ms</label>
+                    <input type="range" id="speed-slider" min="1" max="500" step="10" value="200" style="cursor: pointer;">
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="controls">
+                <button id="start-btn" class="control-btn primary">start comparison</button>
+                <button id="stop-btn" class="control-btn secondary" disabled>stop</button>
+                <button id="reset-btn" class="control-btn secondary">new array</button>
+            </div>
+        </div>
+
+        <!-- split-screen kinda view -->
+        <div class="compare-grid">
+            <!-- Algorithm 1 -->
+            <div class="compare-pane">
+                <div class="compare-pane-header">
+                    <h3 id="algo1-title" class="sub-algo-title">Algo 1</h3>
+                    <span class="exec-time-badge">time: <span id="time-val-1">-</span> ms</span>
+                </div>
+                <div id="array-container-1" class="array-container compare-array-container"></div>
+            </div>
+
+            <!-- Algorithm 2 -->
+            <div class="compare-pane">
+                <div class="compare-pane-header">
+                    <h3 id="algo2-title" class="sub-algo-title">Algo 2</h3>
+                    <span class="exec-time-badge">time: <span id="time-val-2">-</span> ms</span>
+                </div>
+                <div id="array-container-2" class="array-container compare-array-container"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/compare.js"></script>
+</body>
+</html>
