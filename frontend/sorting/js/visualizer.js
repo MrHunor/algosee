@@ -44,10 +44,10 @@ function playTone(frequency) {
     const osc = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
 
-    osc.type = 'sine'; // Weicher "Plop"-Ton
+    osc.type = 'sine'; // sinussound
     osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
 
-    // Lautstärke regeln und nach 80ms leise ausklingen lassen (verhindert Knacken)
+    // regulate noise: soften after 80ms
     gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.08);
 
@@ -178,7 +178,6 @@ startBtn.addEventListener('click', async () => {
         const data = await response.json();
 
         if (data.TIME !== undefined) {
-            // ns->ms (wieder korrekt durch 1_000_000 geteilt)
             const timeMs = (data.TIME / 1_000_000).toFixed(2);
             document.getElementById('time-val').innerText = timeMs;
         }
@@ -225,7 +224,7 @@ async function playSuccessWave() {
         bars[i].style.backgroundColor = '#22c55e';
         
         //audio wave
-        playTone(200 + (i * 40));
+        playTone(200 + (i * 40));  //tone
 
         // wait (small time)
         await new Promise(resolve => setTimeout(resolve, Math.max(20, animationSpeed / 3)));
@@ -252,7 +251,7 @@ async function visualizeMoves(moves, speed) {
         bars[j].style.backgroundColor = '#ef4444';
 
         //play sinus for every sort 
-        playTone(150 + (array[i] * 6));
+        playTone(150 + (array[i] * 6));  //tone
         
         let tempHeight = bars[i].style.height;
         let tempText = bars[i].innerText;
@@ -267,7 +266,7 @@ async function visualizeMoves(moves, speed) {
         array[i] = array[j];
         array[j] = tempValue;
 
-        // nutzt jetzt den dynamischen speed
+        // dynamic speed
         await new Promise(resolve => setTimeout(resolve, speed));
 
         bars[i].style.backgroundColor = '#3b82f6';
@@ -305,7 +304,7 @@ async function visualizeTries(tries, speed) {
         }
            
         if (currentTry.length > 0) {
-            playTone(150 + (currentTry[0] * 6));
+            playTone(150 + (currentTry[0] * 6)); //tone
         }
     
         array = [...currentTry];
@@ -344,7 +343,7 @@ async function visualizeMerge(mergeSteps, speed) {
         }
 
         if (result.length > 0) {
-            playTone(150 + (result[0] * 6));
+            playTone(150 + (result[0] * 6)); //tone
         }
 
         array = [...result];
@@ -393,4 +392,4 @@ async function visualizeCounting(sortedArray, speed) {
     }
 }
 
-//if you've understood allat, you're better than me lol 
+//almost 400ll lol XD

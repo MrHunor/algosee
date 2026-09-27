@@ -76,8 +76,8 @@ stopBtn.addEventListener('click', () => {
 const ROWS = 15;
 const COLS = 25;
 let grid = []; // 0 = empty, 1 = wall
-let startPos = { r: 7, c: 4 };   // Standard-Startpunkt
-let goalPos = { r: 7, c: 20 };  // Standard-Zielpunkt
+let startPos = { r: 7, c: 4 };   // default goal
+let goalPos = { r: 7, c: 20 };  // default goal
 
 let isMouseDown = false;
 let mouseMode = 'wall'; // 'wall', 'start', 'goal'
@@ -162,7 +162,7 @@ startBtn.addEventListener('click', async () => {
 
     const payload = {
         MAP: grid,
-        START: [startPos.c, startPos.r], // [X, Y] bzw [Spalte, Zeile] analog zum C++ Backend Check
+        START: [startPos.c, startPos.r], // [X, Y] collumn, row
         GOAL: [goalPos.c, goalPos.r]
     };
 
@@ -179,8 +179,6 @@ startBtn.addEventListener('click', async () => {
 
         if (data.TIME !== undefined) {
             const timeMs = (data.TIME / 1_000_000).toFixed(2);
-            // Falls ihr ein Element für die Zeit habt, könnt ihr das hier füllen:
-            // document.getElementById('time-val').innerText = timeMs;
             console.log(`Pathfinding time: ${timeMs} ms`);
         }
 
@@ -204,7 +202,7 @@ async function playSuccessPath(path) {
     for (let k = 0; k < path.length; k++) {
         if (isCancelled) return;
 
-        const [c, r] = path[k]; // Koordinaten aus dem Backend [X, Y]
+        const [c, r] = path[k]; // coordinates from backend
         const cell = document.querySelector(`[data-row='${r}'][data-col='${c}']`);
         
         if (cell && !cell.classList.contains('start') && !cell.classList.contains('goal')) {
@@ -218,7 +216,6 @@ async function playSuccessPath(path) {
 
 // animation of PATH
 async function visualizePath(path) {
-    // Hier können vorab gefundene "visited" Knoten animiert werden, 
-    // falls das Backend diese mitschickt. Andernfalls direkt den finalen Pfad zeichnen:
+    //future: animte visited nodes
     await playSuccessPath(path);
 }
