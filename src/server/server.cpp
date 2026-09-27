@@ -27,6 +27,20 @@
 
 using json = nlohmann::json;
 
+std::vector<std::vector<bool>> castIntToBool(const json& input)
+{
+ std::vector<std::vector<bool>> retval;
+
+for (const auto& row : input["MAP"]) {
+    std::vector<bool> boolRow;
+    for (const auto& value : row) {
+        boolRow.push_back(value.get<bool>());
+    }
+    retval.push_back(std::move(boolRow));
+}
+return retval;
+}
+
 void afterSelfTestRun(std::string algorithmName,
                       std::vector<int> &paramPassValues,
                       std::vector<int> &testvalues,
@@ -339,11 +353,25 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
   auto startTime = std::chrono::steady_clock::now();
 
   if (algo == "BFS" || algo == "DFS" || algo == "BIBFS") {
-    std::vector<std::vector<bool>> map = parsed["MAP"].get<std::vector<std::vector<bool>>>();//this attempts to cast input to bool
+
+
+    std::vector<std::vector<bool>> map = castIntToBool(parsed);
+
     if (map.empty()) {
       returnFailedAnswer(res, "No values specified. (map.empty()==true)", 400);
       return;
     }
+    state.out("Casted input map:\n"+parsed["MAP"].dump()+"\n to:\n",0);
+    for(const auto row : map)
+{
+  for(const auto value : row)
+  {
+    std::cout<<value;
+  }
+  std::cout<<std::endl;
+}
+
+
     if (algo == "BFS")
       path = BreadthFirstSearch(map, start, goal, response);
     else if (algo == "DFS")
@@ -378,3 +406,6 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
   res.set_content(response.dump(), "application/json");
   return;
 }
+
+
+
