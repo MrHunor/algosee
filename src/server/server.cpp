@@ -338,7 +338,7 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
   state.out("Starting time mesurement...", 0);
   auto startTime = std::chrono::steady_clock::now();
 
-  if (algo == "BFS" || algo == "DFS" || "BIBFS") {
+  if (algo == "BFS" || algo == "DFS" || algo == "BIBFS") {
     std::vector<std::vector<bool>> map = parsed["MAP"];
     if (map.empty()) {
       returnFailedAnswer(res, "No values specified. (map.empty()==true)", 400);

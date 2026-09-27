@@ -151,7 +151,7 @@ startBtn.addEventListener('click', async () => {
     // Backend expects uppercase or matching exact string depending on backend routing (e.g. "BFS" or "dijkstra")
     // Euer C++ Code prüft: algo == "BFS" || algo == "DFS" || algo == "dijkstra"
     let apiAlgo = algoKey.toUpperCase();
-    if (algoKey === 'dijkstra') apiAlgo = 'dijkstra';
+    if (algoKey === 'dij' || algoKey === 'dijkstra') apiAlgo = 'dijkstra';
 
     const backendUrl = `https://algosee.onrender.com/pathalgo?algo=${apiAlgo}`;
 
