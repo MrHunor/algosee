@@ -383,3 +383,55 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+/*-------------------------------------------------*/
+/* PATHFINDING */
+/*grid container*/
+.path-grid {
+    display: grid;
+    grid-template-columns: repeat(25, 1fr); 
+    gap: 2px;
+    background-color: #0b0b0b;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid #222;
+    aspect-ratio: 2 / 1; 
+    max-height: 500px;
+    overflow: hidden;
+}
+
+/* single cell */
+.grid-cell {
+    background-color: #1a1a1a;
+    border: 1px solid #262626;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+
+.grid-cell:hover {
+    background-color: #333333;
+}
+
+/* cell state */
+.grid-cell.start {
+    background-color: #22c55e; /* grenn for start */
+    border-color: #16a34a;
+}
+
+.grid-cell.goal {
+    background-color: #ef4444; /* red for goal */
+    border-color: #dc2626;
+}
+
+.grid-cell.wall {
+    background-color: #64748b; /* grey ->wall */
+    border-color: #475569;
+}
+
+.grid-cell.visited {
+    background-color: #3b82f6; /* blue -> visited point */
+}
+
+.grid-cell.path {
+    background-color: #eab308; /* yellow ->final path */
+}
