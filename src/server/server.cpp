@@ -21,11 +21,36 @@
 #include "../sortalgo/algos.h"
 #include "../utils/utils.h"
 #include <chrono>
+#include <exception>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 
 using json = nlohmann::json;
+
+std::string checkMapValidness(json parsed, std::pair<int,int> start, std::pair<int,int> goal )
+{
+  int collums = parsed["MAP"][0].size();
+  bool sameRowLength=true;
+  for (int i = 1; i < parsed["MAP"].size(); i++) {
+    if (parsed["MAP"][i].size() != collums) {
+      sameRowLength = false;
+      break;
+    }
+  }
+  if (!sameRowLength) {
+    return "Rows have diffrent lengths.";
+  }
+
+  if (start.first < 0 || start.first >= parsed["MAP"][0].size() ||
+      start.second < 0 || start.second >= parsed["MAP"].size() ||
+      goal.first < 0 || goal.first >= parsed["MAP"][0].size() ||
+      goal.second < 0 || goal.second >= parsed["MAP"].size()) {
+    return "Start or goal coordinates invalid (out of map).";
+  }
+  return "";
+}
+
 
 std::vector<std::vector<bool>> castIntToBool(const json& input)
 {
@@ -186,8 +211,17 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res,
                 "\nBody:" + req.body,
             0);
 
-  state.out("parasing values....", 0);
+  state.out("Parasing values....", 0);
+  
+  std::vector<int> values = {};
+  try
+  {
   auto parsed = json::parse(req.body);
+  if (!req.has_param("values")) {
+    returnFailedAnswer(res, "Request URL does not contain a algo parameter.",
+                       400);
+    return;
+  }  
   std::vector<int> values = parsed["values"];
   if (values.empty()) {
     returnFailedAnswer(res, "No values specified. (values.empty()==true)", 400);
@@ -201,12 +235,13 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res,
     return;
   }
 
-  if (!req.has_param("algo")) {
-    returnFailedAnswer(res, "Request URL does not contain a algo parameter.",
-                       400);
-    return;
+}
+  catch(const std::exception& e )
+  {
+  returnFailedAnswer(res, "Failed to parse request body. Exception details:"+std::string(e.what()),400); 
+  return;  
   }
-
+  
   state.out("Finished.", 0);
 
   json response;
@@ -281,6 +316,7 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
   std::string ip;
   std::vector<std::pair<int, int>> path;
   json response;
+  response["VERSION"] = VERSION;
   std::string algo;
   bool sameRowLength = true;
   int collums;
@@ -296,9 +332,14 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
             0);
 
   // parsing
-  state.out("parsing values....", 0);
-  response["VERSION"] = VERSION;
-  auto parsed = json::parse(req.body);
+  state.out("Parsing values....", 0);
+  
+  json parsed; 
+  std::pair<int, int> start={-1,-1};
+  std::pair<int, int> goal={-1,-1}; 
+  try
+  {
+  parsed = json::parse(req.body);
   if (!parsed.contains("MAP") || !parsed.contains("START") ||
       !parsed.contains("GOAL")) {
     returnFailedAnswer(res,
@@ -314,32 +355,20 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
     return;
   }
 
-  std::pair<int, int> start = parsed["START"];
-  std::pair<int, int> goal = parsed["GOAL"];
+  start = parsed["START"];
+  goal = parsed["GOAL"];
   state.out("Finished.", 0);
-
+  
+}
+  catch(const std::exception& e )
+  {
+  returnFailedAnswer(res, "Failed to parse request body. Exception details:"+std::string(e.what()),400); 
+  return;  
+  }
+  
   // input validation
+  checkMapValidness(parsed,start, goal);
 
-  collums = parsed["MAP"][0].size();
-  for (int i = 1; i < parsed["MAP"].size(); i++) {
-    if (parsed["MAP"][i].size() != collums) {
-      sameRowLength = false;
-      break;
-    }
-  }
-  if (!sameRowLength) {
-    returnFailedAnswer(res, "Map contains rows of diffrent lengths.", 442);
-    return;
-  }
-
-  if (start.first < 0 || start.first >= parsed["MAP"][0].size() ||
-      start.second < 0 || start.second >= parsed["MAP"].size() ||
-      goal.first < 0 || goal.first >= parsed["MAP"][0].size() ||
-      goal.second < 0 || goal.second >= parsed["MAP"].size()) {
-    returnFailedAnswer(res, "Start or goal coordinates invalid (out of map).",
-                       422);
-    return;
-  }
 
   algo = req.get_param_value("algo");
   state.out("Parsed algo:" + algo, 0);
@@ -353,9 +382,15 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
   auto startTime = std::chrono::steady_clock::now();
 
   if (algo == "BFS" || algo == "DFS" || algo == "BIBFS") {
-
+    
+    //this could very likely throw 
+    std::vector<std::vector<bool>> map;
+    try {
     std::vector<std::vector<bool>> map = castIntToBool(parsed);
-
+    } catch (const std::exception& e ) {
+    returnFailedAnswer(res, "Failed to read map from req into vector. Exception details:"+std::string(e.what()),500);
+    }
+    
     if (map.empty()) {
       returnFailedAnswer(res, "No values specified. (map.empty()==true)", 400);
       return;
@@ -380,7 +415,13 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
   }
 
   if (algo == "dijkstra") {
+
+    std::vector<std::vector<int>> map;
+    try {
     std::vector<std::vector<int>> map = parsed["MAP"];
+    } catch (const std::exception e ) {
+    returnFailedAnswer(res, "Failed to copy map from req to vector. Exception details:"+std::string(e.what()),500);
+    }
     if (map.empty()) {
       returnFailedAnswer(res, "No values specified. (map.empty()==true)", 400);
       return;

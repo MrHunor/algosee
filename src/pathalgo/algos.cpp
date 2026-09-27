@@ -198,7 +198,7 @@ BreadthFirstSearch(std::vector<std::vector<bool>> map,
   // retrace the steps via parent
   std::pair<int, int> current = {goal.second,goal.first};
 
-  while (current != start) {
+  while (current != std::make_pair(start.second,start.first)) {
     path.push_back(current);
     current = parent[current.first][current.second];
   }
@@ -209,6 +209,11 @@ BreadthFirstSearch(std::vector<std::vector<bool>> map,
   // due to starting with goal, the path must be reversed to start from start
   std::reverse(path.begin(), path.end());
 
+
+    for(int i = 0; i<path.size();i++)
+  {
+    std::swap(path[i].first,path[i].second);
+  }
   return path;
 }
 
@@ -239,10 +244,10 @@ std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map,
   std::queue<std::pair<int, int>> frontierFromStart;
   std::queue<std::pair<int, int>> frontierFromEnd;
 
-  frontierFromStart.push(start);
-  frontierFromEnd.push(goal);
-  visitedFromStart[start.first][start.second] = true;
-  visitedFromEnd[goal.first][goal.second] = true;
+  frontierFromStart.push({start.second,start.first});
+  frontierFromEnd.push({goal.second,goal.first});
+  visitedFromStart[start.second][start.first] = true;
+  visitedFromEnd[goal.second][goal.first] = true;
 
   std::vector<int> directionsRows = {-1, 1, 0, 0};
   std::vector<int> directionsCollums = {0, 0, 1, -1};
@@ -356,6 +361,12 @@ std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map,
   // NOTE: +1 to skip the meeting point which is present in both
   pathFromStart.insert(pathFromStart.end(), pathFromEnd.begin() + 1,
                        pathFromEnd.end());
+
+  for(int i = 0; i<pathFromStart.size();i++)
+  {
+    std::swap(pathFromStart[i].first,pathFromStart[i].second);
+  }
+
   return pathFromStart;
 }
 
@@ -377,8 +388,8 @@ DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
   std::vector<std::pair<int, int>> path;
 
   std::stack<std::pair<int, int>> frontier;
-  frontier.push(start);
-  visited[start.first][start.second] = true;
+  frontier.push({start.second,start.first});
+  visited[start.second][start.first] = true;
 
   std::vector<int> directionsRows = {-1, 1, 0, 0};
   std::vector<int> directionsCollums = {0, 0, 1, -1};
@@ -390,7 +401,7 @@ DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
     // frontier can be deleted
     frontier.pop();
 
-    if (std::make_pair(x, y) == goal)
+    if (std::make_pair(y,x) == goal)
       break; // reached goal
 
     for (int i = 0; i < 4; i++) // check all possible neighbors
@@ -419,23 +430,27 @@ DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
 
   response["VISITED"] = visited;
 
-  if (!visited[goal.first][goal.second])
+  if (!visited[goal.second][goal.first])
     return {}; // never once reached the goal means there was no path found to
                // the goal
 
   // retrace the steps via parent
-  std::pair<int, int> current = goal;
+  std::pair<int, int> current = {goal.second,goal.first};
 
-  while (current != start) {
+  while (current != std::make_pair(start.second, start.first)) {
     path.push_back(current);
     current = parent[current.first][current.second];
   }
 
   // push back start pour fini
-  path.push_back(start);
+  path.push_back({start.second,start.first});
 
   // due to starting with goal, the path must be reversed to start from start
   std::reverse(path.begin(), path.end());
 
+    for(int i = 0; i<path.size();i++)
+  {
+    std::swap(path[i].first,path[i].second);
+  }
   return path;
 }
