@@ -149,8 +149,8 @@ BreadthFirstSearch(std::vector<std::vector<bool>> map,
   std::vector<std::pair<int, int>> path;
 
   std::queue<std::pair<int, int>> frontier;
-  frontier.push(start);
-  visited[start.first][start.second] = true;
+  frontier.push({start.second,start.first});
+  visited[start.second][start.first] = true;
 
   std::vector<int> directionsRows = {-1, 1, 0, 0};
   std::vector<int> directionsCollums = {0, 0, 1, -1};
@@ -162,7 +162,7 @@ BreadthFirstSearch(std::vector<std::vector<bool>> map,
     // frontier can be deleted
     frontier.pop();
 
-    if (std::make_pair(x, y) == goal)
+    if (std::make_pair(y, x) == goal)
       break; // reached goal
 
     for (int i = 0; i < 4; i++) // check all possible neighbors
@@ -191,12 +191,12 @@ BreadthFirstSearch(std::vector<std::vector<bool>> map,
 
   response["VISITED"] = visited;
 
-  if (!visited[goal.first][goal.second])
+  if (!visited[goal.second][goal.first])
     return {}; // never once reached the goal means there was no path found to
                // the goal
 
   // retrace the steps via parent
-  std::pair<int, int> current = goal;
+  std::pair<int, int> current = {goal.second,goal.first};
 
   while (current != start) {
     path.push_back(current);
