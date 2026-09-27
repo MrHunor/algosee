@@ -373,6 +373,7 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
   }
   res.status = 200;
   response["PATH"] = path;
+  state.out("Finished. Replying;\nresponse:"+response.dump(),0);
   res.set_header("Access-Control-Allow-Origin", "*");
   res.set_content(response.dump(), "application/json");
   return;
