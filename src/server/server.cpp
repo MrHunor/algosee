@@ -354,7 +354,6 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
 
   if (algo == "BFS" || algo == "DFS" || algo == "BIBFS") {
 
-
     std::vector<std::vector<bool>> map = castIntToBool(parsed);
 
     if (map.empty()) {
@@ -363,7 +362,7 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
     }
     state.out("Casted input map:\n"+parsed["MAP"].dump()+"\n to:\n",0);
     for(const auto row : map)
-{
+   {
   for(const auto value : row)
   {
     std::cout<<value;

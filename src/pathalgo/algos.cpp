@@ -49,11 +49,11 @@ Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
   using Node = std::pair<int, std::pair<int, int>>;
   std::priority_queue<Node, std::vector<Node>, std::greater<Node>> frontier;
 
-  distance[start.first][start.second] = 0;
+  distance[start.second][start.first] = 0;
 
   // push the start into the frontier, because its the lowest distance and also
   // the only element it will be the first element
-  frontier.push({0, start});
+  frontier.push({0, {start.second,start.first}});
 
   std::vector<int> directionsRows = {-1, 1, 0, 0};
   std::vector<int> directionsCollums = {0, 0, 1, -1};
@@ -71,7 +71,7 @@ Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
     if (currentDistance != distance[x][y])
       continue; // already discovered
 
-    if (std::make_pair(x, y) == goal)
+    if (std::make_pair(y, x) == goal)
       break; // finished, goal discovered
 
     // check all neighbours
@@ -107,22 +107,28 @@ Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
   // checking if the goal was ever reached, be careful this could theoretically
   // be a false positive if the addition of tiles matches exatly the intmax, but
   // the likelyhood is very small
-  if (distance[goal.first][goal.second] == INFINTY)
+  if (distance[goal.second][goal.first] == INFINTY)
     return {};
 
   // copy paste from BFS, same logic
-  std::pair<int, int> current = goal;
+  std::pair<int, int> current = {goal.second,goal.first};
 
-  while (current != start) {
+  while (current != std::make_pair(start.second,start.first)) {
     path.push_back(current);
     current = parent[current.first][current.second];
   }
 
   // push back start pour fini
-  path.push_back(start);
+  path.push_back({start.second,start.first});
 
   // due to starting with goal, the path must be reversed to start from start
   std::reverse(path.begin(), path.end());
+
+  for(int i = 0; i<path.size();i++)
+  {
+    std::swap(path[i].first,path[i].second);
+  }
+
 
   return path;
 }
