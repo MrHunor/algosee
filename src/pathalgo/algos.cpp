@@ -16,7 +16,6 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#include "../logger/logger.h"
 #include <algorithm>
 #include <limits>
 #include <nlohmann/json.hpp>
@@ -24,6 +23,7 @@
 #include <stack>
 #include <utility>
 #include <vector>
+#include "../config.h"
 
 std::vector<std::pair<int, int>>
 Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
@@ -338,22 +338,22 @@ std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map,
   // fist retrace all steps from the BFS starting at start
   std::pair<int, int> current = std::make_pair(meetingPointX, meetingPointY);
 
-  while (current != start) {
+  while (current != std::make_pair(start.second, start.first)) {
     pathFromStart.push_back(current);
     current = parentFromStart[current.first][current.second];
   }
-  pathFromStart.push_back(start);
+  pathFromStart.push_back({start.second,start.first});
 
   std::reverse(pathFromStart.begin(), pathFromStart.end());
 
   // and now same thing from the other direciton
   current = std::make_pair(meetingPointX, meetingPointY);
 
-  while (current != goal) {
+  while (current != std::make_pair(goal.second,goal.first)) {
     pathFromEnd.push_back(current);
     current = parentFromEnd[current.first][current.second];
   }
-  pathFromEnd.push_back(goal);
+  pathFromEnd.push_back({goal.second,goal.first});
 
   // we do not have to reverse here because it is already the right order
 
