@@ -18,9 +18,9 @@
  */
 #ifndef PALGOS_H
 #define PALGOS_H
-#include "../logger/logger.h"
 #include <nlohmann/json.hpp>
 #include <vector>
+#include "../config.h"
 
 std::vector<std::pair<int, int>>
 BreadthFirstSearch(std::vector<std::vector<bool>> map,
