@@ -204,7 +204,7 @@ BreadthFirstSearch(std::vector<std::vector<bool>> map,
   }
 
   // push back start pour fini
-  path.push_back(start);
+  path.push_back({start.second,start.first});
 
   // due to starting with goal, the path must be reversed to start from start
   std::reverse(path.begin(), path.end());
