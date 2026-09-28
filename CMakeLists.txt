@@ -15,7 +15,7 @@
  #   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
 cmake_minimum_required(VERSION 3.20)
 
-project(algosee VERSION 0.2 LANGUAGES CXX)
+project(algosee VERSION 0.8 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
