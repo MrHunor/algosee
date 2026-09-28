@@ -39,6 +39,16 @@ int main(int argc, char *argv[]) {
   state.out("VERSION:" + std::to_string(VERSION), 0);
   httplib::Server server;
 
+
+  //-------------------------PRERESPONSE HANDLING-------------------------
+  //this runs before sending any response
+  server.set_post_routing_handler([](const httplib::Request &, httplib::Response &res) {
+  res.headers.erase("Access-Control-Allow-Origin");
+  res.set_header("Access-Control-Allow-Origin", "*");
+  });
+
+
+
   //--------------------------OPTIONS-----------------------------------------
   // handle a preflight request from a diffrent origin; firefox & co. considers
   // diffrent ports on the same computer to be diffrent origins so this fix is
