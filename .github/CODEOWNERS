@@ -1,0 +1,4 @@
+# keep in mind, github uses the last matching pattern so the wildcome has to come first
+* @ MrHunor
+/frontend/ @ siryanni
+/src/ @ MrHunor
