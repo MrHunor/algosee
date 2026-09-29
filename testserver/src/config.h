@@ -41,5 +41,6 @@ const std::unordered_set<std::string> implementedSortAlgos = {
 const std::unordered_set<std::string> implementedPathAlgos = {"BFS", "dijkstra",
                                                               "DFS", "BIBFS"};
 
-const std::unordered_set<int> testSizes = {2,10,25,100,250,1000,2000,MAX_ELEMENT_COUNT-1};
+const std::set<int> testSizesSort = {2,10,25,100,250,1000,2000,MAX_ELEMENT_COUNT-1};
+const std::set<std::pair<int,int>> testSizesPath = {{10,5},{10,10},{20,20},{20,5},{30,30},{30,5},{50,50},{100,100},{250,250}};
 #endif
