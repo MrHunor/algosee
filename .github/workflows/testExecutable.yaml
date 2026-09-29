@@ -59,10 +59,10 @@ jobs:
      - name: Build testserver
        shell: bash
        run: | 
-        cd testserver && ./rebuildLinux.sh
+        cd testserver &&  ./rebuildLinux.sh
 
      - name: Runtestserver
        shell: bash 
        run: | 
-        cd build && ./aglosee_testserver
+        cd testserver/build && ./aglosee_testserver
 
