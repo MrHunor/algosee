@@ -1,0 +1,68 @@
+name: Test Executable
+
+on: 
+  push:
+    branches:
+      - main
+      - development
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    container:
+      image: archlinux:latest
+
+    steps:
+     - name: Checkout repository
+       uses: actions/checkout@v6
+
+     - name: Update outputs
+       shell: bash
+       run: | 
+         pacman -Syu --noconfirm
+
+     - name: Install Build Tools
+       shell: bash 
+       run: |
+        pacman -S --noconfirm \
+        base-devel \
+        cmake \
+        git \
+        curl \
+        github-cli \
+        python \
+        python-pipx
+
+     - name: Install Conan and configure # weird command syntax but should work like this
+       shell: bash
+       run: |
+        pipx install conan
+        export PATH="$HOME/.local/bin:$PATH"
+        echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+        conan profile detect --force
+
+     - name: Build executable 
+       shell: bash
+       run: |
+        ./rebuildLinux.sh 
+
+     - name: Start executable for testing 
+       shell: bash
+       run: | 
+        ./build/algosee & 
+
+     - name: Build testserver
+       shell: bash
+       run: | 
+        cd testserver &&  ./rebuildLinux.sh
+
+     - name: Run testserver
+       shell: bash 
+       run: | 
+          ./testserver/build/algosee_testserver
+

@@ -1,9 +1,12 @@
 name: Build executable and publish
 
 on: 
+  workflow_run:
+    workflows: ["testExecutable"]
+    types: [completed]
   push:
     branches:
-      - main 
+      - main, development
   workflow_dispatch:
 
 permissions:
@@ -45,25 +48,10 @@ jobs:
         echo "$HOME/.local/bin" >> "$GITHUB_PATH"
         conan profile detect --force
 
-     - name: Install Build dependencies via conan 
-       shell: bash
-       run: |
-        conan install . --output-folder=build --build=missing
-
-     - name: Configure cmake with conan preset 
-       shell: bash
-       run: | 
-        cmake --preset conan-release
-
      - name: Build executable 
        shell: bash
        run: |
-        cmake --build build --parallel
-
-     - name: Test sortalgos via testserver.sh
-       shell: bash
-       run: | 
-        ./testserver.sh
+        ./rebuildLinux.sh 
 
      - name: Create new GitHub release
        shell: bash
