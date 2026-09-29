@@ -1,9 +1,10 @@
-name: Build executable and publish
+name: Test Executable
 
 on: 
   push:
     branches:
-      - main, development
+      - main
+      - development
   workflow_dispatch:
 
 permissions:
