@@ -2,11 +2,11 @@ name: Build executable and publish
 
 on: 
   workflow_run:
-    workflows: ["testExecutable"]
+    workflows: ["Test Executable"]
     types: [completed]
   push:
     branches:
-      - main, development
+      - main
   workflow_dispatch:
 
 permissions:
