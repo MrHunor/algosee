@@ -91,9 +91,8 @@ int main(int argc, char *argv[]) {
           if (path[i] != start) {
             currentrun.failure = true;
             i = path.size();
-
           }
-                      continue;
+          continue;
         }
         if (i == path.size() - 1) {
           if (path[i] != goal) {
@@ -134,5 +133,10 @@ int main(int argc, char *argv[]) {
                 0);
   }
 
+
+  for(const auto& element : exitMessage)
+  {
+    if(element.failure==true)return -1;
+  }
   return 0;
 }

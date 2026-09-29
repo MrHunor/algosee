@@ -1,9 +1,6 @@
 name: Build executable and publish
 
 on: 
-  workflow_run:
-    workflows: ["testExecutable"]
-    types: [completed]
   push:
     branches:
       - main, development
@@ -53,19 +50,18 @@ jobs:
        run: |
         ./rebuildLinux.sh 
 
-     - name: Create new GitHub release
+     - name: Start executable for testing 
        shell: bash
-       env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       run: |
-          TAG="build-${{ github.run_number }}"
-          TITLE="Algosee Nightly Build ${{ github.run_number }}"
+       run: | 
+        ./build/algosee & 
 
-          gh release create "$TAG" \
-            build/algosee \
-            --repo "${{ github.repository }}" \
-            --title "$TITLE" \
-            --notes "Nightly build from commit ${{ github.sha }}.
+     - name: Build testserver
+       shell: bash
+       run: | 
+        cd testserver && ./rebuildLinux
 
-            Commit message:
-            ${{ github.event.head_commit.message }}"
+     - name: Runtestserver
+       shell: bash 
+       run: | 
+        cd build && ./aglosee_testserver
+
