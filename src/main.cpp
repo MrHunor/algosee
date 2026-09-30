@@ -18,8 +18,8 @@
  */
 
 #include "logger/logger.h"
-#include "server/server.h"
-#include "utils/utils.h"
+#include "routing/routing.h"
+#include "utils/general/utils.h"
 #include <httplib.h>
 #include <nlohmann/json.hpp>
 #include <string>
@@ -39,15 +39,13 @@ int main(int argc, char *argv[]) {
   state.out("VERSION:" + std::to_string(VERSION), 0);
   httplib::Server server;
 
-
   //-------------------------PRERESPONSE HANDLING-------------------------
-  //this runs before sending any response
-  server.set_post_routing_handler([](const httplib::Request &, httplib::Response &res) {
-  res.headers.erase("Access-Control-Allow-Origin");
-  res.set_header("Access-Control-Allow-Origin", "*");
-  });
-
-
+  // this runs before sending any response
+  server.set_post_routing_handler(
+      [](const httplib::Request &, httplib::Response &res) {
+        res.headers.erase("Access-Control-Allow-Origin");
+        res.set_header("Access-Control-Allow-Origin", "*");
+      });
 
   //--------------------------OPTIONS-----------------------------------------
   // handle a preflight request from a diffrent origin; firefox & co. considers
@@ -72,14 +70,6 @@ int main(int argc, char *argv[]) {
   server.Get("/status",
              [&](const httplib::Request &req, httplib::Response &res) {
                RunStatus(req, res, state);
-               return;
-             });
-
-  //------------------------------SELFTEST---------------------------------------------------------------
-
-  server.Get("/selftest",
-             [&](const httplib::Request &req, httplib::Response &res) {
-               RunSelftest(req, res, state);
                return;
              });
 

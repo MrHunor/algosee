@@ -17,19 +17,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef SALGOS_H
-#define SALGOS
-
-#include "../config.h"
-#include <nlohmann/json.hpp>
 #include <vector>
-
-void selectionSort(std::vector<int> &unsorted, json &response);
-void bogoSort(std::vector<int> &unsorted, json &response);
-void bubbleSort(std::vector<int> &unsorted, json &response);
-void quickSort(std::vector<int> &unsorted, int low, int high, json &response);
-void mergeSort(std::vector<int> &unsorted, json &response);
-
-void countingSort(std::vector<int> &unsorted, json &response);
-void cycleSort(std::vector<int> &unsorted, json &response);
+#ifndef SORTALGO_UTILS_H
+#define SORTALGO_UTILS_H
+void randomise(std::vector<int> &vec);
 #endif

@@ -16,24 +16,27 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#ifndef PALGOS_H
-#define PALGOS_H
+
 #include "../config.h"
+#include <algorithm>
+#include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
+#include <utility>
 #include <vector>
 
-std::vector<std::pair<int, int>>
-BreadthFirstSearch(std::vector<std::vector<bool>> map,
-                   std::pair<int, int> start, std::pair<int, int> goal,
-                   json& response);
-std::vector<std::pair<int, int>>
-Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
-         std::pair<int, int> goal, json response);
-std::vector<std::pair<int, int>>
-DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
-                 std::pair<int, int> goal, json& response);
-std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map,
-                                       std::pair<int, int> start,
-                                       std::pair<int, int> goal,
-                                       json &response);
-#endif
+void bubbleSort(std::vector<int> &unsorted, json &response) {
+  if (unsorted.size() <= 1)
+    return; // an array of the size one is already sorted
+  for (size_t i = 0; i < unsorted.size(); i++) {
+    for (size_t z = 0; z < unsorted.size() - 1 - i;
+         z++) // you can subtract i because the last elements have already been
+              // orderd before, this saves you some time but doesnt make the
+              // horrible O(n^2) much better
+    {
+      if (unsorted[z] > unsorted[z + 1]) {
+        response["MOVES"].push_back({z, z + 1});
+        std::swap(unsorted[z], unsorted[z + 1]);
+      }
+    }
+  }
+}

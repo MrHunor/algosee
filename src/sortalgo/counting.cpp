@@ -16,24 +16,31 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#ifndef PALGOS_H
-#define PALGOS_H
+
 #include "../config.h"
+#include <algorithm>
+#include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 
-std::vector<std::pair<int, int>>
-BreadthFirstSearch(std::vector<std::vector<bool>> map,
-                   std::pair<int, int> start, std::pair<int, int> goal,
-                   json& response);
-std::vector<std::pair<int, int>>
-Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
-         std::pair<int, int> goal, json response);
-std::vector<std::pair<int, int>>
-DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
-                 std::pair<int, int> goal, json& response);
-std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map,
-                                       std::pair<int, int> start,
-                                       std::pair<int, int> goal,
-                                       json &response);
-#endif
+void countingSort(std::vector<int> &unsorted, json &response) {
+  if (unsorted.size() <= 1)
+    return; // an array of the size one is already sorted
+  int countI = 0;
+  std::vector<int> count(*std::max_element(unsorted.begin(), unsorted.end()) +
+                         1);
+  std::vector<int> retval;
+  retval.reserve(unsorted.size());
+  for (int i : unsorted) {
+    count[i]++;
+  }
+  response["COUNT ARRAY:"] = count;
+  for (size_t i = 0; i < unsorted.size(); i++) {
+    while (count[countI] == 0)
+      countI++;
+    retval.push_back(countI);
+    count[countI]--;
+  }
+
+  unsorted = retval;
+}

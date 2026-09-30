@@ -17,19 +17,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef SALGOS_H
-#define SALGOS
-
-#include "../config.h"
+#ifndef PATHALGO_UTILS_H
+#define PATHALGO_UTILS_H
+#include "../../config.h"
+#include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void selectionSort(std::vector<int> &unsorted, json &response);
-void bogoSort(std::vector<int> &unsorted, json &response);
-void bubbleSort(std::vector<int> &unsorted, json &response);
-void quickSort(std::vector<int> &unsorted, int low, int high, json &response);
-void mergeSort(std::vector<int> &unsorted, json &response);
-
-void countingSort(std::vector<int> &unsorted, json &response);
-void cycleSort(std::vector<int> &unsorted, json &response);
+std::string checkMapValidness(json parsed, std::pair<int, int> start,
+                              std::pair<int, int> goal);
+std::vector<std::vector<bool>> castIntMapToBoolIfNeeded(const json &input);
 #endif

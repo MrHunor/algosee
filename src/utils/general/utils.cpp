@@ -30,7 +30,6 @@
 #include <string>
 #include <sys/wait.h>
 #include <unistd.h>
-namespace fs = std::filesystem;
 using json = nlohmann::json;
 
 int randomInt(int lower, int upper) {
@@ -72,7 +71,8 @@ std::string executeCommand(const std::string &command) {
 void returnFailedAnswer(httplib::Response &res, const std::string &Details,
                         int exitCode) {
 
-  std::cout << "returnFailedAnswer called:" + Details<<"; Code:"+std::to_string(exitCode)<<std::endl;
+  std::cout << "returnFailedAnswer called:" + Details
+            << "; Code:" + std::to_string(exitCode) << std::endl;
   res.status = exitCode;
   res.set_header("Access-Control-Allow-Origin", "*");
   res.set_content(json(Details), "application/json");
