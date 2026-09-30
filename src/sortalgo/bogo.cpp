@@ -16,24 +16,19 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#ifndef PALGOS_H
-#define PALGOS_H
+
 #include "../config.h"
+#include "../utils/sortalgo/sortalgo.h"
+#include <algorithm>
+#include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 
-std::vector<std::pair<int, int>>
-BreadthFirstSearch(std::vector<std::vector<bool>> map,
-                   std::pair<int, int> start, std::pair<int, int> goal,
-                   json response);
-std::vector<std::pair<int, int>>
-Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
-         std::pair<int, int> goal, json response);
-std::vector<std::pair<int, int>>
-DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
-                 std::pair<int, int> goal, json response);
-std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map,
-                                       std::pair<int, int> start,
-                                       std::pair<int, int> goal,
-                                       json &response);
-#endif
+void bogoSort(std::vector<int> &unsorted, json &response) {
+  if (unsorted.size() == 1)
+    return; // an array of the size one is already sorted
+  while (!std::is_sorted(unsorted.begin(), unsorted.end())) {
+    randomise(unsorted);
+    response["TRIES"].push_back(unsorted);
+  }
+}

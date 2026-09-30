@@ -16,20 +16,24 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-
-#ifndef SALGOS_H
-#define SALGOS
-
-#include "../config.h"
+#include "../logger/logger.h"
+#include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
-#include <vector>
 
-void selectionSort(std::vector<int> &unsorted, json &response);
-void bogoSort(std::vector<int> &unsorted, json &response);
-void bubbleSort(std::vector<int> &unsorted, json &response);
-void quickSort(std::vector<int> &unsorted, int low, int high, json &response);
-void mergeSort(std::vector<int> &unsorted, json &response);
 
-void countingSort(std::vector<int> &unsorted, json &response);
-void cycleSort(std::vector<int> &unsorted, json &response);
-#endif
+void RunStatus(const httplib::Request &req, httplib::Response &res,
+               stateClass &state) {
+  json response;
+  response["STATUS"] = "ONLINE";
+  response["VERION"] = "VERSION";
+  if (req.has_header("X-Forwarded-For")) {
+    state.out("Status request from:" + req.get_header_value("X-Forwarded-For"),
+              0);
+  } else {
+    state.out(req.remote_addr, 0);
+  }
+  state.out("Send status signal.", 0);
+  res.status = 200;
+  res.set_header("Access-Control-Allow-Origin", "*");
+  res.set_content(response.dump(), "application/json");
+}

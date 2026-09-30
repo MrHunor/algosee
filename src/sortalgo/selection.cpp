@@ -16,24 +16,26 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#ifndef PALGOS_H
-#define PALGOS_H
+
 #include "../config.h"
+#include <algorithm>
+#include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
+#include <utility>
 #include <vector>
 
-std::vector<std::pair<int, int>>
-BreadthFirstSearch(std::vector<std::vector<bool>> map,
-                   std::pair<int, int> start, std::pair<int, int> goal,
-                   json response);
-std::vector<std::pair<int, int>>
-Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
-         std::pair<int, int> goal, json response);
-std::vector<std::pair<int, int>>
-DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
-                 std::pair<int, int> goal, json response);
-std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map,
-                                       std::pair<int, int> start,
-                                       std::pair<int, int> goal,
-                                       json &response);
-#endif
+void selectionSort(std::vector<int> &unsorted, json &response) {
+  if (unsorted.size() <= 1)
+    return; // an array of the size one is already sorted
+  int index;
+
+  for (size_t i = 0; i < unsorted.size() - 1;
+       i++) // unsorted.size() is valid because the last element is sorted due
+            // to the other elements already being sorted
+  {
+    auto minT = std::min_element(unsorted.begin() + i, unsorted.end());
+    index = minT - unsorted.begin();
+    response["MOVES"].push_back({i, index});
+    std::swap(unsorted[i], unsorted[index]);
+  }
+}

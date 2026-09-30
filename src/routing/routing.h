@@ -16,8 +16,8 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#ifndef SERVER_H
-#define SERVER_H
+#ifndef ROUTING_H
+#define ROUTING_H
 #include "../logger/logger.h"
 #include <chrono>
 #include <httplib/httplib.h>
@@ -34,8 +34,6 @@ void afterSelfTestRun(std::string algorithmName,
 void RunStatus(const httplib::Request &req, httplib::Response &res,
                stateClass &state);
 
-void RunSelftest(const httplib::Request &req, httplib::Response &res,
-                 stateClass &state);
 
 void runSortalgo(const httplib::Request &req, httplib::Response &res,
                  stateClass &state);

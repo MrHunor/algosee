@@ -84,6 +84,7 @@ Current plans invlove expanding into other areas of algorithms, like wayfinding 
 # ----------------For Contributers-------------------------- 
 
 ## Project structure:
+---------------------- NOT UP TO DATE -----------------------------
 - `./assets` Contains images for this ReadME
 - `./benchmarks` Contains the benchmark script and results
 - `./frontend` Root folder of the Frontend side  
@@ -111,8 +112,7 @@ Current plans invlove expanding into other areas of algorithms, like wayfinding 
 3. `cmake --build build` to build 
 
 ## Syntax  
-`[SERVERIP]/status` **->** Responds with a json with STATUS and VERSION paramter, of which the status parameter should return 'ONLINE' if the server is online and reachable.  
-`[SERVERIP]/selftest` **->** Runs a selftest on all sorting algorithms that are [currently implemented](#Sorting), and returns a json with VERSION, and a STATUS & TIME (in ns) paramter for every algorithm.  
+`[SERVERIP]/status` **->** Responds with a json with STATUS and VERSION paramter, of which the status parameter should return 'ONLINE' if the server is online and reachable.    
 `[SERVERIP]/sortalgo?algo=X` (where x is a search algorithm name, for valid names look in `src/utils/defs.h`) **->** Run a sorting algorithm of your choice on the values provided in the body of the request under the name 'values' (formatted in json).  
 `[SERVERIP]/pathalgo?algo=X` (where x is a search algorithm name, for valid names look in `src/utils/defs.h`) **->** Run a pathfinding algorithm of your choice, you have to provide the MAP (in boolean or integer depending on algorithm) in a array(rows) format, a START in pair format, and a GOAL in the same format (view the examples under this section).  
 
