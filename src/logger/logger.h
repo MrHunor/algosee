@@ -96,7 +96,7 @@ public:
       auto now = std::chrono::system_clock::now();
       message += std::format("@{} -> ", now);
     }
-    if (verbose >= 4)
+    if (verbose >= 0)
       message += std::format("{}->", location.function_name());
     message += output;
     message += RESET;
