@@ -237,8 +237,13 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res,
   std::vector<int> values;
   try {
     auto parsed = json::parse(req.body);
-
+    if(!parsed.contains("values"))
+    {
+      returnFailedAnswer(res,"No value parameter. (request.contains(values)==false)",413);
+      return;
+    }
     values = parsed["values"].get<std::vector<int>>();
+    
     if (values.empty()) {
       returnFailedAnswer(res, "No values specified. (values.empty()==true)",
                          400);
