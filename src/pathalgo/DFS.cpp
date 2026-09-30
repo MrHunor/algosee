@@ -28,7 +28,7 @@
 // replace queue with stack)
 std::vector<std::pair<int, int>>
 DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
-                 std::pair<int, int> goal, json response) {
+                 std::pair<int, int> goal, json& response) {
   // Frontier means what is it going to explore next, hence it being a queue
 
   const int rows = map.size();
