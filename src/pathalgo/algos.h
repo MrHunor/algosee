@@ -25,13 +25,13 @@
 std::vector<std::pair<int, int>>
 BreadthFirstSearch(std::vector<std::vector<bool>> map,
                    std::pair<int, int> start, std::pair<int, int> goal,
-                   json response);
+                   json& response);
 std::vector<std::pair<int, int>>
 Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
          std::pair<int, int> goal, json response);
 std::vector<std::pair<int, int>>
 DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
-                 std::pair<int, int> goal, json response);
+                 std::pair<int, int> goal, json& response);
 std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map,
                                        std::pair<int, int> start,
                                        std::pair<int, int> goal,
