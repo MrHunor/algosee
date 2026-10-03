@@ -20,11 +20,16 @@ int main(int argc, char *argv[]) {
   // sortalgos
   for (const auto &algo : implementedSortAlgos) {
     for (const auto &i : testSizesSort) {
+     
       run currentrun;
       currentrun.failure = false;
       currentrun.algoname = algo;
       currentrun.size = i;
       currentrun.mapSize = {-1, -1};
+            state.out("Trying:"+currentrun.algoname+" with size:"+std::to_string(currentrun.size),0);
+       try
+      {
+
       std::vector<int> testValues(i);
       std::iota(testValues.begin(), testValues.end(), 1);
       std::sort(testValues.begin(), testValues.end());
@@ -36,8 +41,9 @@ int main(int argc, char *argv[]) {
           R"(-d "{\"values\":[$(seq 1 )" +
           std::to_string(i) + R"( | shuf | paste -sd, -)]}")";
       std::string output = executeCommand(command);
+      state.out("Recived (raw):"+output,0);
       json response = json::parse(output);
-      state.out("recived:" + response.dump(), 0);
+      state.out("recived (json):" + response.dump(), 0);
       std::vector<int> sortedByAlgosee = response["SORTED"];
 
       if (sortedByAlgosee != sorted) {
@@ -45,6 +51,12 @@ int main(int argc, char *argv[]) {
         currentrun.failure = true;
       }
       exitMessage.push_back(currentrun);
+      }
+      catch(const std::exception& e )
+      {
+        currentrun.failure=true;
+        exitMessage.push_back(currentrun);
+      }
     }
   }
 
@@ -57,6 +69,7 @@ int main(int argc, char *argv[]) {
       currentrun.algoname = algo;
       currentrun.size = -1;
       currentrun.mapSize = size;
+      try {
       std::string mapString;
       mapString += "[";
       for (const auto &row : map) {
@@ -82,6 +95,7 @@ int main(int argc, char *argv[]) {
           std::to_string(goal.first) + "," + std::to_string(goal.second) +
           "]}'";
       std::string output = executeCommand(command);
+            state.out("Recived (raw):"+output,0);
       json response = json::parse(output);
       state.out("recived:" + response.dump(), 0);
       std::vector<std::pair<int, int>> path = response["PATH"];
@@ -109,6 +123,11 @@ int main(int argc, char *argv[]) {
         }
       }
       exitMessage.push_back(currentrun);
+      } catch (const std::exception &e) {
+        state.out("Path test failed for " + algo + ": " + e.what(), 0);
+        currentrun.failure = true;
+        exitMessage.push_back(currentrun);
+      }
     }
   }
 

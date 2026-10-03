@@ -18,7 +18,7 @@
  */
 #include "../logger/logger.h"
 #include "../pathalgo/algos.h"
-#include "../sortalgo/algos.h"
+#include "../validate/path/validate.h"
 #include "../utils/pathalgo/pathalgo.h"
 #include "../utils/general/utils.h"
 #include <chrono>
@@ -35,7 +35,6 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
   std::vector<std::pair<int, int>> path;
   json response;
   response["VERSION"] = VERSION;
-  std::string algo;
   bool sameRowLength = true;
   int collums;
   // log ip
@@ -50,106 +49,31 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
             0);
 
   // parsing
-  state.out("Parsing values....", 0);
+  state.out("Processing values....", 0);
+  PathValidReturn info=validatePath(req,state);
 
-  json parsed;
-  std::pair<int, int> start;
-  std::pair<int, int> goal;
-  try {
-    parsed = json::parse(req.body);
-    if (!parsed.contains("MAP") || !parsed.contains("START") ||
-        !parsed.contains("GOAL")) {
-      returnFailedAnswer(res,
-                         "Request does not include needed values. Either "
-                         "MAP,START or GOAL is missing",
-                         400);
-      return;
-    }
-
-    if (!req.has_param("algo")) {
-      returnFailedAnswer(res, "Request URL does not contain a algo parameter.",
-                         400);
-      return;
-    }
-
-    start = parsed["START"];
-    goal = parsed["GOAL"];
-    state.out("Finished.", 0);
-
-  } catch (const std::exception &e) {
-    returnFailedAnswer(res,
-                       "Failed to parse request body. Exception details:" +
-                           std::string(e.what()),
-                       400);
+  if(info.failure)
+  {
+    returnFailedAnswer(res,info.failureString,400);
     return;
   }
-
-  // input validation
-  checkMapValidness(parsed, start, goal);
-
-  algo = req.get_param_value("algo");
-  state.out("Parsed algo:" + algo, 0);
-
-  if (!implementedPathAlgos.contains(algo)) {
-    returnFailedAnswer(res, "The provided algo could no be found.", 442);
-    return;
-  }
+  
 
   state.out("Starting time mesurement...", 0);
   auto startTime = std::chrono::steady_clock::now();
 
-  if (algo == "BFS" || algo == "DFS" || algo == "BIBFS") {
+  if (info.algo == "BFS" || info.algo == "DFS" || info.algo == "BIBFS") {
 
     // this could very likely throw
-    std::vector<std::vector<bool>> map;
-    try {
-      map = castIntMapToBoolIfNeeded(parsed);
-    } catch (const std::exception &e) {
-      returnFailedAnswer(
-          res,
-          "Failed to read map from req into vector. Exception details:" +
-              std::string(e.what()),
-          500);
-    }
-
-    if (map.empty()) {
-      returnFailedAnswer(res, "No values specified. (map.empty()==true)", 400);
-      return;
-    }
-    state.out("Casted input map:\n" + parsed["MAP"].dump() + "\n to:\n", 0);
-    for (const auto row : map) {
-      for (const auto value : row) {
-        std::cout << value;
-      }
-      std::cout << std::endl;
-    }
-
-    if (algo == "BFS")
-      path = BreadthFirstSearch(map, start, goal, response);
-    else if (algo == "DFS")
-      path = DepthFirstSearch(map, start, goal, response);
-    else if (algo == "BIBFS")
-      path = BIBFS(map, start, goal, response);
+    if (info.algo == "BFS")
+      path = BreadthFirstSearch(info.mapBool, info.start, info.goal, response);
+    else if (info.algo == "DFS")
+      path = DepthFirstSearch(info.mapBool, info.start, info.goal, response);
+    else if (info.algo == "BIBFS")
+      path = BIBFS(info.mapBool, info.start, info.goal, response);
   }
 
-  if (algo == "dijkstra") {
-
-    std::vector<std::vector<int>> map;
-    try {
-       map = parsed["MAP"];
-    } catch (const std::exception e) {
-      returnFailedAnswer(
-          res,
-          "Failed to copy map from req to vector. Exception details:" +
-              std::string(e.what()),
-          500);
-    }
-    if (map.empty()) {
-      returnFailedAnswer(res, "No values specified. (map.empty()==true)", 400);
-      return;
-    }
-    path = Dijkstra(map, start, goal, response);
-  }
+  if (info.algo == "dijkstra")path = Dijkstra(info.mapInt, info.start, info.goal, response);
 
   auto endTime = std::chrono::steady_clock::now();
   auto elapsed =
