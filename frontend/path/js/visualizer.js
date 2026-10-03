@@ -4,11 +4,11 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. URL-Parameter auslesen
+    // 1.URL-parameter
     const urlParams = new URLSearchParams(window.location.search);
     const algoKey = urlParams.get('algo') || 'bfs';
 
-    // 2. Titel anpassen
+    // 2. title adjust 
     const algoNames = {
         bfs: "Breadth First Search",
         dfs: "Depth First Search",
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let isCancelled = false;
     let currentTool = 'wall'; // 'wall', 'cost-1', 'cost-5'
 
-    // 3. Tool-Selector Listener
+    // 3.tool selct listener
     document.querySelectorAll('.tool-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Web Audio API
+    // 4. web audio api
     let audioCtx = null;
     function playTone(frequency) {
         if (!audioCtx) {
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         osc.stop(audioCtx.currentTime + 0.08);
     }
 
-    // 5. Speed-Slider Listener
+    // 5. speed listener
     if (speedSlider) {
         speedSlider.addEventListener('input', (e) => {
             animationSpeed = parseInt(e.target.value);
@@ -72,14 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 6. Stop Listener
+    // 6. stop listener
     if (stopBtn) {
         stopBtn.addEventListener('click', () => {
             isCancelled = true;
         });
     }
 
-    // 7. Grid-Konfiguration & Generierung
+    // 7.grid config and generation 
     const ROWS = 15;
     const COLS = 25;
     let grid = [];
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 container.appendChild(cell);
-                currentRow.push(1); // Standardwert 1 (passierbar)
+                currentRow.push(1); // base-value 1
             }
             grid.push(currentRow);
         }
@@ -152,10 +152,10 @@ document.addEventListener('DOMContentLoaded', () => {
         resetBtn.addEventListener('click', generateGrid);
     }
 
-    // Grid beim Laden aufbauen
+    // instantly generate grid
     generateGrid();
 
-   // 8. Start-Button Handler
+   // 8. start button handler
     if (startBtn) {
         startBtn.addEventListener('click', async () => {
             let apiAlgo = algoKey.toUpperCase();
@@ -182,9 +182,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify(payload)
                 });
 
-                if (!response.ok) throw new Error('Error while communicating with Backend');
+                const data = await response.json().catch(() => null);
 
-                const data = await response.json();
+                if (!response.ok) {
+                    // Verwendet die Message vom Backend (falls vorhanden) oder den HTTP-Status
+                    const serverMessage = data?.error || data?.message || `Server-Fehler: ${response.status} ${response.statusText}`;
+                    throw new Error(serverMessage);
+                }
 
                 if (data.TIME !== undefined) {
                     const timeMs = (data.TIME / 1_000_000).toFixed(2);
@@ -194,10 +198,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.PATH) {
                     await visualizePath(data.PATH);
                 }
- 
+
             } catch (error) {
                 console.error("Connection-Error:", error);
-                alert("Error connecting to backend or no valid path found.");
+                // dynamic error message (network or backend )
+                alert(error.message || "Fehler bei der Verbindung zum Backend.");
             } finally {
                 startBtn.disabled = false;
                 if (resetBtn) resetBtn.disabled = false;
