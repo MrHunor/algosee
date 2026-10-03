@@ -19,6 +19,7 @@
 #include "../logger/logger.h"
 #include "../sortalgo/algos.h"
 #include "../utils/general/utils.h"
+#include "../validate/sort/validate.h"
 #include <chrono>
 #include <exception>
 #include <httplib/httplib.h>
@@ -38,36 +39,11 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res,
                 "\nBody:" + req.body,
             0);
 
-  state.out("Parasing values....", 0);
-
-  std::vector<int> values;
-  try {
-    auto parsed = json::parse(req.body);
-    if(!parsed.contains("values"))
-    {
-      returnFailedAnswer(res,"No value parameter. (request.contains(values)==false)",413);
-      return;
-    }
-    values = parsed["values"].get<std::vector<int>>();
-    
-    if (values.empty()) {
-      returnFailedAnswer(res, "No values specified. (values.empty()==true)",
-                         400);
-      return;
-    }
-    if (values.size() > MAX_ELEMENT_COUNT) {
-      returnFailedAnswer(res,
-                         "Too many elements specified. Max element count:" +
-                             std::to_string(MAX_ELEMENT_COUNT),
-                         413);
-      return;
-    }
-
-  } catch (const std::exception &e) {
-    returnFailedAnswer(res,
-                       "Failed to parse request body. Exception details:" +
-                           std::string(e.what()),
-                       400);
+  state.out("Processing values....", 0);
+  SortValidReturn info;
+  info = validateSort(req, state);
+  if (info.failure) {
+    returnFailedAnswer(res, info.failureString);
     return;
   }
 
@@ -76,50 +52,23 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res,
   json response;
   response["VERSION"] = VERSION;
 
-  std::string algo = req.get_param_value("algo");
-  state.out("Parsed algo:" + algo, 0);
-
-  if (!implementedSortAlgos.contains(algo)) {
-    returnFailedAnswer(res, "The provided algo could no be found.", 501);
-    return;
-  }
-
   state.out("Starting time mesurement...", 0);
   auto startTime = std::chrono::steady_clock::now();
 
-  if (algo == "selection")
-    selectionSort(values, response);
-  else if (algo == "cycle")
-    cycleSort(values, response);
-  else if (algo == "bubble")
-    bubbleSort(values, response);
-  else if (algo == "quick")
-    quickSort(values, 0, values.size() - 1, response);
-  else if (algo == "merge")
-    mergeSort(values, response);
-  else if (algo == "counting") {
-    bool hasNegNumbers = std::any_of(values.begin(), values.end(),
-                                     [](int x) { // some weird callback shit
-                                       return x < 0;
-                                     });
-    if (hasNegNumbers) {
-      returnFailedAnswer(
-          res,
-          "Counting sort does not allow negative numbers. See Issue #39 on "
-          "github.com/mrhunor/algosee/issues for more info.",
-          501);
-      return;
-    }
-    countingSort(values, response);
-  } else if (algo == "bogo") {
-    if (values.size() > MAX_ELEMENT_COUNT_BOGO) {
-      returnFailedAnswer(
-          res, "Aborted early:Too many elements specified, answer would "
-               "likely exceed the memory limit of the server");
-      return;
-    }
-
-    bogoSort(values, response);
+  if (info.algo == "selection")
+    selectionSort(info.values, response);
+  else if (info.algo == "cycle")
+    cycleSort(info.values, response);
+  else if (info.algo == "bubble")
+    bubbleSort(info.values, response);
+  else if (info.algo == "quick")
+    quickSort(info.values, 0, info.values.size() - 1, response);
+  else if (info.algo == "merge")
+    mergeSort(info.values, response);
+  else if (info.algo == "counting") {
+    countingSort(info.values, response);
+  } else if (info.algo == "bogo") {
+    bogoSort(info.values, response);
   }
 
   // Default for all algorithms exit
@@ -129,7 +78,7 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res,
   state.out("Ended Time mesurement.", 0);
   response["TIME"] = elapsed.count();
 
-  response["SORTED"] = values;
+  response["SORTED"] = info.values;
 
   res.status = 200;
   res.set_header("Access-Control-Allow-Origin", "*");
