@@ -160,13 +160,13 @@
         compareBtn.addEventListener('click', (e) => {
             e.preventDefault();
             const selectedAlgo2 = compareSelect.value;
-            
+            const selectedServer = document.querySelector('input[name="server-target"]:checked').value;
             if (!selectedAlgo2) {
-                alert("Bitte wähle einen Algorithmus zum Vergleichen aus.");
+                alert("Please choose an algorithm to compare");
                 return;
             }
 
-            window.location.href = `compare.html?algo1=${algoKey}&algo2=${selectedAlgo2}`;
+            window.location.href = `compare.html?algo1=${algoKey}&algo2=${selectedAlgo2}&server=${selectedServer}`;
         });
 
         const data = algoDatabase[algoKey] || {
