@@ -16,22 +16,20 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-
-#ifndef SALGOS_H
-#define SALGOS
-
-#include "../config.h"
-#include <nlohmann/json.hpp>
+#ifndef IMGVALIDATE_H
+#define IMGVALIDATE_H
 #include <vector>
+#include <httplib/httplib.h>
+#include "../../logger/logger.h"
+#include "../../config.h"
 
-void selectionSort(std::vector<int> &unsorted, json &response);
-void bogoSort(std::vector<int> &unsorted, json &response);
-void bubbleSort(std::vector<int> &unsorted, json &response);
-void bubbleSort(image img, json &response);
-void quickSort(std::vector<int> &unsorted, int low, int high, json &response);
-void mergeSort(std::vector<int> &unsorted, json &response);
-void countingSort(std::vector<int> &unsorted, json &response);
-void countingSort(image &img, json &response);
-void cycleSort(std::vector<int> &unsorted, json &response);
-void cycleSort(image &img, json &response);
+ struct ImageValidReturn {
+  image img;
+  std::string algo;
+
+  bool failure=false;
+  std::string failureString;
+};
+
+ImageValidReturn validateImage(const httplib::Request &req, stateClass& state);
 #endif
