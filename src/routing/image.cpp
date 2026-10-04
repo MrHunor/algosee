@@ -16,19 +16,13 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-
-#ifndef PATHALGO_UTILS_H
-#define PATHALGO_UTILS_H
-#include "../../config.h"
+#include "../logger/logger.h"
+#include "../sortalgo/algos.h"
+#include "../utils/general/utils.h"
+#include "../validate/sort/validate.h"
+#include <chrono>
+#include <exception>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
+#include <stb_image.h>
 #include <vector>
-
-void checkMapValidness(const std::vector<std::vector<int>> &mapInt,
-                              const std::pair<int, int> &start,
-                              const std::pair<int, int> &goal);
-void checkMapValidness(const std::vector<std::vector<bool>> &map,
-                              const std::pair<int, int> &start,
-                              const std::pair<int, int> &goal);
-std::vector<std::vector<bool>> castIntMapToBoolIfNeeded(const json &input);
-#endif

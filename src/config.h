@@ -18,14 +18,39 @@
  */
 #ifndef CONFIG_H
 #define CONFIG_H
+
+
+
+
 #include <nlohmann/json.hpp>
 #include <unordered_set>
+#include <vector>
 
 #define VERSION 0.8
 
 #define DEFAULT_COLOUR MAGENTA
 
 #define VERBOSE_LEVEL_NEEDED_FOR_TIME 0
+
+typedef unsigned char colour;
+struct pixel 
+{
+colour R;
+colour G;
+colour B;
+colour A;
+};
+
+
+typedef std::vector<std::pair<int,pixel>> indexPixel;
+
+struct image
+{
+int width;
+int height;
+indexPixel data;
+};
+
 
 #define MAX_ELEMENT_COUNT                                                      \
   2500 // you could customise this for every algo, but thats a future issue

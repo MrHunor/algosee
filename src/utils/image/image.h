@@ -16,19 +16,11 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-
-#ifndef PATHALGO_UTILS_H
-#define PATHALGO_UTILS_H
+#include "../../logger/logger.h"
 #include "../../config.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
-#include <vector>
+#include <stb_image.h>
 
-void checkMapValidness(const std::vector<std::vector<int>> &mapInt,
-                              const std::pair<int, int> &start,
-                              const std::pair<int, int> &goal);
-void checkMapValidness(const std::vector<std::vector<bool>> &map,
-                              const std::pair<int, int> &start,
-                              const std::pair<int, int> &goal);
-std::vector<std::vector<bool>> castIntMapToBoolIfNeeded(const json &input);
-#endif
+void shuffleImage(image& img);
+image loadImage(const httplib::Request &req, const stateClass &state);
