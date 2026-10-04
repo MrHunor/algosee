@@ -1,5 +1,5 @@
 build/*
 build-debug/*
-testserver/build/*
+testclient/build/*
 log.txt
 frontend/picsort/notice.md
