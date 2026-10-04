@@ -33,21 +33,28 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const algoKey = urlParams.get('algo') || 'selection';
-        const backendPingUrl = 'https://algosee.onrender.com/status'; // which url get's pinged
+        const serverParam = urlParams.get('server') || 'remote';
 
-        async function checkServer() {
-            try {
-                const response = await fetch(backendPingUrl);
-                if (response.ok) {
-                    window.location.href = `visualizer.html?algo=${algoKey}`;
+        // if local ->no loading
+        if (serverParam === 'local') {
+            window.location.href = `visualizer.html?algo=${algoKey}&server=local`;
+        } else {
+            const backendPingUrl = 'https://algosee.onrender.com/status'; // render ping
+
+            async function checkServer() {
+                try {
+                    const response = await fetch(backendPingUrl);
+                    if (response.ok) {
+                        window.location.href = `visualizer.html?algo=${algoKey}&server=remote`;
+                    }
+                } catch (e) {
+                    console.log("server's still sleeping");   // Debugging-Log
                 }
-            } catch (e) {
-                console.log("server's still sleeping");   //console log for debugging
             }
-        }
 
-        checkServer();
-        setInterval(checkServer, 3000);
+            checkServer();
+            setInterval(checkServer, 3000);
+        }
     </script>
 </body>
 </html>

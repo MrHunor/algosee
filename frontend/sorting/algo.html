@@ -58,6 +58,12 @@
                 <div class="wiki-source">
                     Source: <a id="wiki-link" href="#" target="_blank" rel="noopener noreferrer">Wikipedia</a>
                 </div>
+                <!-- Server-Switch UI -->
+                <div class="server-switch" style="display: flex; gap: 1rem; align-items: center; color: #cbd5e1; font-size: 0.9rem;">
+                    <span>Server:</span>
+                    <label style="cursor: pointer;"><input type="radio" name="server-target" value="remote" checked> Remote (Render)</label>
+                    <label style="cursor: pointer;"><input type="radio" name="server-target" value="local"> Localhost</label>
+                </div>
             </div>
         </div>
     </main>
@@ -185,8 +191,19 @@
         wikiLinkElement.href = data.wikiUrl;
         wikiLinkElement.innerText = "Wikipedia";
 
-        // Set Play-Button link to vis. site
-        document.getElementById('visualizer-link').href = `visualizer.html?algo=${algoKey}`;
+        // update link
+        function updateVisualizerLink() {
+            const selectedServer = document.querySelector('input[name="server-target"]:checked').value;
+            document.getElementById('visualizer-link').href = `loading.html?algo=${algoKey}&server=${selectedServer}`;
+        }
+
+        // eventlistener fpr switch changes
+        document.querySelectorAll('input[name="server-target"]').forEach(input => {
+            input.addEventListener('change', updateVisualizerLink);
+        });
+
+        // init while loading
+        updateVisualizerLink();
     </script>
 </body>
 </html>
