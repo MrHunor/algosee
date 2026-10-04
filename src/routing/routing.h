@@ -40,5 +40,6 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res,
 
 void RunPathalgo(const httplib::Request &req, httplib::Response &res,
                  stateClass &state);
-
+void runImageSort(const httplib::Request &req, httplib::Response &res,
+                  stateClass &state);
 #endif

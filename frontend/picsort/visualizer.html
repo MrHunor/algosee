@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">AlgoSee - Visualization</title>
+    <title id="page-title">AlgoSee - Image Visualization</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -16,35 +16,38 @@
         <a href="index.html" class="logo-link"><h1 class="logo">AlgoSee</h1></a>
     </header>
 
-   <main class="visualizer-container">
+   <main class="visualizer-container visualizer-container-custom">
         <div class="visualizer-header">
             <h2 id="algo-title">loading...</h2>
             
-            <!-- Size & Speed -->
+            <!-- controls (picture upload) -->
             <div class="speed-control-box">
-                <!-- slider for array-size -->
-                <div class="size-control speed-control-inner">
-                    <label for="array-size-slider">sz: <span id="size-val">15</span></label>
-                    <input type="range" id="array-size-slider" min="3" max="50" value="15" class="cursor-pointer">
-                </div>
-
-                <!-- slider for speed -->
-                <div class="size-control speed-control-inner">
-                    <label for="speed-slider">spd: <span id="speed-val">200</span>ms</label>
-                    <input type="range" id="speed-slider" min="1" max="500" step="10" value="200" class="cursor-pointer">
+                <div class="speed-control-inner">
+                    <label for="image-upload">Image:</label>
+                    <input type="file" id="image-upload" accept="image/*" class="file-input-custom cursor-pointer">
                 </div>
             </div>
 
-            <!-- Action Buttons-->
+            <!-- Action Buttons -->
             <div class="controls">
                 <button id="start-btn" class="control-btn primary">start sorting</button>
                 <button id="stop-btn" class="control-btn secondary" disabled>stop</button>
-                <button id="reset-btn" class="control-btn secondary">generate new array</button>
+                <button id="reset-btn" class="control-btn secondary">reset image</button>
             </div>
         </div>
 
-        <!-- Draws the bars-->
-        <div id="array-container" class="array-container"></div>
+        <!-- Canvas Container -->
+        <div class="canvas-wrapper-grid">
+            <div class="canvas-box-center">
+                <p class="canvas-label">Original </p>
+                <canvas id="source-canvas" width="200" height="200" class="canvas-element"></canvas>
+            </div>
+            <div class="canvas-box-center">
+                <p class="canvas-label">Sorting Progress</p>
+                <canvas id="target-canvas" width="200" height="200" class="canvas-element"></canvas>
+            </div>
+        </div>
+
         <div id="execution-time" class="execution-time-box">
             The backend took <span id="time-val">-</span> ms
         </div>

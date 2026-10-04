@@ -25,6 +25,7 @@
 #include <string>
 
 int main(int argc, char *argv[]) {
+  remove("log.txt");
   stateClass state;
   state.verbose = 0;
   state.out("algosee Copyright (C) 2026  MrHunor, siryanni (as equals)\n"

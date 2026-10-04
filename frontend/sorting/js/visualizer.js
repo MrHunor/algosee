@@ -171,7 +171,7 @@ startBtn.addEventListener('click', async () => {
     resetBtn.disabled = true;
     if (sizeSlider) sizeSlider.disabled = true;
     if (speedSlider) speedSlider.disabled = true;
-    stopBtn.disabled = false; // accses stop button jhhuhu
+    stopBtn.disabled = false; // accses stop button 
     isCancelled = false;      // reset cancel flag
 
     try {
@@ -400,4 +400,4 @@ async function visualizeCounting(sortedArray, speed) {
     }
 }
 
-//almost 400ll lol XD
+//400ll lol XD

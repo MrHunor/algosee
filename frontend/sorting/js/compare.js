@@ -6,6 +6,10 @@
 const urlParams = new URLSearchParams(window.location.search);
 const algoKey1 = urlParams.get('algo1'); // no fallback
 const algoKey2 = urlParams.get('algo2'); // no fallback
+const serverParam = urlParams.get('server') || 'remote';
+const backendBase = serverParam === 'local' 
+    ? 'http://localhost:8080' 
+    : 'https://algosee.onrender.com';
 
 const algoNames = {
     bogo: "BogoSort",
@@ -19,7 +23,7 @@ const algoNames = {
     radix: "RadixSort",
     intro: "IntroSort"
 };
-// if no algo, show placeholder wh
+// if no algo, show placeholder 
 const name1 = algoNames[algoKey1] || "no algo selected";
 const name2 = algoNames[algoKey2] || "no algo selected";
 
@@ -164,17 +168,17 @@ startBtn.addEventListener('click', async () => {
     document.getElementById('time-val-2').innerText = '-';
 
     try {
-        const [res1, res2] = await Promise.all([
-            fetch(`https://algosee.onrender.com/sortalgo?algo=${algoKey1}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ values: [...baseArray] })
-            }),
-            fetch(`https://algosee.onrender.com/sortalgo?algo=${algoKey2}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ values: [...baseArray] })
-            })
+            const [res1, res2] = await Promise.all([
+        fetch(`${backendBase}/sortalgo?algo=${algoKey1}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ values: [...baseArray] })
+        }),
+        fetch(`${backendBase}/sortalgo?algo=${algoKey2}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ values: [...baseArray] })
+        })
         ]);
 
         if (!res1.ok || !res2.ok) throw new Error('Error with backend communication.');
@@ -196,8 +200,8 @@ startBtn.addEventListener('click', async () => {
         ]);
 
     } catch (error) {
-        console.error("Verbindungsfehler:", error);
-        alert("Fehler beim Verbinden mit dem Backend.");
+        console.error("Connectionerror:", error);
+        alert("Error while connecting to backend");
     } finally {
         startBtn.disabled = false;
         resetBtn.disabled = false;
@@ -207,15 +211,15 @@ startBtn.addEventListener('click', async () => {
     }
 });
 
-// --- Success Wave Animation (Grün werden + Sound wie in visualizer.js) ---
+// --- Success Wave Animation  ---
 async function playSuccessWave(containerElement) {
     const bars = containerElement.children;
 
     for (let i = 0; i < bars.length; i++) {
         if (isCancelled) return;
 
-        bars[i].style.backgroundColor = '#22c55e'; // Grün färben
-        playTone(200 + (i * 40));                   // Sound abspielen[cite: 8]
+        bars[i].style.backgroundColor = '#22c55e'; // turn green
+        playTone(200 + (i * 40));                   // play sound[cite: 8]
 
         await new Promise(resolve => setTimeout(resolve, Math.max(20, animationSpeed / 3)));
     }
@@ -290,7 +294,7 @@ async function visualizeAlgo(containerElement, data, key) {
         await new Promise(resolve => setTimeout(resolve, dynamicSpeed));
     }
 
-    // Wenn nicht abgebrochen, am Ende die grüne Erfolgswelle für diesen Container zünden
+    // if not cancelled, play wave anim
     if (!isCancelled) {
         await playSuccessWave(containerElement);
     }

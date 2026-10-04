@@ -29,18 +29,6 @@
                 </svg>
                 <span>start visualization</span>
             </a>
-
-            <!-- compare section -->
-            <div class="compare-section compare-box-layout">
-                <label for="compare-select" class="compare-label-text">compare with:</label>
-                <select id="compare-select" class="compare-select-dropdown cursor-pointer">
-                    <!-- dynamic -->
-                </select>
-                <button id="compare-btn" class="play-button compare-action-btn">
-                    <span>Start Comparison</span>
-                </button>
-            </div>
-
             <h2 id="algo-name" class="algo-main-title">loading...</h2>
         </div>
 
@@ -144,31 +132,7 @@
                 spaceComplexity:"O(log n)"
             }
         };
-
-        const compareSelect = document.getElementById('compare-select');
-        const compareBtn = document.getElementById('compare-btn');
-
-        for (const [key, algoData] of Object.entries(algoDatabase)) {
-            if (key !== algoKey) {
-                const option = document.createElement('option');
-                option.value = key;
-                option.innerText = algoData.name;
-                compareSelect.appendChild(option);
-            }
-        }
-
-        compareBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            const selectedAlgo2 = compareSelect.value;
-            const selectedServer = document.querySelector('input[name="server-target"]:checked').value;
-            if (!selectedAlgo2) {
-                alert("Please choose an algorithm to compare");
-                return;
-            }
-
-            window.location.href = `compare.html?algo1=${algoKey}&algo2=${selectedAlgo2}&server=${selectedServer}`;
-        });
-
+    
         const data = algoDatabase[algoKey] || {
             name: "unknown algorithm",
             description: "No Details for this Algorithm",
@@ -187,7 +151,7 @@
 
         function updateVisualizerLink() {
         const selectedServer = document.querySelector('input[name="server-target"]:checked').value;
-        document.getElementById('visualizer-link').href = `../loading.html?dir=sorting&algo=${algoKey}&server=${selectedServer}`;
+        document.getElementById('visualizer-link').href = `../loading.html?dir=picsort&algo=${algoKey}&server=${selectedServer}`;
         }
 
         document.querySelectorAll('input[name="server-target"]').forEach(input => {

@@ -84,14 +84,23 @@ Current plans invlove expanding into other areas of algorithms, like wayfinding 
 # ----------------For Contributers-------------------------- 
 
 ## Project structure:
----------------------- NOT UP TO DATE -----------------------------
 - `./assets` Contains images for this ReadME
 - `./benchmarks` Contains the benchmark script and results
 - `./frontend` Root folder of the Frontend side  
-   -> `/assets/` Contains the images seen in the index.html  
-   -> `/css/` contains the main css file  
-   -> `/js/` Contains JS files  
-   -> `/` Contains all html files  
+   -> `/assets/` Contains global images for `/frontend/` 
+   -> `/css/` contains global css file  
+   -> Global HTML files (loading;index/landing)
+   -> `/path/`
+      ->`/js` contains visualizer.js
+      ->html files
+   ->`/picsort/`
+      ->`/js/` "
+      -> html
+   ->`/sorting/`
+      ->`/js/`
+         -> compare.js main.js visualizer.js 
+      ->html files
+     
 - `./src` Root folder of the Backend side  
    -> `pathalgo` Contains pathfinding algorithms  
    -> `/server/` Contains server logic  
