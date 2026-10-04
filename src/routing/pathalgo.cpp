@@ -31,22 +31,13 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
                  stateClass &state) {
 
   // variables
-  std::string ip;
   std::vector<std::pair<int, int>> path;
   json response;
   response["VERSION"] = VERSION;
   bool sameRowLength = true;
   int collums;
   // log ip
-  if (req.has_header("X-Forwarded-For")) {
-    ip = req.get_header_value("X-Forwarded-For");
-  } else {
-    ip = req.remote_addr;
-  }
 
-  state.out("Recived Request:\nClientIP:" + ip + "\nTarget:" + req.target +
-                "\nBody:" + req.body,
-            0);
 
   // parsing
   state.out("Processing values....", 0);

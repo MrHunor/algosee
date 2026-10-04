@@ -28,16 +28,7 @@
 
 void runSortalgo(const httplib::Request &req, httplib::Response &res,
                  stateClass &state) {
-  std::string ip;
-  if (req.has_header("X-Forwarded-For")) {
-    ip = req.get_header_value("X-Forwarded-For");
-  } else {
-    ip = req.remote_addr;
-  }
-
-  state.out("Recived Request:\nClientIP:" + ip + "\nTarget:" + req.target +
-                "\nBody:" + req.body,
-            0);
+  
 
   state.out("Processing values....", 0);
   SortValidReturn info;
