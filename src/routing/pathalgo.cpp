@@ -71,6 +71,7 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
       std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
   state.out("Ended time measurement.", 0);
   response["TIME"] = elapsed.count();
+  
   if (path.empty()) {
     returnFailedAnswer(res, "No Valid path from start to goal could be found.",
                        500);

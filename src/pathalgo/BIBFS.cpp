@@ -17,6 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../config.h"
+#include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
 #include <nlohmann/json.hpp>
 #include <queue>
@@ -135,8 +136,8 @@ std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map,
       }
     }
   }
-  response["VISITEDFROMSTART"] = visitedFromStart;
-  response["VISITEDFROMEND"] = visitedFromEnd;
+  response["VISITEDFROMSTART"] = swapVisitedArray(visitedFromStart);
+  response["VISITEDFROMEND"] =swapVisitedArray(visitedFromEnd);
 
   if (meetingPointX == -1)
     return {};

@@ -17,6 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../config.h"
+#include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
 #include <nlohmann/json.hpp>
 #include <stack>
@@ -81,7 +82,8 @@ DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
   }
   // being out of the while loop means every possible tile was explored
 
-  response["VISITED"] = visited;
+  response["VISITED"] = swapVisitedArray(visited);
+  
 
   if (!visited[goal.second][goal.first])
     return {}; // never once reached the goal means there was no path found to
