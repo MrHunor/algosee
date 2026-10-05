@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#This script is here, cuz I am lazy af :D
 if [ -z "$1" ]; then
     echo "Fehler: Bitte gib eine Commit-Nachricht an."
     echo "Nutzung: ./gpush.sh \"deine nachricht\""
