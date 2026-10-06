@@ -92,25 +92,25 @@ const std::vector<std::pair<std::string,std::pair<int,int>>> testCasesPathfindin
     {"BFS",{20,5}},
     {"BFS",{100,45}},
     {"BFS",{250,150}},
-    {"BFS",{250,250}},
+    {"BFS",{249,249}},
 
     {"dijkstra",{10,5}},
     {"dijkstra",{20,5}},
     {"dijkstra",{100,45}},
     {"dijkstra",{250,150}},
-    {"dijkstra",{250,250}},
+    {"dijkstra",{249,249}},
 
     {"DFS",{10,5}},
     {"DFS",{20,5}},
     {"DFS",{100,45}},
     {"DFS",{250,150}},
-    {"DFS",{250,250}},
+    {"DFS",{249,249}},
 
     {"BIBFS",{10,5}},
     {"BIBFS",{20,5}},
     {"BIBFS",{100,45}},
     {"BIBFS",{250,150}},
-    {"BIBFS",{250,250}},
+    {"BIBFS",{249,249}},
 };
 
 
