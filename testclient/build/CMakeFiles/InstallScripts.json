@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/user/code/algosee/testclient/build/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
