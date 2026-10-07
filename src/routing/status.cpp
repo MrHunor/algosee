@@ -26,7 +26,13 @@ void RunStatus(const httplib::Request &req, httplib::Response &res,
   json response;
   response["STATUS"] = "ONLINE";
   response["VERION"] = "VERSION";
-  state.out("Sending status signal.", 0);
+  if (req.has_header("X-Forwarded-For")) {
+    state.out("Status request from:" + req.get_header_value("X-Forwarded-For"),
+              0);
+  } else {
+    state.out(req.remote_addr, 0);
+  }
+  state.out("Send status signal.", 0);
   res.status = 200;
   res.set_header("Access-Control-Allow-Origin", "*");
   res.set_content(response.dump(), "application/json");

@@ -40,20 +40,3 @@ void bubbleSort(std::vector<int> &unsorted, json &response) {
     }
   }
 }
-
-void bubbleSort(image& img, json &response) {
-  if (img.data.size() <= 1)
-    return; // an array of the size one is already sorted
-  for (size_t i = 0; i < img.data.size(); i++) {
-    for (size_t z = 0; z < img.data.size() - 1 - i;
-         z++) // you can subtract i because the last elements have already been
-              // orderd before, this saves you some time but doesnt make the
-              // horrible O(n^2) much better
-    {
-      if (img.data[z].first > img.data[z + 1].first) {
-        response["MOVES"].push_back({z, z + 1});
-        std::swap(img.data[z],img.data[z + 1]);
-      }
-    }
-  }
-}

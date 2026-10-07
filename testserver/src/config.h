@@ -19,6 +19,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 #include <nlohmann/json.hpp>
+#include <set>
 #include <unordered_set>
 
 #define VERSION 0.8
@@ -34,11 +35,12 @@
 #define MAX_ELEMENT_COUNT_BOGO 9
 
 using json = nlohmann::json;
-
 const std::unordered_set<std::string> implementedSortAlgos = {
-    "selection", "bogo", "bubble", "quick", "merge", "counting", "cycle"};
+    "selection",  "bubble", "quick", "merge", "counting", "cycle"};
 
 const std::unordered_set<std::string> implementedPathAlgos = {"BFS", "dijkstra",
                                                               "DFS", "BIBFS"};
 
+const std::set<int> testSizesSort = {2,10,25,100,250,1000,2000,MAX_ELEMENT_COUNT-1};
+const std::set<std::pair<int,int>> testSizesPath = {{10,5},{10,10},{20,20},{20,5},{30,30},{30,5},{50,50},{100,100},{250,250}};
 #endif

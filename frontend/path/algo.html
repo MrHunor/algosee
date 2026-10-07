@@ -3,6 +3,7 @@
   LICENSE:GNU General Public License v3 (GPLv3)
 -->
 
+<!-- again, mostly same architecture as sorting -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -34,35 +35,30 @@
             <h2 id="algo-name" class="algo-main-title">loading...</h2>
         </div>
 
-        <!-- right: long description -->
+        <!-- right: long ass description against whitespace -->
         <div class="algo-right-column">
             <div class="description-card">
                 <h3>description</h3>
-                <p id="algo-description">Info to algorithm loading...</p>
+<p id="algo-description">Info to alogrithm loading...</p>
 
-                <div class="complexity">
-                    <p><strong>Time Complexity:</strong> <span id="time-complexity"></span></p>
-                    <p><strong>Space Complexity:</strong> <span id="space-complexity"></span></p>
-                </div>
+<div class="complexity">
+    <p><strong>Time Complexity:</strong> <span id="time-complexity"></span></p>
+    <p><strong>Space Complexity:</strong> <span id="space-complexity"></span></p>
+</div>
                 <!-- wiki credits -->
                 <div class="wiki-source">
                     Source: <a id="wiki-link" href="#" target="_blank" rel="noopener noreferrer">Wikipedia</a>
-                </div>
-                
-                <!-- Server-Switch UI -->
-                <div class="server-switch server-switch-wrapper">
-                    <span>Server:</span>
-                    <label class="cursor-pointer"><input type="radio" name="server-target" value="remote" checked> Remote (Render)</label>
-                    <label class="cursor-pointer"><input type="radio" name="server-target" value="local"> Localhost</label>
                 </div>
             </div>
         </div>
     </main>
  
    <script>
+        // read URL-parameters
         const urlParams = new URLSearchParams(window.location.search);
-        const algoKey = urlParams.get('algo') || 'bogo';
+        const algoKey = urlParams.get('algo') || 'bogo'; // Fallback
 
+        // central db for infos + wikiUrl
         const algoDatabase = {
             bfs: {
                 name: "Breadth first search",
@@ -80,7 +76,7 @@
             },
             dij: {
                 name: "Dijkstra",
-                description: "Dijkstra's algorithm finds the shortest path from a given source node to every other node.[7]: 196–206  It can be used to find the shortest path to a specific destination node, by terminating the algorithm after determining the shortest path to that node. For example, if the nodes of the graph represent cities, and the costs of edges represent the distances between pairs of cities connected by a direct road, then Dijkstra's algorithm can be used to find the shortest route between one city and all other cities.",
+                description: "Dijkstra's algorithm finds the shortest path from a given source node to every other node.[7]: 196–206  It can be used to find the shortest path to a specific destination node, by terminating the algorithm after determining the shortest path to that node. For example, if the nodes of the graph represent cities, and the costs of edges represent the distances between pairs of cities connected by a direct road, then Dijkstra's algorithm can be used to find the shortest route between one city and all other cities.",
                 wikiUrl: "https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm",
                 timeComplexity:"O(E log V); where V = number of Verticles (=nodes) and E = number of edges",
                 spaceComplexity:"O(V)"
@@ -129,6 +125,7 @@
             }
         };
 
+        // paste data in html-set
         const data = algoDatabase[algoKey] || {
             name: "unknown algorithm",
             description: "No Details for this Algorithm",
@@ -140,21 +137,23 @@
         document.getElementById('algo-description').innerText = data.description;
         document.getElementById('time-complexity').innerText = data.timeComplexity;
         document.getElementById('space-complexity').innerText = data.spaceComplexity;
-        
+        // Set Wikipedia Link
         const wikiLinkElement = document.getElementById('wiki-link');
         wikiLinkElement.href = data.wikiUrl;
         wikiLinkElement.innerText = "Wikipedia";
 
-        function updateVisualizerLink() {
-        const selectedServer = document.querySelector('input[name="server-target"]:checked').value;
-        document.getElementById('visualizer-link').href = `../loading.html?dir=path&algo=${algoKey}&server=${selectedServer}`;
-        }
-
-        document.querySelectorAll('input[name="server-target"]').forEach(input => {
-            input.addEventListener('change', updateVisualizerLink);
-        });
-
-        updateVisualizerLink();
+        // Set Play-Button link to vis. site
+        document.getElementById('visualizer-link').href = `visualizer.html?algo=${algoKey}`;
     </script>
 </body>
 </html>
+ 
+ 
+ 
+ 
+ 
+ 
+    <!-- aktueller stand: 
+  Ich muss noch die main.js für path schreiben, sonst bringt es nichts script 
+  jetzt schon anzufertigen. 
+  referenz siehe algo.html in sorting-->

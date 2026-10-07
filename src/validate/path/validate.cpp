@@ -23,9 +23,8 @@
 #include <httplib/httplib.h>
 #include <stdexcept>
 
-PathValidReturn validatePath(const httplib::Request &req, stateClass& state) {
+PathValidReturn validatePath(const httplib::Request &req, stateClass state) {
   PathValidReturn retval;
-  state.out("Checking algo URL parameter...",0);
   try {
     if (!req.has_param("algo")) {
       throw std::runtime_error("URL does not contain a url parameter.");
@@ -35,15 +34,13 @@ PathValidReturn validatePath(const httplib::Request &req, stateClass& state) {
       throw std::runtime_error(
           "URL contains a algo parameter but no algo is set.");
     }
-    if (!implementedPathAlgos.contains(retval.algo)) {
+    if (!implementedSortAlgos.contains(retval.algo)) {
       throw std::runtime_error(
           "Provided algo does not exist or is not implemented.");
     }
 
-    state.out("Parsing body...",0);
-    json parsed = json::parse(req.body);
-    
-    state.out("Checking MAP, START and GOAL parameters existance...",0);
+    json parsed = json(req.body);
+
     if (!parsed.contains("MAP")) {
       throw std::runtime_error("Body does not contain a MAP parameter.");
     }
@@ -54,8 +51,6 @@ PathValidReturn validatePath(const httplib::Request &req, stateClass& state) {
       throw std::runtime_error("Body does not contain a GOAL parameter.");
     }
 
-
-    state.out("Casting Map (if needed)...",0);
     if (retval.algo == "dijkstra") {
       retval.mapInt = parsed["MAP"];
       if (retval.mapInt.empty()) {
@@ -64,22 +59,14 @@ PathValidReturn validatePath(const httplib::Request &req, stateClass& state) {
     } else {
       retval.mapBool = castIntMapToBoolIfNeeded(parsed);
       if (retval.mapBool.empty()) {
-        throw std::runtime_error("MAP does not contain any values or failed to parse.");
+        throw std::runtime_error("MAP does not contain any values.");
       }
     }
-
-  
 
     //this will throw itself it is empty
     retval.start = parsed["START"];
     retval.goal = parsed["GOAL"];
 
-    state.out("Checking Maps internal validness...",0);
-    if(retval.algo!="dijkstra") checkMapValidness(retval.mapBool, retval.start, retval.goal);
-    else checkMapValidness(retval.mapInt, retval.start, retval.goal);
-    
-
-    
   } catch (const std::exception &e) {
     state.out("An Exception was thrown while validating the input:" +
                   std::string(e.what()),
@@ -97,5 +84,4 @@ PathValidReturn validatePath(const httplib::Request &req, stateClass& state) {
     retval.failure = true;
     return retval;
   }
-  return retval;
 }

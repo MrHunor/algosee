@@ -7,11 +7,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const algoKey = urlParams.get('algo') || 'selection';
 
-const serverParam = urlParams.get('server') || 'remote';
-const backendBase = serverParam === 'local' 
-    ? 'http://localhost:8080' // adjust local port here
-    : 'https://algosee.onrender.com';
-
 // adjust title
 const algoNames = {
     bogo: "BogoSort",
@@ -109,16 +104,13 @@ if (sizeSlider) {
             sizeSlider.value = 10;
         }
 
-        arraySize = val;w
+        arraySize = val;
         sizeValSpan.innerText = val;
         generateArray();
     });
 }
-
-// init an array asap 
-generateArray();
-
 // -------------------------------------------------------------
+
 // generate random array and draw bars
 function generateArray() {
     container.innerHTML = '';
@@ -165,13 +157,13 @@ startBtn.addEventListener('click', async () => {
         return;
     }
 
-    const backendUrl = `${backendBase}/sortalgo?algo=${algoKey}`;
+    const backendUrl = `https://algosee.onrender.com/sortalgo?algo=${algoKey}`;
 
     startBtn.disabled = true;
     resetBtn.disabled = true;
     if (sizeSlider) sizeSlider.disabled = true;
     if (speedSlider) speedSlider.disabled = true;
-    stopBtn.disabled = false; // accses stop button 
+    stopBtn.disabled = false; // accses stop button
     isCancelled = false;      // reset cancel flag
 
     try {
@@ -400,4 +392,4 @@ async function visualizeCounting(sortedArray, speed) {
     }
 }
 
-//400ll lol XD
+//almost 400ll lol XD

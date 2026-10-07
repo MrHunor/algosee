@@ -27,11 +27,9 @@
 void selectionSort(std::vector<int> &unsorted, json &response);
 void bogoSort(std::vector<int> &unsorted, json &response);
 void bubbleSort(std::vector<int> &unsorted, json &response);
-void bubbleSort(image img, json &response);
 void quickSort(std::vector<int> &unsorted, int low, int high, json &response);
 void mergeSort(std::vector<int> &unsorted, json &response);
+
 void countingSort(std::vector<int> &unsorted, json &response);
-void countingSort(image &img, json &response);
 void cycleSort(std::vector<int> &unsorted, json &response);
-void cycleSort(image &img, json &response);
 #endif

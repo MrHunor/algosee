@@ -30,5 +30,5 @@
   std::string failureString;
  };
 
-SortValidReturn validateSort(const httplib::Request &req, stateClass& state);
+SortValidReturn validateSort(const httplib::Request &req, stateClass state);
 #endif

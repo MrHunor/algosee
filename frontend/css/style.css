@@ -169,7 +169,7 @@ body {
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: 1.2rem;
-    color: #3b82f6;
+    color: #3b82f6; /* accents */
 }
 
 .description-card p {
@@ -306,7 +306,7 @@ body {
     font-weight: 600;
 }
 
-/* slider styling */
+/* slider styling cuz default was really buggy*/
 .visualizer-header input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
@@ -357,7 +357,7 @@ body {
     transform: scale(1.1);
 }
 
-/* Footer Styling */
+/*Footer Styling*/
 footer {             
     background-color: #1a1a1a; 
     color: #ffffff;
@@ -383,8 +383,9 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
-
+/*-------------------------------------------------*/
 /* PATHFINDING */
+/*grid container*/
 .path-grid {
     display: grid;
     grid-template-columns: repeat(25, 1fr); 
@@ -398,6 +399,7 @@ footer a:hover {
     overflow: hidden;
 }
 
+/* single cell */
 .grid-cell {
     background-color: #1a1a1a;
     border: 1px solid #262626;
@@ -410,32 +412,34 @@ footer a:hover {
     background-color: #333333;
 }
 
+/* cell state */
 .grid-cell.start {
-    background-color: #22c55e;
+    background-color: #22c55e; /* grenn for start */
     border-color: #16a34a;
 }
 
 .grid-cell.goal {
-    background-color: #ef4444;
+    background-color: #ef4444; /* red for goal */
     border-color: #dc2626;
 }
 
 .grid-cell.wall {
-    background-color: #64748b;
+    background-color: #64748b; /* grey ->wall */
     border-color: #475569;
 }
 
 .grid-cell.visited {
-    background-color: #3b82f6;
+    background-color: #3b82f6; /* blue -> visited point */
 }
 
 .grid-cell.path {
-    background-color: #eab308;
+    background-color: #eab308; /* yellow ->final path */
 }
 
-/* COMPARISON VIEW STYLING */
+/*----------------------------------------------------------------------*/
+/* --- COMPARISON VIEW STYLING (FIXED) --- */
 .visualizer-container.compare-main-container {
-    max-width: 1300px;
+    max-width: 1300px !important;
 }
 
 .compare-grid {
@@ -455,7 +459,6 @@ footer a:hover {
     flex-direction: column;
     gap: 0.8rem;
     min-width: 0; 
-}
 
 .compare-pane-header {
     display: flex;
@@ -480,93 +483,12 @@ footer a:hover {
 }
 
 .compare-array-container {
-    height: 280px;
-    padding: 1.5rem;
+    height: 280px !important;
+    padding: 1.5rem !important;
 }
 
 @media (max-width: 900px) {
     .compare-grid {
         flex-direction: column;
     }
-}
-
-/* TOOL SELECTION & COST TILES & NEW UTILITY CLASSES FOR CLEAN HTML */
-.tool-btn.active {
-    background-color: #3b82f6;
-    color: #ffffff;
-    border-color: #3b82f6;
-}
-
-.grid-cell.cost-5 {
-    background-color: #475569; 
-    border-color: #334155;
-}
-
-/* inline replacement */
-.server-switch-wrapper {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    color: #cbd5e1;
-    font-size: 0.9rem;
-}
-
-.cursor-pointer {
-    cursor: pointer;
-}
-
-.visualizer-main-container {
-    text-align: center;
-    padding: 4rem 2.5rem;
-}
-
-.visualizer-heading-main {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-    color: #3b82f6;
-}
-
-.visualizer-desc-text {
-    color: #cbd5e1;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    max-width: 600px;
-    margin: 0 auto 2rem auto;
-}
-
-.connecting-hint {
-    font-size: 0.9rem;
-    color: #888888;
-    letter-spacing: 1px;
-}
-
-.header-controls-group {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-.speed-control-box {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.speed-control-inner {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: #cbd5e1;
-}
-
-.tool-selector-box {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.tool-selector-label {
-    color: #cbd5e1;
-    font-size: 0.9rem;
-}
+}}
