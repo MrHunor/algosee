@@ -17,6 +17,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../../config.h"
+#include "../../logger/logger.h"
+#include <exception>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <stdexcept>
