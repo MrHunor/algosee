@@ -35,11 +35,11 @@
         const algoKey = urlParams.get('algo') || 'selection';
         const serverParam = urlParams.get('server') || 'remote';
 
-        // Wenn lokal gewählt wurde, direkt ohne Ping weiterleiten
+        //for localhost
         if (serverParam === 'local') {
             window.location.href = `visualizer.html?algo=${algoKey}&server=local`;
         } else {
-            const backendPingUrl = 'https://algosee.onrender.com/status'; // Pingt den Render-Server
+            const backendPingUrl = 'https://algosee.onrender.com/status'; // sends a server ping
 
             async function checkServer() {
                 try {
