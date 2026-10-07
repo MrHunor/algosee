@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Grid beim Laden aufbauen
     generateGrid();
 
-    // 8. Start-Button Handler
+   // 8. Start-Button Handler
     if (startBtn) {
         startBtn.addEventListener('click', async () => {
             let apiAlgo = algoKey.toUpperCase();
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.PATH) {
                     await visualizePath(data.PATH);
                 }
-
+ 
             } catch (error) {
                 console.error("Connection-Error:", error);
                 alert("Error connecting to backend or no valid path found.");
