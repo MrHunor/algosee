@@ -6,6 +6,10 @@
 const urlParams = new URLSearchParams(window.location.search);
 const algoKey1 = urlParams.get('algo1'); // no fallback
 const algoKey2 = urlParams.get('algo2'); // no fallback
+const serverParam = urlParams.get('server') || 'remote';
+const backendBase = serverParam === 'local' 
+    ? 'http://localhost:8080' 
+    : 'https://algosee.onrender.com';
 
 const algoNames = {
     bogo: "BogoSort",
@@ -164,17 +168,17 @@ startBtn.addEventListener('click', async () => {
     document.getElementById('time-val-2').innerText = '-';
 
     try {
-        const [res1, res2] = await Promise.all([
-            fetch(`https://algosee.onrender.com/sortalgo?algo=${algoKey1}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ values: [...baseArray] })
-            }),
-            fetch(`https://algosee.onrender.com/sortalgo?algo=${algoKey2}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ values: [...baseArray] })
-            })
+            const [res1, res2] = await Promise.all([
+        fetch(`${backendBase}/sortalgo?algo=${algoKey1}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ values: [...baseArray] })
+        }),
+        fetch(`${backendBase}/sortalgo?algo=${algoKey2}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ values: [...baseArray] })
+        })
         ]);
 
         if (!res1.ok || !res2.ok) throw new Error('Error with backend communication.');
