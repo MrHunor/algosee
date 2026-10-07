@@ -14,7 +14,7 @@
   };
   
 int main(int argc, char *argv[]) {
-  remove("log.txt");
+
   stateClass state;
   state.out("Testing sorting algorithms", 0);
 
