@@ -19,10 +19,24 @@
 #include "../logger/logger.h"
 #include "../sortalgo/algos.h"
 #include "../utils/general/utils.h"
-#include "../validate/sort/validate.h"
+#include "../validate/image/validate.h"
 #include <chrono>
 #include <exception>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <stb_image.h>
 #include <vector>
+
+void runImageSort(const httplib::Request &req, httplib::Response &res,
+                  stateClass &state) {
+  json response;
+  response["VERSION"];
+  ImageValidReturn info = validateImage(req, state);
+  if (info.failure) {
+    returnFailedAnswer(res, "Validate Image failed:" + info.failureString, 400);
+    return;
+  }
+
+
+
+}
