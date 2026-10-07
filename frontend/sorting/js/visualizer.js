@@ -400,4 +400,4 @@ async function visualizeCounting(sortedArray, speed) {
     }
 }
 
-//400ll lol XD
+//almost 400ll lol XD

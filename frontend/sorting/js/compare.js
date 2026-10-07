@@ -196,8 +196,8 @@ startBtn.addEventListener('click', async () => {
         ]);
 
     } catch (error) {
-        console.error("Connectionerror:", error);
-        alert("Error while connecting to backend");
+        console.error("Verbindungsfehler:", error);
+        alert("Fehler beim Verbinden mit dem Backend.");
     } finally {
         startBtn.disabled = false;
         resetBtn.disabled = false;
@@ -207,15 +207,15 @@ startBtn.addEventListener('click', async () => {
     }
 });
 
-// --- Success Wave Animation  ---
+// --- Success Wave Animation (Grün werden + Sound wie in visualizer.js) ---
 async function playSuccessWave(containerElement) {
     const bars = containerElement.children;
 
     for (let i = 0; i < bars.length; i++) {
         if (isCancelled) return;
 
-        bars[i].style.backgroundColor = '#22c55e'; // turn green
-        playTone(200 + (i * 40));                   // play sound[cite: 8]
+        bars[i].style.backgroundColor = '#22c55e'; // Grün färben
+        playTone(200 + (i * 40));                   // Sound abspielen[cite: 8]
 
         await new Promise(resolve => setTimeout(resolve, Math.max(20, animationSpeed / 3)));
     }
@@ -290,7 +290,7 @@ async function visualizeAlgo(containerElement, data, key) {
         await new Promise(resolve => setTimeout(resolve, dynamicSpeed));
     }
 
-    // if not cancelled, play wave anim
+    // Wenn nicht abgebrochen, am Ende die grüne Erfolgswelle für diesen Container zünden
     if (!isCancelled) {
         await playSuccessWave(containerElement);
     }

@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json().catch(() => null);
 
                 if (!response.ok) {
-                    // uses message from backend or http status
+                    // Verwendet die Message vom Backend (falls vorhanden) oder den HTTP-Status
                     const serverMessage = data?.error || data?.message || `Server-Fehler: ${response.status} ${response.statusText}`;
                     throw new Error(serverMessage);
                 }
