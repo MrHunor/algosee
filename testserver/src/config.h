@@ -36,7 +36,7 @@
 
 using json = nlohmann::json;
 const std::unordered_set<std::string> implementedSortAlgos = {
-    "selection",  "bubble", "quick", "merge", "counting", "cycle"};
+    "selection",  "bubble", "quick", "merge", "counting", "cycle","bogo"};
 
 const std::unordered_set<std::string> implementedPathAlgos = {"BFS", "dijkstra",
                                                               "DFS", "BIBFS"};

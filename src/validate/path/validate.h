@@ -20,6 +20,7 @@
 #define PATHVALIDATE_H
 #include "../../config.h"
 #include "../../logger/logger.h"
+#include <httplib/httplib.h>
 
 struct PathValidReturn {
   std::string algo;
@@ -33,4 +34,6 @@ struct PathValidReturn {
   bool failure = false;
   std::string failureString;
 };
+
+PathValidReturn validatePath(const httplib::Request &req, stateClass& state);
 #endif
