@@ -20,35 +20,25 @@ events:
     names:
       - "uname"
     candidate_directories:
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
     searched_directories:
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/uname"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/uname"
       - "/home/user/.local/bin/uname"
       - "/usr/local/bin/uname"
     found: "/usr/bin/uname"
     search_context:
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -58,7 +48,7 @@ events:
       - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:218 (message)"
       - "CMakeLists.txt:18 (project)"
     message: |
-      The system is: Linux - 7.2.8-2-cachyos - x86_64
+      The system is: Linux - 7.2.8-1-cachyos - x86_64
   -
     kind: "find-v1"
     backtrace:
@@ -83,14 +73,11 @@ events:
       - "/home/user/code/algosee/testclient/build/bin/"
       - "/home/user/code/algosee/testclient/build/sbin/"
       - "/home/user/code/algosee/testclient/build/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -98,22 +85,17 @@ events:
       - "/home/user/code/algosee/testclient/build/bin/gmake"
       - "/home/user/code/algosee/testclient/build/sbin/gmake"
       - "/home/user/code/algosee/testclient/build/gmake"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/gmake"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/gmake"
       - "/home/user/.local/bin/gmake"
       - "/usr/local/bin/gmake"
       - "/usr/bin/gmake"
       - "/bin/gmake"
       - "/usr/local/sbin/gmake"
-      - "/usr/lib/jvm/default/bin/gmake"
       - "/usr/bin/site_perl/gmake"
       - "/usr/bin/vendor_perl/gmake"
       - "/usr/bin/core_perl/gmake"
       - "/home/user/code/algosee/testclient/build/bin/make"
       - "/home/user/code/algosee/testclient/build/sbin/make"
       - "/home/user/code/algosee/testclient/build/make"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/make"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/make"
       - "/home/user/.local/bin/make"
       - "/usr/local/bin/make"
     found: "/usr/bin/make"
@@ -121,16 +103,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -166,14 +143,11 @@ events:
       - "/home/user/code/algosee/testclient/build/bin/"
       - "/home/user/code/algosee/testclient/build/sbin/"
       - "/home/user/code/algosee/testclient/build/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/usr/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -181,8 +155,6 @@ events:
       - "/home/user/code/algosee/testclient/build/bin/c++"
       - "/home/user/code/algosee/testclient/build/sbin/c++"
       - "/home/user/code/algosee/testclient/build/c++"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/c++"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/c++"
       - "/home/user/.local/bin/c++"
       - "/usr/local/bin/c++"
     found: "/usr/bin/c++"
@@ -190,16 +162,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -235,16 +202,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -291,13 +253,10 @@ events:
       - "ar"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -306,16 +265,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -340,13 +294,10 @@ events:
       - "ranlib"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -355,16 +306,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -389,13 +335,10 @@ events:
       - "strip"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -404,16 +347,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -438,13 +376,10 @@ events:
       - "ld"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -453,16 +388,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -487,13 +417,10 @@ events:
       - "nm"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -502,16 +429,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -536,13 +458,10 @@ events:
       - "objdump"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -551,16 +470,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -585,13 +499,10 @@ events:
       - "objcopy"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -600,16 +511,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -634,13 +540,10 @@ events:
       - "readelf"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -649,16 +552,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -683,25 +581,19 @@ events:
       - "dlltool"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
     searched_directories:
       - "/usr/bin/dlltool"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/dlltool"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/dlltool"
       - "/home/user/.local/bin/dlltool"
       - "/usr/local/bin/dlltool"
       - "/bin/dlltool"
       - "/usr/local/sbin/dlltool"
-      - "/usr/lib/jvm/default/bin/dlltool"
       - "/usr/bin/site_perl/dlltool"
       - "/usr/bin/vendor_perl/dlltool"
       - "/usr/bin/core_perl/dlltool"
@@ -710,16 +602,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -744,13 +631,10 @@ events:
       - "addr2line"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
@@ -759,16 +643,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -793,25 +672,19 @@ events:
       - "tapi"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
     searched_directories:
       - "/usr/bin/tapi"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/tapi"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/tapi"
       - "/home/user/.local/bin/tapi"
       - "/usr/local/bin/tapi"
       - "/bin/tapi"
       - "/usr/local/sbin/tapi"
-      - "/usr/lib/jvm/default/bin/tapi"
       - "/usr/bin/site_perl/tapi"
       - "/usr/bin/vendor_perl/tapi"
       - "/usr/bin/core_perl/tapi"
@@ -820,16 +693,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -857,47 +725,35 @@ events:
       - "gcc-ar"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
     searched_directories:
       - "/usr/bin/gcc-ar-16.2"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/gcc-ar-16.2"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/gcc-ar-16.2"
       - "/home/user/.local/bin/gcc-ar-16.2"
       - "/usr/local/bin/gcc-ar-16.2"
       - "/bin/gcc-ar-16.2"
       - "/usr/local/sbin/gcc-ar-16.2"
-      - "/usr/lib/jvm/default/bin/gcc-ar-16.2"
       - "/usr/bin/site_perl/gcc-ar-16.2"
       - "/usr/bin/vendor_perl/gcc-ar-16.2"
       - "/usr/bin/core_perl/gcc-ar-16.2"
       - "/usr/bin/gcc-ar-16"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/gcc-ar-16"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/gcc-ar-16"
       - "/home/user/.local/bin/gcc-ar-16"
       - "/usr/local/bin/gcc-ar-16"
       - "/bin/gcc-ar-16"
       - "/usr/local/sbin/gcc-ar-16"
-      - "/usr/lib/jvm/default/bin/gcc-ar-16"
       - "/usr/bin/site_perl/gcc-ar-16"
       - "/usr/bin/vendor_perl/gcc-ar-16"
       - "/usr/bin/core_perl/gcc-ar-16"
       - "/usr/bin/gcc-ar16"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/gcc-ar16"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/gcc-ar16"
       - "/home/user/.local/bin/gcc-ar16"
       - "/usr/local/bin/gcc-ar16"
       - "/bin/gcc-ar16"
       - "/usr/local/sbin/gcc-ar16"
-      - "/usr/lib/jvm/default/bin/gcc-ar16"
       - "/usr/bin/site_perl/gcc-ar16"
       - "/usr/bin/vendor_perl/gcc-ar16"
       - "/usr/bin/core_perl/gcc-ar16"
@@ -906,16 +762,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -943,47 +794,35 @@ events:
       - "gcc-ranlib"
     candidate_directories:
       - "/usr/bin/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/home/user/.local/bin/"
       - "/usr/local/bin/"
       - "/bin/"
       - "/usr/local/sbin/"
-      - "/usr/lib/jvm/default/bin/"
       - "/usr/bin/site_perl/"
       - "/usr/bin/vendor_perl/"
       - "/usr/bin/core_perl/"
     searched_directories:
       - "/usr/bin/gcc-ranlib-16.2"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/gcc-ranlib-16.2"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/gcc-ranlib-16.2"
       - "/home/user/.local/bin/gcc-ranlib-16.2"
       - "/usr/local/bin/gcc-ranlib-16.2"
       - "/bin/gcc-ranlib-16.2"
       - "/usr/local/sbin/gcc-ranlib-16.2"
-      - "/usr/lib/jvm/default/bin/gcc-ranlib-16.2"
       - "/usr/bin/site_perl/gcc-ranlib-16.2"
       - "/usr/bin/vendor_perl/gcc-ranlib-16.2"
       - "/usr/bin/core_perl/gcc-ranlib-16.2"
       - "/usr/bin/gcc-ranlib-16"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/gcc-ranlib-16"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/gcc-ranlib-16"
       - "/home/user/.local/bin/gcc-ranlib-16"
       - "/usr/local/bin/gcc-ranlib-16"
       - "/bin/gcc-ranlib-16"
       - "/usr/local/sbin/gcc-ranlib-16"
-      - "/usr/lib/jvm/default/bin/gcc-ranlib-16"
       - "/usr/bin/site_perl/gcc-ranlib-16"
       - "/usr/bin/vendor_perl/gcc-ranlib-16"
       - "/usr/bin/core_perl/gcc-ranlib-16"
       - "/usr/bin/gcc-ranlib16"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand/gcc-ranlib16"
-      - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli/gcc-ranlib16"
       - "/home/user/.local/bin/gcc-ranlib16"
       - "/usr/local/bin/gcc-ranlib16"
       - "/bin/gcc-ranlib16"
       - "/usr/local/sbin/gcc-ranlib16"
-      - "/usr/lib/jvm/default/bin/gcc-ranlib16"
       - "/usr/bin/site_perl/gcc-ranlib16"
       - "/usr/bin/vendor_perl/gcc-ranlib16"
       - "/usr/bin/core_perl/gcc-ranlib16"
@@ -992,16 +831,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"
@@ -1014,8 +848,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/home/user/code/algosee/testclient/build/CMakeFiles/CMakeScratch/TryCompile-8nb2T6"
-      binary: "/home/user/code/algosee/testclient/build/CMakeFiles/CMakeScratch/TryCompile-8nb2T6"
+      source: "/home/user/code/algosee/testclient/build/CMakeFiles/CMakeScratch/TryCompile-TBR2ml"
+      binary: "/home/user/code/algosee/testclient/build/CMakeFiles/CMakeScratch/TryCompile-TBR2ml"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "-m64"
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1027,13 +861,13 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: false
       stdout: |
-        Change Dir: '/home/user/code/algosee/testclient/build/CMakeFiles/CMakeScratch/TryCompile-8nb2T6'
+        Change Dir: '/home/user/code/algosee/testclient/build/CMakeFiles/CMakeScratch/TryCompile-TBR2ml'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_f2d10/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_f2d10.dir/build.make CMakeFiles/cmTC_f2d10.dir/build
-        make[1]: Entering directory '/home/user/code/algosee/testclient/build/CMakeFiles/CMakeScratch/TryCompile-8nb2T6'
-        Building CXX object CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o
-        /usr/bin/c++   -m64  -std=gnu++20   -v -o CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_0f193/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_0f193.dir/build.make CMakeFiles/cmTC_0f193.dir/build
+        make[1]: Entering directory '/home/user/code/algosee/testclient/build/CMakeFiles/CMakeScratch/TryCompile-TBR2ml'
+        Building CXX object CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -m64  -std=gnu++20   -v -o CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         Target: x86_64-pc-linux-gnu
@@ -1041,8 +875,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 16.2.1 20260810 (GCC) 
-        COLLECT_GCC_OPTIONS='-m64' '-std=gnu++20' '-v' '-o' 'CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_f2d10.dir/'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/16/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_f2d10.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -m64 -mtune=generic -march=x86-64 -std=gnu++20 -version -o /tmp/cc5lF6Ki.s
+        COLLECT_GCC_OPTIONS='-m64' '-std=gnu++20' '-v' '-o' 'CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_0f193.dir/'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/16/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_0f193.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -m64 -mtune=generic -march=x86-64 -std=gnu++20 -version -o /tmp/ccVAAsJv.s
         GNU C++20 (GCC) version 16.2.1 20260810 (x86_64-pc-linux-gnu)
         	compiled by GNU C version 16.2.1 20260810, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.4.1, isl version isl-0.28-GMP
         
@@ -1058,15 +892,15 @@ events:
          /usr/local/include
          /usr/include
         End of search list.
-        Compiler executable checksum: 037f72dbb7daf695ab4f9c9043c92e73
-        COLLECT_GCC_OPTIONS='-m64' '-std=gnu++20' '-v' '-o' 'CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_f2d10.dir/'
-         as -v --64 -o CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc5lF6Ki.s
+        Compiler executable checksum: 28a31ad65a3474623aa15fc494746870
+        COLLECT_GCC_OPTIONS='-m64' '-std=gnu++20' '-v' '-o' 'CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_0f193.dir/'
+         as -v --64 -o CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccVAAsJv.s
         GNU assembler version 2.47 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.47
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-m64' '-std=gnu++20' '-v' '-o' 'CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_f2d10
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f2d10.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-m64' '-std=gnu++20' '-v' '-o' 'CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_0f193
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0f193.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/16/lto-wrapper
@@ -1077,14 +911,14 @@ events:
         gcc version 16.2.1 20260810 (GCC) 
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-m64' '-v' '-o' 'cmTC_f2d10' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_f2d10.'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/16/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/16/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccX1zIrJ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_f2d10 /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/16 -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crtn.o
+        COLLECT_GCC_OPTIONS='-m64' '-v' '-o' 'cmTC_0f193' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_0f193.'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/16/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/16/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnsH3gU.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_0f193 /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/16 -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crtn.o
         collect2 version 16.2.1 20260810
-        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/16/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccX1zIrJ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_f2d10 /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/16 -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crtn.o
+        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/16/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnsH3gU.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_0f193 /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/16 -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crtn.o
         GNU ld (GNU Binutils) 2.47
-        COLLECT_GCC_OPTIONS='-m64' '-v' '-o' 'cmTC_f2d10' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_f2d10.'
-        /usr/bin/c++ -m64  -m64 -v -Wl,-v CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_f2d10
-        make[1]: Leaving directory '/home/user/code/algosee/testclient/build/CMakeFiles/CMakeScratch/TryCompile-8nb2T6'
+        COLLECT_GCC_OPTIONS='-m64' '-v' '-o' 'cmTC_0f193' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_0f193.'
+        /usr/bin/c++ -m64  -m64 -v -Wl,-v CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_0f193
+        make[1]: Leaving directory '/home/user/code/algosee/testclient/build/CMakeFiles/CMakeScratch/TryCompile-TBR2ml'
         
       exitCode: 0
   -
@@ -1123,13 +957,13 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|wild))("|,| |$)]
-        ignore line: [Change Dir: '/home/user/code/algosee/testclient/build/CMakeFiles/CMakeScratch/TryCompile-8nb2T6']
+        ignore line: [Change Dir: '/home/user/code/algosee/testclient/build/CMakeFiles/CMakeScratch/TryCompile-TBR2ml']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_f2d10/fast]
-        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_f2d10.dir/build.make CMakeFiles/cmTC_f2d10.dir/build]
-        ignore line: [make[1]: Entering directory '/home/user/code/algosee/testclient/build/CMakeFiles/CMakeScratch/TryCompile-8nb2T6']
-        ignore line: [Building CXX object CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/usr/bin/c++   -m64  -std=gnu++20   -v -o CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_0f193/fast]
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_0f193.dir/build.make CMakeFiles/cmTC_0f193.dir/build]
+        ignore line: [make[1]: Entering directory '/home/user/code/algosee/testclient/build/CMakeFiles/CMakeScratch/TryCompile-TBR2ml']
+        ignore line: [Building CXX object CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -m64  -std=gnu++20   -v -o CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [Target: x86_64-pc-linux-gnu]
@@ -1137,8 +971,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 16.2.1 20260810 (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-m64' '-std=gnu++20' '-v' '-o' 'CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_f2d10.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/16/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_f2d10.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -m64 -mtune=generic -march=x86-64 -std=gnu++20 -version -o /tmp/cc5lF6Ki.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-m64' '-std=gnu++20' '-v' '-o' 'CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_0f193.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/16/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_0f193.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -m64 -mtune=generic -march=x86-64 -std=gnu++20 -version -o /tmp/ccVAAsJv.s]
         ignore line: [GNU C++20 (GCC) version 16.2.1 20260810 (x86_64-pc-linux-gnu)]
         ignore line: [	compiled by GNU C version 16.2.1 20260810  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.4.1  isl version isl-0.28-GMP]
         ignore line: []
@@ -1154,15 +988,15 @@ events:
         ignore line: [ /usr/local/include]
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
-        ignore line: [Compiler executable checksum: 037f72dbb7daf695ab4f9c9043c92e73]
-        ignore line: [COLLECT_GCC_OPTIONS='-m64' '-std=gnu++20' '-v' '-o' 'CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_f2d10.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc5lF6Ki.s]
+        ignore line: [Compiler executable checksum: 28a31ad65a3474623aa15fc494746870]
+        ignore line: [COLLECT_GCC_OPTIONS='-m64' '-std=gnu++20' '-v' '-o' 'CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_0f193.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccVAAsJv.s]
         ignore line: [GNU assembler version 2.47 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.47]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-m64' '-std=gnu++20' '-v' '-o' 'CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_f2d10]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f2d10.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-m64' '-std=gnu++20' '-v' '-o' 'CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_0f193]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0f193.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/16/lto-wrapper]
@@ -1173,13 +1007,13 @@ events:
         ignore line: [gcc version 16.2.1 20260810 (GCC) ]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/16/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-m64' '-v' '-o' 'cmTC_f2d10' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_f2d10.']
-        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/16/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/16/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccX1zIrJ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_f2d10 /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/16 -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-m64' '-v' '-o' 'cmTC_0f193' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_0f193.']
+        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/16/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/16/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnsH3gU.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_0f193 /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/16 -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crtn.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/16/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/16/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/16/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccX1zIrJ.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccnsH3gU.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-latomic_asneeded] ==> ignore
@@ -1195,7 +1029,7 @@ events:
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-pie] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_f2d10] ==> ignore
+          arg [cmTC_0f193] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o]
@@ -1207,7 +1041,7 @@ events:
           arg [-L/lib] ==> dir [/lib]
           arg [-L/usr/lib] ==> dir [/usr/lib]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -1219,9 +1053,9 @@ events:
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crtn.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crtn.o]
         ignore line: [collect2 version 16.2.1 20260810]
-        link line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/16/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccX1zIrJ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_f2d10 /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/16 -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crtn.o] ==> linker [/usr/bin/ld]
-        link line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/16/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccX1zIrJ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_f2d10 /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/16 -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crtn.o] ==> linker architecture flags [-m;elf]
-        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/16/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccX1zIrJ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_f2d10 /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/16 -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_f2d10.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crtn.o]
+        link line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/16/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnsH3gU.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_0f193 /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/16 -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crtn.o] ==> linker [/usr/bin/ld]
+        link line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/16/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnsH3gU.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_0f193 /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/16 -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crtn.o] ==> linker architecture flags [-m;elf]
+        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/16/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/16/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnsH3gU.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-latomic_asneeded -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_0f193 /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/16 -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_0f193.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -latomic_asneeded -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crtn.o]
         linker tool for 'CXX': /usr/bin/ld -m;elf
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/Scrt1.o] ==> [/usr/lib/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o] ==> [/usr/lib/crti.o]
@@ -1315,16 +1149,11 @@ events:
       CMAKE_PREFIX_PATH:
         - "/home/user/code/algosee/testclient/build"
       ENV{PATH}:
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/home/user/.local/bin"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/debugCommand"
-        - "/home/user/.config/Code - OSS/User/globalStorage/github.copilot-chat/copilotCli"
         - "/usr/local/bin"
         - "/usr/bin"
         - "/bin"
         - "/usr/local/sbin"
-        - "/usr/lib/jvm/default/bin"
         - "/usr/bin/site_perl"
         - "/usr/bin/vendor_perl"
         - "/usr/bin/core_perl"

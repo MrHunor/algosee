@@ -26,7 +26,7 @@
         {
             "name": "conan-release",
             "configurePreset": "conan-release",
-            "jobs": 16
+            "jobs": 4
         }
     ],
     "testPresets": [
@@ -34,7 +34,7 @@
             "name": "conan-release",
             "configurePreset": "conan-release",
             "execution": {
-                "jobs": 16
+                "jobs": 4
             }
         }
     ]

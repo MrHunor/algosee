@@ -36,12 +36,10 @@ find_package(nlohmann_json REQUIRED)
 
 find_package(httplib REQUIRED)
 
-find_package(stb REQUIRED)
 
 target_link_libraries(algosee 
 nlohmann_json::nlohmann_json
 httplib::httplib
-stb::stb
 stdc++exp
 
 )

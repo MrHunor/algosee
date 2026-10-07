@@ -39,25 +39,7 @@ int main(int argc, char *argv[]) {
   state.out("VERSION:" + std::to_string(VERSION), 0);
   httplib::Server server;
 
-  //--------------------------PREROUTING HANDLING-------------------
-  server.set_pre_routing_handler(
-      [&state](const httplib::Request &req, httplib::Response &res) {
-        std::string ip;
-        if (req.has_header("X-Forwarded-For")) {
-          ip = req.get_header_value("X-Forwarded-For");
-        } else {
-          ip = req.remote_addr;
-        }
-
-        state.out("Recived Request:\nClientIP:" + ip +
-                      "\nTarget:" + req.target + "\nBody:" + req.body,
-                  0);
-
-        // continue to normal handling
-        return httplib::Server::HandlerResponse::Unhandled;
-      });
-
-  //-------------------------POSTROUTING HANDLING-------------------------
+  //-------------------------PRERESPONSE HANDLING-------------------------
   // this runs before sending any response
   server.set_post_routing_handler(
       [](const httplib::Request &, httplib::Response &res) {
