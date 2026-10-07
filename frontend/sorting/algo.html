@@ -17,7 +17,7 @@
     </header>
 
     <main class="algo-detail-container">
-<!-- Left side: Title, Image, Play -->
+        <!-- Left side: Title, Image, Play -->
         <div class="algo-left-column">
             <div class="algo-preview-box">
                 <span class="preview-text">Preview</span>
@@ -29,17 +29,6 @@
                 </svg>
                 <span>start visualization</span>
             </a>
-
-            <!-- compare section -->
-            <div class="compare-section" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; width: 100%;">
-                <label for="compare-select" style="font-size: 0.9rem; color: #cbd5e1;">compare with:</label>
-                <select id="compare-select" style="padding: 0.6rem; border-radius: 6px; background: #1e293b; color: #fff; border: 1px solid #334155; cursor: pointer;">
-                    <!-- dynamic -->
-                </select>
-                <button id="compare-btn" class="play-button" style="background-color: #3b82f6; margin-top: 0.3rem;">
-                    <span>Start Comparison</span>
-                </button>
-            </div>
 
             <h2 id="algo-name" class="algo-main-title">loading...</h2>
         </div>
@@ -140,33 +129,6 @@
                 spaceComplexity:"O(log n)"
             }
         };
-
-        // --- dropdown ---
-    const compareSelect = document.getElementById('compare-select');
-    const compareBtn = document.getElementById('compare-btn');
-
-    //fill dropdown with algos (w/o the selected)
-    for (const [key, algoData] of Object.entries(algoDatabase)) {
-        if (key !== algoKey) { // preventsd same-same compare
-            const option = document.createElement('option');
-            option.value = key;
-            option.innerText = algoData.name;
-            compareSelect.appendChild(option);
-        }
-    }
-
-    // click logic 
-    compareBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const selectedAlgo2 = compareSelect.value;
-        
-        if (!selectedAlgo2) {
-            alert("Bitte wähle einen Algorithmus zum Vergleichen aus.");
-            return;
-        }
-
-        window.location.href = `compare.html?algo1=${algoKey}&algo2=${selectedAlgo2}`;
-    });
 
         // paste data in html-set
         const data = algoDatabase[algoKey] || {
