@@ -19,7 +19,8 @@ const algoNames = {
     radix: "RadixSort",
     intro: "IntroSort"
 };
-// if no algo, show placeholder wh
+
+// if no algo, show placeholder
 const name1 = algoNames[algoKey1] || "no algo selected";
 const name2 = algoNames[algoKey2] || "no algo selected";
 

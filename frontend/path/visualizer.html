@@ -16,12 +16,9 @@
         <a href="index.html" class="logo-link"><h1 class="logo">AlgoSee - Pathfinding</h1></a>
     </header>
 
-<main class="visualizer-container">
-    <div class="visualizer-header">
-        <h2 id="algo-title">loading...</h2>
-        
-        <!-- Controls & Tools Container mit gutem Abstand -->
-        <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+ <main class="visualizer-container">
+        <div class="visualizer-header">
+            <h2 id="algo-title">loading...</h2>
             
             <!-- Speed Control -->
             <div style="display: flex; flex-direction: column; gap: 0.5rem;">
@@ -31,28 +28,18 @@
                 </div>
             </div>
 
-            <!-- Tool Selector (Neu) -->
-            <div class="tool-selector" style="display: flex; align-items: center; gap: 0.5rem;">
-                <span style="color: #cbd5e1; font-size: 0.9rem;">Tool:</span>
-                <button type="button" class="control-btn secondary tool-btn active" data-tool="wall">wall (-1)</button>
-                <button type="button" class="control-btn secondary tool-btn" data-tool="cost-1">default (1)</button>
-                <button type="button" class="control-btn secondary tool-btn" data-tool="cost-5">hard (5)</button>
+            <!-- Action Buttons -->
+            <div class="controls">
+                <button id="start-btn" class="control-btn primary">start pathfinding</button>
+                <button id="stop-btn" class="control-btn secondary" disabled>stop</button>
+                <button id="reset-btn" class="control-btn secondary">reset grid</button>
             </div>
-
         </div>
 
-        <!-- Action Buttons -->
-        <div class="controls">
-            <button id="start-btn" class="control-btn primary">start pathfinding</button>
-            <button id="stop-btn" class="control-btn secondary" disabled>stop</button>
-            <button id="reset-btn" class="control-btn secondary">reset grid</button>
-        </div>
-    </div>
-
-     <!-- adjustable grid -->
+        <!-- adjustable grid -->
         <div id="path-grid" class="path-grid"></div>
-</main>
+    </main>
 
-<script src="js/visualizer.js" defer></script>
+    <script src="js/visualizer.js"></script>
 </body>
 </html>

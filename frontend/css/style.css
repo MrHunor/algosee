@@ -383,7 +383,6 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
-
 /*-------------------------------------------------*/
 /* PATHFINDING */
 /*grid container*/
@@ -415,7 +414,7 @@ footer a:hover {
 
 /* cell state */
 .grid-cell.start {
-    background-color: #22c55e; /* green for start */
+    background-color: #22c55e; /* grenn for start */
     border-color: #16a34a;
 }
 
@@ -425,7 +424,7 @@ footer a:hover {
 }
 
 .grid-cell.wall {
-    background-color: #64748b; /* grey -> wall */
+    background-color: #64748b; /* grey ->wall */
     border-color: #475569;
 }
 
@@ -434,7 +433,7 @@ footer a:hover {
 }
 
 .grid-cell.path {
-    background-color: #eab308; /* yellow -> final path */
+    background-color: #eab308; /* yellow ->final path */
 }
 
 /*----------------------------------------------------------------------*/
@@ -460,7 +459,6 @@ footer a:hover {
     flex-direction: column;
     gap: 0.8rem;
     min-width: 0; 
-}
 
 .compare-pane-header {
     display: flex;
@@ -493,19 +491,4 @@ footer a:hover {
     .compare-grid {
         flex-direction: column;
     }
-}
-
-/* --- TOOL SELECTION & COST TILES (Added for Dijkstra and such) --- */
-
-/* active state for tool buttons */
-.tool-btn.active {
-    background-color: #3b82f6 !important;
-    color: #ffffff !important;
-    border-color: #3b82f6 !important;
-}
-
-/* visualization for high-cost tiles */
-.grid-cell.cost-5 {
-    background-color: #475569; 
-    border-color: #334155;
-}
+}}
