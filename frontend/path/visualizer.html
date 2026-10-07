@@ -7,7 +7,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-wihdt, initial-scale=1.0">
     <title>AlgoSee</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -21,19 +21,19 @@
         <h2 id="algo-title">loading...</h2>
         
         <!-- controler and tool selection -->
-        <div class="header-controls-group">
+        <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
             
             <!-- Speed Control -->
-            <div class="speed-control-box">
-                <div class="speed-control-inner">
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <div class="size-control" style="display: flex; align-items: center; gap: 0.5rem; color: #cbd5e1;">
                     <label for="speed-slider">spd: <span id="speed-val">200</span>ms</label>
-                    <input type="range" id="speed-slider" min="1" max="500" step="10" value="200" class="cursor-pointer">
+                    <input type="range" id="speed-slider" min="1" max="500" step="10" value="200" style="cursor: pointer;">
                 </div>
             </div>
 
             <!-- Tool Selector -->
-            <div class="tool-selector tool-selector-box">
-                <span class="tool-selector-label">Tool:</span>
+            <div class="tool-selector" style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="color: #cbd5e1; font-size: 0.9rem;">Tool:</span>
                 <button type="button" class="control-btn secondary tool-btn active" data-tool="wall">wall (-1)</button>
                 <button type="button" class="control-btn secondary tool-btn" data-tool="cost-1">default (1)</button>
                 <button type="button" class="control-btn secondary tool-btn" data-tool="cost-5">hard (5)</button>

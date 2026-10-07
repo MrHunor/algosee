@@ -16,15 +16,15 @@
         <a href="index.html" class="logo-link"><h1 class="logo">AlgoSee</h1></a>
     </header>
 
-   <main class="visualizer-container visualizer-container-custom">
+   <main class="visualizer-container" style="max-width: 950px;">
         <div class="visualizer-header">
             <h2 id="algo-title">loading...</h2>
             
             <!-- controls (picture upload) -->
-            <div class="speed-control-box">
-                <div class="speed-control-inner">
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <div class="size-control" style="display: flex; align-items: center; gap: 0.5rem; color: #cbd5e1;">
                     <label for="image-upload">Image:</label>
-                    <input type="file" id="image-upload" accept="image/*" class="file-input-custom cursor-pointer">
+                    <input type="file" id="image-upload" accept="image/*" style="color: #cbd5e1; font-size: 0.85rem; cursor: pointer;">
                 </div>
             </div>
 
@@ -36,20 +36,20 @@
             </div>
         </div>
 
-        <!-- Canvas Container -->
-        <div class="canvas-wrapper-grid">
-            <div class="canvas-box-center">
-                <p class="canvas-label">Original / Scrambled</p>
-                <canvas id="source-canvas" width="200" height="200" class="canvas-element"></canvas>
+        <!-- Canvas Container instead of arrays -->
+        <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; background-color: #0b0b0b; border-radius: 8px; padding: 1.5rem; border: 1px solid #222; flex-wrap: wrap;">
+            <div style="text-align: center;">
+                <p style="color: #888; margin-bottom: 0.5rem; font-size: 0.85rem;">Original / Scrambled</p>
+                <canvas id="source-canvas" width="200" height="200" style="background: #1a1a1a; border-radius: 6px; border: 1px solid #333;"></canvas>
             </div>
-            <div class="canvas-box-center">
-                <p class="canvas-label">Sorting Progress</p>
-                <canvas id="target-canvas" width="200" height="200" class="canvas-element"></canvas>
+            <div style="text-align: center;">
+                <p style="color: #888; margin-bottom: 0.5rem; font-size: 0.85rem;">Sorting Progress</p>
+                <canvas id="target-canvas" width="200" height="200" style="background: #1a1a1a; border-radius: 6px; border: 1px solid #333;"></canvas>
             </div>
         </div>
 
-        <div id="execution-time" class="execution-time-box">
-            The backend took <span id="time-val">-</span> ms
+        <div id="execution-time" style="margin-top: 1rem; text-align: center; font-size: 0.85rem; color: #888888;">
+        The backend took <span id="time-val">-</span> ms
         </div>
     </main>
 
