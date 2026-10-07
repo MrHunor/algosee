@@ -187,7 +187,7 @@
 
         function updateVisualizerLink() {
         const selectedServer = document.querySelector('input[name="server-target"]:checked').value;
-        document.getElementById('visualizer-link').href = `/loading.html?dir=sorting&algo=${algoKey}&server=${selectedServer}`;
+        document.getElementById('visualizer-link').href = `../loading.html?dir=sorting&algo=${algoKey}&server=${selectedServer}`;
         }
 
         document.querySelectorAll('input[name="server-target"]').forEach(input => {
