@@ -75,11 +75,16 @@ PathValidReturn validatePath(const httplib::Request &req, stateClass& state) {
     retval.goal = parsed["GOAL"];
 
     state.out("Checking Maps internal validness...",0);
-    if(retval.algo!="dijkstra") checkMapValidness(retval.mapBool, retval.start, retval.goal);
-    checkMapValidness(retval.mapInt, retval.start, retval.goal);
+    std::string errmessage;
+    if(retval.algo!="dijkstra") errmessage=checkMapValidness(retval.mapBool, retval.start, retval.goal);
+    else errmessage = checkMapValidness(retval.mapInt, retval.start, retval.goal);
     
 
-    
+    if(errmessage!="")
+    {
+      throw std::runtime_error("Failed to validate map:"+errmessage);
+    }
+
   } catch (const std::exception &e) {
     state.out("An Exception was thrown while validating the input:" +
                   std::string(e.what()),

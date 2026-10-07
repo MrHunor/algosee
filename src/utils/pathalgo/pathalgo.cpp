@@ -21,14 +21,13 @@
 #include <exception>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
-#include <stdexcept>
 #include <vector>
 
-void checkMapValidness(const std::vector<std::vector<int>> &map,
+std::string checkMapValidness(const std::vector<std::vector<int>> &map,
                               const std::pair<int, int> &start,
                               const std::pair<int, int> &goal) {
   if (map.empty()) {
-    throw std::runtime_error("Bad Map: Map is empty.");
+    return "Bad Map: Map is empty.";
   }
   int rows = map.size();
   int cols = map[0].size();
@@ -41,25 +40,26 @@ void checkMapValidness(const std::vector<std::vector<int>> &map,
     }
   }
   if (!sameRowLength) {
-    throw std::runtime_error("Bad Map:Rows dont have same row length.");
+    return "Bad Map:Rows dont have same row length.";
   }
 
   if (start.first < 0 || start.first > cols - 1 || start.second < 0 ||
       start.second > rows - 1) {
-    throw std::runtime_error( "Bad Map: Start out of Map Bounds.");
+    return "Bad Map: Start out of Map Bounds.";
   }
 
   if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 ||
       goal.second > rows - 1) {
-    throw std::runtime_error("Bad Map: End out of Map Bounds");
+    return "Bad Map: End out of Map Bounds";
   }
+  return "";
 }
 
-void checkMapValidness(const std::vector<std::vector<bool>> &map,
+std::string checkMapValidness(const std::vector<std::vector<bool>> &map,
                               const std::pair<int, int> &start,
                               const std::pair<int, int> &goal) {
   if (map.empty()) {
-    throw std::runtime_error( "Bad Map: Map is empty.");
+    return "Bad Map: Map is empty.";
   }
   int rows = map.size();
   int cols = map[0].size();
@@ -72,23 +72,25 @@ void checkMapValidness(const std::vector<std::vector<bool>> &map,
     }
   }
   if (!sameRowLength) {
-    throw std::runtime_error( "Bad Map:Rows dont have same row length.");
+    return "Bad Map:Rows dont have same row length.";
   }
 
   if (start.first < 0 || start.first > cols - 1 || start.second < 0 ||
       start.second > rows - 1) {
-    throw std::runtime_error( "Bad Map: Start out of Map Bounds.");
+    return "Bad Map: Start out of Map Bounds.";
   }
 
   if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 ||
       goal.second > rows - 1) {
-    throw std::runtime_error( "Bad Map: End out of Map Bounds");
+    return "Bad Map: End out of Map Bounds";
   }
+  return "";
 }
 
 std::vector<std::vector<bool>> castIntMapToBoolIfNeeded(const json &input) {
   bool isBool = true;
   // check if input array is already boolean
+  try {
     for (const auto &row : input["MAP"]) {
       for (const auto &element : row) {
         if (!element.is_boolean())
@@ -96,7 +98,9 @@ std::vector<std::vector<bool>> castIntMapToBoolIfNeeded(const json &input) {
       }
     }
 
-
+  } catch (const std::exception &e) {
+    return {};
+  }
 
   if (isBool == true)
     return input["MAP"];

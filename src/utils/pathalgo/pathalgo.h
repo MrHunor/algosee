@@ -24,10 +24,10 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void checkMapValidness(const std::vector<std::vector<int>> &mapInt,
+std::string checkMapValidness(const std::vector<std::vector<int>> &mapInt,
                               const std::pair<int, int> &start,
                               const std::pair<int, int> &goal);
-void checkMapValidness(const std::vector<std::vector<bool>> &map,
+std::string checkMapValidness(const std::vector<std::vector<bool>> &map,
                               const std::pair<int, int> &start,
                               const std::pair<int, int> &goal);
 std::vector<std::vector<bool>> castIntMapToBoolIfNeeded(const json &input);
