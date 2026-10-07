@@ -76,7 +76,7 @@ PathValidReturn validatePath(const httplib::Request &req, stateClass& state) {
 
     state.out("Checking Maps internal validness...",0);
     if(retval.algo!="dijkstra") checkMapValidness(retval.mapBool, retval.start, retval.goal);
-    checkMapValidness(retval.mapInt, retval.start, retval.goal);
+    else checkMapValidness(retval.mapInt, retval.start, retval.goal);
     
 
     
