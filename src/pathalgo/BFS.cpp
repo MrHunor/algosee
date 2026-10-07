@@ -17,7 +17,6 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../config.h"
-#include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
 #include <nlohmann/json.hpp>
 #include <queue>
@@ -27,7 +26,7 @@
 std::vector<std::pair<int, int>>
 BreadthFirstSearch(std::vector<std::vector<bool>> map,
                    std::pair<int, int> start, std::pair<int, int> goal,
-                   json &response) {
+                   json& response) {
   // Frontier means what is it going to explore next, hence it being a queue
 
   const int rows = map.size();
@@ -80,8 +79,7 @@ BreadthFirstSearch(std::vector<std::vector<bool>> map,
   }
   // being out of the while loop means every possible tile was explored
 
- 
-  response["VISITED"] = swapVisitedArray(visited);
+  response["VISITED"] = visited;
 
   if (!visited[goal.second][goal.first])
     return {}; // never once reached the goal means there was no path found to

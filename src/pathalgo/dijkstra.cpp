@@ -17,7 +17,6 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../config.h"
-#include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
 #include <limits>
 #include <nlohmann/json.hpp>
@@ -27,7 +26,7 @@
 
 std::vector<std::pair<int, int>>
 Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
-         std::pair<int, int> goal, json& response) {
+         std::pair<int, int> goal, json response) {
   const int rows = map.size();
   const int collums = map[0].size();
   const int INFINTY = std::numeric_limits<int>::max();
@@ -102,7 +101,7 @@ Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
 
   // Explored all possible tiles
 
-  response["DISTANCE"] = swapVisitedArray(distance);
+  response["DISTANCE"] = distance;
 
   // checking if the goal was ever reached, be careful this could theoretically
   // be a false positive if the addition of tiles matches exatly the intmax, but
