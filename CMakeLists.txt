@@ -31,6 +31,19 @@ add_executable(algosee
 ${ALL_SOURCES}
 )
 
+string(TIMESTAMP BUILD_TIME "%Y-%m-%dT%H:%M:%S")
+
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/build_info.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/generated/build_info.h"
+    @ONLY
+)
+
+
+target_include_directories(algosee PRIVATE
+    "${CMAKE_CURRENT_BINARY_DIR}/generated"
+)
+
 find_package(nlohmann_json REQUIRED)
 
 

@@ -37,7 +37,8 @@ int main(int argc, char *argv[]) {
             0, RED);
 
   state.out("Starting...", 0);
-  state.out("VERSION:" + std::to_string(VERSION), 0);
+  state.out("VERSION:" + std::string(ALGOSEE_VERSION), 0);
+  state.out("Build on:"+std::string(ALGOSEE_BUILD_TIME),0);
   httplib::Server server;
 
   //--------------------------PREROUTING HANDLING-------------------

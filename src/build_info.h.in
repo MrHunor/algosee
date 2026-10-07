@@ -1,0 +1,7 @@
+#ifndef BUILD_INFO_H
+#define BUILD_INFO_H
+
+#define ALGOSEE_VERSION "@PROJECT_VERSION@"
+#define ALGOSEE_BUILD_TIME "@BUILD_TIME@"
+
+#endif

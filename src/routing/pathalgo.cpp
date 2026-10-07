@@ -21,6 +21,7 @@
 #include "../validate/path/validate.h"
 #include "../utils/pathalgo/pathalgo.h"
 #include "../utils/general/utils.h"
+#include "build_info.h"
 #include <chrono>
 #include <exception>
 #include <httplib/httplib.h>
@@ -33,7 +34,8 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
   // variables
   std::vector<std::pair<int, int>> path;
   json response;
-  response["VERSION"] = VERSION;
+  response["VERSION"] = ALGOSEE_VERSION;
+  response["BUILDTIME"]=ALGOSEE_BUILD_TIME;
   bool sameRowLength = true;
   int collums;
   // log ip

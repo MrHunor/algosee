@@ -20,6 +20,7 @@
 #include "../sortalgo/algos.h"
 #include "../utils/general/utils.h"
 #include "../validate/sort/validate.h"
+#include "build_info.h"
 #include <chrono>
 #include <exception>
 #include <httplib/httplib.h>
@@ -41,7 +42,8 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res,
   state.out("Finished.", 0);
 
   json response;
-  response["VERSION"] = VERSION;
+  response["VERSION"] = ALGOSEE_VERSION;
+  response["BUILDTIME"]=ALGOSEE_BUILD_TIME;
 
   state.out("Starting time mesurement...", 0);
   auto startTime = std::chrono::steady_clock::now();

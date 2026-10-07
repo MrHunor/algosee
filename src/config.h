@@ -21,9 +21,9 @@
 
 #include <nlohmann/json.hpp>
 #include <unordered_set>
+#include "build_info.h"
 #include <vector>
 
-#define VERSION 0.8
 
 #define DEFAULT_COLOUR MAGENTA
 
