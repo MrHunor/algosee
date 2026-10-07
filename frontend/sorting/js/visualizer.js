@@ -104,11 +104,15 @@ if (sizeSlider) {
             sizeSlider.value = 10;
         }
 
-        arraySize = val;
+        arraySize = val;w
         sizeValSpan.innerText = val;
         generateArray();
     });
 }
+
+// init an array asap 
+generateArray();
+
 // -------------------------------------------------------------
 // generate random array and draw bars
 function generateArray() {

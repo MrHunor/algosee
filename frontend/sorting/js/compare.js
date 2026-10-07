@@ -13,7 +13,11 @@ const algoNames = {
     selection: "SelectionSort",
     merge: "MergeSort",
     bubble: "BubbleSort",
-    counting: "CountingSort"
+    counting: "CountingSort",
+    quick: "QuickSort",
+    cycle: "CycleSort",
+    radix: "RadixSort",
+    intro: "IntroSort"
 };
 
 // if no algo, show placeholder
@@ -40,9 +44,43 @@ let isCancelled = false;
 let baseArray = [];
 let arraySize = 15;
 
-if (sizeValSpan) sizeValSpan.innerText = arraySize;
+// --- WebAudio API ---
+let audioCtx = null;
 
-// lock s-b if no algo
+function playTone(frequency) {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    const osc = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+
+    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.08);
+
+    osc.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.08);
+}
+// --------------------
+
+// BogoSort Limit
+if (algoKey1 === 'bogo' || algoKey2 === 'bogo') {
+    arraySize = 10;
+    if (sizeSlider) {
+        sizeSlider.max = 10;
+        sizeSlider.value = 10;
+    }
+}
+
+if (sizeValSpan) sizeValSpan.innerText = sizeSlider ? sizeSlider.value : arraySize;
+
+// lock start-btn if no algo
 if (!algoKey1 || !algoKey2) {
     startBtn.disabled = true;
     startBtn.innerText = "choose algorithms";
@@ -65,8 +103,15 @@ stopBtn.addEventListener('click', () => {
 // Size Listener
 if (sizeSlider) {
     sizeSlider.addEventListener('input', (e) => {
-        arraySize = parseInt(e.target.value);
-        sizeValSpan.innerText = arraySize;
+        let val = parseInt(e.target.value);
+        
+        if ((algoKey1 === 'bogo' || algoKey2 === 'bogo') && val > 10) {
+            val = 10;
+            sizeSlider.value = 10;
+        }
+
+        arraySize = val;
+        sizeValSpan.innerText = val;
         generateArrays();
     });
 }
@@ -104,6 +149,11 @@ generateArrays();
 
 // startbutton logic (send both req parallel)
 startBtn.addEventListener('click', async () => {
+    if ((algoKey1 === 'bogo' || algoKey2 === 'bogo') && baseArray.length > 10) {
+        alert("Bogo is capped at 10 Arrays in comparison mode!");
+        return;
+    }
+
     startBtn.disabled = true;
     resetBtn.disabled = true;
     if (sizeSlider) sizeSlider.disabled = true;
@@ -115,7 +165,6 @@ startBtn.addEventListener('click', async () => {
     document.getElementById('time-val-2').innerText = '-';
 
     try {
-        // Parallel die Daten von eurem Backend holen
         const [res1, res2] = await Promise.all([
             fetch(`https://algosee.onrender.com/sortalgo?algo=${algoKey1}`, {
                 method: 'POST',
@@ -141,7 +190,7 @@ startBtn.addEventListener('click', async () => {
             document.getElementById('time-val-2').innerText = (data2.TIME / 1_000_000).toFixed(2);
         }
 
-        // start both vis asyc
+        // start both vis async in parallel
         await Promise.all([
             visualizeAlgo(container1, data1, algoKey1),
             visualizeAlgo(container2, data2, algoKey2)
@@ -159,6 +208,20 @@ startBtn.addEventListener('click', async () => {
     }
 });
 
+// --- Success Wave Animation (Grün werden + Sound wie in visualizer.js) ---
+async function playSuccessWave(containerElement) {
+    const bars = containerElement.children;
+
+    for (let i = 0; i < bars.length; i++) {
+        if (isCancelled) return;
+
+        bars[i].style.backgroundColor = '#22c55e'; // Grün färben
+        playTone(200 + (i * 40));                   // Sound abspielen[cite: 8]
+
+        await new Promise(resolve => setTimeout(resolve, Math.max(20, animationSpeed / 3)));
+    }
+}
+
 async function visualizeAlgo(containerElement, data, key) {
     const bars = containerElement.children;
     let moves = [];
@@ -171,7 +234,10 @@ async function visualizeAlgo(containerElement, data, key) {
     const dynamicSpeed = Math.max(2, Math.floor((animationSpeed * 15) / Math.max(moves.length, 1)));
 
     for (let k = 0; k < moves.length; k++) {
-        if (isCancelled) return;
+        if (isCancelled) {
+            generateArrays();
+            return;
+        }
 
         if (key === 'merge') {
             const result = moves[k][2];
@@ -179,6 +245,10 @@ async function visualizeAlgo(containerElement, data, key) {
                 if (!bars[i]) continue;
                 bars[i].style.height = `${result[i] * 3}px`;
                 if (bars.length <= 20) bars[i].innerText = result[i];
+                bars[i].style.backgroundColor = '#3b82f6';
+            }
+            if (result.length > 0) {
+                playTone(150 + (result[0] * 6));
             }
         } else if (key === 'bogo' || key === 'counting') {
             const currentArr = moves[k];
@@ -187,6 +257,10 @@ async function visualizeAlgo(containerElement, data, key) {
                     if (!bars[i]) continue;
                     bars[i].style.height = `${currentArr[i] * 3}px`;
                     if (bars.length <= 20) bars[i].innerText = currentArr[i];
+                    bars[i].style.backgroundColor = '#3b82f6';
+                }
+                if (currentArr.length > 0) {
+                    playTone(150 + (currentArr[0] * 6));
                 }
             }
         } else {
@@ -195,6 +269,9 @@ async function visualizeAlgo(containerElement, data, key) {
             if (bars[i] && bars[j]) {
                 bars[i].style.backgroundColor = '#ef4444';
                 bars[j].style.backgroundColor = '#ef4444';
+
+                const currentVal = parseInt(bars[i].style.height) || 100;
+                playTone(150 + (currentVal * 2));
 
                 let tempHeight = bars[i].style.height;
                 let tempText = bars[i].innerText;
@@ -212,5 +289,10 @@ async function visualizeAlgo(containerElement, data, key) {
         }
 
         await new Promise(resolve => setTimeout(resolve, dynamicSpeed));
+    }
+
+    // Wenn nicht abgebrochen, am Ende die grüne Erfolgswelle für diesen Container zünden
+    if (!isCancelled) {
+        await playSuccessWave(containerElement);
     }
 }
