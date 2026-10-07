@@ -7,6 +7,11 @@
 const urlParams = new URLSearchParams(window.location.search);
 const algoKey = urlParams.get('algo') || 'selection';
 
+const serverParam = urlParams.get('server') || 'remote';
+const backendBase = serverParam === 'local' 
+    ? 'http://localhost:8080' // adjust local port here
+    : 'https://algosee.onrender.com';
+
 // adjust title
 const algoNames = {
     bogo: "BogoSort",
@@ -160,7 +165,7 @@ startBtn.addEventListener('click', async () => {
         return;
     }
 
-    const backendUrl = `https://algosee.onrender.com/sortalgo?algo=${algoKey}`;
+    const backendUrl = `${backendBase}/sortalgo?algo=${algoKey}`;
 
     startBtn.disabled = true;
     resetBtn.disabled = true;
