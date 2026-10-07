@@ -1,1 +1,0 @@
-. "/home/user/code/algosee/testclient/build/deactivate_conanrunenv-release-x86_64.sh"

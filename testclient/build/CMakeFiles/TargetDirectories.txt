@@ -1,3 +1,0 @@
-/home/user/code/algosee/testclient/build/CMakeFiles/algosee_testserver.dir
-/home/user/code/algosee/testclient/build/CMakeFiles/edit_cache.dir
-/home/user/code/algosee/testclient/build/CMakeFiles/rebuild_cache.dir
