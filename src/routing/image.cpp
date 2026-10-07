@@ -17,17 +17,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../logger/logger.h"
+#include "../sortalgo/algos.h"
+#include "../utils/general/utils.h"
+#include "../validate/sort/validate.h"
+#include <chrono>
+#include <exception>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
-
-
-void RunStatus(const httplib::Request &req, httplib::Response &res,
-               stateClass &state) {
-  json response;
-  response["STATUS"] = "ONLINE";
-  response["VERION"] = "VERSION";
-  state.out("Sending status signal.", 0);
-  res.status = 200;
-  res.set_header("Access-Control-Allow-Origin", "*");
-  res.set_content(response.dump(), "application/json");
-}
+#include <stb_image.h>
+#include <vector>
