@@ -19,7 +19,9 @@
 #include "../logger/logger.h"
 #include "../sortalgo/algos.h"
 #include "../utils/general/utils.h"
+#include "../utils/image/image.h"
 #include "../validate/image/validate.h"
+#include "build_info.h"
 #include <chrono>
 #include <exception>
 #include <httplib/httplib.h>
@@ -30,13 +32,41 @@
 void runImageSort(const httplib::Request &req, httplib::Response &res,
                   stateClass &state) {
   json response;
-  response["VERSION"];
+  response["VERSION"] = ALGOSEE_VERSION;
+  response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
   ImageValidReturn info = validateImage(req, state);
   if (info.failure) {
     returnFailedAnswer(res, "Validate Image failed:" + info.failureString, 400);
     return;
   }
+  shuffleImage(info.img);
+  state.out("Starting time mesurement...", 0);
+  auto startTime = std::chrono::steady_clock::now();
 
+  if (info.algo == "selection")
+    selectionSort(info.img.data, response);
+  else if (info.algo == "cycle")
+    cycleSort(info.img.data, response);
+  else if (info.algo == "bubble")
+    bubbleSort(info.img.data, response);
+  else if (info.algo == "quick")
+    quickSort(info.img.data, 0, info.img.data.size() - 1, response);
+  else if (info.algo == "merge")
+    mergeSort(info.img.data, response);
+  else if (info.algo == "counting") {
+    countingSort(info.img.data, response);
+  } else if (info.algo == "bogo") {
+    bogoSort(info.img.data, response);
+  }
+  auto endTime = std::chrono::steady_clock::now();
+  auto elapsed =
+      std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+  state.out("Ended Time mesurement.", 0);
+  response["TIME"] = elapsed.count();
 
-
+  res.status = 200;
+  res.set_header("Access-Control-Allow-Origin", "*");
+  res.set_content(response.dump(), "application/json");
+  state.out("Sending response...", 0);
+  return;
 }

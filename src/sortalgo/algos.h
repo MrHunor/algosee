@@ -40,4 +40,5 @@ void bubbleSort(indexPixel& unsorted, json &response);
 void quickSort(indexPixel& unsorted, int low, int high, json &response);
 void countingSort(indexPixel& unsorted, json &response);
 void cycleSort(indexPixel& unsorted, json &response);
+void mergeSort(indexPixel& unsorted, json &response);
 #endif

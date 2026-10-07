@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
 
   state.out("Starting...", 0);
   state.out("VERSION:" + std::string(ALGOSEE_VERSION), 0);
-  state.out("Build on:"+std::string(ALGOSEE_BUILD_TIME),0);
+  state.out("Build on:" + std::string(ALGOSEE_BUILD_TIME), 0);
   httplib::Server server;
 
   //--------------------------PREROUTING HANDLING-------------------
@@ -85,7 +85,14 @@ int main(int argc, char *argv[]) {
   server.Options("(/sortalgo)", serverOptionHandler);
   server.Options("(/pathalgo)", serverOptionHandler);
   server.Options("(/status)", serverOptionHandler);
-  server.Options("(/selftest)", serverOptionHandler);
+  server.Options("(/image)", serverOptionHandler);
+
+  //--------------------------IMAGE-----------------------------------------------------------
+  server.Post("/image",
+              [&](const httplib::Request &req, httplib::Response &res) {
+                runImageSort(req, res, state);
+                return;
+              });
 
   //---------------------------STATUS---------------------------------------------------------------------
   server.Get("/status",
