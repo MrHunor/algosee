@@ -110,6 +110,7 @@ if (sizeSlider) {
     });
 }
 // -------------------------------------------------------------
+
 // generate random array and draw bars
 function generateArray() {
     container.innerHTML = '';
