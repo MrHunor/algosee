@@ -19,6 +19,9 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+
+
+
 #include <nlohmann/json.hpp>
 #include <unordered_set>
 #include <vector>
@@ -30,54 +33,38 @@
 #define VERBOSE_LEVEL_NEEDED_FOR_TIME 0
 
 typedef unsigned char colour;
-struct pixel {
-  colour R;
-  colour G;
-  colour B;
-  colour A;
+struct pixel 
+{
+colour R;
+colour G;
+colour B;
+colour A;
 };
 
-typedef std::vector<std::pair<int, pixel>> indexPixel;
 
-struct image {
-  int width;
-  int height;
-  indexPixel data;
+typedef std::vector<std::pair<int,pixel>> indexPixel;
+
+struct image
+{
+int width;
+int height;
+indexPixel data;
 };
 
-#define MAX_ELEMENT_COUNT_SORT                                                 \
+
+#define MAX_ELEMENT_COUNT                                                      \
   2500 // you could customise this for every algo, but thats a future issue
        // (Issue #38)
 
-#define MAX_ELEMENT_COUNT_SELECTION MAX_ELEMENT_COUNT_SORT
 #define MAX_ELEMENT_COUNT_BOGO 9
-#define MAX_ELEMENT_COUNT_BUBBLE MAX_ELEMENT_COUNT_SORT
-#define MAX_ELEMENT_COUNT_QUICK MAX_ELEMENT_COUNT_SORT
-#define MAX_ELEMENT_COUNT_MERGE MAX_ELEMENT_COUNT_SORT
-#define MAX_ELEMENT_COUNT_COUNTING MAX_ELEMENT_COUNT_SORT
-#define MAX_ELEMENT_COUNT_CYCLE MAX_ELEMENT_COUNT_SORT
-
-#define MAX_ELEMENT_COUNT_PATH 62500
-#define MAX_ELEMENT_COUNT_BFS MAX_ELEMENT_COUNT_PATH
-#define MAX_ELEMENT_COUNT_DIJKSTRA MAX_ELEMENT_COUNT_PATH
-#define MAX_ELEMENT_COUNT_DFS MAX_ELEMENT_COUNT_PATH
-#define MAX_ELEMENT_COUNT_BIBFS MAX_ELEMENT_COUNT_PATH
 
 using json = nlohmann::json;
 
-const std::unordered_map<std::string, int> implementedSortAlgos = {
-    {"selection", MAX_ELEMENT_COUNT_SELECTION},
-    {"bogo", MAX_ELEMENT_COUNT_BOGO},
-    {"bubble", MAX_ELEMENT_COUNT_BUBBLE},
-    {"quick", MAX_ELEMENT_COUNT_QUICK},
-    {"merge", MAX_ELEMENT_COUNT_MERGE},
-    {"counting", MAX_ELEMENT_COUNT_COUNTING},
-    {"cycle", MAX_ELEMENT_COUNT_CYCLE}};
+const std::unordered_set<std::string> implementedSortAlgos = {
+    "selection", "bogo", "bubble", "quick", "merge", "counting", "cycle"};
 
-const std::unordered_map<std::string, int> implementedPathAlgos = {
-    {"BFS", MAX_ELEMENT_COUNT_BFS},
-    {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA},
-    {"DFS", MAX_ELEMENT_COUNT_DFS},
-    {"BIBFS", MAX_ELEMENT_COUNT_BIBFS}};
+const std::unordered_set<std::string> implementedPathAlgos = {"BFS", "dijkstra",
+                                                              "DFS", "BIBFS"};
+
 
 #endif

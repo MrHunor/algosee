@@ -54,7 +54,6 @@ SortValidReturn validateSort(const httplib::Request &req, stateClass& state) {
     // internelly and throws itself so it is not really needed
     retval.values = parsed["values"].get<std::vector<int>>();
 
-    
 
     if(retval.algo == "counting")
     {
@@ -65,13 +64,10 @@ SortValidReturn validateSort(const httplib::Request &req, stateClass& state) {
       if(hasNegNumbers)throw std::runtime_error("Selected algorithm (counting) does not support negative numbers.");
     }
     
-    auto it = implementedSortAlgos.find(retval.algo);
-    if(retval.values.size()>it->second)
+    if(retval.algo == "bogo"&&retval.values.size()>9)
     {
-      throw std::runtime_error("Too many element specified. "+it->first+" only accepts less then "+ std::to_string(it->second)+ " elements.");
+      throw std::runtime_error("Too many elements for bogo.");
     }
-
-
   } catch (const std::exception &e) {
     state.out("An Exception was thrown while validating the input:" +
                   std::string(e.what()),
