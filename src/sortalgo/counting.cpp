@@ -44,13 +44,13 @@ void countingSort(std::vector<int> &unsorted, json &response) {
 
   unsorted = retval;
 }
-void countingSort(image& img, json &response) {
-  if (img.data.size() <= 1)
+void countingSort(indexPixel& unsorted, json &response){
+  if (unsorted.size() <= 1)
     return; // an array of the size one is already sorted
   int countI = 0;
   std::vector<int> count(
       std::max_element(
-          img.data.begin(), img.data.end(),
+          unsorted.begin(), unsorted.end(),
           [](const auto &a, const auto &b) { return a.first < b.first; })
           ->first +
       1); // so whats going on here is that you cannot pass the begin and end
@@ -61,12 +61,12 @@ void countingSort(image& img, json &response) {
           // back the first element plus one (compare with the bubblesort
           // implemenntation up if you have any concerns)
   std::vector<int> indexes;
-  indexes.reserve(img.data.size());
-  for (const auto& i : img.data) {
+  indexes.reserve(unsorted.size());
+  for (const auto& i : unsorted) {
     count[i.first]++;
   }
   response["COUNT ARRAY:"] = count;
-  for (size_t i = 0; i < img.data.size(); i++) {
+  for (size_t i = 0; i < unsorted.size(); i++) {
     while (count[countI] == 0)
       countI++;
     indexes.push_back(countI);
@@ -74,14 +74,14 @@ void countingSort(image& img, json &response) {
   }
 
   //well now we have a sorted array of indexes, but not of a pair so we need to match the indexes to pairs
-  image retval;
+  indexPixel retval;
 
   for(int i = 0; i < indexes.size();i++)
   {
-    auto it = std::find_if(img.data.begin(),img.data.end(),[i](const auto&element){return element.first == i; });
-    size_t iIndex = std::distance(img.data.begin(),it);
-    retval.data.push_back(img.data[iIndex]);
+    auto it = std::find_if(unsorted.begin(),unsorted.end(),[i](const auto&element){return element.first == i; });
+    size_t iIndex = std::distance(unsorted.begin(),it);
+    retval.push_back(unsorted[iIndex]);
   }
-  img = retval;
+  unsorted=retval;
   
 }

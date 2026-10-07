@@ -17,14 +17,21 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#include "../../config.h"
 #include <algorithm>
 #include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
 #include <random>
 #include <vector>
 
-
 void randomise(std::vector<int> &vec) {
+  static std::random_device rd;
+  static std::mt19937 gen(rd());
+
+  std::shuffle(vec.begin(), vec.end(), gen);
+}
+
+void randomise(indexPixel &vec) {
   static std::random_device rd;
   static std::mt19937 gen(rd());
 

@@ -64,14 +64,14 @@ void cycleSort(std::vector<int> &unsorted, json &response) {
   }
 }
 
-void cycleSort(image &img, json &response) {
+void cycleSort(indexPixel& unsorted, json &response) {
   int NewPosition = 0;
   std::pair<int, pixel> current = {};
-  for (size_t i = 0; i < img.data.size(); i++) {
-    current = img.data[i];
+  for (size_t i = 0; i < unsorted.size(); i++) {
+    current = unsorted[i];
     NewPosition = i;
-    for (size_t z = i + 1; z < img.data.size(); z++) {
-      if (current.first > img.data[z].first)
+    for (size_t z = i + 1; z < unsorted.size(); z++) {
+      if (current.first > unsorted[z].first)
         NewPosition++;
     }
     // already sorted?
@@ -79,27 +79,27 @@ void cycleSort(image &img, json &response) {
       continue;
 
     // is current swap position a duplicate?
-    while (current.first == img.data[NewPosition].first)
+    while (current.first == unsorted[NewPosition].first)
       NewPosition++;
 
     // intresing about this: it does not swap two items in the array, it swaps
     // one OUT with another one; so remember this takes the displaced one OUT of
     // the array and back into current and swaps in the correct value for the
     // index
-    std::swap(current, img.data[NewPosition]);
+    std::swap(current, unsorted[NewPosition]);
     response["SWAPED"].push_back({current.first, NewPosition});
 
     // sort the displaced
     while (NewPosition != i) {
       NewPosition = i;
-      for (size_t z = i + 1; z < img.data.size(); z++) {
-        if (current.first > img.data[z].first)
+      for (size_t z = i + 1; z < unsorted.size(); z++) {
+        if (current.first > unsorted[z].first)
           NewPosition++;
       }
       // check For duplicates once again
-      while (current.first == img.data[NewPosition].first)
+      while (current.first == unsorted[NewPosition].first)
         NewPosition++;
-      std::swap(current, img.data[NewPosition]);
+      std::swap(current, unsorted[NewPosition]);
       response["SWAPED"].push_back({current.first, NewPosition});
     }
   }

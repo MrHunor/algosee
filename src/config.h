@@ -20,7 +20,6 @@
 #define CONFIG_H
 
 #include <nlohmann/json.hpp>
-#include <unordered_set>
 #include "build_info.h"
 #include <vector>
 

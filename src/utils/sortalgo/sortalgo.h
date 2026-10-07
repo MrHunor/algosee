@@ -17,8 +17,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#include "../../config.h"
 #include <vector>
 #ifndef SORTALGO_UTILS_H
 #define SORTALGO_UTILS_H
 void randomise(std::vector<int> &vec);
+void randomise(indexPixel &vec);
 #endif

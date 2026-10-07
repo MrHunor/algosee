@@ -32,3 +32,12 @@ void bogoSort(std::vector<int> &unsorted, json &response) {
     response["TRIES"].push_back(unsorted);
   }
 }
+
+//--------------IMAGE-------------------
+void bogoSort(indexPixel& unsorted, json &response){
+  if (unsorted.size() == 1)
+    return; // an array of the size one is already sorted
+  while (!std::is_sorted(unsorted.begin(), unsorted.end(),[](const auto& a, const auto&b){return a.first<b.first;})) {
+    randomise(unsorted);
+  }
+}
