@@ -7,11 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1.URL-parameter
     const urlParams = new URLSearchParams(window.location.search);
     const algoKey = urlParams.get('algo') || 'bfs';
-    //1.2.Backend-URL parameters
-    const serverParam = urlParams.get('server') || 'remote';
-    const backendBase = serverParam === 'local' 
-        ? 'http://localhost:8080' // depents which port *you* choose, change accordingly
-        : 'https://algosee.onrender.com';
 
     // 2. title adjust 
     const algoNames = {
@@ -122,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 container.appendChild(cell);
-                currentRow.push(1); // base-value 1 
+                currentRow.push(1); // base-value 1
             }
             grid.push(currentRow);
         }
@@ -166,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let apiAlgo = algoKey.toUpperCase();
             if (algoKey === 'dij' || algoKey === 'dijkstra') apiAlgo = 'dijkstra';
 
-            const backendUrl = `${backendBase}/pathalgo?algo=${apiAlgo}`;
+            const backendUrl = `https://algosee.onrender.com/pathalgo?algo=${apiAlgo}`;
 
             startBtn.disabled = true;
             if (resetBtn) resetBtn.disabled = true;
