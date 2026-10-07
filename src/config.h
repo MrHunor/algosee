@@ -41,5 +41,4 @@ const std::unordered_set<std::string> implementedSortAlgos = {
 const std::unordered_set<std::string> implementedPathAlgos = {"BFS", "dijkstra",
                                                               "DFS", "BIBFS"};
 
-
 #endif
