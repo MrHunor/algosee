@@ -32,19 +32,18 @@ DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
                  std::pair<int, int> goal, json& response) {
   // Frontier means what is it going to explore next, hence it being a queue
 
-  int iteration = 0;
   const int rows = map.size();
   const int collums = map[0].size();
 
-  std::vector<std::vector<int>> visited(
-      rows, std::vector<int>(collums, -1)); // weird ass constructor
+  std::vector<std::vector<bool>> visited(
+      rows, std::vector<bool>(collums, false)); // weird ass constructor
   std::vector<std::vector<std::pair<int, int>>> parent(
       rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
   std::vector<std::pair<int, int>> path;
 
   std::stack<std::pair<int, int>> frontier;
   frontier.push({start.second, start.first});
-  visited[start.second][start.first] = 0;
+  visited[start.second][start.first] = true;
 
   std::vector<int> directionsRows = {-1, 1, 0, 0};
   std::vector<int> directionsCollums = {0, 0, 1, -1};
@@ -71,23 +70,22 @@ DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
       if (map[xNeighbour][yNeighbour] == true)
         continue; // current Neighboor not a valid tile, skip
 
-      if (visited[xNeighbour][yNeighbour] != -1)
+      if (visited[xNeighbour][yNeighbour] == true)
         continue; // been there done that, so skip
 
       // if everything thus far was negative that means we have a valid
       // unvisited tile
-      visited[xNeighbour][yNeighbour] = iteration;
+      visited[xNeighbour][yNeighbour] = true;
       parent[xNeighbour][yNeighbour] = {x, y};
       frontier.push({xNeighbour, yNeighbour});
     }
-    iteration++;
   }
   // being out of the while loop means every possible tile was explored
 
   response["VISITED"] = swapVisitedArray(visited);
   
 
-  if (visited[goal.second][goal.first]==-1)
+  if (!visited[goal.second][goal.first])
     return {}; // never once reached the goal means there was no path found to
                // the goal
 
