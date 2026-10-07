@@ -17,7 +17,7 @@
     </header>
 
     <main class="algo-detail-container">
-<!-- Left side: Title, Image, Play -->
+        <!-- Left side: Title, Image, Play -->
         <div class="algo-left-column">
             <div class="algo-preview-box">
                 <span class="preview-text">Preview</span>
@@ -32,36 +32,34 @@
             <h2 id="algo-name" class="algo-main-title">loading...</h2>
         </div>
 
-        <!-- right: long ass description against whitespace -->
+        <!-- right: long description -->
         <div class="algo-right-column">
             <div class="description-card">
                 <h3>description</h3>
-<p id="algo-description">Info to alogrithm loading...</p>
+                <p id="algo-description">Info to algorithm loading...</p>
 
-<div class="complexity">
-    <p><strong>Time Complexity:</strong> <span id="time-complexity"></span></p>
-    <p><strong>Space Complexity:</strong> <span id="space-complexity"></span></p>
-</div>
+                <div class="complexity">
+                    <p><strong>Time Complexity:</strong> <span id="time-complexity"></span></p>
+                    <p><strong>Space Complexity:</strong> <span id="space-complexity"></span></p>
+                </div>
                 <!-- wiki credits -->
                 <div class="wiki-source">
                     Source: <a id="wiki-link" href="#" target="_blank" rel="noopener noreferrer">Wikipedia</a>
                 </div>
                 <!-- Server-Switch UI -->
-                <div class="server-switch" style="display: flex; gap: 1rem; align-items: center; color: #cbd5e1; font-size: 0.9rem;">
+                <div class="server-switch server-switch-wrapper">
                     <span>Server:</span>
-                    <label style="cursor: pointer;"><input type="radio" name="server-target" value="remote" checked> Remote (Render)</label>
-                    <label style="cursor: pointer;"><input type="radio" name="server-target" value="local"> Localhost</label>
+                    <label class="cursor-pointer"><input type="radio" name="server-target" value="remote" checked> Remote (Render)</label>
+                    <label class="cursor-pointer"><input type="radio" name="server-target" value="local"> Localhost</label>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        // read URL-parameters
         const urlParams = new URLSearchParams(window.location.search);
-        const algoKey = urlParams.get('algo') || 'bogo'; // Fallback
+        const algoKey = urlParams.get('algo') || 'bogo';
 
-        // central db for infos + wikiUrl
         const algoDatabase = {
             bogo: {
                 name: "BogoSort",
@@ -135,7 +133,6 @@
             }
         };
     
-        // paste data in html-set
         const data = algoDatabase[algoKey] || {
             name: "unknown algorithm",
             description: "No Details for this Algorithm",
@@ -147,23 +144,20 @@
         document.getElementById('algo-description').innerText = data.description;
         document.getElementById('time-complexity').innerText = data.timeComplexity;
         document.getElementById('space-complexity').innerText = data.spaceComplexity;
-        // Set Wikipedia Link
+        
         const wikiLinkElement = document.getElementById('wiki-link');
         wikiLinkElement.href = data.wikiUrl;
         wikiLinkElement.innerText = "Wikipedia";
 
-        // update link
         function updateVisualizerLink() {
-            const selectedServer = document.querySelector('input[name="server-target"]:checked').value;
-            document.getElementById('visualizer-link').href = `loading.html?algo=${algoKey}&server=${selectedServer}`;
+        const selectedServer = document.querySelector('input[name="server-target"]:checked').value;
+        document.getElementById('visualizer-link').href = `../loading.html?dir=picsort&algo=${algoKey}&server=${selectedServer}`;
         }
 
-        // eventlistener fpr switch changes
         document.querySelectorAll('input[name="server-target"]').forEach(input => {
             input.addEventListener('change', updateVisualizerLink);
         });
 
-        // init while loading
         updateVisualizerLink();
     </script>
 </body>
