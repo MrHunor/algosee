@@ -10,32 +10,10 @@
     font-family: system-ui, -apple-system, sans-serif;
 }
 
-html {
-    height: 100%;
-}
-
 body {
     background-color: #0b0b0b;
     color: #ffffff;
     padding: 2.5rem;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* inner distance */
-.navbar, 
-main, 
-.algo-detail-container, 
-.visualizer-container {
-    padding: 2.5rem;
-}
-
-/* footer to the bottom  */
-main, 
-.algo-detail-container, 
-.visualizer-container {
-    flex: 1 0 auto;
 }
 
 .navbar {
@@ -54,8 +32,6 @@ main,
     gap: 2.5rem;
     max-width: 1200px;
     margin: 0 auto;
-    width: 100%;          /* full width */
-    align-items: start;   
 }
 
 .card {
@@ -387,7 +363,7 @@ footer {
     color: #ffffff;
     text-align: center;
     padding: 20px;
-    margin-top: auto; 
+    margin-top: 40px; 
 }
 
 footer ul {
