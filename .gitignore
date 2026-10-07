@@ -2,4 +2,3 @@ build/*
 build-debug/*
 testserver/build/*
 log.txt
-frontend/picsort/notice.md
