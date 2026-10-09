@@ -39,7 +39,7 @@ private:
 
 public:
   excep(const std::string &message,
-        std::source_location location = std::source_location::current())
-      : std::runtime_error(message) {};
+        std::source_location location = std::source_location::current(),int SetexitCode = 400)
+      : std::runtime_error(formatMessage(message,location)) {};
 };
 #endif
