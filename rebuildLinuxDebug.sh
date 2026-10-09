@@ -17,6 +17,6 @@ set -euo pipefail
 set -x
 
 rm -rf build
-conan install . --output-folder=build --build=missing
-cmake --preset conan-release
-cmake --build build --parallel
+conan install . --output-folder=build --build=missing -s build_type=Debug
+cmake --preset conan-debug -DCMAKE_BUILD_TYPE=debug -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake
+cmake --build build --parallel 

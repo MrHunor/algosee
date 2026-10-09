@@ -1,6 +1,0 @@
-[requires]
-nlohmann_json/3.12.0
-
-[generators]
-CMakeDeps #specifically for cmake
-CMakeToolchain #tells cmake where to find dependencies using build config
