@@ -50,7 +50,7 @@ jobs:
      - name: Build executable 
        shell: bash
        run: |
-        ./rebuildLinux.sh 
+        ./rebuildLinuxRelease.sh 
 
      - name: Create new GitHub release
        shell: bash

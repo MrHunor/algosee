@@ -49,20 +49,15 @@ jobs:
      - name: Build executable 
        shell: bash
        run: |
-        ./rebuildLinux.sh 
+        ./rebuildLinuxDebug.sh 
 
      - name: Start executable for testing 
        shell: bash
        run: | 
         ./build/algosee & 
 
-     - name: Build testserver
-       shell: bash
-       run: | 
-        cd testclient &&  ./rebuildLinux.sh
-
      - name: Run testserver
        shell: bash 
        run: | 
-          ./testclient/build/algosee_testserver
+          ./build/algosee_testserver
 
