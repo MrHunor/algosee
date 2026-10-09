@@ -46,6 +46,9 @@ if(CMAKE_BUILD_TYPE STREQUAL "debug")
     add_executable(algosee_testclient
         ${ALL_SOURCES_TESTCLIENT}
     )
+    target_include_directories(algosee_testclient PRIVATE
+    "${CMAKE_CURRENT_BINARY_DIR}/generated"
+)
 elseif(CMAKE_BUILD_TYPE STREQUAL "release")
     target_compile_options(algosee PRIVATE
         $<$<CONFIG:Release>:-O3>

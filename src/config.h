@@ -83,4 +83,76 @@ const std::unordered_map<std::string, int> implementedPathAlgos = {
     {"DFS", MAX_ELEMENT_COUNT_DFS},
     {"BIBFS", MAX_ELEMENT_COUNT_BIBFS}};
 
+    const std::vector<std::pair<std::string,int>> testCasesSorting
+{
+   
+    {"selection",5},
+    {"selection",25},
+    {"selection",100},
+    {"selection",1000},
+    {"selection",MAX_ELEMENT_COUNT_SORT-1},
+
+    {"bubble",5},
+    {"bubble",25},
+    {"bubble",100},
+    {"bubble",1000},
+    {"bubble",MAX_ELEMENT_COUNT_SORT-1},
+
+    {"quick",5},
+    {"quick",25},
+    {"quick",100},
+    {"quick",1000},
+    {"quick",MAX_ELEMENT_COUNT_SORT-1},
+
+    {"merge",5},
+    {"merge",25},
+    {"merge",100},
+    {"merge",1000},
+    {"merge",MAX_ELEMENT_COUNT_SORT-1},
+
+    {"counting",5},
+    {"counting",25},
+    {"counting",100},
+    {"counting",1000},
+    {"counting",MAX_ELEMENT_COUNT_SORT-1},
+
+    {"cycle",5},
+    {"cycle",25},
+    {"cycle",100},
+    {"cycle",1000},
+    {"cycle",MAX_ELEMENT_COUNT_SORT-1},
+
+    // bogo is factorial time: keep sizes tiny
+    {"bogo",3},
+    {"bogo",5},
+    {"bogo",MAX_ELEMENT_COUNT_BOGO-1},
+};
+
+const std::vector<std::pair<std::string,std::pair<int,int>>> testCasesPathfinding
+{
+    {"BFS",{10,5}},
+    {"BFS",{20,5}},
+    {"BFS",{100,45}},
+    {"BFS",{250,150}},
+    {"BFS",{249,249}},
+
+    {"dijkstra",{10,5}},
+    {"dijkstra",{20,5}},
+    {"dijkstra",{100,45}},
+    {"dijkstra",{250,150}},
+    {"dijkstra",{249,249}},
+
+    {"DFS",{10,5}},
+    {"DFS",{20,5}},
+    {"DFS",{100,45}},
+    {"DFS",{250,150}},
+    {"DFS",{249,249}},
+
+    {"BIBFS",{10,5}},
+    {"BIBFS",{20,5}},
+    {"BIBFS",{100,45}},
+    {"BIBFS",{250,150}},
+    {"BIBFS",{249,249}},
+};
+
 #endif
