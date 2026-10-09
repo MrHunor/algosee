@@ -1,6 +1,7 @@
 #   algosee; A algorithm visulizer
 #   Copyright (C) 2026  MrHunor, siryanni (as equals)
-#
+#   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
+#   
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
 #   the Free Software Foundation, either version 3 of the License, or
@@ -12,7 +13,8 @@
 #   GNU General Public License for more details.
 #
 #   You should have received a copy of the GNU General Public License
-#   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
+#   along with this program.(root/LICENSE)
+#   If not, see <https://www.gnu.org/licenses/>.
 cmake_minimum_required(VERSION 3.20)
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -78,7 +80,9 @@ target_link_libraries(algosee
     stdc++exp
 )
 
+if(CMAKE_BUILD_TYPE STREQUAL "debug")
 target_link_libraries(algosee_testclient
 nlohmann_json::nlohmann_json
 stdc++exp
 )
+endif()

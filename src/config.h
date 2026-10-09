@@ -1,7 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
- *
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
+ * 
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
@@ -24,6 +25,8 @@
 #include "build_info.h"
 #include <vector>
 
+
+#define QUOTE "\"Es mejor morir de pie que vivir toda una vida arrodillado\" ~ Emiliano Zapata."
 
 #define DEFAULT_COLOUR MAGENTA
 

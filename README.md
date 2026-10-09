@@ -4,6 +4,8 @@
 
 *© 2026 MrHunor, siryanni (as equals) · GPLv3*
 
+![Hackatime Badge](https://hackatime-badge.hackclub.com/U0BAT7EGEQ7/algosee)
+![Hackatime Badge](https://hackatime-badge.hackclub.com/U0A2D73JM9R/algosee)
 
 ## Demo:
 ![Demo](./assets/Screenshot_Overview.png)    

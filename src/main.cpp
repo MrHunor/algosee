@@ -1,6 +1,7 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,6 +18,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#include "config.h"
 #include "logger/logger.h"
 #include "routing/routing.h"
 
@@ -36,6 +38,7 @@ int main(int argc, char *argv[]) {
             "under certain conditions; visit "
             "'https://www.gnu.org/licenses/gpl-3.0.en.html' for details.\n",
             0, RED);
+  state.out(QUOTE,0,BRIGHT_BLUE);
 
   state.out("Starting...", 0);
   state.out("VERSION:" + std::string(ALGOSEE_VERSION), 0);
