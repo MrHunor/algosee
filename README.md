@@ -141,5 +141,11 @@ Use curl to make request to the render server, e.g.: `curl -X POST "https://algo
 
 <br>
 
+
+# AI usage disclosure:
+I, **@MrHunor**, have used AI for explaining what do to when i didn't know anymore, as well as when i wanted to implement something but didn't know how. I have also let copilot scan each commit for possible unintended bugs with the latest change in a new commit.  
+I, **@siryanni**, (TBD [#126](https://github.com/MrHunor/algosee/issues/126))  
+For anyone looking to contribute we would ask them to follow the line we provided 
+
 # Big :heart: to the following:
 - [Render](https://render.com/), for their free tier hosting which the online Backend relies on.

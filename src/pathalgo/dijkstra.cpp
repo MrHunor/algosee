@@ -61,41 +61,41 @@ Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
   while (!frontier.empty()) {
     // extract info from the first frontier element
     int currentDistance = frontier.top().first;
-    int x = frontier.top().second.first;
-    int y = frontier.top().second.second;
+    int y = frontier.top().second.first;
+    int x = frontier.top().second.second;
 
     // because the info fron the first frontier element is now stored in the
     // above declared variables, we can delete the first element from frontier
     frontier.pop();
 
-    if (currentDistance != distance[x][y])
+    if (currentDistance != distance[y][x])
       continue; // already discovered
 
-    if (std::make_pair(y, x) == goal)
+    if (std::make_pair(x, y) == goal)
       break; // finished, goal discovered
 
     // check all neighbours
     for (int i = 0; i < 4; i++) {
-      int xNeighbour = x + directionsRows[i];
-      int yNeighbour = y + directionsCollums[i];
+      int yNeighbour = y + directionsRows[i];
+      int xNeighbour = x + directionsCollums[i];
 
-      if (xNeighbour < 0 || xNeighbour > rows - 1 || yNeighbour < 0 ||
-          yNeighbour > collums - 1)
+      if (yNeighbour < 0 || yNeighbour > rows - 1 || xNeighbour < 0 ||
+          xNeighbour > collums - 1)
         continue; // current neighboor out of map, skip this iteration
 
-      if (map[xNeighbour][yNeighbour] == -1)
+      if (map[yNeighbour][xNeighbour] == -1)
         continue; // this tile is blocked, skip
 
-      int newDistance = currentDistance + map[xNeighbour][yNeighbour];
+      int newDistance = currentDistance + map[yNeighbour][xNeighbour];
 
       // is the current path to this tile cheaper then the already known path
       // from start to goal?
-      if (newDistance < distance[xNeighbour][yNeighbour]) {
+      if (newDistance < distance[yNeighbour][xNeighbour]) {
         // yes, save all info about the new tile and add it to frontier to be
         // explored next
-        distance[xNeighbour][yNeighbour] = newDistance;
-        parent[xNeighbour][yNeighbour] = {x, y};
-        frontier.push({newDistance, {xNeighbour, yNeighbour}});
+        distance[yNeighbour][xNeighbour] = newDistance;
+        parent[yNeighbour][xNeighbour] = {y, x};
+        frontier.push({newDistance, {yNeighbour, xNeighbour}});
       }
     }
   }

@@ -23,11 +23,9 @@
 #include "../validate/image/validate.h"
 #include "build_info.h"
 #include <chrono>
-#include <exception>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <stb_image.h>
-#include <vector>
 
 void runImageSort(const httplib::Request &req, httplib::Response &res,
                   stateClass &state) {

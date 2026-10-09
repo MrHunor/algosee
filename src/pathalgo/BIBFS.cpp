@@ -62,10 +62,10 @@ std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map,
 
   while (!frontierFromStart.empty() && !frontierFromEnd.empty() &&
          meetingPointX == -1) {
-    int xFromStart = frontierFromStart.front().first;
-    int yFromStart = frontierFromStart.front().second;
-    int xFromEnd = frontierFromEnd.front().first;
-    int yFromEnd = frontierFromEnd.front().second;
+    int yFromStart = frontierFromStart.front().first;
+    int xFromStart = frontierFromStart.front().second;
+    int yFromEnd = frontierFromEnd.front().first;
+    int xFromEnd = frontierFromEnd.front().second;
 
     frontierFromStart.pop();
     frontierFromEnd.pop();
@@ -79,44 +79,44 @@ std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map,
     }
     for (int i = 0; i < 4; i++) // check all neighbours
     {
-      int xNFromStart = xFromStart + directionsRows[i];
-      int yNFromStart = yFromStart + directionsCollums[i];
-      int xNFromEnd = xFromEnd + directionsRows[i];
-      int yNFromEnd = yFromEnd + directionsCollums[i];
+      int yNFromStart = yFromStart + directionsRows[i];
+      int xNFromStart = xFromStart + directionsCollums[i];
+      int yNFromEnd = yFromEnd + directionsRows[i];
+      int xNFromEnd = xFromEnd + directionsCollums[i];
 
       bool NFromStartValid = true;
       bool NFromEndValid = true;
 
       // check bounds
-      if (xNFromStart < 0 || xNFromStart > rows - 1 || yNFromStart < 0 ||
-          yNFromStart > collums - 1)
+      if (yNFromStart < 0 || yNFromStart > rows - 1 || xNFromStart < 0 ||
+          xNFromStart > collums - 1)
         NFromStartValid = false;
 
-      if (xNFromEnd < 0 || xNFromEnd > rows - 1 || yNFromEnd < 0 ||
-          yNFromEnd > collums - 1)
+      if (yNFromEnd < 0 || yNFromEnd > rows - 1 || xNFromEnd < 0 ||
+          xNFromEnd > collums - 1)
         NFromEndValid = false;
 
       // checked for blocked tile & if already visited
       if (NFromStartValid) {
-        if (map[xNFromStart][yNFromStart] == true)
+        if (map[yNFromStart][xNFromStart] == true)
           NFromStartValid = false;
-        if (visitedFromStart[xNFromStart][yNFromStart]!=-1)
+        if (visitedFromStart[yNFromStart][xNFromStart]!=-1)
           NFromStartValid = false;
       }
 
       if (NFromEndValid) {
-        if (map[xNFromEnd][yNFromEnd] == true)
+        if (map[yNFromEnd][xNFromEnd] == true)
           NFromEndValid = false;
-        if (visitedFromEnd[xNFromEnd][yNFromEnd]!=-1)
+        if (visitedFromEnd[yNFromEnd][xNFromEnd]!=-1)
           NFromEndValid = false;
       }
 
       if (NFromStartValid) {
-        visitedFromStart[xNFromStart][yNFromStart] = iteration;
-        parentFromStart[xNFromStart][yNFromStart] =
-            std::make_pair(xFromStart, yFromStart);
-        frontierFromStart.push(std::make_pair(xNFromStart, yNFromStart));
-        if (visitedFromEnd[xNFromStart][yNFromStart]!=-1) {
+        visitedFromStart[yNFromStart][xNFromStart] = iteration;
+        parentFromStart[yNFromStart][xNFromStart] =
+            std::make_pair(yFromStart, xFromStart);
+        frontierFromStart.push(std::make_pair(yNFromStart, xNFromStart));
+        if (visitedFromEnd[yNFromStart][xNFromStart]!=-1) {
           meetingPointX = xNFromStart;
           meetingPointY = yNFromStart;
           break;
@@ -124,11 +124,11 @@ std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map,
       }
 
       if (NFromEndValid) {
-        visitedFromEnd[xNFromEnd][yNFromEnd] = iteration;
-        parentFromEnd[xNFromEnd][yNFromEnd] =
-            std::make_pair(xFromEnd, yFromEnd);
-        frontierFromEnd.push(std::make_pair(xNFromEnd, yNFromEnd));
-        if (visitedFromStart[xNFromEnd][yNFromEnd]!=-1) {
+        visitedFromEnd[yNFromEnd][xNFromEnd] = iteration;
+        parentFromEnd[yNFromEnd][xNFromEnd] =
+            std::make_pair(yFromEnd, xFromEnd);
+        frontierFromEnd.push(std::make_pair(yNFromEnd, xNFromEnd));
+        if (visitedFromStart[yNFromEnd][xNFromEnd]!=-1) {
           meetingPointX = xNFromEnd;
           meetingPointY = yNFromEnd;
 
@@ -145,7 +145,7 @@ std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map,
     return {};
 
   // fist retrace all steps from the BFS starting at start
-  std::pair<int, int> current = std::make_pair(meetingPointX, meetingPointY);
+  std::pair<int, int> current = std::make_pair(meetingPointY, meetingPointX);
 
   while (current != std::make_pair(start.second, start.first)) {
     pathFromStart.push_back(current);
@@ -156,7 +156,7 @@ std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map,
   std::reverse(pathFromStart.begin(), pathFromStart.end());
 
   // and now same thing from the other direciton
-  current = std::make_pair(meetingPointX, meetingPointY);
+  current = std::make_pair(meetingPointY, meetingPointX);
 
   while (current != std::make_pair(goal.second, goal.first)) {
     pathFromEnd.push_back(current);

@@ -50,35 +50,35 @@ DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
   std::vector<int> directionsCollums = {0, 0, 1, -1};
 
   while (!frontier.empty()) {
-    int x = frontier.top().first;
-    int y = frontier.top().second;
+    int y = frontier.top().first;
+    int x = frontier.top().second;
     // because the first frontier element is now in x,y the first element of
     // frontier can be deleted
     frontier.pop();
 
-    if (std::make_pair(y, x) == goal)
+    if (std::make_pair(x, y) == goal)
       break; // reached goal
 
     for (int i = 0; i < 4; i++) // check all possible neighbors
     {
-      int xNeighbour = x + directionsRows[i];
-      int yNeighbour = y + directionsCollums[i];
+      int yNeighbour = y + directionsRows[i];
+      int xNeighbour = x + directionsCollums[i];
 
-      if (xNeighbour < 0 || xNeighbour > rows - 1 || yNeighbour < 0 ||
-          yNeighbour > collums - 1)
+      if (yNeighbour < 0 || yNeighbour > rows - 1 || xNeighbour < 0 ||
+          xNeighbour > collums - 1)
         continue; // current neighboor out of map, skip this iteration
 
-      if (map[xNeighbour][yNeighbour] == true)
+      if (map[yNeighbour][xNeighbour] == true)
         continue; // current Neighboor not a valid tile, skip
 
-      if (visited[xNeighbour][yNeighbour] != -1)
+      if (visited[yNeighbour][xNeighbour] != -1)
         continue; // been there done that, so skip
 
       // if everything thus far was negative that means we have a valid
       // unvisited tile
-      visited[xNeighbour][yNeighbour] = iteration;
-      parent[xNeighbour][yNeighbour] = {x, y};
-      frontier.push({xNeighbour, yNeighbour});
+      visited[yNeighbour][xNeighbour] = iteration;
+      parent[yNeighbour][xNeighbour] = {y, x};
+      frontier.push({yNeighbour, xNeighbour});
     }
     iteration++;
   }
