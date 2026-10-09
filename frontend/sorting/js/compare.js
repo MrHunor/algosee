@@ -83,7 +83,7 @@ if (algoKey1 === 'bogo' || algoKey2 === 'bogo') {
 
 if (sizeValSpan) sizeValSpan.innerText = sizeSlider ? sizeSlider.value : arraySize;
 
-// lock start-btn if no algo
+// lock start-btn if no algo 
 if (!algoKey1 || !algoKey2) {
     startBtn.disabled = true;
     startBtn.innerText = "choose algorithms";
