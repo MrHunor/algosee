@@ -30,10 +30,7 @@ struct PathValidReturn {
 
   std::pair<int, int> start;
   std::pair<int, int> goal;
-
-  bool failure = false;
-  std::string failureString;
 };
 
-PathValidReturn validatePath(const httplib::Request &req, stateClass& state);
+PathValidReturn validatePath(const httplib::Request &req, stateClass &state);
 #endif

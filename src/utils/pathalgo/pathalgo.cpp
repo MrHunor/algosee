@@ -48,7 +48,7 @@ void checkMapValidness(const std::vector<std::vector<int>> &map,
                        const std::pair<int, int> &start,
                        const std::pair<int, int> &goal) {
   if (map.empty()) {
-    throw std::runtime_error("Bad Map: Map is empty.");
+    throw excep("Bad Map: Map is empty.");
   }
   int rows = map.size();
   int cols = map[0].size();
@@ -61,17 +61,17 @@ void checkMapValidness(const std::vector<std::vector<int>> &map,
     }
   }
   if (!sameRowLength) {
-    throw std::runtime_error("Bad Map:Rows dont have same row length.");
+    throw excep("Bad Map:Rows dont have same row length.");
   }
 
   if (start.first < 0 || start.first > cols - 1 || start.second < 0 ||
       start.second > rows - 1) {
-    throw std::runtime_error("Bad Map: Start out of Map Bounds.");
+    throw excep("Bad Map: Start out of Map Bounds.");
   }
 
   if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 ||
       goal.second > rows - 1) {
-    throw std::runtime_error("Bad Map: End out of Map Bounds");
+    throw excep("Bad Map: End out of Map Bounds");
   }
 }
 
@@ -79,7 +79,7 @@ void checkMapValidness(const std::vector<std::vector<bool>> &map,
                        const std::pair<int, int> &start,
                        const std::pair<int, int> &goal) {
   if (map.empty()) {
-    throw std::runtime_error("Bad Map: Map is empty.");
+    throw excep("Bad Map: Map is empty.");
   }
   int rows = map.size();
   int cols = map[0].size();
@@ -92,17 +92,17 @@ void checkMapValidness(const std::vector<std::vector<bool>> &map,
     }
   }
   if (!sameRowLength) {
-    throw std::runtime_error("Bad Map:Rows dont have same row length.");
+    throw excep("Bad Map:Rows dont have same row length.");
   }
 
   if (start.first < 0 || start.first > cols - 1 || start.second < 0 ||
       start.second > rows - 1) {
-    throw std::runtime_error("Bad Map: Start out of Map Bounds.");
+    throw excep("Bad Map: Start out of Map Bounds.");
   }
 
   if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 ||
       goal.second > rows - 1) {
-    throw std::runtime_error("Bad Map: End out of Map Bounds");
+    throw excep("Bad Map: End out of Map Bounds");
   }
 }
 

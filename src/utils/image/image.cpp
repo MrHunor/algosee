@@ -37,7 +37,7 @@ image loadImage(const httplib::Request &req, const stateClass &state) {
 
   // read image from body to file
   if (!req.form.has_file("image"))
-    throw std::runtime_error("Request does not contain a 'image' file.");
+    throw excep("Request does not contain a 'image' file.");
 
   const auto &image = req.form.get_file("image");
 
@@ -55,7 +55,7 @@ image loadImage(const httplib::Request &req, const stateClass &state) {
                 4); // the 4 FORCES RGBA (might lead to issues later on)
 
   if (!data)
-    throw std::runtime_error("Failed to read saved image into memory.");
+    throw excep("Failed to read saved image into memory.");
 
   // copy to vector
   std::vector<colour> colours(data, data + (width * height * 4));

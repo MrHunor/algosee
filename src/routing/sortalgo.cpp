@@ -29,53 +29,52 @@
 
 void runSortalgo(const httplib::Request &req, httplib::Response &res,
                  stateClass &state) {
-  
+  try {
+    state.out("Processing values....", 0);
+    SortValidReturn info;
+    info = validateSort(req, state);
 
-  state.out("Processing values....", 0);
-  SortValidReturn info;
-  info = validateSort(req, state);
-  if (info.failure) {
-    returnFailedAnswer(res, info.failureString);
-    return;
+    state.out("Finished.", 0);
+
+    json response;
+    response["VERSION"] = ALGOSEE_VERSION;
+    response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
+
+    state.out("Starting time mesurement...", 0);
+    auto startTime = std::chrono::steady_clock::now();
+
+    if (info.algo == "selection")
+      selectionSort(info.values, response);
+    else if (info.algo == "cycle")
+      cycleSort(info.values, response);
+    else if (info.algo == "bubble")
+      bubbleSort(info.values, response);
+    else if (info.algo == "quick")
+      quickSort(info.values, 0, info.values.size() - 1, response);
+    else if (info.algo == "merge")
+      mergeSort(info.values, response);
+    else if (info.algo == "counting") {
+      countingSort(info.values, response);
+    } else if (info.algo == "bogo") {
+      bogoSort(info.values, response);
+    }
+
+    // Default for all algorithms exit
+    auto endTime = std::chrono::steady_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
+        endTime - startTime);
+    state.out("Ended Time mesurement.", 0);
+    response["TIME"] = elapsed.count();
+
+    response["SORTED"] = info.values;
+
+    res.status = 200;
+    res.set_header("Access-Control-Allow-Origin", "*");
+    res.set_content(response.dump(), "application/json");
+    state.out("Sending response...", 0);
+  } catch (const std::exception &e) {
+    state.out("Cought an exception:" + std::string(e.what()), 0);
+    returnFailedAnswer(res, std::string(e.what()));
   }
-
-  state.out("Finished.", 0);
-
-  json response;
-  response["VERSION"] = ALGOSEE_VERSION;
-  response["BUILDTIME"]=ALGOSEE_BUILD_TIME;
-
-  state.out("Starting time mesurement...", 0);
-  auto startTime = std::chrono::steady_clock::now();
-
-  if (info.algo == "selection")
-    selectionSort(info.values, response);
-  else if (info.algo == "cycle")
-    cycleSort(info.values, response);
-  else if (info.algo == "bubble")
-    bubbleSort(info.values, response);
-  else if (info.algo == "quick")
-    quickSort(info.values, 0, info.values.size() - 1, response);
-  else if (info.algo == "merge")
-    mergeSort(info.values, response);
-  else if (info.algo == "counting") {
-    countingSort(info.values, response);
-  } else if (info.algo == "bogo") {
-    bogoSort(info.values, response);
-  }
-
-  // Default for all algorithms exit
-  auto endTime = std::chrono::steady_clock::now();
-  auto elapsed =
-      std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
-  state.out("Ended Time mesurement.", 0);
-  response["TIME"] = elapsed.count();
-
-  response["SORTED"] = info.values;
-
-  res.status = 200;
-  res.set_header("Access-Control-Allow-Origin", "*");
-  res.set_content(response.dump(), "application/json");
-  state.out("Sending response...", 0);
   return;
 }

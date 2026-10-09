@@ -34,7 +34,6 @@ void afterSelfTestRun(std::string algorithmName,
 void RunStatus(const httplib::Request &req, httplib::Response &res,
                stateClass &state);
 
-
 void runSortalgo(const httplib::Request &req, httplib::Response &res,
                  stateClass &state);
 

@@ -18,18 +18,15 @@
  */
 #ifndef IMGVALIDATE_H
 #define IMGVALIDATE_H
-#include <vector>
-#include <httplib/httplib.h>
-#include "../../logger/logger.h"
 #include "../../config.h"
+#include "../../logger/logger.h"
+#include <httplib/httplib.h>
+#include <vector>
 
- struct ImageValidReturn {
+struct ImageValidReturn {
   image img;
   std::string algo;
-
-  bool failure=false;
-  std::string failureString;
 };
 
-ImageValidReturn validateImage(const httplib::Request &req, stateClass& state);
+ImageValidReturn validateImage(const httplib::Request &req, stateClass &state);
 #endif

@@ -27,31 +27,22 @@
 #include <vector>
 ImageValidReturn validateImage(const httplib::Request &req, stateClass &state) {
   ImageValidReturn retval;
-  try {
+ 
     retval.img = loadImage(req, state);
 
     if (!req.has_param("algo")) {
-      throw std::runtime_error("URL does not contain a url parameter.");
+      throw excep("URL does not contain a url parameter.");
     }
     retval.algo = req.get_param_value("algo");
     if (retval.algo.empty()) {
-      throw std::runtime_error(
+      throw excep(
           "URL contains a algo parameter but no algo is set.");
     }
     if (!implementedSortAlgos.contains(retval.algo)) {
-      throw std::runtime_error(
+      throw excep(
           "Provided algo does not exist or is not implemented.");
     }
 
-  } catch (const std::exception &e) {
-    retval.algo = "";
-    retval.img = {};
-    retval.failure = true;
-    retval.failureString =
-        "An exception was thrown while validating the input:" +
-        std::string(e.what());
-    return retval;
-  }
-
+ 
   return retval;
 }

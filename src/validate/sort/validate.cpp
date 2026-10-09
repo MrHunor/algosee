@@ -19,36 +19,33 @@
 #include "validate.h"
 #include "../../config.h"
 #include "../../logger/logger.h"
-#include <exception>
 #include <httplib/httplib.h>
-#include <stdexcept>
 #include <vector>
 
 SortValidReturn validateSort(const httplib::Request &req, stateClass& state) {
   SortValidReturn retval;
 
-  try {
     if (!req.has_param("algo")) {
-      throw std::runtime_error("URL does not contain a url parameter.");
+      throw excep("URL does not contain a url parameter.");
     }
     retval.algo = req.get_param_value("algo");
     if (retval.algo.empty()) {
-      throw std::runtime_error(
+      throw excep(
           "URL contains a algo parameter but no algo is set.");
     }
     if (!implementedSortAlgos.contains(retval.algo)) {
-      throw std::runtime_error(
+      throw excep(
           "Provided algo does not exist or is not implemented.");
     }
 
     json parsed = json::parse(req.body);
 
     if (!parsed.contains("values")) {
-      throw std::runtime_error("Body does not contain a values parameter.");
+      throw excep("Body does not contain a values parameter.");
     }
 
     if (!parsed["values"].is_array()) {
-      throw std::runtime_error("Values is not an array.");
+      throw excep("Values is not an array.");
     }
     // you could check if all elements are integers but nlohman does that
     // internelly and throws itself so it is not really needed
@@ -62,28 +59,15 @@ SortValidReturn validateSort(const httplib::Request &req, stateClass& state) {
                                      [](int x) { // some weird callback shit
                                        return x < 0;
                                      });
-      if(hasNegNumbers)throw std::runtime_error("Selected algorithm (counting) does not support negative numbers.");
+      if(hasNegNumbers)throw excep("Selected algorithm (counting) does not support negative numbers.");
     }
     
     auto it = implementedSortAlgos.find(retval.algo);
     if(retval.values.size()>it->second)
     {
-      throw std::runtime_error("Too many element specified. "+it->first+" only accepts less then "+ std::to_string(it->second)+ " elements.");
+      throw excep("Too many element specified. "+it->first+" only accepts less then "+ std::to_string(it->second)+ " elements.");
     }
 
 
-  } catch (const std::exception &e) {
-    state.out("An Exception was thrown while validating the input:" +
-                  std::string(e.what()),
-              0);
-
-    retval.algo = "";
-    retval.values = {};
-    retval.failureString =
-        "An Exception was thrown while validating the input:" +
-        std::string(e.what());
-    retval.failure = true;
-    return retval;
-  }
   return retval;
 }

@@ -16,11 +16,11 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+#include "../utils/pathalgo/pathalgo.h"
 #include "../logger/logger.h"
 #include "../pathalgo/algos.h"
-#include "../validate/path/validate.h"
-#include "../utils/pathalgo/pathalgo.h"
 #include "../utils/general/utils.h"
+#include "../validate/path/validate.h"
 #include "build_info.h"
 #include <chrono>
 #include <exception>
@@ -30,59 +30,57 @@
 
 void RunPathalgo(const httplib::Request &req, httplib::Response &res,
                  stateClass &state) {
+  try {
+    // variables
+    std::vector<std::pair<int, int>> path;
+    json response;
+    response["VERSION"] = ALGOSEE_VERSION;
+    response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
+    bool sameRowLength = true;
+    int collums;
+    // log ip
 
-  // variables
-  std::vector<std::pair<int, int>> path;
-  json response;
-  response["VERSION"] = ALGOSEE_VERSION;
-  response["BUILDTIME"]=ALGOSEE_BUILD_TIME;
-  bool sameRowLength = true;
-  int collums;
-  // log ip
+    // parsing
+    state.out("Processing values....", 0);
+    PathValidReturn info = validatePath(req, state);
 
+    state.out("Starting time mesurement...", 0);
+    auto startTime = std::chrono::steady_clock::now();
 
-  // parsing
-  state.out("Processing values....", 0);
-  PathValidReturn info=validatePath(req,state);
+    if (info.algo == "BFS" || info.algo == "DFS" || info.algo == "BIBFS") {
 
-  if(info.failure)
-  {
-    returnFailedAnswer(res,info.failureString,400);
-    return;
+      // this could very likely throw
+      if (info.algo == "BFS")
+        path =
+            BreadthFirstSearch(info.mapBool, info.start, info.goal, response);
+      else if (info.algo == "DFS")
+        path = DepthFirstSearch(info.mapBool, info.start, info.goal, response);
+      else if (info.algo == "BIBFS")
+        path = BIBFS(info.mapBool, info.start, info.goal, response);
+    }
+
+    if (info.algo == "dijkstra")
+      path = Dijkstra(info.mapInt, info.start, info.goal, response);
+
+    auto endTime = std::chrono::steady_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
+        endTime - startTime);
+    state.out("Ended time measurement.", 0);
+    response["TIME"] = elapsed.count();
+
+    if (path.empty()) {
+      returnFailedAnswer(
+          res, "No Valid path from start to goal could be found.", 500);
+      return;
+    }
+    res.status = 200;
+    response["PATH"] = path;
+    state.out("Finished. Replying;\nresponse:" + response.dump(), 0);
+    res.set_header("Access-Control-Allow-Origin", "*");
+    res.set_content(response.dump(), "application/json");
+  } catch (const std::exception &e) {
+    state.out("Cought an exception:" + std::string(e.what()), 0);
+    returnFailedAnswer(res, std::string(e.what()));
   }
-  
-
-  state.out("Starting time mesurement...", 0);
-  auto startTime = std::chrono::steady_clock::now();
-
-  if (info.algo == "BFS" || info.algo == "DFS" || info.algo == "BIBFS") {
-
-    // this could very likely throw
-    if (info.algo == "BFS")
-      path = BreadthFirstSearch(info.mapBool, info.start, info.goal, response);
-    else if (info.algo == "DFS")
-      path = DepthFirstSearch(info.mapBool, info.start, info.goal, response);
-    else if (info.algo == "BIBFS")
-      path = BIBFS(info.mapBool, info.start, info.goal, response);
-  }
-
-  if (info.algo == "dijkstra")path = Dijkstra(info.mapInt, info.start, info.goal, response);
-
-  auto endTime = std::chrono::steady_clock::now();
-  auto elapsed =
-      std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
-  state.out("Ended time measurement.", 0);
-  response["TIME"] = elapsed.count();
-  
-  if (path.empty()) {
-    returnFailedAnswer(res, "No Valid path from start to goal could be found.",
-                       500);
-    return;
-  }
-  res.status = 200;
-  response["PATH"] = path;
-  state.out("Finished. Replying;\nresponse:" + response.dump(), 0);
-  res.set_header("Access-Control-Allow-Origin", "*");
-  res.set_content(response.dump(), "application/json");
   return;
 }

@@ -18,17 +18,14 @@
  */
 #ifndef SORTVALIDATE_H
 #define SORTVALIDATE_H
-#include <vector>
-#include <httplib/httplib.h>
 #include "../../logger/logger.h"
+#include <httplib/httplib.h>
+#include <vector>
 
- struct SortValidReturn {
+struct SortValidReturn {
   std::vector<int> values;
   std::string algo;
+};
 
-  bool failure = false;
-  std::string failureString;
- };
-
-SortValidReturn validateSort(const httplib::Request &req, stateClass& state);
+SortValidReturn validateSort(const httplib::Request &req, stateClass &state);
 #endif

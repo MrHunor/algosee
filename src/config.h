@@ -20,6 +20,7 @@
 #define CONFIG_H
 
 #include <nlohmann/json.hpp>
+#include "exception/exception.h"
 #include "build_info.h"
 #include <vector>
 
