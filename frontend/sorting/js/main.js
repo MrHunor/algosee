@@ -7,26 +7,30 @@
 //and other network-related stuff
 
 document.addEventListener('DOMContentLoaded', () => {
-    //searches for start-vis. button on algo.html
     const playButton = document.querySelector('.play-button'); 
     
-    if (!playButton) return; // in case it's site w/o the button, cancel
+    if (!playButton) return;
 
     playButton.addEventListener('click', async (e) => {
-        e.preventDefault(); // prevents instant loading of deafult link
+        e.preventDefault();
 
-        //which algorithm is selected? (e.g. ?algo=bogo)
         const urlParams = new URLSearchParams(window.location.search);
-        const algoKey = urlParams.get('algo') === null ? 'selection' : urlParams.get('algo');
+        const algoKey = urlParams.get('algo') || 'selection';
 
-        // URL incl. /status endpoint
+        // read server setting from switch
+        const serverRadio = document.querySelector('input[name="server-target"]:checked');
+        const selectedServer = serverRadio ? serverRadio.value : 'remote';
+
+        // incase lh choosen, redir instant
+        if (selectedServer === 'local') {
+            window.location.href = `visualizer.html?algo=${algoKey}&server=local`;
+            return;
+        }
+
         const backendPingUrl = 'https://algosee.onrender.com/status';
-
-        // optional: give user feedback
         playButton.innerText = "checking server...";
 
         try {
-            // ping get's max 3 secs
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 3000);
 
@@ -37,16 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
             clearTimeout(timeoutId);
 
             if (response.ok) {
-                // server awake -> redir to visualizer
-                window.location.href = `visualizer.html?algo=${algoKey}`;
-                return;
+                window.location.href = `visualizer.html?algo=${algoKey}&server=remote`;
             } else {
-                // server doesn't respond with 200 OK -> loading screen
-                window.location.href = `loading.html?algo=${algoKey}`;
+                window.location.href = `../loading.html?dir=sorting&algo=${algoKey}&server=remote`;
             }
         } catch (error) {
-            // server sleeping (timeout/error) -> loading screen
-            window.location.href = `loading.html?algo=${algoKey}`;
+            window.location.href = `../loading.html?dir=sorting&algo=${algoKey}&server=remote`;
         }
     });
 });
