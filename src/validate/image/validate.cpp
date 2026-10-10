@@ -19,7 +19,8 @@
  */
 
 #include "validate.h"
-#include "../../config.h"
+#include "../../exception/exception.h"
+#include "../../defs/implemented.h"
 #include "../../logger/logger.h"
 #include "../../utils/image/image.h"
 #include <exception>

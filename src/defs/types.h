@@ -1,7 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
- *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,10 +18,27 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#ifndef TESTCLIENT_CONFIG_H
-#define TESTCLIENT_CONFIG_H
-#include "../../src/config.h"
+
+#ifndef DEF_TYPES_H
+#define DEF_TYPES_H
+#include <vector>
+
+typedef unsigned char colour;
+struct pixel {
+  colour R;
+  colour G;
+  colour B;
+  colour A;
+};
+
+typedef std::vector<std::pair<int, pixel>> indexPixel;
+
+struct image {
+  int width;
+  int height;
+  indexPixel data;
+};
 
 
 
-                                                              #endif
+#endif

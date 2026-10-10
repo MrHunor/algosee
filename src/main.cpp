@@ -18,7 +18,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#include "config.h"
+#include "defs/general.h"
+#include "build_info.h"
 #include "logger/logger.h"
 #include "routing/routing.h"
 

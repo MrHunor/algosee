@@ -1,7 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
- *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,21 +18,22 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#include "config.h"
+#include "../../src/defs/general.h"
+#include "../../src/defs/implemented.h"
+#include "../../src/defs/testcases.h"
 #include "logger/logger.h"
 #include "utils/utils.h"
 #include <cmath>
 #include <string>
 #include <utility>
 
+struct run {
+  std::string algoname;
+  int size;
+  std::pair<int, int> mapSize;
+  bool failure;
+};
 
-  struct run {
-    std::string algoname;
-    int size;
-    std::pair<int, int> mapSize;
-    bool failure;
-  };
-  
 int main(int argc, char *argv[]) {
   remove("testclientlog.txt");
   stateClass state;
@@ -47,7 +49,7 @@ int main(int argc, char *argv[]) {
     currentrun.algoname = testcase.first;
     currentrun.size = testcase.second;
     currentrun.mapSize = {-1, -1};
-    
+
     state.out("Testing Sorting validness with: " + currentrun.algoname +
                   " size:" + std::to_string(currentrun.size),
               0);
@@ -88,7 +90,10 @@ int main(int argc, char *argv[]) {
     currentrun.algoname = testcase.first;
     currentrun.size = -1;
     currentrun.mapSize = testcase.second;
-    state.out("Testing path validness for:"+currentrun.algoname+" on Mapsize:"+std::to_string(currentrun.mapSize.first)+"x"+std::to_string(currentrun.mapSize.second),0);
+    state.out("Testing path validness for:" + currentrun.algoname +
+                  " on Mapsize:" + std::to_string(currentrun.mapSize.first) +
+                  "x" + std::to_string(currentrun.mapSize.second),
+              0);
     std::vector<std::vector<int>> map(testcase.second.second,
                                       std::vector<int>(testcase.second.first));
     try {
@@ -155,30 +160,30 @@ int main(int argc, char *argv[]) {
     }
   }
 
-state.out("Finished", 0);
-state.out("Succededed for:", 0);
-for (const auto &element : exitMessage) {
-  if (element.failure == false)
-    state.out("Algorithm:" + element.algoname +
-                  ", Size:" + std::to_string(element.size) +
-                  "Map Size:" + std::to_string(element.mapSize.first) + "," +
-                  std::to_string(element.mapSize.second),
-              0);
-}
+  state.out("Finished", 0);
+  state.out("Succededed for:", 0);
+  for (const auto &element : exitMessage) {
+    if (element.failure == false)
+      state.out("Algorithm:" + element.algoname +
+                    ", Size:" + std::to_string(element.size) +
+                    "Map Size:" + std::to_string(element.mapSize.first) + "," +
+                    std::to_string(element.mapSize.second),
+                0);
+  }
 
-state.out("Failed for:", 0);
-for (const auto &element : exitMessage) {
-  if (element.failure == true)
-    state.out("Algorithm:" + element.algoname +
-                  ", Size:" + std::to_string(element.size) +
-                  "Map Size:" + std::to_string(element.mapSize.first) + "," +
-                  std::to_string(element.mapSize.second),
-              0);
-}
+  state.out("Failed for:", 0);
+  for (const auto &element : exitMessage) {
+    if (element.failure == true)
+      state.out("Algorithm:" + element.algoname +
+                    ", Size:" + std::to_string(element.size) +
+                    "Map Size:" + std::to_string(element.mapSize.first) + "," +
+                    std::to_string(element.mapSize.second),
+                0);
+  }
 
-for (const auto &element : exitMessage) {
-  if (element.failure == true)
-    return -1;
-}
-return 0;
+  for (const auto &element : exitMessage) {
+    if (element.failure == true)
+      return -1;
+  }
+  return 0;
 }

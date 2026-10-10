@@ -22,7 +22,9 @@
 #ifndef STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
 #endif
-#include "../../config.h"
+#include "../../defs/general.h"
+#include "../../defs/types.h"
+#include "../../exception/exception.h"
 #include "../../logger/logger.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>

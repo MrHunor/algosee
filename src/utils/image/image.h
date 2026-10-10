@@ -17,8 +17,10 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+#ifndef UTILS_IMAGE_H
+#define UTILS_IMAGE_H
 #include "../../logger/logger.h"
-#include "../../config.h"
+#include "../../defs/types.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <stb_image.h>
@@ -26,3 +28,4 @@
 void shuffleImage(image& img);
 image loadImage(const httplib::Request &req, const stateClass &state);
 json indexPixelArrToJson(const indexPixel &arr);
+#endif

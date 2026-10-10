@@ -18,7 +18,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#include "../config.h"
+#include "../defs/general.h"
+#include "../defs/types.h"
 #include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
 #include "../utils/image/image.h"

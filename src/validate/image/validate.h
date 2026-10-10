@@ -19,7 +19,7 @@
  */
 #ifndef IMGVALIDATE_H
 #define IMGVALIDATE_H
-#include "../../config.h"
+#include "../../defs/types.h"
 #include "../../logger/logger.h"
 #include <httplib/httplib.h>
 #include <vector>

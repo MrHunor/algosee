@@ -19,7 +19,7 @@
  */
 #ifndef PALGOS_H
 #define PALGOS_H
-#include "../config.h"
+#include "../defs/general.h"
 #include <nlohmann/json.hpp>
 #include <vector>
 

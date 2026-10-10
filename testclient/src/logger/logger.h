@@ -20,7 +20,7 @@
 
 #ifndef LOGGER_H
 #define LOGGER_H
-#include "../config.h"
+#include "../../src/defs/general.h"
 #include <chrono>
 #include <format>
 #include <fstream>

@@ -19,7 +19,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "validate.h"
-#include "../../config.h"
+#include "../../exception/exception.h"
+#include "../../defs/implemented.h"
 #include "../../logger/logger.h"
 #include <httplib/httplib.h>
 #include <vector>

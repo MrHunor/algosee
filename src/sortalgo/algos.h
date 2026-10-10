@@ -21,7 +21,8 @@
 #ifndef SALGOS_H
 #define SALGOS_H
 
-#include "../config.h"
+#include "../defs/general.h"
+#include "../defs/types.h"
 #include <nlohmann/json.hpp>
 #include <vector>
 

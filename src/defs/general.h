@@ -18,22 +18,16 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+#ifndef DEF_GENERAL_H
+#define DEF_GENERAL_H
+#include "nlohmann/json.hpp"
 
-#ifndef PATHALGO_UTILS_H
-#define PATHALGO_UTILS_H
-#include "../../defs/general.h"
-#include <httplib/httplib.h>
-#include <nlohmann/json.hpp>
-#include <vector>
+#define QUOTE "\"Es mejor morir de pie que vivir toda una vida arrodillado\" ~ Emiliano Zapata."
 
-json swapVisitedArray(const std::vector<std::vector<bool>> &visited);
-json swapVisitedArray(const std::vector<std::vector<int>> &visited);
-void checkMapValidness(const std::vector<std::vector<int>> &mapInt,
-                       const std::pair<int, int> &start,
-                       const std::pair<int, int> &goal);
-void checkMapValidness(const std::vector<std::vector<bool>> &map,
-                       const std::pair<int, int> &start,
-                       const std::pair<int, int> &goal);
-std::pair<int, int> checkRange(const std::vector<std::vector<int>> &map);
-std::vector<std::vector<bool>> castIntMapToBoolIfNeeded(const json &input);
+#define DEFAULT_COLOUR MAGENTA
+
+#define VERBOSE_LEVEL_NEEDED_FOR_TIME 0
+
+using json = nlohmann::json;
+
 #endif

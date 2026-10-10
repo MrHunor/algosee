@@ -18,7 +18,8 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#include "../../config.h"
+#include "../../defs/general.h"
+#include "../../exception/exception.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <stdexcept>

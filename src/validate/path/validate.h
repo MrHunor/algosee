@@ -19,7 +19,6 @@
  */
 #ifndef PATHVALIDATE_H
 #define PATHVALIDATE_H
-#include "../../config.h"
 #include "../../logger/logger.h"
 #include <httplib/httplib.h>
 

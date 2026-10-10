@@ -1,7 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
- *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,6 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../utils/image/image.h"
+#include "../exception/exception.h"
 #include "../logger/logger.h"
 #include "../sortalgo/algos.h"
 #include "../utils/general/utils.h"
@@ -36,7 +38,7 @@ void runImageSort(const httplib::Request &req, httplib::Response &res,
     response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
     ImageValidReturn info = validateImage(req, state);
     shuffleImage(info.img);
-    response["SHUFFLED (INDEXES)"]=indexPixelArrToJson(info.img.data);
+    response["SHUFFLED (INDEXES)"] = indexPixelArrToJson(info.img.data);
     state.out("Starting time mesurement...", 0);
     auto startTime = std::chrono::steady_clock::now();
 
@@ -60,7 +62,7 @@ void runImageSort(const httplib::Request &req, httplib::Response &res,
         endTime - startTime);
     state.out("Ended Time mesurement.", 0);
     response["TIME"] = elapsed.count();
-    response["SORTED"]=indexPixelArrToJson(info.img.data);
+    response["SORTED"] = indexPixelArrToJson(info.img.data);
 
     res.status = 200;
     res.set_header("Access-Control-Allow-Origin", "*");

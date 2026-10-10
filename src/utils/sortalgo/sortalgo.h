@@ -18,7 +18,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#include "../../config.h"
+#include "../../defs/types.h"
 #include <vector>
 #ifndef SORTALGO_UTILS_H
 #define SORTALGO_UTILS_H
