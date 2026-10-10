@@ -139,12 +139,12 @@ void mergeSort(indexPixel& unsorted, json &response) {
                 // actually the last one to copy is last-1
   indexPixel right(unsorted.begin() + mid, unsorted.end());
   // recursion magic
-  response["SPLIT (ORIGIN,LEFT,RIGHT)"]={indexPixelArrToJson(unsorted),indexPixelArrToJson(left),indexPixelArrToJson(right)};
+  response["SPLIT (ORIGIN,LEFT,RIGHT)"].push_back({indexPixelArrToJson(unsorted),indexPixelArrToJson(left),indexPixelArrToJson(right)});
   mergeSort(left, response);
   mergeSort(right, response);
-  response["SORTED (LEFT,RIGHT)"]={indexPixelArrToJson(left),indexPixelArrToJson(right)};
+  response["SORTED (LEFT,RIGHT)"].push_back({indexPixelArrToJson(left),indexPixelArrToJson(right)});
   unsorted = merge(left, right);
-  response["MERGED (LEFT,RIGHT,RESULT)"]={indexPixelArrToJson(left),indexPixelArrToJson(right),indexPixelArrToJson(unsorted)};
+  response["MERGED (LEFT,RIGHT,RESULT)"].push_back({indexPixelArrToJson(left),indexPixelArrToJson(right),indexPixelArrToJson(unsorted)});
 }
 
 
