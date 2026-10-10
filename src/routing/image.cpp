@@ -36,6 +36,7 @@ void runImageSort(const httplib::Request &req, httplib::Response &res,
     response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
     ImageValidReturn info = validateImage(req, state);
     shuffleImage(info.img);
+    response["SHUFFLED (INDEXES)"]=indexPixelArrToJson(info.img.data);
     state.out("Starting time mesurement...", 0);
     auto startTime = std::chrono::steady_clock::now();
 
@@ -59,6 +60,7 @@ void runImageSort(const httplib::Request &req, httplib::Response &res,
         endTime - startTime);
     state.out("Ended Time mesurement.", 0);
     response["TIME"] = elapsed.count();
+    response["SORTED"]=indexPixelArrToJson(info.img.data);
 
     res.status = 200;
     res.set_header("Access-Control-Allow-Origin", "*");

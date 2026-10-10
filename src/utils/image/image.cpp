@@ -1,7 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
- *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,32 +19,29 @@
  * <https://www.gnu.org/licenses/>.
  */
 
- #ifndef STB_IMAGE_IMPLEMENTATION
+#ifndef STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
 #endif
-#include "../../logger/logger.h"
 #include "../../config.h"
+#include "../../logger/logger.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 
+#include <algorithm>
+#include <random>
 #include <stb_image.h>
 #include <stdexcept>
 #include <vector>
-#include <algorithm>
-#include <random>
 
-
-std::vector<int> indexPixelArrayIsolateIndexArray(const indexPixel& arr)
-{
-std::vector<int> retval;
-for(const auto& element : arr)
-{
-  retval.push_back(element.first);
+json indexPixelArrToJson(const indexPixel &arr) {
+  json jarr = json::array();
+  for (const auto &element : arr) {
+    jarr.push_back(
+        json::array({element.first, element.second.R, element.second.G,
+                     element.second.B, element.second.A}));
+  }
+  return jarr;
 }
-return retval;
-}
-
-
 
 image loadImage(const httplib::Request &req, const stateClass &state) {
 
@@ -74,8 +72,7 @@ image loadImage(const httplib::Request &req, const stateClass &state) {
 
   stbi_image_free(data);
 
-
-  //copy to pixel vector
+  // copy to pixel vector
   std::vector<pixel> pixels;
   pixels.reserve(colours.size() / 4);
   pixel currentPixel;
@@ -87,30 +84,25 @@ image loadImage(const httplib::Request &req, const stateClass &state) {
     pixels.push_back(currentPixel);
   }
 
-  //add index Data
+  // add index Data
   indexPixel indexPixeldata;
   indexPixeldata.reserve(pixels.size());
   for (int i = 0; i < pixels.size(); i++) {
     indexPixeldata.push_back({i, pixels[i]});
   }
 
-  //add everthing up to a image struct
+  // add everthing up to a image struct
   struct image retval;
   retval.width = width;
   retval.height = height;
   retval.data = indexPixeldata;
 
-
   return retval;
 }
 
+void shuffleImage(image &img) {
+  std::random_device rd;
+  std::mt19937 g(rd());
 
-void shuffleImage(image& img)
-{
-std::random_device rd;
-std::mt19937 g(rd());
-
-std::shuffle(img.data.begin(),img.data.end(),g);
-
-
+  std::shuffle(img.data.begin(), img.data.end(), g);
 }
