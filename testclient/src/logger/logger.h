@@ -86,7 +86,7 @@
 class stateClass {
 public:
   std::ofstream logFile{"testclientlog.txt"};
-  int verbose;
+  int verbose=0;
   void out(const std::string &output, int importance,
            const std::string &colour = DEFAULT_COLOUR,
            std::source_location location = std::source_location::current()) {

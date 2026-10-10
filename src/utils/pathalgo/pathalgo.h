@@ -1,7 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
- *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -33,5 +34,6 @@ void checkMapValidness(const std::vector<std::vector<int>> &mapInt,
 void checkMapValidness(const std::vector<std::vector<bool>> &map,
                        const std::pair<int, int> &start,
                        const std::pair<int, int> &goal);
+std::pair<int, int> checkRange(const std::vector<std::vector<int>> &map);
 std::vector<std::vector<bool>> castIntMapToBoolIfNeeded(const json &input);
 #endif

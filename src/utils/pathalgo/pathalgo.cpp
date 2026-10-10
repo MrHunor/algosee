@@ -1,7 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
- *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,8 +24,23 @@
 #include <stdexcept>
 #include <vector>
 
+std::pair<int, int> checkRange(const std::vector<std::vector<int>> &map) {
+  int min = 0;
+  int max = 0;
+  for (const auto &row : map) {
+    for (const auto &element : row) {
+      if (element < min)
+        min = element;
+      if (element > max)
+        max = element;
+    }
+  }
+  return std::make_pair(min, max);
+}
+
 json swapVisitedArray(const std::vector<std::vector<bool>> &visited) {
-  std::vector<std::vector<bool>> retval(visited[0].size(),std::vector<bool>(visited.size(),false));
+  std::vector<std::vector<bool>> retval(
+      visited[0].size(), std::vector<bool>(visited.size(), false));
   for (int rows = 0; rows < visited.size(); rows++) {
     for (int cols = 0; cols < visited[rows].size(); cols++) {
       retval[cols][rows] = visited[rows][cols];
@@ -33,9 +49,10 @@ json swapVisitedArray(const std::vector<std::vector<bool>> &visited) {
   return json(retval);
 }
 
-//dijkstra uses the same thing but as int, so we can overload this
+// dijkstra uses the same thing but as int, so we can overload this
 json swapVisitedArray(const std::vector<std::vector<int>> &visited) {
-  std::vector<std::vector<int>> retval(visited[0].size(),std::vector<int>(visited.size(),0));
+  std::vector<std::vector<int>> retval(visited[0].size(),
+                                       std::vector<int>(visited.size(), 0));
 
   for (int rows = 0; rows < visited.size(); rows++) {
     for (int cols = 0; cols < visited[rows].size(); cols++) {
