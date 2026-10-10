@@ -66,6 +66,11 @@ struct image {
 #define MAX_ELEMENT_COUNT_DFS MAX_ELEMENT_COUNT_PATH
 #define MAX_ELEMENT_COUNT_BIBFS MAX_ELEMENT_COUNT_PATH
 
+
+#define MAX_PIXEL_COUNT_IMAGE 2500
+
+
+
 using json = nlohmann::json;
 
 const std::unordered_map<std::string, int> implementedSortAlgos = {

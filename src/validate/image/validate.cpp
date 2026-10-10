@@ -43,7 +43,9 @@ ImageValidReturn validateImage(const httplib::Request &req, stateClass &state) {
       throw excep(
           "Provided algo does not exist or is not implemented.");
     }
-
+    if(retval.img.width*retval.img.height>MAX_PIXEL_COUNT_IMAGE){
+      throw excep("Too many pixels provided. Max:"+std::to_string(MAX_PIXEL_COUNT_IMAGE));
+    }
  
   return retval;
 }
