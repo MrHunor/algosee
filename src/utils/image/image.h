@@ -25,3 +25,4 @@
 
 void shuffleImage(image& img);
 image loadImage(const httplib::Request &req, const stateClass &state);
+std::vector<int> indexPixelArrayIsolateIndexArray(const indexPixel& arr);

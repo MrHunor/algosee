@@ -23,6 +23,7 @@
 #include <algorithm>
 #include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
+#include "../utils/image/image.h"
 #include <vector>
 
 void bogoSort(std::vector<int> &unsorted, json &response) {
@@ -39,6 +40,7 @@ void bogoSort(indexPixel& unsorted, json &response){
   if (unsorted.size() == 1)
     return; // an array of the size one is already sorted
   while (!std::is_sorted(unsorted.begin(), unsorted.end(),[](const auto& a, const auto&b){return a.first<b.first;})) {
+    response["TRIES"].push_back(indexPixelArrayIsolateIndexArray(unsorted));
     randomise(unsorted);
   }
 }

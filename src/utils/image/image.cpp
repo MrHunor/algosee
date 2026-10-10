@@ -33,6 +33,17 @@
 #include <random>
 
 
+std::vector<int> indexPixelArrayIsolateIndexArray(const indexPixel& arr)
+{
+std::vector<int> retval;
+for(const auto& element : arr)
+{
+  retval.push_back(element.first);
+}
+return retval;
+}
+
+
 
 image loadImage(const httplib::Request &req, const stateClass &state) {
 

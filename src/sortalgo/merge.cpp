@@ -21,6 +21,7 @@
 #include "../config.h"
 #include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
+#include "../utils/image/image.h"
 #include <strings.h>
 #include <vector>
 
@@ -138,9 +139,12 @@ void mergeSort(indexPixel& unsorted, json &response) {
                 // actually the last one to copy is last-1
   indexPixel right(unsorted.begin() + mid, unsorted.end());
   // recursion magic
+  response["SPLIT (ORIGIN,LEFT,RIGHT)"]={indexPixelArrayIsolateIndexArray(unsorted),indexPixelArrayIsolateIndexArray(left),indexPixelArrayIsolateIndexArray(right)};
   mergeSort(left, response);
   mergeSort(right, response);
+  response["SORTED (LEFT,RIGHT)"]={indexPixelArrayIsolateIndexArray(left),indexPixelArrayIsolateIndexArray(right)};
   unsorted = merge(left, right);
+  response["MERGED (LEFT,RIGHT,RESULT)"]={indexPixelArrayIsolateIndexArray(left),indexPixelArrayIsolateIndexArray(right),indexPixelArrayIsolateIndexArray(unsorted)};
 }
 
 
