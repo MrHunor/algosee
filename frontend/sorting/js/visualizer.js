@@ -109,7 +109,7 @@ if (sizeSlider) {
             sizeSlider.value = 10;
         }
 
-        arraySize = val;w
+        arraySize = val;
         sizeValSpan.innerText = val;
         generateArray();
     });
