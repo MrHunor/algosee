@@ -1,6 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,31 +18,21 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#ifndef CONFIG_H
-#define CONFIG_H
-#include <nlohmann/json.hpp>
-#include <set>
-#include <unordered_set>
+#ifndef DEF_GENERAL_H
+#define DEF_GENERAL_H
+#include "nlohmann/json.hpp"
 
-#define VERSION 0.8
+#define QUOTE                                                                  \
+  "\"Es mejor morir de pie que vivir toda una vida arrodillado\" ~ Emiliano "  \
+  "Zapata."
 
 #define DEFAULT_COLOUR MAGENTA
 
 #define VERBOSE_LEVEL_NEEDED_FOR_TIME 0
 
-#define MAX_ELEMENT_COUNT                                                      \
-  2500 // you could customise this for every algo, but thats a future issue
-       // (Issue #38)
-
-#define MAX_ELEMENT_COUNT_BOGO 9
+#define FILENAME_MAX_SIZE 15
 
 using json = nlohmann::json;
-const std::unordered_set<std::string> implementedSortAlgos = {
-    "selection",  "bubble", "quick", "merge", "counting", "cycle"};
 
-const std::unordered_set<std::string> implementedPathAlgos = {"BFS", "dijkstra",
-                                                              "DFS", "BIBFS"};
-
-const std::set<int> testSizesSort = {2,10,25,100,250,1000,2000,MAX_ELEMENT_COUNT-1};
-const std::set<std::pair<int,int>> testSizesPath = {{10,5},{10,10},{20,20},{20,5},{30,30},{30,5},{50,50},{100,100},{250,250}};
+extern std::vector<char> randomStringDataset;
 #endif

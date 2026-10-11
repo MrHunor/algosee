@@ -1,6 +1,7 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,7 +18,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#include "../config.h"
+#include "../defs/general.h"
+#include "../defs/types.h"
 #include <algorithm>
 #include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
@@ -34,6 +36,25 @@ void selectionSort(std::vector<int> &unsorted, json &response) {
             // to the other elements already being sorted
   {
     auto minT = std::min_element(unsorted.begin() + i, unsorted.end());
+    index = minT - unsorted.begin();
+    response["MOVES"].push_back({i, index});
+    std::swap(unsorted[i], unsorted[index]);
+  }
+}
+
+//--------------IMAGE-----------------------------
+void selectionSort(indexPixel& unsorted, json &response) {
+  if (unsorted.size() <= 1)
+    return; // an array of the size one is already sorted
+  int index;
+
+  for (size_t i = 0; i < unsorted.size() - 1;
+       i++) // unsorted.size() is valid because the last element is sorted due
+            // to the other elements already being sorted
+  {
+    auto minT = std::min_element(
+        unsorted.begin() + i, unsorted.end(),
+        [](const auto &a, const auto &b) { return a.first < b.first; });
     index = minT - unsorted.begin();
     response["MOVES"].push_back({i, index});
     std::swap(unsorted[i], unsorted[index]);

@@ -1,6 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,71 +19,76 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "validate.h"
-#include "../../config.h"
+#include "../../defs/implemented.h"
+#include "../../exception/exception.h"
 #include "../../logger/logger.h"
 #include "../../utils/pathalgo/pathalgo.h"
 #include <httplib/httplib.h>
-#include <stdexcept>
 
-PathValidReturn validatePath(const httplib::Request &req, stateClass state) {
+PathValidReturn validatePath(const httplib::Request &req, stateClass &state) {
   PathValidReturn retval;
-  try {
-    if (!req.has_param("algo")) {
-      throw std::runtime_error("URL does not contain a url parameter.");
-    }
-    retval.algo = req.get_param_value("algo");
-    if (retval.algo.empty()) {
-      throw std::runtime_error(
-          "URL contains a algo parameter but no algo is set.");
-    }
-    if (!implementedSortAlgos.contains(retval.algo)) {
-      throw std::runtime_error(
-          "Provided algo does not exist or is not implemented.");
-    }
-
-    json parsed = json(req.body);
-
-    if (!parsed.contains("MAP")) {
-      throw std::runtime_error("Body does not contain a MAP parameter.");
-    }
-    if (!parsed.contains("START")) {
-      throw std::runtime_error("Body does not contain a START parameter.");
-    }
-    if (!parsed.contains("GOAL")) {
-      throw std::runtime_error("Body does not contain a GOAL parameter.");
-    }
-
-    if (retval.algo == "dijkstra") {
-      retval.mapInt = parsed["MAP"];
-      if (retval.mapInt.empty()) {
-        throw std::runtime_error("MAP does not contain any values.");
-      }
-    } else {
-      retval.mapBool = castIntMapToBoolIfNeeded(parsed);
-      if (retval.mapBool.empty()) {
-        throw std::runtime_error("MAP does not contain any values.");
-      }
-    }
-
-    //this will throw itself it is empty
-    retval.start = parsed["START"];
-    retval.goal = parsed["GOAL"];
-
-  } catch (const std::exception &e) {
-    state.out("An Exception was thrown while validating the input:" +
-                  std::string(e.what()),
-              0);
-
-    retval.algo = "";
-    retval.start = {};
-    retval.goal = {};
-    retval.mapBool = {};
-    retval.mapInt = {};
-
-    retval.failureString =
-        "An Exception was thrown while validating the input:" +
-        std::string(e.what());
-    retval.failure = true;
-    return retval;
+  state.out("Checking algo URL parameter...", 0);
+  if (!req.has_param("algo")) {
+    throw excep("URL does not contain a url parameter.");
   }
+  retval.algo = req.get_param_value("algo");
+  if (retval.algo.empty()) {
+    throw excep("URL contains a algo parameter but no algo is set.");
+  }
+  if (!implementedPathAlgos.contains(retval.algo)) {
+    throw excep("Provided algo does not exist or is not implemented.");
+  }
+
+  state.out("Parsing body...", 0);
+  json parsed = json::parse(req.body);
+
+  state.out("Checking MAP, START and GOAL parameters existance...", 0);
+  if (!parsed.contains("MAP")) {
+    throw excep("Body does not contain a MAP parameter.");
+  }
+  if (!parsed.contains("START")) {
+    throw excep("Body does not contain a START parameter.");
+  }
+  if (!parsed.contains("GOAL")) {
+    throw excep("Body does not contain a GOAL parameter.");
+  }
+
+  state.out("Casting Map (if needed)...", 0);
+  if (retval.algo == "dijkstra" || retval.algo == "ASTAR") {
+    retval.mapInt = parsed["MAP"];
+    if (retval.mapInt.empty()) {
+      throw excep("MAP does not contain any values.");
+    }
+  } else {
+    retval.mapBool = castIntMapToBoolIfNeeded(parsed);
+    if (retval.mapBool.empty()) {
+      throw excep("MAP does not contain any values or failed to parse.");
+    }
+  }
+
+  // this will throw itself it is empty
+  retval.start = parsed["START"];
+  retval.goal = parsed["GOAL"];
+
+  state.out("Checking Maps internal validness...", 0);
+  if (retval.algo != "dijkstra" && retval.algo != "ASTAR")
+    checkMapValidness(retval.mapBool, retval.start, retval.goal);
+  else {
+    checkMapValidness(retval.mapInt, retval.start, retval.goal);
+    if (checkRange(retval.mapInt).first < -1)
+      throw excep("An element in the map is below -1, which is the min "
+                  "required for Djkstra.");
+  }
+  auto it = implementedPathAlgos.find(retval.algo);
+  if (retval.algo == "dijkstra" || retval.algo == "ASTAR") {
+    if (retval.mapInt.size() * retval.mapInt[0].size() > it->second)
+      throw excep("Too many element specified. " + it->first +
+                  " only accepts less then " + std::to_string(it->second) +
+                  " elements.");
+  } else if (retval.algo != "dijkstra" &&
+             retval.mapBool.size() * retval.mapBool[0].size() > it->second)
+    throw excep("Too many element specified. " + it->first +
+                " only accepts less then " + std::to_string(it->second) +
+                " elements.");
+  return retval;
 }

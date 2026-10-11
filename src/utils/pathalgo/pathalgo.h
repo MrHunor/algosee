@@ -1,6 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,12 +21,19 @@
 
 #ifndef PATHALGO_UTILS_H
 #define PATHALGO_UTILS_H
-#include "../../config.h"
+#include "../../defs/general.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 
-std::string checkMapValidness(json parsed, std::pair<int, int> start,
-                              std::pair<int, int> goal);
+json swapVisitedArray(const std::vector<std::vector<bool>> &visited);
+json swapVisitedArray(const std::vector<std::vector<int>> &visited);
+void checkMapValidness(const std::vector<std::vector<int>> &mapInt,
+                       const std::pair<int, int> &start,
+                       const std::pair<int, int> &goal);
+void checkMapValidness(const std::vector<std::vector<bool>> &map,
+                       const std::pair<int, int> &start,
+                       const std::pair<int, int> &goal);
+std::pair<int, int> checkRange(const std::vector<std::vector<int>> &map);
 std::vector<std::vector<bool>> castIntMapToBoolIfNeeded(const json &input);
 #endif

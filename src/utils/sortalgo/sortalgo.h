@@ -1,6 +1,7 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,8 +18,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#include "../../defs/types.h"
 #include <vector>
 #ifndef SORTALGO_UTILS_H
 #define SORTALGO_UTILS_H
 void randomise(std::vector<int> &vec);
+void randomise(indexPixel &vec);
 #endif

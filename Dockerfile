@@ -1,5 +1,6 @@
  #   algosee; A algorithm visulizer
  #   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ #   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  #
  #   This program is free software: you can redistribute it and/or modify
  #   it under the terms of the GNU General Public License as published by
@@ -24,7 +25,7 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     pipx \
     cmake \
-    && rm -rf /var/lib/apt/lists/#
+    && rm -rf /var/lib/apt/lists/
 
 ENV PATH="/root/.local/bin:$PATH"
 

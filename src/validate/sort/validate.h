@@ -1,7 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
- *
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
+ * 
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
@@ -18,17 +19,14 @@
  */
 #ifndef SORTVALIDATE_H
 #define SORTVALIDATE_H
-#include <vector>
-#include <httplib/httplib.h>
 #include "../../logger/logger.h"
+#include <httplib/httplib.h>
+#include <vector>
 
- struct SortValidReturn {
+struct SortValidReturn {
   std::vector<int> values;
   std::string algo;
+};
 
-  bool failure = false;
-  std::string failureString;
- };
-
-SortValidReturn validateSort(const httplib::Request &req, stateClass state);
+SortValidReturn validateSort(const httplib::Request &req, stateClass &state);
 #endif

@@ -1,6 +1,7 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,7 +18,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#include "../config.h"
+#include "../defs/general.h"
+#include "../defs/types.h"
 #include <algorithm>
 #include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
@@ -36,6 +38,25 @@ void bubbleSort(std::vector<int> &unsorted, json &response) {
       if (unsorted[z] > unsorted[z + 1]) {
         response["MOVES"].push_back({z, z + 1});
         std::swap(unsorted[z], unsorted[z + 1]);
+      }
+    }
+  }
+}
+
+//--------------IMAGE-----------------------------------
+
+void bubbleSort(indexPixel& unsorted, json &response) {
+  if (unsorted.size() <= 1)
+    return; // an array of the size one is already sorted
+  for (size_t i = 0; i < unsorted.size(); i++) {
+    for (size_t z = 0; z < unsorted.size() - 1 - i;
+         z++) // you can subtract i because the last elements have already been
+              // orderd before, this saves you some time but doesnt make the
+              // horrible O(n^2) much better
+    {
+      if (unsorted[z].first > unsorted[z + 1].first) {
+        response["MOVES"].push_back({z, z + 1});
+        std::swap(unsorted[z],unsorted[z + 1]);
       }
     }
   }

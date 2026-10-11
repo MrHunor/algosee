@@ -1,5 +1,6 @@
  #   algosee; A algorithm visulizer
  #   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ #   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  #
  #   This program is free software: you can redistribute it and/or modify
  #   it under the terms of the GNU General Public License as published by
@@ -17,8 +18,6 @@ set -euo pipefail
 set -x
 
 rm -rf build
-conan install . --output-folder=build --build=missing
-cmake -S . -B build \
-  -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake \
-  -DCMAKE_BUILD_TYPE=Release
-cmake --build build --parallel
+conan install . --output-folder=build --build=missing -s build_type=Release
+cmake --preset conan-release -DCMAKE_BUILD_TYPE=release -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake
+cmake --build build --parallel 

@@ -1,6 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,21 +20,25 @@
  */
 #ifndef PALGOS_H
 #define PALGOS_H
-#include "../config.h"
+#include "../defs/general.h"
 #include <nlohmann/json.hpp>
 #include <vector>
 
 std::vector<std::pair<int, int>>
 BreadthFirstSearch(std::vector<std::vector<bool>> map,
                    std::pair<int, int> start, std::pair<int, int> goal,
-                   json& response);
+                   json &response);
 std::vector<std::pair<int, int>>
 Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
-         std::pair<int, int> goal, json response);
+         std::pair<int, int> goal, json &response);
 std::vector<std::pair<int, int>>
 DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
-                 std::pair<int, int> goal, json& response);
+                 std::pair<int, int> goal, json &response);
 std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map,
+                                       std::pair<int, int> start,
+                                       std::pair<int, int> goal,
+                                       json &response);
+std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
                                        std::pair<int, int> start,
                                        std::pair<int, int> goal,
                                        json &response);

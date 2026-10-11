@@ -4,7 +4,6 @@ on:
   workflow_run:
     workflows: ["Test Executable"]
     types: [completed]
-  push:
     branches:
       - main
   workflow_dispatch:
@@ -14,6 +13,9 @@ permissions:
 
 jobs:
   build:
+    if: | # AI made
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-24.04
 
     container:
@@ -21,7 +23,7 @@ jobs:
 
     steps:
      - name: Checkout repository
-       uses: actions/checkout@v6
+       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7
 
      - name: Update outputs
        shell: bash
@@ -51,7 +53,7 @@ jobs:
      - name: Build executable 
        shell: bash
        run: |
-        ./rebuildLinux.sh 
+        ./rebuildLinuxRelease.sh 
 
      - name: Create new GitHub release
        shell: bash

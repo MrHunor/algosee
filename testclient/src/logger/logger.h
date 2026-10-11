@@ -1,6 +1,7 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,7 +20,7 @@
 
 #ifndef LOGGER_H
 #define LOGGER_H
-#include "../config.h"
+#include "../../src/defs/general.h"
 #include <chrono>
 #include <format>
 #include <fstream>
@@ -84,8 +85,8 @@
 
 class stateClass {
 public:
-  std::ofstream logFile{"log.txt"};
-  int verbose;
+  std::ofstream logFile{"testclientlog.txt"};
+  int verbose=0;
   void out(const std::string &output, int importance,
            const std::string &colour = DEFAULT_COLOUR,
            std::source_location location = std::source_location::current()) {

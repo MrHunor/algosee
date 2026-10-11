@@ -1,0 +1,118 @@
+/*
+ *   algosee; a algorithm visulizer
+ *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.(root/LICENSE)  If not, see
+ * <https://www.gnu.org/licenses/>.
+ */
+
+#ifndef STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_IMPLEMENTATION
+#include <cstdio>
+#endif
+#include "../../defs/general.h"
+#include "../../defs/max_sizes.h"
+#include "../../defs/types.h"
+#include "../../exception/exception.h"
+#include "../../logger/logger.h"
+#include "../../utils/general/utils.h"
+#include <httplib/httplib.h>
+#include <nlohmann/json.hpp>
+
+#include <algorithm>
+#include <random>
+#include <stb_image.h>
+#include <stdexcept>
+#include <vector>
+
+json indexPixelArrToJson(const indexPixel &arr) {
+  json jarr = json::array();
+  for (const auto &element : arr) {
+    jarr.push_back(
+        json::array({element.first, element.second.R, element.second.G,
+                     element.second.B, element.second.A}));
+  }
+  return jarr;
+}
+
+image loadImage(const httplib::Request &req, const stateClass &state) {
+  
+  // read image from body to file
+  if (!req.form.has_file("image"))
+    throw excep("Request does not contain a 'image' file.");
+
+  const auto &image = req.form.get_file("image");
+
+  std::string filename=generateRandomString(FILENAME_MAX_SIZE-4)+".png";
+  std::ofstream file(filename.c_str(), std::ios::binary);
+  file.write(image.content.data(), image.content.size());
+  file.close();
+
+  // read file to memory
+  int width = 0;
+  int height = 0;
+  int channels = 0;
+
+  stbi_info(filename.c_str(),&width,&height,nullptr);
+  if(width*height>MAX_PIXEL_COUNT_IMAGE)throw excep("Image contains too many pixels. Max pixels:"+std::to_string(MAX_PIXEL_COUNT_IMAGE));
+
+  colour *data =
+      stbi_load(filename.c_str(), &width, &height, &channels,
+                4); // the 4 FORCES RGBA (might lead to issues later on)
+
+  remove(filename.c_str());
+  if (!data)
+    throw excep("Failed to read saved image into memory.");
+
+  // copy to vector
+  std::vector<colour> colours(data, data + (width * height * 4));
+
+  stbi_image_free(data);
+
+  // copy to pixel vector
+  std::vector<pixel> pixels;
+  pixels.reserve(colours.size() / 4);
+  pixel currentPixel;
+  for (int i = 0; i < colours.size(); i = i + 4) {
+    currentPixel.R = colours[i + 0];
+    currentPixel.G = colours[i + 1];
+    currentPixel.B = colours[i + 2];
+    currentPixel.A = colours[i + 3];
+    pixels.push_back(currentPixel);
+  }
+
+  // add index Data
+  indexPixel indexPixeldata;
+  indexPixeldata.reserve(pixels.size());
+  for (int i = 0; i < pixels.size(); i++) {
+    indexPixeldata.push_back({i, pixels[i]});
+  }
+
+  // add everthing up to a image struct
+  struct image retval;
+  retval.width = width;
+  retval.height = height;
+  retval.data = indexPixeldata;
+
+  return retval;
+}
+
+void shuffleImage(image &img) {
+  std::random_device rd;
+  std::mt19937 g(rd());
+
+  std::shuffle(img.data.begin(), img.data.end(), g);
+}

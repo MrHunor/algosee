@@ -1,5 +1,6 @@
  #   algosee; A algorithm visulizer
  #   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ #   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  #
  #   This program is free software: you can redistribute it and/or modify
  #   it under the terms of the GNU General Public License as published by
@@ -13,10 +14,12 @@
  #
  #   You should have received a copy of the GNU General Public License
  #   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
-set -euo pipefail
-set -x
+#!/bin/bash
+#This script is here, cuz I am lazy af :D
+if [ -z "$1" ]; then
+    echo "Fehler: Bitte gib eine Commit-Nachricht an."
+    echo "Nutzung: ./gpush.sh \"deine nachricht\""
+    exit 1
+fi
 
-rm -rf build
-conan install . --output-folder=build --build=missing
-cmake --preset conan-release
-cmake --build build --parallel
+git add . && git commit -m "$1" && git pull --rebase && git push

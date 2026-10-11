@@ -1,6 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,48 +18,121 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#include "../../config.h"
-#include <exception>
+#include "../../defs/general.h"
+#include "../../exception/exception.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
+#include <stdexcept>
 #include <vector>
 
-std::string checkMapValidness(json parsed, std::pair<int, int> start,
-                              std::pair<int, int> goal) {
-  int collums = parsed["MAP"][0].size();
+std::pair<int, int> checkRange(const std::vector<std::vector<int>> &map) {
+  int min = 0;
+  int max = 0;
+  for (const auto &row : map) {
+    for (const auto &element : row) {
+      if (element < min)
+        min = element;
+      if (element > max)
+        max = element;
+    }
+  }
+  return std::make_pair(min, max);
+}
+
+json swapVisitedArray(const std::vector<std::vector<bool>> &visited) {
+  std::vector<std::vector<bool>> retval(
+      visited[0].size(), std::vector<bool>(visited.size(), false));
+  for (int rows = 0; rows < visited.size(); rows++) {
+    for (int cols = 0; cols < visited[rows].size(); cols++) {
+      retval[cols][rows] = visited[rows][cols];
+    }
+  }
+  return json(retval);
+}
+
+// dijkstra uses the same thing but as int, so we can overload this
+json swapVisitedArray(const std::vector<std::vector<int>> &visited) {
+  std::vector<std::vector<int>> retval(visited[0].size(),
+                                       std::vector<int>(visited.size(), 0));
+
+  for (int rows = 0; rows < visited.size(); rows++) {
+    for (int cols = 0; cols < visited[rows].size(); cols++) {
+      retval[cols][rows] = visited[rows][cols];
+    }
+  }
+  return json(retval);
+}
+
+void checkMapValidness(const std::vector<std::vector<int>> &map,
+                       const std::pair<int, int> &start,
+                       const std::pair<int, int> &goal) {
+  if (map.empty()) {
+    throw excep("Bad Map: Map is empty.");
+  }
+  int rows = map.size();
+  int cols = map[0].size();
+  size_t rowLength = map[0].size();
   bool sameRowLength = true;
-  for (int i = 1; i < parsed["MAP"].size(); i++) {
-    if (parsed["MAP"][i].size() != collums) {
+  for (const auto &row : map) {
+    if (row.size() != rowLength) {
       sameRowLength = false;
       break;
     }
   }
   if (!sameRowLength) {
-    return "Rows have diffrent lengths.";
+    throw excep("Bad Map:Rows dont have same row length.");
   }
 
-  if (start.first < 0 || start.first >= parsed["MAP"][0].size() ||
-      start.second < 0 || start.second >= parsed["MAP"].size() ||
-      goal.first < 0 || goal.first >= parsed["MAP"][0].size() ||
-      goal.second < 0 || goal.second >= parsed["MAP"].size()) {
-    return "Start or goal coordinates invalid (out of map).";
+  if (start.first < 0 || start.first > cols - 1 || start.second < 0 ||
+      start.second > rows - 1) {
+    throw excep("Bad Map: Start out of Map Bounds.");
   }
-  return "";
+
+  if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 ||
+      goal.second > rows - 1) {
+    throw excep("Bad Map: End out of Map Bounds");
+  }
+}
+
+void checkMapValidness(const std::vector<std::vector<bool>> &map,
+                       const std::pair<int, int> &start,
+                       const std::pair<int, int> &goal) {
+  if (map.empty()) {
+    throw excep("Bad Map: Map is empty.");
+  }
+  int rows = map.size();
+  int cols = map[0].size();
+  size_t rowLength = map[0].size();
+  bool sameRowLength = true;
+  for (const auto &row : map) {
+    if (row.size() != rowLength) {
+      sameRowLength = false;
+      break;
+    }
+  }
+  if (!sameRowLength) {
+    throw excep("Bad Map:Rows dont have same row length.");
+  }
+
+  if (start.first < 0 || start.first > cols - 1 || start.second < 0 ||
+      start.second > rows - 1) {
+    throw excep("Bad Map: Start out of Map Bounds.");
+  }
+
+  if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 ||
+      goal.second > rows - 1) {
+    throw excep("Bad Map: End out of Map Bounds");
+  }
 }
 
 std::vector<std::vector<bool>> castIntMapToBoolIfNeeded(const json &input) {
   bool isBool = true;
   // check if input array is already boolean
-  try {
-    for (const auto &row : input["MAP"]) {
-      for (const auto &element : row) {
-        if (!element.is_boolean())
-          isBool = false;
-      }
+  for (const auto &row : input["MAP"]) {
+    for (const auto &element : row) {
+      if (!element.is_boolean())
+        isBool = false;
     }
-
-  } catch (const std::exception &e) {
-    return {};
   }
 
   if (isBool == true)

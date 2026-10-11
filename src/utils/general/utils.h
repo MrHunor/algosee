@@ -1,6 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,6 +20,7 @@
  */
 #ifndef UTILS_H
 #define UTILS_H
+#include "../../defs/types.h"
 #include <httplib.h>
 #include <source_location>
 #include <string>
@@ -28,4 +31,10 @@ void InvalidInputMessage(
     std::source_location location = std::source_location::current());
 void returnFailedAnswer(httplib::Response &res, const std::string &Details,
                         int exitCode = 400);
+void addClient(
+    clientListType &cList,
+    const std::pair<std::chrono::time_point<std::chrono::system_clock>,
+                    std::string> &newEntry);
+bool checkRateLimit(const clientListType &cList, const int &index);
+std::string generateRandomString(const int &size);
 #endif

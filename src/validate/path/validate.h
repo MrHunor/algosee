@@ -1,6 +1,7 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,8 +19,8 @@
  */
 #ifndef PATHVALIDATE_H
 #define PATHVALIDATE_H
-#include "../../config.h"
 #include "../../logger/logger.h"
+#include <httplib/httplib.h>
 
 struct PathValidReturn {
   std::string algo;
@@ -29,8 +30,7 @@ struct PathValidReturn {
 
   std::pair<int, int> start;
   std::pair<int, int> goal;
-
-  bool failure = false;
-  std::string failureString;
 };
+
+PathValidReturn validatePath(const httplib::Request &req, stateClass &state);
 #endif

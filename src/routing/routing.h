@@ -1,6 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,6 +20,7 @@
  */
 #ifndef ROUTING_H
 #define ROUTING_H
+#include "../defs/types.h"
 #include "../logger/logger.h"
 #include <chrono>
 #include <httplib/httplib.h>
@@ -34,11 +37,16 @@ void afterSelfTestRun(std::string algorithmName,
 void RunStatus(const httplib::Request &req, httplib::Response &res,
                stateClass &state);
 
-
 void runSortalgo(const httplib::Request &req, httplib::Response &res,
                  stateClass &state);
 
 void RunPathalgo(const httplib::Request &req, httplib::Response &res,
                  stateClass &state);
-
+void runImageSort(const httplib::Request &req, httplib::Response &res,
+                  stateClass &state);
+httplib::Server::HandlerResponse
+runPreflightHandler(const httplib::Request &req, httplib::Response &res,
+                    stateClass &state, clientListType &clientList,
+                    std::mutex &clientListMutex);
+void runLimits(httplib::Response &res, stateClass &state);
 #endif

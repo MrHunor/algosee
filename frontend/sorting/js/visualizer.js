@@ -7,7 +7,9 @@
 const urlParams = new URLSearchParams(window.location.search);
 const algoKey = urlParams.get('algo') || 'selection';
 
-// adjust title
+const backendBase = getBackendBase();
+
+// adjust title 
 const algoNames = {
     bogo: "BogoSort",
     miracle: "MiracleSort",
@@ -109,8 +111,11 @@ if (sizeSlider) {
         generateArray();
     });
 }
-// -------------------------------------------------------------
 
+// init an array asap 
+generateArray();
+
+// -------------------------------------------------------------
 // generate random array and draw bars
 function generateArray() {
     container.innerHTML = '';
@@ -157,13 +162,13 @@ startBtn.addEventListener('click', async () => {
         return;
     }
 
-    const backendUrl = `https://algosee.onrender.com/sortalgo?algo=${algoKey}`;
+    const backendUrl = `${backendBase}/sortalgo?algo=${algoKey}`;
 
     startBtn.disabled = true;
     resetBtn.disabled = true;
     if (sizeSlider) sizeSlider.disabled = true;
     if (speedSlider) speedSlider.disabled = true;
-    stopBtn.disabled = false; // accses stop button
+    stopBtn.disabled = false; // accses stop button 
     isCancelled = false;      // reset cancel flag
 
     try {
@@ -224,9 +229,9 @@ async function playSuccessWave() {
         bars[i].style.backgroundColor = '#22c55e';
         
         //audio wave
-        playTone(200 + (i * 40));  //tone
+        playTone(200 + (i * 40));  //audio que if done
 
-        // wait (small time)
+        // wait for short interval 
         await new Promise(resolve => setTimeout(resolve, Math.max(20, animationSpeed / 3)));
     }
 }
@@ -392,4 +397,4 @@ async function visualizeCounting(sortedArray, speed) {
     }
 }
 
-//almost 400ll lol XD
+//400ll lol XD

@@ -1,6 +1,7 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,18 +19,28 @@
  */
 
 #ifndef SALGOS_H
-#define SALGOS
+#define SALGOS_H
 
-#include "../config.h"
+#include "../defs/general.h"
+#include "../defs/types.h"
 #include <nlohmann/json.hpp>
 #include <vector>
 
+//--------------------NUMBERS------------------------------
 void selectionSort(std::vector<int> &unsorted, json &response);
 void bogoSort(std::vector<int> &unsorted, json &response);
 void bubbleSort(std::vector<int> &unsorted, json &response);
 void quickSort(std::vector<int> &unsorted, int low, int high, json &response);
 void mergeSort(std::vector<int> &unsorted, json &response);
-
 void countingSort(std::vector<int> &unsorted, json &response);
 void cycleSort(std::vector<int> &unsorted, json &response);
+
+//-------------------IMAGES------------------------------------
+void selectionSort(indexPixel& unsorted, json &response);
+void bogoSort(indexPixel& unsorted, json &response);
+void bubbleSort(indexPixel& unsorted, json &response);
+void quickSort(indexPixel& unsorted, int low, int high, json &response);
+void countingSort(indexPixel& unsorted, json &response);
+void cycleSort(indexPixel& unsorted, json &response);
+void mergeSort(indexPixel& unsorted, json &response);
 #endif

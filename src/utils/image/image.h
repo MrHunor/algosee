@@ -1,6 +1,7 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,14 +17,15 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#ifndef UTILS_H
-#define UTILS_H
-#include <source_location>
-#include <string>
-int randomInt(int lower, int upper);
-std::string executeCommand(const std::string &command);
-void InvalidInputMessage(
-    const std::string &details,
-    std::source_location location = std::source_location::current());
+#ifndef UTILS_IMAGE_H
+#define UTILS_IMAGE_H
+#include "../../logger/logger.h"
+#include "../../defs/types.h"
+#include <httplib/httplib.h>
+#include <nlohmann/json.hpp>
+#include <stb_image.h>
 
+void shuffleImage(image& img);
+image loadImage(const httplib::Request &req, const stateClass &state);
+json indexPixelArrToJson(const indexPixel &arr);
 #endif

@@ -1,6 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,14 +19,20 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#include "build_info.h"
+#include "defs/general.h"
+#include "defs/types.h"
 #include "logger/logger.h"
 #include "routing/routing.h"
+
 #include "utils/general/utils.h"
 #include <httplib.h>
+#include <mutex>
 #include <nlohmann/json.hpp>
 #include <string>
 
 int main(int argc, char *argv[]) {
+  remove("log.txt");
   stateClass state;
   state.verbose = 0;
   state.out("algosee Copyright (C) 2026  MrHunor, siryanni (as equals)\n"
@@ -34,12 +42,22 @@ int main(int argc, char *argv[]) {
             "under certain conditions; visit "
             "'https://www.gnu.org/licenses/gpl-3.0.en.html' for details.\n",
             0, RED);
+  state.out(QUOTE, 0, BRIGHT_BLUE);
 
   state.out("Starting...", 0);
-  state.out("VERSION:" + std::to_string(VERSION), 0);
+  state.out("VERSION:" + std::string(ALGOSEE_VERSION), 0);
+  state.out("Build on:" + std::string(ALGOSEE_BUILD_TIME), 0);
   httplib::Server server;
+  clientListType clientList;
+  std::mutex clientListMutex;
+  //--------------------------PREROUTING HANDLING-------------------
+  server.set_pre_routing_handler(
+      [&state, &clientList,&clientListMutex](const httplib::Request &req,
+                            httplib::Response &res) {
+        return runPreflightHandler(req, res, state, clientList,clientListMutex);
+      });
 
-  //-------------------------PRERESPONSE HANDLING-------------------------
+  //-------------------------POSTROUTING HANDLING-------------------------
   // this runs before sending any response
   server.set_post_routing_handler(
       [](const httplib::Request &, httplib::Response &res) {
@@ -64,7 +82,24 @@ int main(int argc, char *argv[]) {
   server.Options("(/sortalgo)", serverOptionHandler);
   server.Options("(/pathalgo)", serverOptionHandler);
   server.Options("(/status)", serverOptionHandler);
-  server.Options("(/selftest)", serverOptionHandler);
+  server.Options("(/image)", serverOptionHandler);
+  server.Options("(/limits)", serverOptionHandler);
+
+  server.set_payload_max_length(10000000);
+  
+  //--------------------------LIMITS----------------------------------
+  server.Get("/limits",
+             [&](const httplib::Request &req, httplib::Response &res) {
+               runLimits(res, state);
+               return;
+             });
+
+  //--------------------------IMAGE-----------------------------------------------------------
+  server.Post("/image",
+              [&](const httplib::Request &req, httplib::Response &res) {
+                runImageSort(req, res, state);
+                return;
+              });
 
   //---------------------------STATUS---------------------------------------------------------------------
   server.Get("/status",

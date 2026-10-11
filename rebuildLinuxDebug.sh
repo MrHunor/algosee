@@ -1,5 +1,6 @@
  #   algosee; A algorithm visulizer
  #   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ #   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  #
  #   This program is free software: you can redistribute it and/or modify
  #   it under the terms of the GNU General Public License as published by
@@ -13,28 +14,10 @@
  #
  #   You should have received a copy of the GNU General Public License
  #   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
-cmake_minimum_required(VERSION 3.20)
+set -euo pipefail
+set -x
 
-project(algosee_testserver VERSION 0.1 LANGUAGES CXX)
-
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
-file(GLOB_RECURSE ALL_SOURCES CONFIGURE_DEPENDS
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
-)
-
-add_executable(algosee_testserver
-${ALL_SOURCES}
-)
-
-find_package(nlohmann_json REQUIRED)
-
-
-
-target_link_libraries(algosee_testserver 
-nlohmann_json::nlohmann_json
-stdc++exp
-
-)
+rm -rf build
+conan install . --output-folder=build --build=missing -s build_type=Debug
+cmake --preset conan-debug -DCMAKE_BUILD_TYPE=debug -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake
+cmake --build build --parallel 

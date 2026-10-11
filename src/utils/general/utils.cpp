@@ -1,6 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,6 +19,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "utils.h"
+#include "../../defs/general.h"
+#include "../../defs/ratelimits.h"
+#include "../../defs/types.h"
+#include <algorithm>
 #include <chrono>
 #include <cstdlib>
 #include <httplib.h>
@@ -30,7 +36,15 @@
 #include <string>
 #include <sys/wait.h>
 #include <unistd.h>
-using json = nlohmann::json;
+#include <vector>
+
+std::vector<char> randomStringDataset{
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+
 
 int randomInt(int lower, int upper) {
   static std::random_device rd;
@@ -38,6 +52,44 @@ int randomInt(int lower, int upper) {
   std::uniform_int_distribution<int> dist(lower, upper);
 
   return dist(gen);
+}
+
+std::string generateRandomString(const int &size) {
+  std::string retval;
+  for (int i = 0; i < size; i++) {
+    retval += randomStringDataset[randomInt(0, randomStringDataset.size()-1)];
+  }
+  return retval;
+}
+
+bool checkRateLimit(const clientListType& cList, const int& index) {
+  std::string targetIP = cList[index].second;
+  int matchingEntrysCount = 0;
+  for (const auto &element : cList) {
+    if (element.second == targetIP &&
+        element.first > std::chrono::system_clock::now() -
+                            std::chrono::minutes(RATE_LIMIT_INTERVALL_MIN)) {
+      matchingEntrysCount++;
+    }
+  }
+  if (matchingEntrysCount >= RATE_LIMIT_COUNT) {
+    return true;
+  }
+  return false;
+}
+
+void addClient(
+    clientListType &cList,
+    const std::pair<std::chrono::time_point<std::chrono::system_clock>,
+                    std::string> &newEntry) {
+  if (!cList.empty() &&
+      std::chrono::system_clock::now() >
+          cList[0].first + std::chrono::hours(
+                               1)) // first entry is older then an hour, delete
+  {
+    cList.erase(cList.begin());
+  }
+  cList.push_back(newEntry);
 }
 
 std::string executeCommand(const std::string &command) {

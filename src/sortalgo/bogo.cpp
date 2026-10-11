@@ -1,6 +1,7 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,11 +18,13 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#include "../config.h"
+#include "../defs/general.h"
+#include "../defs/types.h"
 #include "../utils/sortalgo/sortalgo.h"
 #include <algorithm>
 #include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
+#include "../utils/image/image.h"
 #include <vector>
 
 void bogoSort(std::vector<int> &unsorted, json &response) {
@@ -30,5 +33,15 @@ void bogoSort(std::vector<int> &unsorted, json &response) {
   while (!std::is_sorted(unsorted.begin(), unsorted.end())) {
     randomise(unsorted);
     response["TRIES"].push_back(unsorted);
+  }
+}
+
+//--------------IMAGE-------------------
+void bogoSort(indexPixel& unsorted, json &response){
+  if (unsorted.size() == 1)
+    return; // an array of the size one is already sorted
+  while (!std::is_sorted(unsorted.begin(), unsorted.end(),[](const auto& a, const auto&b){return a.first<b.first;})) {
+    response["TRIES"].push_back(indexPixelArrToJson(unsorted));
+    randomise(unsorted);
   }
 }

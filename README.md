@@ -4,6 +4,8 @@
 
 *© 2026 MrHunor, siryanni (as equals) · GPLv3*
 
+![Hackatime Badge](https://hackatime-badge.hackclub.com/U0BAT7EGEQ7/algosee)
+![Hackatime Badge](https://hackatime-badge.hackclub.com/U0A2D73JM9R/algosee)
 
 ## Demo:
 ![Demo](./assets/Screenshot_Overview.png)    
@@ -42,7 +44,7 @@ The implementation will roughly follow the order given in the table.
 | Dijkstra | Supported |
 | Depth first search (DFS) | Supported |
 | Bidirectional Breadth first search (BIBFS) | Supported |
-| A* | TBD | 
+| A* | Supported | 
 | Greedy Best-First-Search | TBD |
 | Jump point search (JPS) | TBD |
 | D* | TBD |
@@ -84,14 +86,23 @@ Current plans invlove expanding into other areas of algorithms, like wayfinding 
 # ----------------For Contributers-------------------------- 
 
 ## Project structure:
----------------------- NOT UP TO DATE -----------------------------
 - `./assets` Contains images for this ReadME
 - `./benchmarks` Contains the benchmark script and results
 - `./frontend` Root folder of the Frontend side  
-   -> `/assets/` Contains the images seen in the index.html  
-   -> `/css/` contains the main css file  
-   -> `/js/` Contains JS files  
-   -> `/` Contains all html files  
+   -> `/assets/` Contains global images for `/frontend/` 
+   -> `/css/` contains global css file  
+   -> Global HTML files (loading;index/landing)
+   -> `/path/`
+      ->`/js` contains visualizer.js
+      ->html files
+   ->`/picsort/`
+      ->`/js/` "
+      -> html
+   ->`/sorting/`
+      ->`/js/`
+         -> compare.js main.js visualizer.js 
+      ->html files
+     
 - `./src` Root folder of the Backend side  
    -> `pathalgo` Contains pathfinding algorithms  
    -> `/server/` Contains server logic  
@@ -131,6 +142,12 @@ Use curl to make request to the render server, e.g.: `curl -X POST "https://algo
 
 
 <br>
+
+
+# AI usage disclosure:
+I, **@MrHunor**, have used AI for explaining what do to when i didn't know anymore, as well as when i wanted to implement something but didn't know how or for scanning the codebase for bugs and possible enhancements. I have also let copilot scan each commit for possible unintended bugs with the latest change in a new commit.  
+I, **@siryanni**, (TBD [#126](https://github.com/MrHunor/algosee/issues/126))  
+For anyone looking to contribute we would ask them to follow the line we provided 
 
 # Big :heart: to the following:
 - [Render](https://render.com/), for their free tier hosting which the online Backend relies on.

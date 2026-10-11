@@ -1,6 +1,7 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,14 +18,21 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+#include "../../defs/types.h"
 #include <algorithm>
 #include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
 #include <random>
 #include <vector>
 
-
 void randomise(std::vector<int> &vec) {
+  static std::random_device rd;
+  static std::mt19937 gen(rd());
+
+  std::shuffle(vec.begin(), vec.end(), gen);
+}
+
+void randomise(indexPixel &vec) {
   static std::random_device rd;
   static std::mt19937 gen(rd());
 
