@@ -19,8 +19,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "validate.h"
-#include "../../exception/exception.h"
 #include "../../defs/implemented.h"
+#include "../../exception/exception.h"
 #include "../../logger/logger.h"
 #include "../../utils/pathalgo/pathalgo.h"
 #include <httplib/httplib.h>
@@ -54,7 +54,7 @@ PathValidReturn validatePath(const httplib::Request &req, stateClass &state) {
   }
 
   state.out("Casting Map (if needed)...", 0);
-  if (retval.algo == "dijkstra") {
+  if (retval.algo == "dijkstra" || retval.algo == "ASTAR") {
     retval.mapInt = parsed["MAP"];
     if (retval.mapInt.empty()) {
       throw excep("MAP does not contain any values.");
@@ -71,7 +71,7 @@ PathValidReturn validatePath(const httplib::Request &req, stateClass &state) {
   retval.goal = parsed["GOAL"];
 
   state.out("Checking Maps internal validness...", 0);
-  if (retval.algo != "dijkstra")
+  if (retval.algo != "dijkstra" && retval.algo != "ASTAR")
     checkMapValidness(retval.mapBool, retval.start, retval.goal);
   else {
     checkMapValidness(retval.mapInt, retval.start, retval.goal);
@@ -80,14 +80,13 @@ PathValidReturn validatePath(const httplib::Request &req, stateClass &state) {
                   "required for Djkstra.");
   }
   auto it = implementedPathAlgos.find(retval.algo);
-  if (retval.algo == "dijkstra" &&
-      retval.mapInt.size() * retval.mapInt[0].size() > it->second)
-    throw excep("Too many element specified. " + it->first +
-                " only accepts less then " + std::to_string(it->second) +
-                " elements.");
-
-  else if (retval.algo != "dijkstra" &&
-           retval.mapBool.size() * retval.mapBool[0].size() > it->second)
+  if (retval.algo == "dijkstra" || retval.algo == "ASTAR") {
+    if (retval.mapInt.size() * retval.mapInt[0].size() > it->second)
+      throw excep("Too many element specified. " + it->first +
+                  " only accepts less then " + std::to_string(it->second) +
+                  " elements.");
+  } else if (retval.algo != "dijkstra" &&
+             retval.mapBool.size() * retval.mapBool[0].size() > it->second)
     throw excep("Too many element specified. " + it->first +
                 " only accepts less then " + std::to_string(it->second) +
                 " elements.");

@@ -60,11 +60,12 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res,
         path = DepthFirstSearch(info.mapBool, info.start, info.goal, response);
       else if (info.algo == "BIBFS")
         path = BIBFS(info.mapBool, info.start, info.goal, response);
-    }
-
-    if (info.algo == "dijkstra")
-      path = Dijkstra(info.mapInt, info.start, info.goal, response);
-
+    } else {
+ 
+    if(info.algo == "dijkstra")path = Dijkstra(info.mapInt, info.start, info.goal, response);
+    else if (info.algo == "ASTAR")path = ASTAR(info.mapInt,info.start,info.goal,response);
+    
+}
     auto endTime = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
         endTime - startTime);
