@@ -19,8 +19,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "validate.h"
-#include "../../exception/exception.h"
 #include "../../defs/implemented.h"
+#include "../../exception/exception.h"
 #include "../../logger/logger.h"
 #include <httplib/httplib.h>
 #include <vector>
@@ -48,9 +48,12 @@ SortValidReturn validateSort(const httplib::Request &req, stateClass &state) {
   if (!parsed["values"].is_array()) {
     throw excep("Values is not an array.");
   }
+
   // you could check if all elements are integers but nlohman does that
   // internelly and throws itself so it is not really needed
   retval.values = parsed["values"].get<std::vector<int>>();
+  if (retval.values.empty())
+    throw excep("No values provided.");
 
   if (retval.algo == "counting") {
     bool hasNegNumbers = std::any_of(retval.values.begin(), retval.values.end(),
