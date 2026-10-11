@@ -1,7 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
- *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,6 +19,9 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "utils.h"
+#include "../../defs/ratelimits.h"
+#include "../../defs/types.h"
+#include <algorithm>
 #include <chrono>
 #include <cstdlib>
 #include <httplib.h>
@@ -31,6 +35,7 @@
 #include <string>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <vector>
 using json = nlohmann::json;
 
 int randomInt(int lower, int upper) {
@@ -39,6 +44,36 @@ int randomInt(int lower, int upper) {
   std::uniform_int_distribution<int> dist(lower, upper);
 
   return dist(gen);
+}
+
+bool checkRateLimit(clientListType cList, int index) {
+  std::string targetIP = cList[index].second;
+  int matchingEntrysCount = 0;
+  for (const auto &element : cList) {
+    if (element.second == targetIP &&
+        element.first < std::chrono::system_clock::now() +
+                            std::chrono::minutes(RATE_LIMIT_INTERVALL_MIN)) {
+      matchingEntrysCount++;
+    }
+  }
+  if (matchingEntrysCount >= RATE_LIMIT_COUNT) {
+    return true;
+  }
+  return false;
+}
+
+void addClient(
+    clientListType &cList,
+    const std::pair<std::chrono::time_point<std::chrono::system_clock>,
+                    std::string> &newEntry) {
+  if (!cList.empty() &&
+      std::chrono::system_clock::now() >
+          cList[0].first + std::chrono::hours(
+                               1)) // first entry is older then an hour, delete
+  {
+    cList.erase(cList.begin());
+  }
+  cList.push_back(newEntry);
 }
 
 std::string executeCommand(const std::string &command) {

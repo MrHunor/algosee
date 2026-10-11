@@ -1,7 +1,8 @@
 /*
  *   algosee; a algorithm visulizer
  *   Copyright (C) 2026  MrHunor, siryanni (as equals)
- *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,8 +19,9 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#include "defs/general.h"
 #include "build_info.h"
+#include "defs/general.h"
+#include "defs/types.h"
 #include "logger/logger.h"
 #include "routing/routing.h"
 
@@ -39,16 +41,18 @@ int main(int argc, char *argv[]) {
             "under certain conditions; visit "
             "'https://www.gnu.org/licenses/gpl-3.0.en.html' for details.\n",
             0, RED);
-  state.out(QUOTE,0,BRIGHT_BLUE);
+  state.out(QUOTE, 0, BRIGHT_BLUE);
 
   state.out("Starting...", 0);
   state.out("VERSION:" + std::string(ALGOSEE_VERSION), 0);
   state.out("Build on:" + std::string(ALGOSEE_BUILD_TIME), 0);
   httplib::Server server;
+  clientListType clientList;
 
   //--------------------------PREROUTING HANDLING-------------------
   server.set_pre_routing_handler(
-      [&state](const httplib::Request &req, httplib::Response &res) {
+      [&state, &clientList](const httplib::Request &req,
+                            httplib::Response &res) {
         std::string ip;
         if (req.has_header("X-Forwarded-For")) {
           ip = req.get_header_value("X-Forwarded-For");
@@ -59,7 +63,17 @@ int main(int argc, char *argv[]) {
         state.out("Recived Request:\nClientIP:" + ip +
                       "\nTarget:" + req.target + "\nBody:" + req.body,
                   0);
-
+        addClient(clientList, {std::chrono::system_clock::now(), ip});
+        state.out("Added to Clientlist:", 0);
+        for (const auto &element : clientList) {
+          std::cout << "@" << element.first << "->" << element.second << "\n";
+        }
+        
+        if(checkRateLimit(clientList, clientList.size()-1))
+        {
+          returnFailedAnswer(res, "You are being rate limited. Try again later.",429);
+          return httplib::Server::HandlerResponse::Handled;
+        }
         // continue to normal handling
         return httplib::Server::HandlerResponse::Unhandled;
       });

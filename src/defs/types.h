@@ -22,6 +22,10 @@
 #ifndef DEF_TYPES_H
 #define DEF_TYPES_H
 #include <vector>
+#include <chrono>
+
+typedef std::vector<std::pair<std::chrono::time_point<std::chrono::system_clock>,std::string>>  clientListType; //time and IP
+
 
 typedef unsigned char colour;
 struct pixel {
