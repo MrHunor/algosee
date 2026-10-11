@@ -67,7 +67,7 @@ bool checkRateLimit(const clientListType& cList, const int& index) {
   int matchingEntrysCount = 0;
   for (const auto &element : cList) {
     if (element.second == targetIP &&
-        element.first < std::chrono::system_clock::now() +
+        element.first < std::chrono::system_clock::now() -
                             std::chrono::minutes(RATE_LIMIT_INTERVALL_MIN)) {
       matchingEntrysCount++;
     }
