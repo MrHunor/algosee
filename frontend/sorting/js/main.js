@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const backendPingUrl = 'https://algosee.onrender.com/status';
+        const backendPingUrl = getBackendStatusUrl();
         playButton.innerText = "checking server...";
 
         try {

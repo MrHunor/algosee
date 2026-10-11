@@ -7,10 +7,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const algoKey = urlParams.get('algo') || 'selection';
 
-const serverParam = urlParams.get('server') || 'remote';
-const backendBase = serverParam === 'local' 
-    ? 'http://localhost:8080' // adjust local port here
-    : 'https://algosee.onrender.com';
+const backendBase = getBackendBase();
 
 // adjust title 
 const algoNames = {

@@ -6,10 +6,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const algoKey1 = urlParams.get('algo1'); // no fallback
 const algoKey2 = urlParams.get('algo2'); // no fallback
-const serverParam = urlParams.get('server') || 'remote';
-const backendBase = serverParam === 'local' 
-    ? 'http://localhost:8080' 
-    : 'https://algosee.onrender.com';
+const backendBase = getBackendBase();
 
 const algoNames = {
     bogo: "BogoSort",

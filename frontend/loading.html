@@ -26,18 +26,18 @@
             CONNECTING TO BACKEND...
         </div>
     </main>
-
+    
+    <script src="config.js"></script>
     <script>
     const urlParams = new URLSearchParams(window.location.search);
     const dir = urlParams.get('dir') || 'sorting'; // z.B. path, sorting, picsort
     const algoKey = urlParams.get('algo') || 'bogo';
     const serverParam = urlParams.get('server') || 'remote';
 
-    // if local, redir asap
     if (serverParam === 'local') {
         window.location.href = `./${dir}/visualizer.html?algo=${algoKey}&server=local`;
     } else {
-        const backendPingUrl = 'https://algosee.onrender.com/status';
+        const backendPingUrl = getBackendStatusUrl();
 
         async function checkServer() {
             try {
