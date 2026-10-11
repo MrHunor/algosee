@@ -22,7 +22,6 @@
 #include "../../defs/types.h"
 #include "../../logger/logger.h"
 #include <httplib/httplib.h>
-#include <vector>
 
 struct ImageValidReturn {
   image img;

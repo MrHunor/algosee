@@ -19,7 +19,6 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../utils/image/image.h"
-#include "../exception/exception.h"
 #include "../logger/logger.h"
 #include "../sortalgo/algos.h"
 #include "../utils/general/utils.h"
