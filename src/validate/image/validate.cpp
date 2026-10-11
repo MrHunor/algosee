@@ -46,5 +46,10 @@ ImageValidReturn validateImage(const httplib::Request &req, stateClass &state) {
       throw excep("Too many pixels provided. Max:"+std::to_string(MAX_PIXEL_COUNT_IMAGE));
     }
  
+    auto it =implementedSortAlgos.find(retval.algo);
+    if(retval.img.width*retval.img.height>it->second)
+    {
+      excep("Too many elements (pixels) provied. Max for this algorithm:"+std::to_string(it->second));
+    }
   return retval;
 }
