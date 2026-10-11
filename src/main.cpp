@@ -65,8 +65,11 @@ int main(int argc, char *argv[]) {
                   0);
         addClient(clientList, {std::chrono::system_clock::now(), ip});
         state.out("Added to Clientlist:", 0);
+        std::string output;
         for (const auto &element : clientList) {
-          std::cout << "@" << element.first << "->" << element.second << "\n";
+          output="";
+          output=std::format("Clientlist Element: Time:{}; IP:{}",element.first,element.second);
+          state.out(output,0);
         }
         
         if(checkRateLimit(clientList, clientList.size()-1))
