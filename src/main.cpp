@@ -84,6 +84,8 @@ int main(int argc, char *argv[]) {
   server.Options("(/image)", serverOptionHandler);
   server.Options("(/limits)", serverOptionHandler);
 
+  server.set_payload_max_length(10000000);
+  
   //--------------------------LIMITS----------------------------------
   server.Get("/limits",
              [&](const httplib::Request &req, httplib::Response &res) {

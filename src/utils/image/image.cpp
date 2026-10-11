@@ -24,6 +24,7 @@
 #include <cstdio>
 #endif
 #include "../../defs/general.h"
+#include "../../defs/max_sizes.h"
 #include "../../defs/types.h"
 #include "../../exception/exception.h"
 #include "../../logger/logger.h"
@@ -64,6 +65,9 @@ image loadImage(const httplib::Request &req, const stateClass &state) {
   int width = 0;
   int height = 0;
   int channels = 0;
+
+  stbi_info(filename.c_str(),&width,&height,nullptr);
+  if(width*height>MAX_PIXEL_COUNT_IMAGE)throw excep("Image contains too many pixels. Max pixels:"+std::to_string(MAX_PIXEL_COUNT_IMAGE));
 
   colour *data =
       stbi_load(filename.c_str(), &width, &height, &channels,

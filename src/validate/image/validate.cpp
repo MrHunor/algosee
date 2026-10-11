@@ -23,10 +23,7 @@
 #include "../../defs/implemented.h"
 #include "../../logger/logger.h"
 #include "../../utils/image/image.h"
-#include <exception>
 #include <httplib/httplib.h>
-#include <stdexcept>
-#include <vector>
 ImageValidReturn validateImage(const httplib::Request &req, stateClass &state) {
   ImageValidReturn retval;
  
@@ -44,6 +41,7 @@ ImageValidReturn validateImage(const httplib::Request &req, stateClass &state) {
       throw excep(
           "Provided algo does not exist or is not implemented.");
     }
+    //technically this check isnt needed because stbi_info in loadImage already checks it but im to anxious to delete it :3
     if(retval.img.width*retval.img.height>MAX_PIXEL_COUNT_IMAGE){
       throw excep("Too many pixels provided. Max:"+std::to_string(MAX_PIXEL_COUNT_IMAGE));
     }
