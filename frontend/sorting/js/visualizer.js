@@ -12,7 +12,7 @@ const backendBase = serverParam === 'local'
     ? 'http://localhost:8080' // adjust local port here
     : 'https://algosee.onrender.com';
 
-// adjust title
+// adjust title 
 const algoNames = {
     bogo: "BogoSort",
     miracle: "MiracleSort",
@@ -232,9 +232,9 @@ async function playSuccessWave() {
         bars[i].style.backgroundColor = '#22c55e';
         
         //audio wave
-        playTone(200 + (i * 40));  //tone
+        playTone(200 + (i * 40));  //audio que if done
 
-        // wait (small time)
+        // wait for short interval 
         await new Promise(resolve => setTimeout(resolve, Math.max(20, animationSpeed / 3)));
     }
 }
