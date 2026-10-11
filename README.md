@@ -44,7 +44,7 @@ The implementation will roughly follow the order given in the table.
 | Dijkstra | Supported |
 | Depth first search (DFS) | Supported |
 | Bidirectional Breadth first search (BIBFS) | Supported |
-| A* | TBD | 
+| A* | Supported | 
 | Greedy Best-First-Search | TBD |
 | Jump point search (JPS) | TBD |
 | D* | TBD |
