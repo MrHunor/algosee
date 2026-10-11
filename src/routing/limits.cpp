@@ -19,14 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../defs/max_sizes.h"
-#include "../exception/exception.h"
 #include "../logger/logger.h"
-#include "../sortalgo/algos.h"
-#include "../utils/general/utils.h"
-#include "../utils/image/image.h"
-#include "../validate/image/validate.h"
-#include "build_info.h"
-#include <chrono>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <stb_image.h>
