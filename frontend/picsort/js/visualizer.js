@@ -7,10 +7,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const algoKey = urlParams.get('algo') || 'bubble';
 
-const serverParam = urlParams.get('server') || 'remote';
-const backendBase = serverParam === 'local' 
-    ? 'http://localhost:8080' 
-    : 'https://algosee.onrender.com';
+const backendBase = getBackendBase();
 
 // adj title
 const algoNames = {

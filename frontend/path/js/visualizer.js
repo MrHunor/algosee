@@ -7,11 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1.URL-parameter
     const urlParams = new URLSearchParams(window.location.search);
     const algoKey = urlParams.get('algo') || 'bfs';
-    //1.2.Backend-URL parameters
-    const serverParam = urlParams.get('server') || 'remote';
-    const backendBase = serverParam === 'local' 
-        ? 'http://localhost:8080' // depents which port *you* choose, change accordingly
-        : 'https://algosee.onrender.com';
+    
+    // 1.2. Backend-URL over central config
+    const backendBase = getBackendBase();
 
     // 2. title adjust 
     const algoNames = {
