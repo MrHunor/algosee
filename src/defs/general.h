@@ -22,12 +22,22 @@
 #define DEF_GENERAL_H
 #include "nlohmann/json.hpp"
 
-#define QUOTE "\"Es mejor morir de pie que vivir toda una vida arrodillado\" ~ Emiliano Zapata."
+#define QUOTE                                                                  \
+  "\"Es mejor morir de pie que vivir toda una vida arrodillado\" ~ Emiliano "  \
+  "Zapata."
 
 #define DEFAULT_COLOUR MAGENTA
 
 #define VERBOSE_LEVEL_NEEDED_FOR_TIME 0
 
+#define FILENAME_MAX_SIZE 15
+
 using json = nlohmann::json;
 
+std::vector<char> randomStringDataset{
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 #endif

@@ -36,4 +36,5 @@ void addClient(
     const std::pair<std::chrono::time_point<std::chrono::system_clock>,
                     std::string> &newEntry);
 bool checkRateLimit(clientListType cList, int index);
+std::string generateRandomString(const int &size);
 #endif

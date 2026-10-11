@@ -19,6 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "utils.h"
+#include "../../defs/general.h"
 #include "../../defs/ratelimits.h"
 #include "../../defs/types.h"
 #include <algorithm>
@@ -36,7 +37,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <vector>
-using json = nlohmann::json;
 
 int randomInt(int lower, int upper) {
   static std::random_device rd;
@@ -44,6 +44,14 @@ int randomInt(int lower, int upper) {
   std::uniform_int_distribution<int> dist(lower, upper);
 
   return dist(gen);
+}
+
+std::string generateRandomString(const int &size) {
+  std::string retval;
+  for (int i = 0; i < size; i++) {
+    retval += randomStringDataset[randomInt(0, randomStringDataset.size()-1)];
+  }
+  return retval;
 }
 
 bool checkRateLimit(clientListType cList, int index) {

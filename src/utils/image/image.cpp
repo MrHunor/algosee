@@ -21,11 +21,13 @@
 
 #ifndef STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
+#include <cstdio>
 #endif
 #include "../../defs/general.h"
 #include "../../defs/types.h"
 #include "../../exception/exception.h"
 #include "../../logger/logger.h"
+#include "../../utils/general/utils.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 
@@ -46,14 +48,15 @@ json indexPixelArrToJson(const indexPixel &arr) {
 }
 
 image loadImage(const httplib::Request &req, const stateClass &state) {
-
+  
   // read image from body to file
   if (!req.form.has_file("image"))
     throw excep("Request does not contain a 'image' file.");
 
   const auto &image = req.form.get_file("image");
 
-  std::ofstream file("originalImage.png", std::ios::binary);
+  std::string filename=generateRandomString(FILENAME_MAX_SIZE-4)+".png";
+  std::ofstream file(filename.c_str(), std::ios::binary);
   file.write(image.content.data(), image.content.size());
   file.close();
 
@@ -63,9 +66,10 @@ image loadImage(const httplib::Request &req, const stateClass &state) {
   int channels = 0;
 
   colour *data =
-      stbi_load("originalImage.png", &width, &height, &channels,
+      stbi_load(filename.c_str(), &width, &height, &channels,
                 4); // the 4 FORCES RGBA (might lead to issues later on)
 
+  remove(filename.c_str());
   if (!data)
     throw excep("Failed to read saved image into memory.");
 
