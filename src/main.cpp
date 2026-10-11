@@ -27,6 +27,7 @@
 
 #include "utils/general/utils.h"
 #include <httplib.h>
+#include <mutex>
 #include <nlohmann/json.hpp>
 #include <string>
 
@@ -48,12 +49,12 @@ int main(int argc, char *argv[]) {
   state.out("Build on:" + std::string(ALGOSEE_BUILD_TIME), 0);
   httplib::Server server;
   clientListType clientList;
-
+  std::mutex clientListMutex;
   //--------------------------PREROUTING HANDLING-------------------
   server.set_pre_routing_handler(
-      [&state, &clientList](const httplib::Request &req,
+      [&state, &clientList,&clientListMutex](const httplib::Request &req,
                             httplib::Response &res) {
-        return runPreflightHandler(req, res, state, clientList);
+        return runPreflightHandler(req, res, state, clientList,clientListMutex);
       });
 
   //-------------------------POSTROUTING HANDLING-------------------------

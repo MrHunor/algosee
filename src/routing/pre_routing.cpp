@@ -24,10 +24,10 @@
 #include <chrono>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
+#include <mutex>
 
 
-
-httplib::Server::HandlerResponse runPreflightHandler(const httplib::Request& req, httplib::Response& res, stateClass& state, clientListType& clientList)
+httplib::Server::HandlerResponse runPreflightHandler(const httplib::Request& req, httplib::Response& res, stateClass& state, clientListType& clientList, std::mutex& clientListMutex)
 {
       std::string ip;
         if (req.has_header("X-Forwarded-For")) {
@@ -39,6 +39,9 @@ httplib::Server::HandlerResponse runPreflightHandler(const httplib::Request& req
         state.out("Recived Request:\nClientIP:" + ip +
                       "\nTarget:" + req.target + "\nBody:" + req.body,
                   0);
+        
+        //prevent a data race
+        std::lock_guard<std::mutex> lock(clientListMutex);
         addClient(clientList, {std::chrono::system_clock::now(), ip});
         state.out("Added to Clientlist:", 0);
         std::string output;

@@ -46,6 +46,7 @@ void runImageSort(const httplib::Request &req, httplib::Response &res,
                   stateClass &state);
 httplib::Server::HandlerResponse
 runPreflightHandler(const httplib::Request &req, httplib::Response &res,
-                    stateClass &state, clientListType &clientList);
+                    stateClass &state, clientListType &clientList,
+                    std::mutex &clientListMutex);
 void runLimits(httplib::Response &res, stateClass &state);
 #endif
