@@ -54,7 +54,7 @@ std::string generateRandomString(const int &size) {
   return retval;
 }
 
-bool checkRateLimit(clientListType cList, int index) {
+bool checkRateLimit(const clientListType& cList, const int& index) {
   std::string targetIP = cList[index].second;
   int matchingEntrysCount = 0;
   for (const auto &element : cList) {
