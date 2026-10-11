@@ -50,11 +50,11 @@ int main(int argc, char *argv[]) {
   clientListType clientList;
 
   //--------------------------PREROUTING HANDLING-------------------
-server.set_pre_routing_handler(
-    [&state, &clientList](const httplib::Request &req,
-                          httplib::Response &res) {
+  server.set_pre_routing_handler(
+      [&state, &clientList](const httplib::Request &req,
+                            httplib::Response &res) {
         return runPreflightHandler(req, res, state, clientList);
-    });
+      });
 
   //-------------------------POSTROUTING HANDLING-------------------------
   // this runs before sending any response
@@ -82,6 +82,14 @@ server.set_pre_routing_handler(
   server.Options("(/pathalgo)", serverOptionHandler);
   server.Options("(/status)", serverOptionHandler);
   server.Options("(/image)", serverOptionHandler);
+  server.Options("(/limits)", serverOptionHandler);
+
+  //--------------------------LIMITS----------------------------------
+  server.Get("/limits",
+             [&](const httplib::Request &req, httplib::Response &res) {
+               runLimits(res, state);
+               return;
+             });
 
   //--------------------------IMAGE-----------------------------------------------------------
   server.Post("/image",
