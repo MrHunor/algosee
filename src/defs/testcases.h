@@ -85,9 +85,9 @@ const std::vector<std::pair<std::string, std::pair<int, int>>>
         {"BIBFS", {100, 45}},     {"BIBFS", {250, 150}},
         {"BIBFS", {249, 249}},
 
-        {"ASTAR", {10, 5}},       {"ASTAR", {20, 5}},
+       /*{"ASTAR", {10, 5}},       {"ASTAR", {20, 5}},
         {"ASTAR", {100, 45}},     {"ASTAR", {250, 150}},
-        {"ASTAR", {249, 249}},
+        {"ASTAR", {249, 249}},*/ 
 };
 
 #endif

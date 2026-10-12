@@ -21,6 +21,7 @@
 #ifndef DEF_GENERAL_H
 #define DEF_GENERAL_H
 #include "nlohmann/json.hpp"
+#include <limits>
 
 #define QUOTE                                                                  \
   "\"Es mejor morir de pie que vivir toda una vida arrodillado\" ~ Emiliano "  \
@@ -31,6 +32,8 @@
 #define VERBOSE_LEVEL_NEEDED_FOR_TIME 0
 
 #define FILENAME_MAX_SIZE 15
+
+#define INFINITY_INT std::numeric_limits<int>::max()
 
 using json = nlohmann::json;
 

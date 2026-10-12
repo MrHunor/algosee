@@ -21,10 +21,10 @@
 #include "../defs/general.h"
 #include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
-#include <limits>
+#include <cmath>
 #include <nlohmann/json.hpp>
+#include <limits>
 #include <queue>
-#include <tuple>
 #include <utility>
 #include <vector>
 
@@ -33,7 +33,14 @@ struct Node {
   int h = 0;
   int x = 0;
   int y = 0;
-  int f() const { return g + h; }
+  int f() const {
+    if (g > INFINITY_INT-h)
+      {return INFINITY_INT;}
+    else
+    {
+      return g + h;
+    }
+  }
 };
 
 struct CompareNode { // this is needed for priority queue
@@ -48,13 +55,13 @@ std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
                                        json &response) {
   const int rows = map.size();
   const int collums = map[0].size();
-  const int INFINTY = std::numeric_limits<int>::max();
+
   int h = 0;
 
   std::vector<std::vector<int>> distance(
       rows,
       std::vector<int>(
-          collums, INFINTY)); // i dont think i'll ever unstand this contructor
+          collums, INFINITY_INT)); // i dont think i'll ever unstand this contructor
   std::vector<std::vector<std::pair<int, int>>> parent(
       rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
   std::vector<std::pair<int, int>> path;
@@ -124,7 +131,7 @@ std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
   // checking if the goal was ever reached, be careful this could theoretically
   // be a false positive if the addition of tiles matches exatly the intmax, but
   // the likelyhood is very small
-  if (distance[goal.second][goal.first] == INFINTY)
+  if (distance[goal.second][goal.first] == INFINITY_INT)
     return {};
 
   // copy paste from BFS, same logic
