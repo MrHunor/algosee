@@ -60,7 +60,11 @@ int main(int argc, char *argv[]) {
   //-------------------------POSTROUTING HANDLING-------------------------
   // this runs before sending any response
   server.set_post_routing_handler(
-      [](const httplib::Request &, httplib::Response &res) {
+      [&state](const httplib::Request & req, httplib::Response &res) {
+          state.out("Target:" + req.target +
+                "\nBody:" + req.body,
+            0);
+
         res.headers.erase("Access-Control-Allow-Origin");
         res.set_header("Access-Control-Allow-Origin", "*");
       });

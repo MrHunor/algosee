@@ -29,6 +29,7 @@ httplib::Server::HandlerResponse
 runPreflightHandler(const httplib::Request &req, httplib::Response &res,
                     stateClass &state, clientListType &clientList,
                     std::mutex &clientListMutex) {
+  
   std::string ip;
   if (req.has_header("X-Forwarded-For")) {
     std::string forwarded = req.get_header_value("X-Forwarded-For");
@@ -40,10 +41,7 @@ runPreflightHandler(const httplib::Request &req, httplib::Response &res,
   } else {
     ip = req.remote_addr;
   }
-
-  state.out("Recived Request:\nClientIP:" + ip + "\nTarget:" + req.target +
-                "\nBody:" + req.body,
-            0);
+state.out("Recived request from IP:"+ip,0);
 
   // prevent a data race
   std::lock_guard<std::mutex> lock(clientListMutex);
