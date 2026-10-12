@@ -36,13 +36,7 @@ WORKDIR /app
 COPY . .
 
 RUN conan profile detect --force && \
-    conan install . \
-        --output-folder=build \
-        --build=missing \
-        -s build_type=Release
-
-RUN cmake --preset conan-release && \
-    cmake --build build --parallel
+    ./rebuildLinuxRelease.sh
 
 EXPOSE 10000
 
