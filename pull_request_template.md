@@ -17,4 +17,4 @@
 
 ## Testing
 In addition to the github actions worklow which will automatically test the executable this PR has been:  
-[ ] Manually tested
+* [ ] Manually tested
