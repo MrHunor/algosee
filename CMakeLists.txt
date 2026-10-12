@@ -37,7 +37,7 @@ add_executable(algosee
     ${ALL_SOURCES_MAIN}
 )
 
-if(CMAKE_BUILD_TYPE STREQUAL "debug")
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
     file(GLOB_RECURSE ALL_SOURCES_TESTCLIENT CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/testclient/src/*.cpp"
@@ -49,7 +49,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "debug")
     target_include_directories(algosee_testclient PRIVATE
     "${CMAKE_CURRENT_BINARY_DIR}/generated"
 )
-elseif(CMAKE_BUILD_TYPE STREQUAL "release")
+elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     target_compile_options(algosee PRIVATE
         $<$<CONFIG:Release>:-O3>
         $<$<CONFIG:Release>:-march=native>
@@ -83,7 +83,7 @@ target_link_libraries(algosee
     stdc++exp
 )
 
-if(CMAKE_BUILD_TYPE STREQUAL "debug")
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 target_link_libraries(algosee_testclient
 nlohmann_json::nlohmann_json
 stdc++exp

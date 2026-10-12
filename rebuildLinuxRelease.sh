@@ -19,5 +19,5 @@ set -x
 
 rm -rf build
 conan install . --output-folder=build --build=missing -s build_type=Release
-cmake --preset conan-release -DCMAKE_BUILD_TYPE=release -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake
+cmake --preset conan-release -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake
 cmake --build build --parallel 
