@@ -145,7 +145,7 @@ Use curl to make request to the render server, e.g.: `curl -X POST "https://algo
 
 
 # AI usage disclosure:
-I, **@MrHunor**, have used AI for explaining what do to when i didn't know anymore, as well as when i wanted to implement something but didn't know how or for scanning the codebase for bugs and possible enhancements. I have also let copilot scan each commit for possible unintended bugs with the latest change in a new commit.  
+I, **@MrHunor**, have used AI for explaining what do to when i didn't know anymore, as well as when i wanted to implement something but didn't know how or for scanning the codebase for bugs and possible enhancements. I've also used AI Audits, such as coderabbit on PRs.
 I, **@siryanni**, (TBD [#126](https://github.com/MrHunor/algosee/issues/126))  
 For anyone looking to contribute we would ask them to follow the line we provided 
 
