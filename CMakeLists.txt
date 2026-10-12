@@ -52,7 +52,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     target_compile_options(algosee PRIVATE
         $<$<CONFIG:Release>:-O3>
-        $<$<CONFIG:Release>:-march=native>
     )
 endif()
 
