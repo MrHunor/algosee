@@ -49,7 +49,7 @@ ImageValidReturn validateImage(const httplib::Request &req, stateClass &state) {
     auto it =implementedSortAlgos.find(retval.algo);
     if(retval.img.width*retval.img.height>it->second)
     {
-      excep("Too many elements (pixels) provied. Max for this algorithm:"+std::to_string(it->second));
+     throw excep("Too many elements (pixels) provided. Max for this algorithm:"+std::to_string(it->second));
     }
   return retval;
 }
