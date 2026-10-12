@@ -56,17 +56,14 @@ image loadImage(const httplib::Request &req, const stateClass &state) {
 
   const auto &image = req.form.get_file("image");
 
-  std::string filename = generateRandomString(FILENAME_MAX_SIZE - 4) + ".png";
-  std::ofstream file(filename.c_str(), std::ios::binary);
-  file.write(image.content.data(), image.content.size());
-  file.close();
 
   // read file to memory
   int width = 0;
   int height = 0;
   int channels = 0;
 
-  if (stbi_info(filename.c_str(), &width, &height, nullptr) != true)
+  if (stbi_info_from_memory(reinterpret_cast<const stbi_uc *>(image.content.data()),
+                        image.content.size(), &width, &height, nullptr) != true)
     throw excep("Failed to read Metadata from image.");
   if (width < 1 || height < 1)
     throw excep("The provided image has invalid dimensions.");
@@ -74,11 +71,10 @@ image loadImage(const httplib::Request &req, const stateClass &state) {
     throw excep("Image contains too many pixels. Max pixels:" +
                 std::to_string(MAX_PIXEL_COUNT_IMAGE));
 
-  colour *data =
-      stbi_load(filename.c_str(), &width, &height, &channels,
-                4); // the 4 FORCES RGBA (might lead to issues later on)
+  colour *data =  stbi_load_from_memory(reinterpret_cast<const stbi_uc *>(image.content.data()),
+                        image.content.size(), &width, &height, &channels, 4);
 
-  remove(filename.c_str());
+
   if (!data)
     throw excep("Failed to read saved image into memory.");
 
