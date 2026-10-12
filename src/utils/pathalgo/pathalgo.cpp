@@ -141,7 +141,9 @@ std::vector<std::vector<bool>> castIntMapToBoolIfNeeded(const json &input) {
   bool isBool = true;
   // check if input array is already boolean
   for (const auto &row : input["MAP"]) {
+    if(row.is_array())throw excep("Invalid Map. A extracted row is NOT a array.");//check for map validness
     for (const auto &element : row) {
+
       if (!element.is_boolean())
         isBool = false;
     }
