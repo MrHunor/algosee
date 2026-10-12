@@ -49,14 +49,14 @@ json indexPixelArrToJson(const indexPixel &arr) {
 }
 
 image loadImage(const httplib::Request &req, const stateClass &state) {
-  
+
   // read image from body to file
   if (!req.form.has_file("image"))
     throw excep("Request does not contain a 'image' file.");
 
   const auto &image = req.form.get_file("image");
 
-  std::string filename=generateRandomString(FILENAME_MAX_SIZE-4)+".png";
+  std::string filename = generateRandomString(FILENAME_MAX_SIZE - 4) + ".png";
   std::ofstream file(filename.c_str(), std::ios::binary);
   file.write(image.content.data(), image.content.size());
   file.close();
@@ -66,8 +66,13 @@ image loadImage(const httplib::Request &req, const stateClass &state) {
   int height = 0;
   int channels = 0;
 
-  stbi_info(filename.c_str(),&width,&height,nullptr);
-  if(width*height>MAX_PIXEL_COUNT_IMAGE)throw excep("Image contains too many pixels. Max pixels:"+std::to_string(MAX_PIXEL_COUNT_IMAGE));
+  if (stbi_info(filename.c_str(), &width, &height, nullptr) != true)
+    throw excep("Failed to read Metadata from image.");
+  if (width < 1 || height < 1)
+    throw excep("The provided image has invalid dimensions.");
+  if (width * height > MAX_PIXEL_COUNT_IMAGE)
+    throw excep("Image contains too many pixels. Max pixels:" +
+                std::to_string(MAX_PIXEL_COUNT_IMAGE));
 
   colour *data =
       stbi_load(filename.c_str(), &width, &height, &channels,
