@@ -79,6 +79,10 @@ PathValidReturn validatePath(const httplib::Request &req, stateClass &state) {
       throw excep("An element in the map is below -1, which is the min "
                   "required for Djkstra.");
   }
+  if (retval.algo == "ASTAR") {
+    if (checkMapForZero(retval.mapInt))
+      throw excep("Map may not contain zero values for this algorithm.");
+  }
   auto it = implementedPathAlgos.find(retval.algo);
   if (retval.algo == "dijkstra" || retval.algo == "ASTAR") {
     if (retval.mapInt.size() * retval.mapInt[0].size() > it->second)

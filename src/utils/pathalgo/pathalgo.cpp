@@ -25,6 +25,18 @@
 #include <stdexcept>
 #include <vector>
 
+bool checkMapForZero(const std::vector<std::vector<int>>& map)
+{
+  for(const auto& row : map)
+  {
+    for(const auto& element : row)
+    {
+      if(element==0)return true;
+    }
+  }
+  return false;
+}
+
 std::pair<int, int> checkRange(const std::vector<std::vector<int>> &map) {
   int min = 0;
   int max = 0;
