@@ -32,8 +32,9 @@ echo "Testing backend using testclient"
 ./rebuildLinuxDebug.sh
 cd build 
 ./algosee & 
+algosee_pid=$! # set PID so you can kill later
 ./algosee_testclient
-kill algosee
+kill "$algosee_pid"
 cd ..
 echo "Creating commit named "$1" and pushing to github"
 git add . && git commit -m "$1" && git pull origin development --rebase && git push origin development
