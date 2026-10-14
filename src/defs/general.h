@@ -23,9 +23,9 @@
 #include "nlohmann/json.hpp"
 #include <limits>
 
-#define QUOTE                                                                  \
-  "\"Es mejor morir de pie que vivir toda una vida arrodillado\" ~ Emiliano "  \
-  "Zapata."
+#define QUOTE                                                                                                          \
+    "\"Es mejor morir de pie que vivir toda una vida arrodillado\" ~ Emiliano "                                        \
+    "Zapata."
 
 #define DEFAULT_COLOUR MAGENTA
 

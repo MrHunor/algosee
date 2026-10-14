@@ -21,28 +21,28 @@
 
 #ifndef DEF_TYPES_H
 #define DEF_TYPES_H
-#include <vector>
 #include <chrono>
+#include <vector>
 
-typedef std::vector<std::pair<std::chrono::time_point<std::chrono::system_clock>,std::string>>  clientListType; //time and IP
-
+typedef std::vector<std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string>>
+    clientListType; // time and IP
 
 typedef unsigned char colour;
-struct pixel {
-  colour R;
-  colour G;
-  colour B;
-  colour A;
+struct pixel
+{
+    colour R;
+    colour G;
+    colour B;
+    colour A;
 };
 
 typedef std::vector<std::pair<int, pixel>> indexPixel;
 
-struct image {
-  int width;
-  int height;
-  indexPixel data;
+struct image
+{
+    int width;
+    int height;
+    indexPixel data;
 };
-
-
 
 #endif

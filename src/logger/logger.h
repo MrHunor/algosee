@@ -83,29 +83,31 @@
 #define HIDDEN "\033[8m"
 #define STRIKE "\033[9m"
 
-class stateClass {
-public:
-  std::ofstream logFile{"log.txt"};
-  int verbose;
-  void out(const std::string &output, int importance,
-           const std::string &colour = DEFAULT_COLOUR,
-           std::source_location location = std::source_location::current()) {
-    if (importance > verbose)
-      return;
-    std::string message = colour;
-    if (verbose >= VERBOSE_LEVEL_NEEDED_FOR_TIME) {
-      auto now = std::chrono::system_clock::now();
-      message += std::format("@{} -> ", now);
+class stateClass
+{
+  public:
+    std::ofstream logFile{"log.txt"};
+    int verbose;
+    void out(const std::string &output, int importance, const std::string &colour = DEFAULT_COLOUR,
+             std::source_location location = std::source_location::current())
+    {
+        if (importance > verbose)
+            return;
+        std::string message = colour;
+        if (verbose >= VERBOSE_LEVEL_NEEDED_FOR_TIME)
+        {
+            auto now = std::chrono::system_clock::now();
+            message += std::format("@{} -> ", now);
+        }
+        if (verbose >= 0)
+            message += std::format("{}->", location.function_name());
+        message += output;
+        message += RESET;
+        std::cout << message;
+        std::cout << std::endl;
+        if (logFile.is_open())
+            logFile << message << std::endl;
     }
-    if (verbose >= 0)
-      message += std::format("{}->", location.function_name());
-    message += output;
-    message += RESET;
-    std::cout << message;
-    std::cout << std::endl;
-    if (logFile.is_open())
-      logFile << message << std::endl;
-  }
 };
 
 #endif

@@ -31,109 +31,101 @@
 #include <nlohmann/json.hpp>
 #include <string>
 
-int main(int argc, char *argv[]) {
-  remove("log.txt");
-  stateClass state;
-  state.verbose = 0;
-  state.out("algosee Copyright (C) 2026  MrHunor, siryanni (as equals)\n"
-            "This program comes with ABSOLUTELY NO WARRANTY; for details "
-            "visit:'https://www.gnu.org/licenses/gpl-3.0.en.html'.\n"
-            "This is free software, and you are welcome to redistribute it\n"
-            "under certain conditions; visit "
-            "'https://www.gnu.org/licenses/gpl-3.0.en.html' for details.\n",
-            0, RED);
-  state.out(QUOTE, 0, BRIGHT_BLUE);
+int main(int argc, char *argv[])
+{
+    remove("log.txt");
+    stateClass state;
+    state.verbose = 0;
+    state.out("algosee Copyright (C) 2026  MrHunor, siryanni (as equals)\n"
+              "This program comes with ABSOLUTELY NO WARRANTY; for details "
+              "visit:'https://www.gnu.org/licenses/gpl-3.0.en.html'.\n"
+              "This is free software, and you are welcome to redistribute it\n"
+              "under certain conditions; visit "
+              "'https://www.gnu.org/licenses/gpl-3.0.en.html' for details.\n",
+              0, RED);
+    state.out(QUOTE, 0, BRIGHT_BLUE);
 
-  state.out("Starting...", 0);
-  state.out("VERSION:" + std::string(ALGOSEE_VERSION), 0);
-  state.out("Build on:" + std::string(ALGOSEE_BUILD_TIME), 0);
-  httplib::Server server;
-  clientListType clientList;
-  std::mutex clientListMutex;
-  //--------------------------PREROUTING HANDLING-------------------
-  server.set_pre_routing_handler(
-      [&state, &clientList,&clientListMutex](const httplib::Request &req,
-                            httplib::Response &res) {
-        return runPreflightHandler(req, res, state, clientList,clientListMutex);
-      });
+    state.out("Starting...", 0);
+    state.out("VERSION:" + std::string(ALGOSEE_VERSION), 0);
+    state.out("Build on:" + std::string(ALGOSEE_BUILD_TIME), 0);
+    httplib::Server server;
+    clientListType clientList;
+    std::mutex clientListMutex;
+    //--------------------------PREROUTING HANDLING-------------------
+    server.set_pre_routing_handler(
+        [&state, &clientList, &clientListMutex](const httplib::Request &req, httplib::Response &res) {
+            return runPreflightHandler(req, res, state, clientList, clientListMutex);
+        });
 
-  //-------------------------POSTROUTING HANDLING-------------------------
-  // this runs before sending any response
-  server.set_post_routing_handler(
-      [&state](const httplib::Request & req, httplib::Response &res) {
-          state.out("Target:" + req.target +
-                "\nBody:" + req.body,
-            0);
+    //-------------------------POSTROUTING HANDLING-------------------------
+    // this runs before sending any response
+    server.set_post_routing_handler([&state](const httplib::Request &req, httplib::Response &res) {
+        state.out("Target:" + req.target + "\nBody:" + req.body, 0);
 
         res.headers.erase("Access-Control-Allow-Origin");
         res.set_header("Access-Control-Allow-Origin", "*");
-      });
+    });
 
-  //--------------------------OPTIONS-----------------------------------------
-  // handle a preflight request from a diffrent origin; firefox & co. considers
-  // diffrent ports on the same computer to be diffrent origins so this fix is
-  // needed to work
-  const auto serverOptionHandler =
-      [](const httplib::Request &req,
-         httplib::Response
-             &res) { // first time using callbacks like this kinda nervous >_<
-        res.set_header("Access-Control-Allow-Origin", "*");
-        res.set_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-        res.set_header("Access-Control-Allow-Headers", "Content-Type");
-        res.status = 200;
-      };
+    //--------------------------OPTIONS-----------------------------------------
+    // handle a preflight request from a diffrent origin; firefox & co. considers
+    // diffrent ports on the same computer to be diffrent origins so this fix is
+    // needed to work
+    const auto serverOptionHandler =
+        [](const httplib::Request &req,
+           httplib::Response &res) { // first time using callbacks like this kinda nervous >_<
+            res.set_header("Access-Control-Allow-Origin", "*");
+            res.set_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+            res.set_header("Access-Control-Allow-Headers", "Content-Type");
+            res.status = 200;
+        };
 
-  server.Options("(/sortalgo)", serverOptionHandler);
-  server.Options("(/pathalgo)", serverOptionHandler);
-  server.Options("(/status)", serverOptionHandler);
-  server.Options("(/image)", serverOptionHandler);
-  server.Options("(/limits)", serverOptionHandler);
+    server.Options("(/sortalgo)", serverOptionHandler);
+    server.Options("(/pathalgo)", serverOptionHandler);
+    server.Options("(/status)", serverOptionHandler);
+    server.Options("(/image)", serverOptionHandler);
+    server.Options("(/limits)", serverOptionHandler);
 
-  server.set_payload_max_length(10000000);
-  
-  //--------------------------LIMITS----------------------------------
-  server.Get("/limits",
-             [&](const httplib::Request &req, httplib::Response &res) {
-               runLimits(res, state);
-               return;
-             });
+    server.set_payload_max_length(10000000);
 
-  //--------------------------IMAGE-----------------------------------------------------------
-  server.Post("/image",
-              [&](const httplib::Request &req, httplib::Response &res) {
-                runImageSort(req, res, state);
-                return;
-              });
+    //--------------------------LIMITS----------------------------------
+    server.Get("/limits", [&](const httplib::Request &req, httplib::Response &res) {
+        runLimits(res, state);
+        return;
+    });
 
-  //---------------------------STATUS---------------------------------------------------------------------
-  server.Get("/status",
-             [&](const httplib::Request &req, httplib::Response &res) {
-               RunStatus(req, res, state);
-               return;
-             });
+    //--------------------------IMAGE-----------------------------------------------------------
+    server.Post("/image", [&](const httplib::Request &req, httplib::Response &res) {
+        runImageSort(req, res, state);
+        return;
+    });
 
-  //------------------------------SORTALGO---------------------------------------------------------------
-  server.Post("/sortalgo",
-              [&](const httplib::Request &req, httplib::Response &res) {
-                runSortalgo(req, res, state);
-                return;
-              });
+    //---------------------------STATUS---------------------------------------------------------------------
+    server.Get("/status", [&](const httplib::Request &req, httplib::Response &res) {
+        RunStatus(req, res, state);
+        return;
+    });
 
-  //------------------------------PATHALGO----------------------------------------------------------------
-  server.Post("/pathalgo",
-              [&](const httplib::Request &req, httplib::Response &res) {
-                RunPathalgo(req, res, state);
-                return;
-              });
+    //------------------------------SORTALGO---------------------------------------------------------------
+    server.Post("/sortalgo", [&](const httplib::Request &req, httplib::Response &res) {
+        runSortalgo(req, res, state);
+        return;
+    });
 
-  // render port detection magic
-  const char *port_env = std::getenv("PORT");
-  int port = port_env ? std::stoi(port_env) : 8080;
+    //------------------------------PATHALGO----------------------------------------------------------------
+    server.Post("/pathalgo", [&](const httplib::Request &req, httplib::Response &res) {
+        RunPathalgo(req, res, state);
+        return;
+    });
 
-  state.out("Listining on:0.0.0.0:" + std::to_string(port), 0);
-  if (!server.listen("0.0.0.0", port)) {
-    InvalidInputMessage("Failed to listen on 0.0.0.0:" + std::to_string(port));
-  }
+    // render port detection magic
+    const char *port_env = std::getenv("PORT");
+    int port = port_env ? std::stoi(port_env) : 8080;
 
-  return 0;
+    state.out("Listining on:0.0.0.0:" + std::to_string(port), 0);
+    if (!server.listen("0.0.0.0", port))
+    {
+        InvalidInputMessage("Failed to listen on 0.0.0.0:" + std::to_string(port));
+    }
+
+    return 0;
 }

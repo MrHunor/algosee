@@ -25,19 +25,15 @@
 #include <unordered_map>
 #include <vector>
 const std::unordered_map<std::string, int> implementedSortAlgos = {
-    {"selection", MAX_ELEMENT_COUNT_SELECTION},
-    {"bogo", MAX_ELEMENT_COUNT_BOGO},
-    {"bubble", MAX_ELEMENT_COUNT_BUBBLE},
-    {"quick", MAX_ELEMENT_COUNT_QUICK},
-    {"merge", MAX_ELEMENT_COUNT_MERGE},
-    {"counting", MAX_ELEMENT_COUNT_COUNTING},
+    {"selection", MAX_ELEMENT_COUNT_SELECTION}, {"bogo", MAX_ELEMENT_COUNT_BOGO},
+    {"bubble", MAX_ELEMENT_COUNT_BUBBLE},       {"quick", MAX_ELEMENT_COUNT_QUICK},
+    {"merge", MAX_ELEMENT_COUNT_MERGE},         {"counting", MAX_ELEMENT_COUNT_COUNTING},
     {"cycle", MAX_ELEMENT_COUNT_CYCLE}};
 
-const std::unordered_map<std::string, int> implementedPathAlgos = {
-    {"BFS", MAX_ELEMENT_COUNT_BFS},
-    {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA},
-    {"DFS", MAX_ELEMENT_COUNT_DFS},
-    {"BIBFS", MAX_ELEMENT_COUNT_BIBFS},
-    {"ASTAR", MAX_ELEMENT_COUNT_ASTAR}};
+const std::unordered_map<std::string, int> implementedPathAlgos = {{"BFS", MAX_ELEMENT_COUNT_BFS},
+                                                                   {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA},
+                                                                   {"DFS", MAX_ELEMENT_COUNT_DFS},
+                                                                   {"BIBFS", MAX_ELEMENT_COUNT_BIBFS},
+                                                                   {"ASTAR", MAX_ELEMENT_COUNT_ASTAR}};
 
 #endif

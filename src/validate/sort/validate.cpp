@@ -25,60 +25,66 @@
 #include <httplib/httplib.h>
 #include <vector>
 
-SortValidReturn validateSort(const httplib::Request &req, stateClass &state) {
-  SortValidReturn retval;
+SortValidReturn validateSort(const httplib::Request &req, stateClass &state)
+{
+    SortValidReturn retval;
 
-  if (!req.has_param("algo")) {
-    throw excep("URL does not contain a url parameter.");
-  }
-  retval.algo = req.get_param_value("algo");
-  if (retval.algo.empty()) {
-    throw excep("URL contains a algo parameter but no algo is set.");
-  }
-  if (!implementedSortAlgos.contains(retval.algo)) {
-    throw excep("Provided algo does not exist or is not implemented.");
-  }
+    if (!req.has_param("algo"))
+    {
+        throw excep("URL does not contain a url parameter.");
+    }
+    retval.algo = req.get_param_value("algo");
+    if (retval.algo.empty())
+    {
+        throw excep("URL contains a algo parameter but no algo is set.");
+    }
+    if (!implementedSortAlgos.contains(retval.algo))
+    {
+        throw excep("Provided algo does not exist or is not implemented.");
+    }
 
-  json parsed = json::parse(req.body);
+    json parsed = json::parse(req.body);
 
-  if (!parsed.contains("values")) {
-    throw excep("Body does not contain a values parameter.");
-  }
+    if (!parsed.contains("values"))
+    {
+        throw excep("Body does not contain a values parameter.");
+    }
 
-  if (!parsed["values"].is_array()) {
-    throw excep("Values is not an array.");
-  }
+    if (!parsed["values"].is_array())
+    {
+        throw excep("Values is not an array.");
+    }
 
-  // you could check if all elements are integers but nlohman does that
-  // internelly and throws itself so it is not really needed
-  retval.values = parsed["values"].get<std::vector<int>>();
-  if (retval.values.empty())
-    throw excep("No values provided.");
+    // you could check if all elements are integers but nlohman does that
+    // internelly and throws itself so it is not really needed
+    retval.values = parsed["values"].get<std::vector<int>>();
+    if (retval.values.empty())
+        throw excep("No values provided.");
 
-  if (retval.algo == "counting") {
-    bool hasNegNumbers = std::any_of(retval.values.begin(), retval.values.end(),
-                                     [](int x) { // some weird callback shit
-                                       return x < 0;
-                                     });
-    if (hasNegNumbers)
-      throw excep(
-          "Selected algorithm (counting) does not support negative numbers.");
-  }
+    if (retval.algo == "counting")
+    {
+        bool hasNegNumbers = std::any_of(retval.values.begin(), retval.values.end(),
+                                         [](int x) { // some weird callback shit
+                                             return x < 0;
+                                         });
+        if (hasNegNumbers)
+            throw excep("Selected algorithm (counting) does not support negative numbers.");
+    }
 
-  auto it = implementedSortAlgos.find(retval.algo);
-  if (retval.values.size() > it->second) {
-    throw excep("Too many element specified. " + it->first +
-                " only accepts less then " + std::to_string(it->second) +
-                " elements.");
-  }
+    auto it = implementedSortAlgos.find(retval.algo);
+    if (retval.values.size() > it->second)
+    {
+        throw excep("Too many element specified. " + it->first + " only accepts less then " +
+                    std::to_string(it->second) + " elements.");
+    }
 
-  if (retval.algo == "counting") {
-    auto range =
-        std::minmax_element(retval.values.begin(), retval.values.end());
-    if (*range.second > HIGHEST_ELEMENT_COUNTING)
-      throw excep("The Highest element (max) is higher then the set limit:" +
-                  std::to_string(HIGHEST_ELEMENT_COUNTING));
-  }
+    if (retval.algo == "counting")
+    {
+        auto range = std::minmax_element(retval.values.begin(), retval.values.end());
+        if (*range.second > HIGHEST_ELEMENT_COUNTING)
+            throw excep("The Highest element (max) is higher then the set limit:" +
+                        std::to_string(HIGHEST_ELEMENT_COUNTING));
+    }
 
-  return retval;
+    return retval;
 }

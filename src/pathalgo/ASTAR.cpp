@@ -22,135 +22,140 @@
 #include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
 #include <cmath>
-#include <nlohmann/json.hpp>
 #include <limits>
+#include <nlohmann/json.hpp>
 #include <queue>
 #include <utility>
 #include <vector>
 
-struct Node {
-  int g = 0;
-  int h = 0;
-  int x = 0;
-  int y = 0;
-  int f() const {
-    if (g > INFINITY_INT-h)
-      {return INFINITY_INT;}
-    else
+struct Node
+{
+    int g = 0;
+    int h = 0;
+    int x = 0;
+    int y = 0;
+    int f() const
     {
-      return g + h;
+        if (g > INFINITY_INT - h)
+        {
+            return INFINITY_INT;
+        }
+        else
+        {
+            return g + h;
+        }
     }
-  }
 };
 
-struct CompareNode { // this is needed for priority queue
-  bool operator()(const Node &a, const Node &b) const { return a.f() > b.f(); }
+struct CompareNode
+{ // this is needed for priority queue
+    bool operator()(const Node &a, const Node &b) const
+    {
+        return a.f() > b.f();
+    }
 };
 // A* is similar to djkstra, only that is uses a diffrent priority queue, with
 // f(n)=g(n)+h(n) where g(n) is the cost from start to node n (same as djkstra)
 // but also h(n) estimated cost from node n to goal (manhatten distance)
-std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
-                                       std::pair<int, int> start,
-                                       std::pair<int, int> goal,
-                                       json &response) {
-  const int rows = map.size();
-  const int collums = map[0].size();
+std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
+                                       std::pair<int, int> goal, json &response)
+{
+    const int rows = map.size();
+    const int collums = map[0].size();
 
-  int h = 0;
+    int h = 0;
 
-  std::vector<std::vector<int>> distance(
-      rows,
-      std::vector<int>(
-          collums, INFINITY_INT)); // i dont think i'll ever unstand this contructor
-  std::vector<std::vector<std::pair<int, int>>> parent(
-      rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
-  std::vector<std::pair<int, int>> path;
+    std::vector<std::vector<int>> distance(
+        rows, std::vector<int>(collums, INFINITY_INT)); // i dont think i'll ever unstand this contructor
+    std::vector<std::vector<std::pair<int, int>>> parent(rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
+    std::vector<std::pair<int, int>> path;
 
-  std::priority_queue<Node, std::vector<Node>, CompareNode> frontier;
+    std::priority_queue<Node, std::vector<Node>, CompareNode> frontier;
 
-  distance[start.second][start.first] = 0;
+    distance[start.second][start.first] = 0;
 
-  // push the start into the frontier, because its the lowest distance and also
-  // the only element it will be the first element
-  frontier.push({0,
-                 std::abs(start.first - goal.first) +
-                     std::abs(start.second - goal.second),
-                 start.second, start.first});
+    // push the start into the frontier, because its the lowest distance and also
+    // the only element it will be the first element
+    frontier.push(
+        {0, std::abs(start.first - goal.first) + std::abs(start.second - goal.second), start.second, start.first});
 
-  std::vector<int> directionsRows = {-1, 1, 0, 0};
-  std::vector<int> directionsCollums = {0, 0, 1, -1};
+    std::vector<int> directionsRows = {-1, 1, 0, 0};
+    std::vector<int> directionsCollums = {0, 0, 1, -1};
 
-  while (!frontier.empty()) {
-    // extract info from the first frontier element
-    int currentDistance = frontier.top().g;
-    int y = frontier.top().y;
-    int x = frontier.top().x;
+    while (!frontier.empty())
+    {
+        // extract info from the first frontier element
+        int currentDistance = frontier.top().g;
+        int y = frontier.top().y;
+        int x = frontier.top().x;
 
-    // because the info fron the first frontier element is now stored in the
-    // above declared variables, we can delete the first element from frontier
-    frontier.pop();
+        // because the info fron the first frontier element is now stored in the
+        // above declared variables, we can delete the first element from frontier
+        frontier.pop();
 
-    if (currentDistance != distance[y][x])
-      continue; // already discovered
+        if (currentDistance != distance[y][x])
+            continue; // already discovered
 
-    if (std::make_pair(x, y) == goal)
-      break; // finished, goal discovered
+        if (std::make_pair(x, y) == goal)
+            break; // finished, goal discovered
 
-    // check all neighbours
-    for (int i = 0; i < 4; i++) {
-      int yNeighbour = y + directionsRows[i];
-      int xNeighbour = x + directionsCollums[i];
+        // check all neighbours
+        for (int i = 0; i < 4; i++)
+        {
+            int yNeighbour = y + directionsRows[i];
+            int xNeighbour = x + directionsCollums[i];
 
-      if (yNeighbour < 0 || yNeighbour > rows - 1 || xNeighbour < 0 ||
-          xNeighbour > collums - 1)
-        continue; // current neighboor out of map, skip this iteration
+            if (yNeighbour < 0 || yNeighbour > rows - 1 || xNeighbour < 0 || xNeighbour > collums - 1)
+                continue; // current neighboor out of map, skip this iteration
 
-      if (map[yNeighbour][xNeighbour] == -1)
-        continue; // this tile is blocked, skip
+            if (map[yNeighbour][xNeighbour] == -1)
+                continue; // this tile is blocked, skip
 
-      int newDistance = currentDistance + map[yNeighbour][xNeighbour];
+            int newDistance = currentDistance + map[yNeighbour][xNeighbour];
 
-      // is the current path to this tile cheaper then the already known path
-      // from start to goal?
-      if (newDistance < distance[yNeighbour][xNeighbour]) {
-        // yes, save all info about the new tile and add it to frontier to be
-        // explored next
-        distance[yNeighbour][xNeighbour] = newDistance;
-        parent[yNeighbour][xNeighbour] = {y, x};
-        h = std::abs(xNeighbour - goal.first) +
-            std::abs(yNeighbour - goal.second);
-        frontier.push({newDistance, h, xNeighbour, yNeighbour});
-      }
+            // is the current path to this tile cheaper then the already known path
+            // from start to goal?
+            if (newDistance < distance[yNeighbour][xNeighbour])
+            {
+                // yes, save all info about the new tile and add it to frontier to be
+                // explored next
+                distance[yNeighbour][xNeighbour] = newDistance;
+                parent[yNeighbour][xNeighbour] = {y, x};
+                h = std::abs(xNeighbour - goal.first) + std::abs(yNeighbour - goal.second);
+                frontier.push({newDistance, h, xNeighbour, yNeighbour});
+            }
+        }
     }
-  }
 
-  // Explored all possible tiles
+    // Explored all possible tiles
 
-  response["DISTANCE"] = swapVisitedArray(distance);
+    response["DISTANCE"] = swapVisitedArray(distance);
 
-  // checking if the goal was ever reached, be careful this could theoretically
-  // be a false positive if the addition of tiles matches exatly the intmax, but
-  // the likelyhood is very small
-  if (distance[goal.second][goal.first] == INFINITY_INT)
-    return {};
+    // checking if the goal was ever reached, be careful this could theoretically
+    // be a false positive if the addition of tiles matches exatly the intmax, but
+    // the likelyhood is very small
+    if (distance[goal.second][goal.first] == INFINITY_INT)
+        return {};
 
-  // copy paste from BFS, same logic
-  std::pair<int, int> current = {goal.second, goal.first};
+    // copy paste from BFS, same logic
+    std::pair<int, int> current = {goal.second, goal.first};
 
-  while (current != std::make_pair(start.second, start.first)) {
-    path.push_back(current);
-    current = parent[current.first][current.second];
-  }
+    while (current != std::make_pair(start.second, start.first))
+    {
+        path.push_back(current);
+        current = parent[current.first][current.second];
+    }
 
-  // push back start pour fini
-  path.push_back({start.second, start.first});
+    // push back start pour fini
+    path.push_back({start.second, start.first});
 
-  // due to starting with goal, the path must be reversed to start from start
-  std::reverse(path.begin(), path.end());
+    // due to starting with goal, the path must be reversed to start from start
+    std::reverse(path.begin(), path.end());
 
-  for (int i = 0; i < path.size(); i++) {
-    std::swap(path[i].first, path[i].second);
-  }
+    for (int i = 0; i < path.size(); i++)
+    {
+        std::swap(path[i].first, path[i].second);
+    }
 
-  return path;
+    return path;
 }

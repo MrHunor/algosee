@@ -25,16 +25,18 @@
 #include <random>
 #include <vector>
 
-void randomise(std::vector<int> &vec) {
-  static std::random_device rd;
-  static std::mt19937 gen(rd());
+void randomise(std::vector<int> &vec)
+{
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
 
-  std::shuffle(vec.begin(), vec.end(), gen);
+    std::shuffle(vec.begin(), vec.end(), gen);
 }
 
-void randomise(indexPixel &vec) {
-  static std::random_device rd;
-  static std::mt19937 gen(rd());
+void randomise(indexPixel &vec)
+{
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
 
-  std::shuffle(vec.begin(), vec.end(), gen);
+    std::shuffle(vec.begin(), vec.end(), gen);
 }

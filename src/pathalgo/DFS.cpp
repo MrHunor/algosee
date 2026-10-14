@@ -28,86 +28,85 @@
 // you can just copy the BFS and change the logic which takes the frontier
 // element from "first of queue" to "last added" and boom you have DFS (and
 // replace queue with stack)
-std::vector<std::pair<int, int>>
-DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
-                 std::pair<int, int> goal, json& response) {
-  // Frontier means what is it going to explore next, hence it being a queue
+std::vector<std::pair<int, int>> DepthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
+                                                  std::pair<int, int> goal, json &response)
+{
+    // Frontier means what is it going to explore next, hence it being a queue
 
-  int iteration = 0;
-  const int rows = map.size();
-  const int collums = map[0].size();
+    int iteration = 0;
+    const int rows = map.size();
+    const int collums = map[0].size();
 
-  std::vector<std::vector<int>> visited(
-      rows, std::vector<int>(collums, -1)); // weird ass constructor
-  std::vector<std::vector<std::pair<int, int>>> parent(
-      rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
-  std::vector<std::pair<int, int>> path;
+    std::vector<std::vector<int>> visited(rows, std::vector<int>(collums, -1)); // weird ass constructor
+    std::vector<std::vector<std::pair<int, int>>> parent(rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
+    std::vector<std::pair<int, int>> path;
 
-  std::stack<std::pair<int, int>> frontier;
-  frontier.push({start.second, start.first});
-  visited[start.second][start.first] = 0;
+    std::stack<std::pair<int, int>> frontier;
+    frontier.push({start.second, start.first});
+    visited[start.second][start.first] = 0;
 
-  std::vector<int> directionsRows = {-1, 1, 0, 0};
-  std::vector<int> directionsCollums = {0, 0, 1, -1};
+    std::vector<int> directionsRows = {-1, 1, 0, 0};
+    std::vector<int> directionsCollums = {0, 0, 1, -1};
 
-  while (!frontier.empty()) {
-    int y = frontier.top().first;
-    int x = frontier.top().second;
-    // because the first frontier element is now in x,y the first element of
-    // frontier can be deleted
-    frontier.pop();
-
-    if (std::make_pair(x, y) == goal)
-      break; // reached goal
-
-    for (int i = 0; i < 4; i++) // check all possible neighbors
+    while (!frontier.empty())
     {
-      int yNeighbour = y + directionsRows[i];
-      int xNeighbour = x + directionsCollums[i];
+        int y = frontier.top().first;
+        int x = frontier.top().second;
+        // because the first frontier element is now in x,y the first element of
+        // frontier can be deleted
+        frontier.pop();
 
-      if (yNeighbour < 0 || yNeighbour > rows - 1 || xNeighbour < 0 ||
-          xNeighbour > collums - 1)
-        continue; // current neighboor out of map, skip this iteration
+        if (std::make_pair(x, y) == goal)
+            break; // reached goal
 
-      if (map[yNeighbour][xNeighbour] == true)
-        continue; // current Neighboor not a valid tile, skip
+        for (int i = 0; i < 4; i++) // check all possible neighbors
+        {
+            int yNeighbour = y + directionsRows[i];
+            int xNeighbour = x + directionsCollums[i];
 
-      if (visited[yNeighbour][xNeighbour] != -1)
-        continue; // been there done that, so skip
+            if (yNeighbour < 0 || yNeighbour > rows - 1 || xNeighbour < 0 || xNeighbour > collums - 1)
+                continue; // current neighboor out of map, skip this iteration
 
-      // if everything thus far was negative that means we have a valid
-      // unvisited tile
-      visited[yNeighbour][xNeighbour] = iteration;
-      parent[yNeighbour][xNeighbour] = {y, x};
-      frontier.push({yNeighbour, xNeighbour});
+            if (map[yNeighbour][xNeighbour] == true)
+                continue; // current Neighboor not a valid tile, skip
+
+            if (visited[yNeighbour][xNeighbour] != -1)
+                continue; // been there done that, so skip
+
+            // if everything thus far was negative that means we have a valid
+            // unvisited tile
+            visited[yNeighbour][xNeighbour] = iteration;
+            parent[yNeighbour][xNeighbour] = {y, x};
+            frontier.push({yNeighbour, xNeighbour});
+        }
+        iteration++;
     }
-    iteration++;
-  }
-  // being out of the while loop means every possible tile was explored
+    // being out of the while loop means every possible tile was explored
 
-  response["VISITED"] = swapVisitedArray(visited);
-  
+    response["VISITED"] = swapVisitedArray(visited);
 
-  if (visited[goal.second][goal.first]==-1)
-    return {}; // never once reached the goal means there was no path found to
-               // the goal
+    if (visited[goal.second][goal.first] == -1)
+        return {}; // never once reached the goal means there was no path found to
+                   // the goal
 
-  // retrace the steps via parent
-  std::pair<int, int> current = {goal.second, goal.first};
+    // retrace the steps via parent
+    std::pair<int, int> current = {goal.second, goal.first};
 
-  while (current != std::make_pair(start.second, start.first)) {
-    path.push_back(current);
-    current = parent[current.first][current.second];
-  }
+    while (current != std::make_pair(start.second, start.first))
+    {
+        path.push_back(current);
+        current = parent[current.first][current.second];
+    }
 
-  // push back start pour fini
-  path.push_back({start.second, start.first});
+    // push back start pour fini
+    path.push_back({start.second, start.first});
 
-  // due to starting with goal, the path must be reversed to start from start
-  std::reverse(path.begin(), path.end());
+    // due to starting with goal, the path must be reversed to start from start
+    std::reverse(path.begin(), path.end());
 
-  for (int i = 0; i < path.size(); i++) {
-    std::swap(path[i].first, path[i].second);
-  }
-  return path;
+    for (int i = 0; i < path.size(); i++)
+    {
+        std::swap(path[i].first, path[i].second);
+    }
+    return path;
 }

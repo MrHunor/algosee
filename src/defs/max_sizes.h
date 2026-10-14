@@ -21,9 +21,9 @@
 #ifndef DEF_MAX_SIZES_H
 #define DEF_MAX_SIZES_H
 
-#define MAX_ELEMENT_COUNT_SORT                                                 \
-  2500 // you could customise this for every algo, but thats a future issue
-       // (Issue #38)
+#define MAX_ELEMENT_COUNT_SORT                                                                                         \
+    2500 // you could customise this for every algo, but thats a future issue
+         // (Issue #38)
 
 #define MAX_ELEMENT_COUNT_SELECTION MAX_ELEMENT_COUNT_SORT
 #define MAX_ELEMENT_COUNT_BOGO 9
@@ -40,7 +40,6 @@
 #define MAX_ELEMENT_COUNT_DFS MAX_ELEMENT_COUNT_PATH
 #define MAX_ELEMENT_COUNT_BIBFS MAX_ELEMENT_COUNT_PATH
 #define MAX_ELEMENT_COUNT_ASTAR MAX_ELEMENT_COUNT_PATH
-
 
 #define MAX_PIXEL_COUNT_IMAGE 2500
 

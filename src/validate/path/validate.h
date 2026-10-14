@@ -22,14 +22,15 @@
 #include "../../logger/logger.h"
 #include <httplib/httplib.h>
 
-struct PathValidReturn {
-  std::string algo;
+struct PathValidReturn
+{
+    std::string algo;
 
-  std::vector<std::vector<int>> mapInt;
-  std::vector<std::vector<bool>> mapBool;
+    std::vector<std::vector<int>> mapInt;
+    std::vector<std::vector<bool>> mapBool;
 
-  std::pair<int, int> start;
-  std::pair<int, int> goal;
+    std::pair<int, int> start;
+    std::pair<int, int> goal;
 };
 
 PathValidReturn validatePath(const httplib::Request &req, stateClass &state);

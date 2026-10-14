@@ -19,13 +19,13 @@
  */
 #ifndef UTILS_IMAGE_H
 #define UTILS_IMAGE_H
-#include "../../logger/logger.h"
 #include "../../defs/types.h"
+#include "../../logger/logger.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <stb_image.h>
 
-void shuffleImage(image& img);
+void shuffleImage(image &img);
 image loadImage(const httplib::Request &req, const stateClass &state);
 json indexPixelArrToJson(const indexPixel &arr);
 #endif
