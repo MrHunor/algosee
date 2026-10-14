@@ -36,11 +36,11 @@ void countingSort(std::vector<int> &unsorted, json &response);
 void cycleSort(std::vector<int> &unsorted, json &response);
 
 //-------------------IMAGES------------------------------------
-void selectionSort(indexPixel& unsorted, json &response);
-void bogoSort(indexPixel& unsorted, json &response);
-void bubbleSort(indexPixel& unsorted, json &response);
-void quickSort(indexPixel& unsorted, int low, int high, json &response);
-void countingSort(indexPixel& unsorted, json &response);
-void cycleSort(indexPixel& unsorted, json &response);
-void mergeSort(indexPixel& unsorted, json &response);
+void selectionSort(indexPixel &unsorted, json &response);
+void bogoSort(indexPixel &unsorted, json &response);
+void bubbleSort(indexPixel &unsorted, json &response);
+void quickSort(indexPixel &unsorted, int low, int high, json &response);
+void countingSort(indexPixel &unsorted, json &response);
+void cycleSort(indexPixel &unsorted, json &response);
+void mergeSort(indexPixel &unsorted, json &response);
 #endif

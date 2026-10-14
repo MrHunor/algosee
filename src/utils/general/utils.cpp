@@ -22,7 +22,6 @@
 #include "../../defs/general.h"
 #include "../../defs/ratelimits.h"
 #include "../../defs/types.h"
-#include <algorithm>
 #include <chrono>
 #include <cstdlib>
 #include <httplib.h>
@@ -38,112 +37,123 @@
 #include <unistd.h>
 #include <vector>
 
-std::vector<char> randomStringDataset{
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+std::vector<char> randomStringDataset{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+                                      'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
+                                      'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+                                      'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
+int randomInt(int lower, int upper)
+{
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(lower, upper);
 
-int randomInt(int lower, int upper) {
-  static std::random_device rd;
-  static std::mt19937 gen(rd());
-  std::uniform_int_distribution<int> dist(lower, upper);
-
-  return dist(gen);
+    return dist(gen);
 }
 
-std::string generateRandomString(const int &size) {
-  std::string retval;
-  for (int i = 0; i < size; i++) {
-    retval += randomStringDataset[randomInt(0, randomStringDataset.size()-1)];
-  }
-  return retval;
-}
-
-bool checkRateLimit(const clientListType& cList, const int& index) {
-  std::string targetIP = cList[index].second;
-  int matchingEntrysCount = 0;
-  for (const auto &element : cList) {
-    if (element.second == targetIP &&
-        element.first > std::chrono::system_clock::now() -
-                            std::chrono::minutes(RATE_LIMIT_INTERVALL_MIN)) {
-      matchingEntrysCount++;
+std::string generateRandomString(const int &size)
+{
+    std::string retval;
+    for (int i = 0; i < size; i++)
+    {
+        retval += randomStringDataset[randomInt(0, randomStringDataset.size() - 1)];
     }
-  }
-  if (matchingEntrysCount >= RATE_LIMIT_COUNT) {
-    return true;
-  }
-  return false;
+    return retval;
 }
 
-void addClient(
-    clientListType &cList,
-    const std::pair<std::chrono::time_point<std::chrono::system_clock>,
-                    std::string> &newEntry) {
-  if (!cList.empty() &&
-      std::chrono::system_clock::now() >
-          cList[0].first + std::chrono::hours(
-                               1)) // first entry is older then an hour, delete
-  {
-    cList.erase(cList.begin());
-  }
-  cList.push_back(newEntry);
+bool checkRateLimit(const clientListType &cList, const int &index)
+{
+    std::string targetIP = cList[index].second;
+    int matchingEntrysCount = 0;
+    for (const auto &element : cList)
+    {
+        if (element.second == targetIP &&
+            element.first > std::chrono::system_clock::now() - std::chrono::minutes(RATE_LIMIT_INTERVALL_MIN))
+        {
+            matchingEntrysCount++;
+        }
+    }
+    if (matchingEntrysCount >= RATE_LIMIT_COUNT)
+    {
+        return true;
+    }
+    return false;
 }
 
-std::string executeCommand(const std::string &command) {
-  int exitCode;
-  FILE *pipe = popen(command.c_str(), "r");
-  if (!pipe)
-    InvalidInputMessage("Failed to open Pipe for executing command:" + command);
-
-  char buffer[256];
-  std::string result;
-
-  while (fgets(buffer, sizeof(buffer),
-               pipe)) // this works because fgets returns a pointer to the data,
-                      // and if no data is available it return nullptr
-  {
-    result += buffer;
-  }
-
-  // i know the reference exit code is kinda ugly but the other option would be
-  // to return an pair or struct which would require a lot of work and im lazy
-  int status = pclose(pipe);
-  exitCode = -1;
-  if (WIFEXITED(status)) {
-    exitCode = WEXITSTATUS(status);
-  }
-  if (exitCode != 0)
-    InvalidInputMessage("Shell Command:'" + command + "' has failed.");
-  return result;
+void addClient(clientListType &cList,
+               const std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string> &newEntry)
+{
+    int index = 0;
+    auto now = std::chrono::system_clock::now();
+    if (!cList.empty())
+    {
+        for (const auto &element : cList)
+        {
+            if (now > element.first + std::chrono::hours(1))
+                index++; // current viewing entry older then one hour, move counter up
+        }
+    }
+    for (int i = 0; i < index; i++)
+    {
+        cList.erase(cList.begin()); // delete all entrys older then an hour
+    }
+    cList.push_back(newEntry);
 }
 
-void returnFailedAnswer(httplib::Response &res, const std::string &Details,
-                        int exitCode) {
+std::string executeCommand(const std::string &command)
+{
+    int exitCode;
+    FILE *pipe = popen(command.c_str(), "r");
+    if (!pipe)
+        InvalidInputMessage("Failed to open Pipe for executing command:" + command);
 
-  std::cout << "returnFailedAnswer called:" + Details
-            << "; Code:" + std::to_string(exitCode) << std::endl;
-  res.status = exitCode;
-  res.set_header("Access-Control-Allow-Origin", "*");
-  res.set_content(json(Details), "application/json");
+    char buffer[256];
+    std::string result;
+
+    while (fgets(buffer, sizeof(buffer),
+                 pipe)) // this works because fgets returns a pointer to the data,
+                        // and if no data is available it return nullptr
+    {
+        result += buffer;
+    }
+
+    // i know the reference exit code is kinda ugly but the other option would be
+    // to return an pair or struct which would require a lot of work and im lazy
+    int status = pclose(pipe);
+    exitCode = -1;
+    if (WIFEXITED(status))
+    {
+        exitCode = WEXITSTATUS(status);
+    }
+    if (exitCode != 0)
+        InvalidInputMessage("Shell Command:'" + command + "' has failed.");
+    return result;
 }
 
-void InvalidInputMessage(const std::string &details,
-                         std::source_location location) {
-  // yes i thought of making this state out for colour but that would require
-  // passing state (which is not always present), or make state global which is
-  // not pretty
-  auto now = std::chrono::system_clock::now();
-  std::cout << "TIME:" << now << std::endl;
-  std::cout << std::stacktrace::current() << std::endl;
-  std::cout << "Filename:" << location.file_name() << std::endl;
-  std::cout << "Function:" << location.function_name() << std::endl;
-  std::cout << "Line:" << location.line() << std::endl;
-  std::cout << "Column:" << location.column() << std::endl;
-  if (!details.empty()) {
-    std::cout << "Details provided:" << details << std::endl;
-  }
-  exit(1);
+void returnFailedAnswer(httplib::Response &res, const std::string &Details, int exitCode)
+{
+
+    std::cout << "returnFailedAnswer called:" + Details << "; Code:" + std::to_string(exitCode) << std::endl;
+    res.status = exitCode;
+    res.set_header("Access-Control-Allow-Origin", "*");
+    res.set_content(json(Details), "application/json");
+}
+
+void InvalidInputMessage(const std::string &details, std::source_location location)
+{
+    // yes i thought of making this state out for colour but that would require
+    // passing state (which is not always present), or make state global which is
+    // not pretty
+    auto now = std::chrono::system_clock::now();
+    std::cout << "TIME:" << now << std::endl;
+    std::cout << std::stacktrace::current() << std::endl;
+    std::cout << "Filename:" << location.file_name() << std::endl;
+    std::cout << "Function:" << location.function_name() << std::endl;
+    std::cout << "Line:" << location.line() << std::endl;
+    std::cout << "Column:" << location.column() << std::endl;
+    if (!details.empty())
+    {
+        std::cout << "Details provided:" << details << std::endl;
+    }
+    exit(1);
 }

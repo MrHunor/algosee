@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
  #   algosee; A algorithm visulizer
  #   Copyright (C) 2026  MrHunor, siryanni (as equals)
  #   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
@@ -15,8 +15,7 @@
  #
  #   You should have received a copy of the GNU General Public License
  #   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
-set -eu
-set -x
+set -euxo pipefail
 
 rm -rf build
 conan install . --output-folder=build --build=missing -s build_type=Debug

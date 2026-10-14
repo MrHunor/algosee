@@ -28,65 +28,70 @@
 
 // caution, you have to pass the vector as a reference here because the vector
 // is being modified
-int findQuickSortPivot(std::vector<int> &unsorted, int low, int high,
-                       json &response) {
-  int index;
-  int pivot = unsorted[high];
-  int lowerPivotIndexBoundry = low - 1;
-  for (int i = low; i < high; i++) {
-    if (unsorted[i] < pivot) {
-      lowerPivotIndexBoundry++;
-      std::swap(unsorted[i], unsorted[lowerPivotIndexBoundry]);
-      response["MOVES"].push_back({i, lowerPivotIndexBoundry});
+int findQuickSortPivot(std::vector<int> &unsorted, int low, int high, json &response)
+{
+    int index;
+    int pivot = unsorted[high];
+    int lowerPivotIndexBoundry = low - 1;
+    for (int i = low; i < high; i++)
+    {
+        if (unsorted[i] < pivot)
+        {
+            lowerPivotIndexBoundry++;
+            std::swap(unsorted[i], unsorted[lowerPivotIndexBoundry]);
+            response["MOVES"].push_back({i, lowerPivotIndexBoundry});
+        }
     }
-  }
-  // move pivot to correct pos;
-  std::swap(unsorted[high], unsorted[lowerPivotIndexBoundry + 1]);
-  response["MOVES"].push_back({high, lowerPivotIndexBoundry + 1});
-  return lowerPivotIndexBoundry + 1;
+    // move pivot to correct pos;
+    std::swap(unsorted[high], unsorted[lowerPivotIndexBoundry + 1]);
+    response["MOVES"].push_back({high, lowerPivotIndexBoundry + 1});
+    return lowerPivotIndexBoundry + 1;
 }
 
-void quickSort(std::vector<int> &unsorted, int low, int high, json &response) {
-  if (low < high) // otherwise already sorted
-  {
-    int pivot = findQuickSortPivot(unsorted, low, high, response);
+void quickSort(std::vector<int> &unsorted, int low, int high, json &response)
+{
+    if (low < high) // otherwise already sorted
+    {
+        int pivot = findQuickSortPivot(unsorted, low, high, response);
 
-    quickSort(unsorted, low, pivot - 1, response); // sort left side recursivly
-    quickSort(unsorted, pivot + 1, high,
-              response); // sort right side recursivly
-  }
+        quickSort(unsorted, low, pivot - 1, response); // sort left side recursivly
+        quickSort(unsorted, pivot + 1, high,
+                  response); // sort right side recursivly
+    }
 }
 
 //-----------------------IMAGE-----------------------------
 
-
 // caution, you have to pass the vector as a reference here because the vector
 // is being modified
-int findQuickSortPivot(indexPixel& unsorted, int low, int high,
-                       json &response) {
-  int index;
-  int pivot = unsorted[high].first;
-  int lowerPivotIndexBoundry = low - 1;
-  for (int i = low; i < high; i++) {
-    if (unsorted[i].first < pivot) {
-      lowerPivotIndexBoundry++;
-      std::swap(unsorted[i], unsorted[lowerPivotIndexBoundry]);
-      response["MOVES"].push_back({i, lowerPivotIndexBoundry});
+int findQuickSortPivot(indexPixel &unsorted, int low, int high, json &response)
+{
+    int index;
+    int pivot = unsorted[high].first;
+    int lowerPivotIndexBoundry = low - 1;
+    for (int i = low; i < high; i++)
+    {
+        if (unsorted[i].first < pivot)
+        {
+            lowerPivotIndexBoundry++;
+            std::swap(unsorted[i], unsorted[lowerPivotIndexBoundry]);
+            response["MOVES"].push_back({i, lowerPivotIndexBoundry});
+        }
     }
-  }
-  // move pivot to correct pos;
-  std::swap(unsorted[high], unsorted[lowerPivotIndexBoundry + 1]);
-  response["MOVES"].push_back({high, lowerPivotIndexBoundry + 1});
-  return lowerPivotIndexBoundry + 1;
+    // move pivot to correct pos;
+    std::swap(unsorted[high], unsorted[lowerPivotIndexBoundry + 1]);
+    response["MOVES"].push_back({high, lowerPivotIndexBoundry + 1});
+    return lowerPivotIndexBoundry + 1;
 }
 
-void quickSort(indexPixel& unsorted, int low, int high, json &response) {
-  if (low < high) // otherwise already sorted
-  {
-    int pivot = findQuickSortPivot(unsorted, low, high, response);
+void quickSort(indexPixel &unsorted, int low, int high, json &response)
+{
+    if (low < high) // otherwise already sorted
+    {
+        int pivot = findQuickSortPivot(unsorted, low, high, response);
 
-    quickSort(unsorted, low, pivot - 1, response); // sort left side recursivly
-    quickSort(unsorted, pivot + 1, high,
-              response); // sort right side recursivly
-  }
+        quickSort(unsorted, low, pivot - 1, response); // sort left side recursivly
+        quickSort(unsorted, pivot + 1, high,
+                  response); // sort right side recursivly
+    }
 }

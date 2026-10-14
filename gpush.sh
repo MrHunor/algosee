@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
  #   algosee; A algorithm visulizer
  #   Copyright (C) 2026  MrHunor, siryanni (as equals)
  #   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
@@ -14,12 +15,28 @@
  #
  #   You should have received a copy of the GNU General Public License
  #   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
-#!/bin/bash
+set -euxo pipefail
 #This script is here, cuz I am lazy af :D
 if [ -z "$1" ]; then
-    echo "Fehler: Bitte gib eine Commit-Nachricht an."
-    echo "Nutzung: ./gpush.sh \"deine nachricht\""
+    echo "Error: Please specify a commit message."
+    echo "Usage: ./gpush.sh \"commit message\""
     exit 1
 fi
 
-git add . && git commit -m "$1" && git pull --rebase && git push
+echo "Frommating /src..."
+cd src 
+find . -type f \( -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.c' \) \
+    -exec clang-format -i {} +
+cd ..
+echo "Testing backend using testclient"
+./rebuildLinuxDebug.sh
+cd build 
+./algosee & 
+algosee_pid=$! # set PID so you can kill later
+trap 'kill "$algosee_pid" 2>/dev/null || true' EXIT #im gonna be honest i dont know how this trap logic syntax works this is from copilot
+./algosee_testclient
+kill "$algosee_pid"
+trap - EXIT
+cd ..
+echo "Creating commit named "$1" and pushing to github"
+git add . && git commit -m "$1" && git pull origin development --rebase && git push origin development

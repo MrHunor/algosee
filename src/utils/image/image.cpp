@@ -38,81 +38,84 @@
 #include <stdexcept>
 #include <vector>
 
-json indexPixelArrToJson(const indexPixel &arr) {
-  json jarr = json::array();
-  for (const auto &element : arr) {
-    jarr.push_back(
-        json::array({element.first, element.second.R, element.second.G,
-                     element.second.B, element.second.A}));
-  }
-  return jarr;
+json indexPixelArrToJson(const indexPixel &arr)
+{
+    json jarr = json::array();
+    for (const auto &element : arr)
+    {
+        jarr.push_back(
+            json::array({element.first, element.second.R, element.second.G, element.second.B, element.second.A}));
+    }
+    return jarr;
 }
 
-image loadImage(const httplib::Request &req, const stateClass &state) {
-  
-  // read image from body to file
-  if (!req.form.has_file("image"))
-    throw excep("Request does not contain a 'image' file.");
+image loadImage(const httplib::Request &req, const stateClass &state)
+{
 
-  const auto &image = req.form.get_file("image");
+    // read image from body to file
+    if (!req.form.has_file("image"))
+        throw excep("Request does not contain a 'image' file.");
 
-  std::string filename=generateRandomString(FILENAME_MAX_SIZE-4)+".png";
-  std::ofstream file(filename.c_str(), std::ios::binary);
-  file.write(image.content.data(), image.content.size());
-  file.close();
+    const auto &image = req.form.get_file("image");
 
-  // read file to memory
-  int width = 0;
-  int height = 0;
-  int channels = 0;
+    // read file to memory
+    int width = 0;
+    int height = 0;
+    int channels = 0;
 
-  stbi_info(filename.c_str(),&width,&height,nullptr);
-  if(width*height>MAX_PIXEL_COUNT_IMAGE)throw excep("Image contains too many pixels. Max pixels:"+std::to_string(MAX_PIXEL_COUNT_IMAGE));
+    if (stbi_info_from_memory(reinterpret_cast<const stbi_uc *>(image.content.data()), image.content.size(), &width,
+                              &height, nullptr) != true)
+        throw excep("Failed to read Metadata from image.");
+    if (width < 1 || height < 1)
+        throw excep("The provided image has invalid dimensions.");
+    if (width * height > MAX_PIXEL_COUNT_IMAGE)
+        throw excep("Image contains too many pixels. Max pixels:" + std::to_string(MAX_PIXEL_COUNT_IMAGE));
 
-  colour *data =
-      stbi_load(filename.c_str(), &width, &height, &channels,
-                4); // the 4 FORCES RGBA (might lead to issues later on)
+    colour *data = stbi_load_from_memory(reinterpret_cast<const stbi_uc *>(image.content.data()), image.content.size(),
+                                         &width, &height, &channels, 4);
 
-  remove(filename.c_str());
-  if (!data)
-    throw excep("Failed to read saved image into memory.");
+    if (!data)
+        throw excep("Failed to read saved image into memory.");
 
-  // copy to vector
-  std::vector<colour> colours(data, data + (width * height * 4));
+    // copy to vector
+    std::vector<colour> colours(data, data + (width * height * 4));
 
-  stbi_image_free(data);
+    stbi_image_free(data);
 
-  // copy to pixel vector
-  std::vector<pixel> pixels;
-  pixels.reserve(colours.size() / 4);
-  pixel currentPixel;
-  for (int i = 0; i < colours.size(); i = i + 4) {
-    currentPixel.R = colours[i + 0];
-    currentPixel.G = colours[i + 1];
-    currentPixel.B = colours[i + 2];
-    currentPixel.A = colours[i + 3];
-    pixels.push_back(currentPixel);
-  }
+    // copy to pixel vector
+    std::vector<pixel> pixels;
+    pixels.reserve(colours.size() / 4);
+    pixel currentPixel;
+    for (int i = 0; i < colours.size(); i = i + 4)
+    {
+        currentPixel.R = colours[i + 0];
+        currentPixel.G = colours[i + 1];
+        currentPixel.B = colours[i + 2];
+        currentPixel.A = colours[i + 3];
+        pixels.push_back(currentPixel);
+    }
 
-  // add index Data
-  indexPixel indexPixeldata;
-  indexPixeldata.reserve(pixels.size());
-  for (int i = 0; i < pixels.size(); i++) {
-    indexPixeldata.push_back({i, pixels[i]});
-  }
+    // add index Data
+    indexPixel indexPixeldata;
+    indexPixeldata.reserve(pixels.size());
+    for (int i = 0; i < pixels.size(); i++)
+    {
+        indexPixeldata.push_back({i, pixels[i]});
+    }
 
-  // add everthing up to a image struct
-  struct image retval;
-  retval.width = width;
-  retval.height = height;
-  retval.data = indexPixeldata;
+    // add everthing up to a image struct
+    struct image retval;
+    retval.width = width;
+    retval.height = height;
+    retval.data = indexPixeldata;
 
-  return retval;
+    return retval;
 }
 
-void shuffleImage(image &img) {
-  std::random_device rd;
-  std::mt19937 g(rd());
+void shuffleImage(image &img)
+{
+    std::random_device rd;
+    std::mt19937 g(rd());
 
-  std::shuffle(img.data.begin(), img.data.end(), g);
+    std::shuffle(img.data.begin(), img.data.end(), g);
 }

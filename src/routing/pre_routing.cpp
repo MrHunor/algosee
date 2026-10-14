@@ -25,43 +25,45 @@
 #include <mutex>
 #include <nlohmann/json.hpp>
 
-httplib::Server::HandlerResponse
-runPreflightHandler(const httplib::Request &req, httplib::Response &res,
-                    stateClass &state, clientListType &clientList,
-                    std::mutex &clientListMutex) {
-  std::string ip;
-  if (req.has_header("X-Forwarded-For")) {
-    std::string forwarded = req.get_header_value("X-Forwarded-For");
-    auto it = forwarded.rfind(',');
-    if (it != std::string::npos) {
-      forwarded.erase(forwarded.begin(), forwarded.begin() +it+1);
+httplib::Server::HandlerResponse runPreflightHandler(const httplib::Request &req, httplib::Response &res,
+                                                     stateClass &state, clientListType &clientList,
+                                                     std::mutex &clientListMutex)
+{
+
+    std::string ip;
+    if (req.has_header("X-Forwarded-For"))
+    {
+        std::string forwarded = req.get_header_value("X-Forwarded-For");
+        auto it = forwarded.rfind(',');
+        if (it != std::string::npos)
+        {
+            forwarded.erase(forwarded.begin(), forwarded.begin() + it + 1);
+        }
+        ip = forwarded;
     }
-    ip = forwarded;
-  } else {
-    ip = req.remote_addr;
-  }
+    else
+    {
+        ip = req.remote_addr;
+    }
+    state.out("Recived request from IP:" + ip, 0);
 
-  state.out("Recived Request:\nClientIP:" + ip + "\nTarget:" + req.target +
-                "\nBody:" + req.body,
-            0);
+    // prevent a data race
+    std::lock_guard<std::mutex> lock(clientListMutex);
+    addClient(clientList, {std::chrono::system_clock::now(), ip});
+    state.out("Added to Clientlist:", 0);
+    std::string output;
+    for (const auto &element : clientList)
+    {
+        output = "";
+        output = std::format("Clientlist Element: Time:{}; IP:{}", element.first, element.second);
+        state.out(output, 0);
+    }
 
-  // prevent a data race
-  std::lock_guard<std::mutex> lock(clientListMutex);
-  addClient(clientList, {std::chrono::system_clock::now(), ip});
-  state.out("Added to Clientlist:", 0);
-  std::string output;
-  for (const auto &element : clientList) {
-    output = "";
-    output = std::format("Clientlist Element: Time:{}; IP:{}", element.first,
-                         element.second);
-    state.out(output, 0);
-  }
-
-  if (checkRateLimit(clientList, clientList.size() - 1)) {
-    returnFailedAnswer(res, "You are being rate limited. Try again later.",
-                       429);
-    return httplib::Server::HandlerResponse::Handled;
-  }
-  // continue to normal handling
-  return httplib::Server::HandlerResponse::Unhandled;
+    if (checkRateLimit(clientList, clientList.size() - 1))
+    {
+        returnFailedAnswer(res, "You are being rate limited. Try again later.", 429);
+        return httplib::Server::HandlerResponse::Handled;
+    }
+    // continue to normal handling
+    return httplib::Server::HandlerResponse::Unhandled;
 }

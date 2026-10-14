@@ -20,9 +20,9 @@
  */
 #ifndef DEF_TESTCASES_H
 #define DEF_TESTCASES_H
-#include <vector>
-#include <string>
 #include "max_sizes.h"
+#include <string>
+#include <vector>
 const std::vector<std::pair<std::string, int>> testCasesSorting{
 
     {"selection", 5},
@@ -67,27 +67,22 @@ const std::vector<std::pair<std::string, int>> testCasesSorting{
     {"bogo", MAX_ELEMENT_COUNT_BOGO - 1},
 };
 
-const std::vector<std::pair<std::string, std::pair<int, int>>>
-    testCasesPathfinding{
-        {"BFS", {10, 5}},         {"BFS", {20, 5}},
-        {"BFS", {100, 45}},       {"BFS", {250, 150}},
-        {"BFS", {249, 249}},
+const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesPathfinding{
+    {"BFS", {10, 5}},         {"BFS", {20, 5}},         {"BFS", {100, 45}},
+    {"BFS", {250, 150}},      {"BFS", {249, 249}},
 
-        {"dijkstra", {10, 5}},    {"dijkstra", {20, 5}},
-        {"dijkstra", {100, 45}},  {"dijkstra", {250, 150}},
-        {"dijkstra", {249, 249}},
+    {"dijkstra", {10, 5}},    {"dijkstra", {20, 5}},    {"dijkstra", {100, 45}},
+    {"dijkstra", {250, 150}}, {"dijkstra", {249, 249}},
 
-        {"DFS", {10, 5}},         {"DFS", {20, 5}},
-        {"DFS", {100, 45}},       {"DFS", {250, 150}},
-        {"DFS", {249, 249}},
+    {"DFS", {10, 5}},         {"DFS", {20, 5}},         {"DFS", {100, 45}},
+    {"DFS", {250, 150}},      {"DFS", {249, 249}},
 
-        {"BIBFS", {10, 5}},       {"BIBFS", {20, 5}},
-        {"BIBFS", {100, 45}},     {"BIBFS", {250, 150}},
-        {"BIBFS", {249, 249}},
+    {"BIBFS", {10, 5}},       {"BIBFS", {20, 5}},       {"BIBFS", {100, 45}},
+    {"BIBFS", {250, 150}},    {"BIBFS", {249, 249}},
 
-       /*{"ASTAR", {10, 5}},       {"ASTAR", {20, 5}},
-        {"ASTAR", {100, 45}},     {"ASTAR", {250, 150}},
-        {"ASTAR", {249, 249}},*/ 
+    /*{"ASTAR", {10, 5}},       {"ASTAR", {20, 5}},
+     {"ASTAR", {100, 45}},     {"ASTAR", {250, 150}},
+     {"ASTAR", {249, 249}},*/
 };
 
 #endif

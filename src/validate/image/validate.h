@@ -23,9 +23,10 @@
 #include "../../logger/logger.h"
 #include <httplib/httplib.h>
 
-struct ImageValidReturn {
-  image img;
-  std::string algo;
+struct ImageValidReturn
+{
+    image img;
+    std::string algo;
 };
 
 ImageValidReturn validateImage(const httplib::Request &req, stateClass &state);

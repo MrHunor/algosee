@@ -28,13 +28,11 @@
 
 json swapVisitedArray(const std::vector<std::vector<bool>> &visited);
 json swapVisitedArray(const std::vector<std::vector<int>> &visited);
-void checkMapValidness(const std::vector<std::vector<int>> &mapInt,
-                       const std::pair<int, int> &start,
+void checkMapValidness(const std::vector<std::vector<int>> &mapInt, const std::pair<int, int> &start,
                        const std::pair<int, int> &goal);
-void checkMapValidness(const std::vector<std::vector<bool>> &map,
-                       const std::pair<int, int> &start,
+void checkMapValidness(const std::vector<std::vector<bool>> &map, const std::pair<int, int> &start,
                        const std::pair<int, int> &goal);
 std::pair<int, int> checkRange(const std::vector<std::vector<int>> &map);
 std::vector<std::vector<bool>> castIntMapToBoolIfNeeded(const json &input);
-bool checkMapForZero(const std::vector<std::vector<int>>& map);
+bool checkMapForZero(const std::vector<std::vector<int>> &map);
 #endif

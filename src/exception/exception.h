@@ -24,23 +24,24 @@
 #include <source_location>
 #include <stdexcept>
 #include <string>
-class excep : public std::runtime_error {
-private:
-  std::string formatMessage(const std::string &message,
-                            std::source_location location) {
+class excep : public std::runtime_error
+{
+  private:
+    std::string formatMessage(const std::string &message, std::source_location location)
+    {
 
-    std::string retval;
-    auto now = std::chrono::system_clock::now();
-    retval += std::format("@{}->Function name:{}\nFile "
-                          "name:{}\nLine:{}\nCollum:{}:Threw an exception:{}",
-                          now, location.function_name(), location.file_name(),
-                          location.line(), location.column(), message);
-    return retval;
-  }
+        std::string retval;
+        auto now = std::chrono::system_clock::now();
+        retval += std::format("@{}->Function name:{}\nFile "
+                              "name:{}\nLine:{}\nCollum:{}:Threw an exception:{}",
+                              now, location.function_name(), location.file_name(), location.line(), location.column(),
+                              message);
+        return retval;
+    }
 
-public:
-  excep(const std::string &message,
-        std::source_location location = std::source_location::current(),int SetexitCode = 400)
-      : std::runtime_error(formatMessage(message,location)) {};
+  public:
+    excep(const std::string &message, std::source_location location = std::source_location::current(),
+          int SetexitCode = 400)
+        : std::runtime_error(formatMessage(message, location)) {};
 };
 #endif
