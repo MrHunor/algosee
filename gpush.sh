@@ -27,4 +27,4 @@ cd src
 find . -type f \( -name '*.cpp' -o -name '*.h' -o -name '*.hpp' -o -name '*.c' \) \
     -exec clang-format -i {} +
 cd ..
-git add . && git commit -m "$1" && git pull --rebase && git push
+git add . && git commit -m "$1" && git pull origin development --rebase && git push origin development
