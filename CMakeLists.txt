@@ -39,6 +39,19 @@ add_executable(algosee
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
+    #Build time optimisations 
+    ##ccache for caching builds 
+    find_program(CACHE_LOCATION ccache)
+    if(CCACHE_PRESNET)
+        set(CMAKE_C_COMPILER_LAUNCHER "${CACHE_LOCATION}")
+        set(CMAKE_CXX_COMPILER_LAUNCHER "${CACHE_LOCATION}")
+    endif()
+    #utiltiy build for bundling builds together
+    option(CMAKE_UNITY_BUILD ON)
+
+    #Export these settings (not sure weather this is needed but im scared so ill just include it)
+    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
     file(GLOB_RECURSE ALL_SOURCES_TESTCLIENT CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/testclient/src/*.cpp"
     )
@@ -47,8 +60,8 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         ${ALL_SOURCES_TESTCLIENT}
     )
     target_include_directories(algosee_testclient PRIVATE
-    "${CMAKE_CURRENT_BINARY_DIR}/generated"
-)
+        "${CMAKE_CURRENT_BINARY_DIR}/generated"
+    )
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     target_compile_options(algosee PRIVATE
         $<$<CONFIG:Release>:-O3>
@@ -83,8 +96,8 @@ target_link_libraries(algosee
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-target_link_libraries(algosee_testclient
-nlohmann_json::nlohmann_json
-stdc++exp
-)
+    target_link_libraries(algosee_testclient
+        nlohmann_json::nlohmann_json
+        stdc++exp
+    )
 endif()
