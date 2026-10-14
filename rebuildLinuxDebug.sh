@@ -17,7 +17,6 @@
  #   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
 set -euxo pipefail
 
-rm -rf build
 conan install . --output-folder=build --build=missing -s build_type=Debug
 cmake --preset conan-debug -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake -G Ninja #ninja supposed to be better from caching builds 
 cmake --build build --parallel 
