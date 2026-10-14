@@ -40,7 +40,8 @@ jobs:
         curl \
         github-cli \
         python \
-        python-pipx
+        python-pipx \
+        ninja
 
      - name: Install Conan and configure # weird command syntax but should work like this
        shell: bash

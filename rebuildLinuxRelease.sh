@@ -17,7 +17,6 @@
  #   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
 set -euxo pipefail
 
-rm -rf build
 conan install . --output-folder=build --build=missing -s build_type=Release
-cmake --preset conan-release -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake
+cmake --preset conan-release -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake -G Ninja
 cmake --build build --parallel 10 #why 10 threads? see Issue #150
