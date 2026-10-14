@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
  #   algosee; A algorithm visulizer
  #   Copyright (C) 2026  MrHunor, siryanni (as equals)
  #   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
