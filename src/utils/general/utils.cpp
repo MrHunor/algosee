@@ -83,7 +83,7 @@ bool checkRateLimit(const clientListType &cList, const int &index)
 void addClient(clientListType &cList,
                const std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string> &newEntry)
 {
-    int index = -1;
+    int index = 0;
     auto now = std::chrono::system_clock::now();
     if (!cList.empty())
     {
