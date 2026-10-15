@@ -140,9 +140,10 @@ Use curl to make a request while the server is runningm e.g.:`curl -X POST "http
 Use curl to make request to the render server, e.g.: `curl -X POST "https://algosee.onrender.com/pathalgo?algo=BFS" -H "Content-Type: application/json" -d '{"MAP": [[false, false, true,  false],[true,  false, true,  false],[false, false, false, false],[false, true,  true,  false]],"START": [0, 0],"GOAL":   [3, 3]}'`
 
 
-
-<br>
-
+# License(s)
+This Project is published under the GPL3 License which you can find [here](./LICENSE.md).  
+Furthermore this project also includes code from other repositorys, you can find their licenses [here](./THIRD_PARTY_LICENSES.md).  
+We thank every author and contribtor of those repositories from :heart: , without their work this project woudn't have been possible. 
 
 # AI usage disclosure:
 I, **@MrHunor**, have used AI for explaining what do to when i didn't know anymore, as well as when i wanted to implement something but didn't know how or for scanning the codebase for bugs and possible enhancements. I've also used AI Audits, such as coderabbit on PRs.
