@@ -60,7 +60,7 @@ To test the backend via a curl command [go here](#to-test-the-backend-online-lin
 ## Tech Stack:
 - **Frontend:** HTML,CSS,JS
 - **Backend:** C++
-- **Building:** CMAKE, GCC
+- **Building:** CMAKE, Ninja
 - **Package Managment:** conan
 - **Hosting:** Github Pages (Frontend), Render (Backend) 
 
@@ -84,7 +84,7 @@ Current plans invlove expanding into other areas of algorithms, like wayfinding 
 <br>  
 
 # ----------------For Contributers-------------------------- 
-
+***This is not up to date***
 ## Project structure:
 - `./assets` Contains images for this ReadME
 - `./benchmarks` Contains the benchmark script and results

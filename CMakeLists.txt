@@ -17,10 +17,15 @@
 #   If not, see <https://www.gnu.org/licenses/>.
 cmake_minimum_required(VERSION 3.20)
 
+
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
 endif()
 
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    #utiltiy build for bundling builds together
+    option(CMAKE_UNITY_BUILD "Set CMake unity builds to on" ON)
+    endif()
 
 project(algosee VERSION 0.8 LANGUAGES CXX)
 
@@ -46,8 +51,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         set(CMAKE_C_COMPILER_LAUNCHER "${CACHE_LOCATION}")
         set(CMAKE_CXX_COMPILER_LAUNCHER "${CACHE_LOCATION}")
     endif()
-    #utiltiy build for bundling builds together
-    option(CMAKE_UNITY_BUILD "Set CMake unity builds to on" ON)
+
 
     #Export these settings (not sure weather this is needed but im scared so ill just include it)
     set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
