@@ -34,6 +34,7 @@ cd build
 ./algosee & 
 algosee_pid=$! # set PID so you can kill later
 trap 'kill "$algosee_pid" 2>/dev/null || true' EXIT #im gonna be honest i dont know how this trap logic syntax works this is from copilot
+sleep 1s
 ./algosee_testclient
 kill "$algosee_pid"
 trap - EXIT

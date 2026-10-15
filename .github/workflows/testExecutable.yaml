@@ -36,7 +36,8 @@ jobs:
         curl \
         github-cli \
         python \
-        python-pipx
+        python-pipx \
+        ninja
 
      - name: Install Conan and configure # weird command syntax but should work like this
        shell: bash
@@ -56,6 +57,10 @@ jobs:
        run: | 
         ./build/algosee & 
 
+     - name: Wait for server readyness 
+       shell: bash
+       run: |
+         sleep 1s
      - name: Run testserver
        shell: bash 
        run: | 

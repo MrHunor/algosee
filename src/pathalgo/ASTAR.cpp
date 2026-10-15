@@ -77,7 +77,7 @@ std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
     // push the start into the frontier, because its the lowest distance and also
     // the only element it will be the first element
     frontier.push(
-        {0, std::abs(start.first - goal.first) + std::abs(start.second - goal.second), start.second, start.first});
+        {0, std::abs(start.first - goal.first) + std::abs(start.second - goal.second), start.first, start.second});
 
     std::vector<int> directionsRows = {-1, 1, 0, 0};
     std::vector<int> directionsCollums = {0, 0, 1, -1};
