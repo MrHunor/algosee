@@ -42,7 +42,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     #Build time optimisations 
     ##ccache for caching builds 
     find_program(CACHE_LOCATION ccache)
-    if(CCACHE_PRESNET)
+    if(CCACHE_LOCATION)
         set(CMAKE_C_COMPILER_LAUNCHER "${CACHE_LOCATION}")
         set(CMAKE_CXX_COMPILER_LAUNCHER "${CACHE_LOCATION}")
     endif()
