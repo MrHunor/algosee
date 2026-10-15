@@ -61,6 +61,7 @@ jobs:
        shell: bash
        env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MESSAGE: ${{ github.event.workflow_run.head_commit.message || '' }} # either use the commit message used in the test workflow or empty (if failed)
        run: |
           TAG="build-${{ github.run_number }}"
           TITLE="Algosee Nightly Build ${{ github.run_number }}"
@@ -69,7 +70,7 @@ jobs:
             build/algosee \
             --repo "${{ github.repository }}" \
             --title "$TITLE" \
-            --notes "Nightly build from commit ${{ github.sha }}.
+            --notes "Nightly build from commit ${{ github.sha }}. This is a running release from either the development branch or main, if you want a stable version check the latest sha of the latest main commit and reference with a nighly build as others might be unstable.
 
             Commit message:
-            ${{ github.event.head_commit.message }}"
+            $MESSAGE" 
