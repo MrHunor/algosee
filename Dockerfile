@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     pipx \
     cmake \
-    ninja-build
+    ninja-build \
     && rm -rf /var/lib/apt/lists/
 
 ENV PATH="/root/.local/bin:$PATH"
