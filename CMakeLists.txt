@@ -47,7 +47,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         set(CMAKE_CXX_COMPILER_LAUNCHER "${CACHE_LOCATION}")
     endif()
     #utiltiy build for bundling builds together
-    option(CMAKE_UNITY_BUILD ON)
+    option(CMAKE_UNITY_BUILD "Set CMake unity builds to on" ON)
 
     #Export these settings (not sure weather this is needed but im scared so ill just include it)
     set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
