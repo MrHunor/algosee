@@ -24,6 +24,7 @@
 #include "../utils/general/utils.h"
 #include "../validate/image/validate.h"
 #include "build_info.h"
+#include "../exception/exception.h"
 #include <chrono>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
@@ -71,9 +72,14 @@ void RunImageSort(const httplib::Request &req, httplib::Response &res, stateClas
         res.set_content(response.dump(), "application/json");
         state.out("Sending response...", 0);
     }
+    catch(const excep &e)
+    {
+        state.out("Cought a excep, Details:"+std::string(e.what())+"\n"+"Status Code:"+std::to_string(e.exitCode),0 );
+        ReturnFailedAnswer(res, std::string(e.what()),e.exitCode);
+    }
     catch (const std::exception &e)
     {
-        state.out("Cought an exception:" + std::string(e.what()), 0);
+        state.out("Cought an std::exception, Details:" + std::string(e.what()), 0);
         ReturnFailedAnswer(res, std::string(e.what()));
     }
     return;
