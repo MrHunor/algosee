@@ -30,13 +30,13 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void runSortalgo(const httplib::Request &req, httplib::Response &res, stateClass &state)
+void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass &state)
 {
     try
     {
         state.out("Processing values....", 0);
         SortValidReturn info;
-        info = validateSort(req, state);
+        info = ValidateSort(req, state);
 
         state.out("Finished.", 0);
 
@@ -48,22 +48,22 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
         auto startTime = std::chrono::steady_clock::now();
 
         if (info.algo == "selection")
-            selectionSort(info.values, response);
+            SelectionSort(info.values, response);
         else if (info.algo == "cycle")
-            cycleSort(info.values, response);
+            CycleSort(info.values, response);
         else if (info.algo == "bubble")
-            bubbleSort(info.values, response);
+            BubbleSort(info.values, response);
         else if (info.algo == "quick")
-            quickSort(info.values, 0, info.values.size() - 1, response);
+            QuickSort(info.values, 0, info.values.size() - 1, response);
         else if (info.algo == "merge")
-            mergeSort(info.values, response);
+            MergeSort(info.values, response);
         else if (info.algo == "counting")
         {
-            countingSort(info.values, response);
+            CountingSort(info.values, response);
         }
         else if (info.algo == "bogo")
         {
-            bogoSort(info.values, response);
+            BogoSort(info.values, response);
         }
 
         // Default for all algorithms exit
@@ -82,7 +82,7 @@ void runSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
     catch (const std::exception &e)
     {
         state.out("Cought an exception:" + std::string(e.what()), 0);
-        returnFailedAnswer(res, std::string(e.what()));
+        ReturnFailedAnswer(res, std::string(e.what()));
     }
     return;
 }

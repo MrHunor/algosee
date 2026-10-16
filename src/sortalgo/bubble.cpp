@@ -26,7 +26,7 @@
 #include <utility>
 #include <vector>
 
-void bubbleSort(std::vector<int> &unsorted, json &response)
+void BubbleSort(std::vector<int> &unsorted, json &response)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted
@@ -47,7 +47,7 @@ void bubbleSort(std::vector<int> &unsorted, json &response)
 
 //--------------IMAGE-----------------------------------
 
-void bubbleSort(indexPixel &unsorted, json &response)
+void BubbleSort(indexPixel &unsorted, json &response)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted

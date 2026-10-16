@@ -24,7 +24,7 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-bool checkMapForZero(const std::vector<std::vector<int>> &map)
+bool CheckMapForZero(const std::vector<std::vector<int>> &map)
 {
     for (const auto &row : map)
     {
@@ -37,7 +37,7 @@ bool checkMapForZero(const std::vector<std::vector<int>> &map)
     return false;
 }
 
-std::pair<int, int> checkRange(const std::vector<std::vector<int>> &map)
+std::pair<int, int> CheckRange(const std::vector<std::vector<int>> &map)
 {
     int min = 0;
     int max = 0;
@@ -54,7 +54,7 @@ std::pair<int, int> checkRange(const std::vector<std::vector<int>> &map)
     return std::make_pair(min, max);
 }
 
-json swapVisitedArray(const std::vector<std::vector<bool>> &visited)
+json SwapVisitedArray(const std::vector<std::vector<bool>> &visited)
 {
     std::vector<std::vector<bool>> retval(visited[0].size(), std::vector<bool>(visited.size(), false));
     for (int rows = 0; rows < visited.size(); rows++)
@@ -68,7 +68,7 @@ json swapVisitedArray(const std::vector<std::vector<bool>> &visited)
 }
 
 // dijkstra uses the same thing but as int, so we can overload this
-json swapVisitedArray(const std::vector<std::vector<int>> &visited)
+json SwapVisitedArray(const std::vector<std::vector<int>> &visited)
 {
     std::vector<std::vector<int>> retval(visited[0].size(), std::vector<int>(visited.size(), 0));
 
@@ -82,7 +82,7 @@ json swapVisitedArray(const std::vector<std::vector<int>> &visited)
     return json(retval);
 }
 
-void checkMapValidness(const std::vector<std::vector<int>> &map, const std::pair<int, int> &start,
+void CheckMapValidness(const std::vector<std::vector<int>> &map, const std::pair<int, int> &start,
                        const std::pair<int, int> &goal)
 {
     if (map.empty())
@@ -117,7 +117,7 @@ void checkMapValidness(const std::vector<std::vector<int>> &map, const std::pair
     }
 }
 
-void checkMapValidness(const std::vector<std::vector<bool>> &map, const std::pair<int, int> &start,
+void CheckMapValidness(const std::vector<std::vector<bool>> &map, const std::pair<int, int> &start,
                        const std::pair<int, int> &goal)
 {
     if (map.empty())
@@ -152,7 +152,7 @@ void checkMapValidness(const std::vector<std::vector<bool>> &map, const std::pai
     }
 }
 
-std::vector<std::vector<bool>> castIntMapToBoolIfNeeded(const json &input)
+std::vector<std::vector<bool>> CastIntMapToBoolIfNeeded(const json &input)
 {
     bool isBool = true;
     // check if input array is already boolean

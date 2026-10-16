@@ -38,7 +38,7 @@
 #include <stdexcept>
 #include <vector>
 
-json indexPixelArrToJson(const indexPixel &arr)
+json IndexPixelArrToJson(const indexPixel &arr)
 {
     json jarr = json::array();
     for (const auto &element : arr)
@@ -49,7 +49,7 @@ json indexPixelArrToJson(const indexPixel &arr)
     return jarr;
 }
 
-image loadImage(const httplib::Request &req, const stateClass &state)
+image LoadImage(const httplib::Request &req, const stateClass &state)
 {
 
     // read image from body to file
@@ -112,7 +112,7 @@ image loadImage(const httplib::Request &req, const stateClass &state)
     return retval;
 }
 
-void shuffleImage(image &img)
+void ShuffleImage(image &img)
 {
     std::random_device rd;
     std::mt19937 g(rd());

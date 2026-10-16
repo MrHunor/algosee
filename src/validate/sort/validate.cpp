@@ -25,7 +25,7 @@
 #include <httplib/httplib.h>
 #include <vector>
 
-SortValidReturn validateSort(const httplib::Request &req, stateClass &state)
+SortValidReturn ValidateSort(const httplib::Request &req, stateClass &state)
 {
     SortValidReturn retval;
 

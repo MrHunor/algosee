@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     //--------------------------PREROUTING HANDLING-------------------
     server.set_pre_routing_handler(
         [&state, &clientList, &clientListMutex](const httplib::Request &req, httplib::Response &res) {
-            return runPreflightHandler(req, res, state, clientList, clientListMutex);
+            return RunPreflightHandler(req, res, state, clientList, clientListMutex);
         });
 
     //-------------------------POSTROUTING HANDLING-------------------------
@@ -89,13 +89,13 @@ int main(int argc, char *argv[])
 
     //--------------------------LIMITS----------------------------------
     server.Get("/limits", [&](const httplib::Request &req, httplib::Response &res) {
-        runLimits(res, state);
+        RunLimits(res, state);
         return;
     });
 
     //--------------------------IMAGE-----------------------------------------------------------
     server.Post("/image", [&](const httplib::Request &req, httplib::Response &res) {
-        runImageSort(req, res, state);
+        RunImageSort(req, res, state);
         return;
     });
 
@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
 
     //------------------------------SORTALGO---------------------------------------------------------------
     server.Post("/sortalgo", [&](const httplib::Request &req, httplib::Response &res) {
-        runSortalgo(req, res, state);
+        RunSortalgo(req, res, state);
         return;
     });
 

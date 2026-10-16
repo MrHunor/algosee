@@ -25,7 +25,7 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void countingSort(std::vector<int> &unsorted, json &response)
+void CountingSort(std::vector<int> &unsorted, json &response)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted
@@ -48,7 +48,7 @@ void countingSort(std::vector<int> &unsorted, json &response)
 
     unsorted = retval;
 }
-void countingSort(indexPixel &unsorted, json &response)
+void CountingSort(indexPixel &unsorted, json &response)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted

@@ -81,7 +81,7 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(std::vector<std::vector<bool
     }
     // being out of the while loop means every possible tile was explored
 
-    response["VISITED"] = swapVisitedArray(visited);
+    response["VISITED"] = SwapVisitedArray(visited);
 
     if (visited[goal.second][goal.first] == -1)
         return {}; // never once reached the goal means there was no path found to

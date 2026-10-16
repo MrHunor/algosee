@@ -28,7 +28,7 @@
 
 // NEVER EVER CALL THIS FUNCTION DIRECTLY IF YOU DIDNT CHECK FOR arr1.size() &
 // arr2.size()>=1
-std::vector<int> merge(const std::vector<int> &arr1, const std::vector<int> &arr2)
+std::vector<int> Merge(const std::vector<int> &arr1, const std::vector<int> &arr2)
 {
     int arr1point = 0;
     int arr2point = 0;
@@ -71,7 +71,7 @@ std::vector<int> merge(const std::vector<int> &arr1, const std::vector<int> &arr
     return retval;
 }
 
-void mergeSort(std::vector<int> &unsorted, json &response)
+void MergeSort(std::vector<int> &unsorted, json &response)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted
@@ -85,10 +85,10 @@ void mergeSort(std::vector<int> &unsorted, json &response)
     response["SPLIT (ORIGIN,LEFT,RIGHT)"].push_back({unsorted, left, right});
 
     // recursion magic
-    mergeSort(left, response);
-    mergeSort(right, response);
+    MergeSort(left, response);
+    MergeSort(right, response);
     response["SORTED (LEFT,RIGHT)"].push_back({left, right});
-    unsorted = merge(left, right);
+    unsorted = Merge(left, right);
     response["MERGED (LEFT,RIGHT,RESULT)"].push_back({left, right, unsorted});
 }
 
@@ -96,7 +96,7 @@ void mergeSort(std::vector<int> &unsorted, json &response)
 
 // NEVER EVER CALL THIS FUNCTION DIRECTLY IF YOU DIDNT CHECK FOR arr1.size() &
 // arr2.size()>=1
-indexPixel merge(indexPixel &arr1, indexPixel &arr2)
+indexPixel Merge(indexPixel &arr1, indexPixel &arr2)
 {
     int arr1point = 0;
     int arr2point = 0;
@@ -139,7 +139,7 @@ indexPixel merge(indexPixel &arr1, indexPixel &arr2)
     return retval;
 }
 
-void mergeSort(indexPixel &unsorted, json &response)
+void MergeSort(indexPixel &unsorted, json &response)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted
@@ -152,11 +152,11 @@ void mergeSort(indexPixel &unsorted, json &response)
     indexPixel right(unsorted.begin() + mid, unsorted.end());
     // recursion magic
     response["SPLIT (ORIGIN,LEFT,RIGHT)"].push_back(
-        {indexPixelArrToJson(unsorted), indexPixelArrToJson(left), indexPixelArrToJson(right)});
-    mergeSort(left, response);
-    mergeSort(right, response);
-    response["SORTED (LEFT,RIGHT)"].push_back({indexPixelArrToJson(left), indexPixelArrToJson(right)});
-    unsorted = merge(left, right);
+        {IndexPixelArrToJson(unsorted), IndexPixelArrToJson(left), IndexPixelArrToJson(right)});
+    MergeSort(left, response);
+    MergeSort(right, response);
+    response["SORTED (LEFT,RIGHT)"].push_back({IndexPixelArrToJson(left), IndexPixelArrToJson(right)});
+    unsorted = Merge(left, right);
     response["MERGED (LEFT,RIGHT,RESULT)"].push_back(
-        {indexPixelArrToJson(left), indexPixelArrToJson(right), indexPixelArrToJson(unsorted)});
+        {IndexPixelArrToJson(left), IndexPixelArrToJson(right), IndexPixelArrToJson(unsorted)});
 }

@@ -25,7 +25,7 @@
 #include "../../utils/pathalgo/pathalgo.h"
 #include <httplib/httplib.h>
 
-PathValidReturn validatePath(const httplib::Request &req, stateClass &state)
+PathValidReturn ValidatePath(const httplib::Request &req, stateClass &state)
 {
     PathValidReturn retval;
     state.out("Checking algo URL parameter...", 0);
@@ -71,7 +71,7 @@ PathValidReturn validatePath(const httplib::Request &req, stateClass &state)
     }
     else
     {
-        retval.mapBool = castIntMapToBoolIfNeeded(parsed);
+        retval.mapBool = CastIntMapToBoolIfNeeded(parsed);
         if (retval.mapBool.empty())
         {
             throw excep("MAP does not contain any values or failed to parse.");
@@ -84,17 +84,17 @@ PathValidReturn validatePath(const httplib::Request &req, stateClass &state)
 
     state.out("Checking Maps internal validness...", 0);
     if (retval.algo != "dijkstra" && retval.algo != "ASTAR")
-        checkMapValidness(retval.mapBool, retval.start, retval.goal);
+        CheckMapValidness(retval.mapBool, retval.start, retval.goal);
     else
     {
-        checkMapValidness(retval.mapInt, retval.start, retval.goal);
-        if (checkRange(retval.mapInt).first < -1)
+        CheckMapValidness(retval.mapInt, retval.start, retval.goal);
+        if (CheckRange(retval.mapInt).first < -1)
             throw excep("An element in the map is below -1, which is the min "
                         "required for Djkstra.");
     }
     if (retval.algo == "ASTAR")
     {
-        if (checkMapForZero(retval.mapInt))
+        if (CheckMapForZero(retval.mapInt))
             throw excep("Map may not contain zero values for this algorithm.");
     }
     auto it = implementedPathAlgos.find(retval.algo);

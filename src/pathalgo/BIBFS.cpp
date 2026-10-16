@@ -139,8 +139,8 @@ std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> map, std::
         }
         iteration++;
     }
-    response["VISITEDFROMSTART"] = swapVisitedArray(visitedFromStart);
-    response["VISITEDFROMEND"] = swapVisitedArray(visitedFromEnd);
+    response["VISITEDFROMSTART"] = SwapVisitedArray(visitedFromStart);
+    response["VISITEDFROMEND"] = SwapVisitedArray(visitedFromEnd);
 
     if (meetingPointX == -1)
         return {};

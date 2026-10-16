@@ -46,7 +46,7 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass
 
         // parsing
         state.out("Processing values....", 0);
-        PathValidReturn info = validatePath(req, state);
+        PathValidReturn info = ValidatePath(req, state);
 
         state.out("Starting time mesurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
@@ -88,7 +88,7 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass
     catch (const std::exception &e)
     {
         state.out("Cought an exception:" + std::string(e.what()), 0);
-        returnFailedAnswer(res, std::string(e.what()));
+        ReturnFailedAnswer(res, std::string(e.what()));
     }
     return;
 }

@@ -24,7 +24,7 @@
 #include <nlohmann/json.hpp>
 #include <stb_image.h>
 
-void runLimits(httplib::Response &res, stateClass &state)
+void RunLimits(httplib::Response &res, stateClass &state)
 {
     json response;
     // sort

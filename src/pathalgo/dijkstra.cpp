@@ -102,7 +102,7 @@ std::vector<std::pair<int, int>> Dijkstra(const std::vector<std::vector<int>> &m
 
     // Explored all possible tiles
 
-    response["DISTANCE"] = swapVisitedArray(distance);
+    response["DISTANCE"] = SwapVisitedArray(distance);
 
     // checking if the goal was ever reached, be careful this could theoretically
     // be a false positive if the addition of tiles matches exatly the intmax, but

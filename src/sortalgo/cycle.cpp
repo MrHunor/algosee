@@ -25,7 +25,7 @@
 #include <utility>
 #include <vector>
 
-void cycleSort(std::vector<int> &unsorted, json &response)
+void CycleSort(std::vector<int> &unsorted, json &response)
 {
     int NewPosition = 0;
     int current = 0;
@@ -71,7 +71,7 @@ void cycleSort(std::vector<int> &unsorted, json &response)
     }
 }
 
-void cycleSort(indexPixel &unsorted, json &response)
+void CycleSort(indexPixel &unsorted, json &response)
 {
     int NewPosition = 0;
     std::pair<int, pixel> current = {};

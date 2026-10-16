@@ -24,11 +24,11 @@
 #include "../../logger/logger.h"
 #include "../../utils/image/image.h"
 #include <httplib/httplib.h>
-ImageValidReturn validateImage(const httplib::Request &req, stateClass &state)
+ImageValidReturn ValidateImage(const httplib::Request &req, stateClass &state)
 {
     ImageValidReturn retval;
 
-    retval.img = loadImage(req, state);
+    retval.img = LoadImage(req, state);
 
     if (!req.has_param("algo"))
     {
