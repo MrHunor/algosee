@@ -25,6 +25,7 @@
 #include <format>
 #include <fstream>
 #include <iostream>
+#include <mutex>
 #include <nlohmann/json.hpp>
 #include <source_location>
 #include <string>
@@ -85,8 +86,11 @@
 
 class stateClass
 {
-  public:
+  private:
     std::ofstream logFile{"log.txt"};
+    std::mutex outMutex;
+
+  public:
     int verbose;
     void out(const std::string &output, int importance, const std::string &colour = DEFAULT_COLOUR,
              std::source_location location = std::source_location::current())
@@ -103,6 +107,7 @@ class stateClass
             message += std::format("{}->", location.function_name());
         message += output;
         message += RESET;
+        std::lock_guard<std::mutex> lock(outMutex);
         std::cout << message;
         std::cout << std::endl;
         if (logFile.is_open())
