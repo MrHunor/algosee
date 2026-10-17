@@ -42,3 +42,4 @@ trap - EXIT
 cd ..
 echo "Creating commit named "$1" and pushing to github"
 git add . && git commit -m "$1" && git pull origin development --rebase && git push origin development
+# this whole file is to be changed, so pretty much unusable right now

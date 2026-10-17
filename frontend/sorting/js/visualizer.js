@@ -168,9 +168,9 @@ startBtn.addEventListener('click', async () => {
     resetBtn.disabled = true;
     if (sizeSlider) sizeSlider.disabled = true;
     if (speedSlider) speedSlider.disabled = true;
-    stopBtn.disabled = false; // accses stop button 
+    stopBtn.disabled = false; // accses stop button
     isCancelled = false;      // reset cancel flag
-
+//error handling, now adjusted for dynamic error messages
     try {
         const response = await fetch(backendUrl, {
             method: 'POST',
@@ -178,7 +178,7 @@ startBtn.addEventListener('click', async () => {
             body: JSON.stringify({ values: array })
         });
 
-        // read, print JSON string
+        // read, print JSON string 
         const responseText = await response.text();
 
         if (!response.ok) {
