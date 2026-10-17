@@ -34,11 +34,11 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     endif()
 endif()
 
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    set_property(GLOBAL PROPERTY JOB_POOLS 10)
-endif()
+
 
 project(algosee VERSION 0.8 LANGUAGES CXX)
+
+
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -52,6 +52,11 @@ file(GLOB_RECURSE ALL_SOURCES_MAIN CONFIGURE_DEPENDS
 add_executable(algosee
     ${ALL_SOURCES_MAIN}
 )
+
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    set_property(GLOBAL PROPERTY JOB_POOLS release_compile=10)
+    set_property(TARGET algosee PROPERTY JOB_POOL_COMPILE release_compile)
+endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
