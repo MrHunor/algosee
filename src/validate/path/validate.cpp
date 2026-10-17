@@ -88,9 +88,14 @@ PathValidReturn ValidatePath(const httplib::Request &req, stateClass &state)
     else
     {
         CheckMapValidness(retval.mapInt, retval.start, retval.goal);
-        if (CheckRange(retval.mapInt).first < -1)
+        auto range = CheckRange(retval.mapInt);
+        if (range.first < -1)
             throw excep("An element in the map is below -1, which is the min "
-                        "required for Djkstra.",
+                        "required for Djkstra/ASTAR.",
+                        400);
+        if (range.second > HIGHEST_ELEMENT_PATH)
+            throw excep("An element in the map is higher then:" + std::to_string(HIGHEST_ELEMENT_PATH) +
+                            " which is the max for Dijkstra/ASTAR",
                         400);
     }
     if (retval.algo == "ASTAR")

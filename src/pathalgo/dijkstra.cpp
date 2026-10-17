@@ -31,13 +31,12 @@ std::vector<std::pair<int, int>> Dijkstra(const std::vector<std::vector<int>> &m
 {
     const int rows = map.size();
     const int collums = map[0].size();
-    const int INFINTY = std::numeric_limits<int>::max();
 
     // dijkstra uses something similar to BFS but instead of vector<bool> visited,
     // it uses a cost based vector<int> so this is effectivly just: "What is the
     // cheapest possible distance to this point in the map"
     std::vector<std::vector<int>> distance(
-        rows, std::vector<int>(collums, INFINTY)); // i dont think i'll ever unstand this contructor
+        rows, std::vector<int>(collums, INFINITY_INT)); // i dont think i'll ever unstand this contructor
     std::vector<std::vector<std::pair<int, int>>> parent(rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
     std::vector<std::pair<int, int>> path;
 
@@ -85,7 +84,15 @@ std::vector<std::pair<int, int>> Dijkstra(const std::vector<std::vector<int>> &m
             if (map[yNeighbour][xNeighbour] == -1)
                 continue; // this tile is blocked, skip
 
-            int newDistance = currentDistance + map[yNeighbour][xNeighbour];
+            int newDistance = 0;
+            if (currentDistance > INFINITY_INT - map[yNeighbour][xNeighbour])
+            {
+                newDistance = INFINITY_INT;
+            }
+            else
+            {
+                newDistance = currentDistance + map[yNeighbour][xNeighbour];
+            }
 
             // is the current path to this tile cheaper then the already known path
             // from start to goal?
@@ -107,7 +114,7 @@ std::vector<std::pair<int, int>> Dijkstra(const std::vector<std::vector<int>> &m
     // checking if the goal was ever reached, be careful this could theoretically
     // be a false positive if the addition of tiles matches exatly the intmax, but
     // the likelyhood is very small
-    if (distance[goal.second][goal.first] == INFINTY)
+    if (distance[goal.second][goal.first] == INFINITY_INT)
         return {};
 
     // copy paste from BFS, same logic
