@@ -38,6 +38,8 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(std::vector<std::vector<bool
     std::vector<std::vector<std::pair<int, int>>> parent(rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
     std::vector<std::pair<int, int>> path;
 
+    std::vector<std::vector<int>> searchMap(rows, std::vector<int>(collums, -1)); // weird ass constructor
+
     std::queue<std::pair<int, int>> frontier;
     frontier.push({start.second, start.first});
     visited[start.second][start.first] = 0;
@@ -50,6 +52,7 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(std::vector<std::vector<bool
 
         int y = frontier.front().first;
         int x = frontier.front().second;
+        searchMap[y][x] = iteration;
         // because the first frontier element is now in x,y the first element of
         // frontier can be deleted
         frontier.pop();
@@ -73,7 +76,7 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(std::vector<std::vector<bool
 
             // if everything thus far was negative that means we have a valid
             // unvisited tile
-            visited[yNeighbour][xNeighbour] = iteration;
+            visited[yNeighbour][xNeighbour] = 1;
             parent[yNeighbour][xNeighbour] = {y, x};
             frontier.push({yNeighbour, xNeighbour});
         }
@@ -82,7 +85,7 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(std::vector<std::vector<bool
     // being out of the while loop means every possible tile was explored
 
     response["VISITED"] = SwapVisitedArray(visited);
-
+    response["SEARCHMAP"] = searchMap;
     if (visited[goal.second][goal.first] == -1)
         return {}; // never once reached the goal means there was no path found to
                    // the goal
