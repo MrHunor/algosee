@@ -25,6 +25,13 @@ endif()
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     #utiltiy build for bundling builds together
     option(CMAKE_UNITY_BUILD "Set CMake unity builds to on" ON)
+    #Build time optimisations 
+    ##ccache for caching builds 
+    find_program(CCACHE_LOCATION ccache)
+    if(CCACHE_LOCATION)
+        set(CMAKE_C_COMPILER_LAUNCHER "${CCACHE_LOCATION}")
+        set(CMAKE_CXX_COMPILER_LAUNCHER "${CCACHE_LOCATION}")
+    endif()
 endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -48,13 +55,7 @@ add_executable(algosee
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-    #Build time optimisations 
-    ##ccache for caching builds 
-    find_program(CACHE_LOCATION ccache)
-    if(CCACHE_LOCATION)
-        set(CMAKE_C_COMPILER_LAUNCHER "${CACHE_LOCATION}")
-        set(CMAKE_CXX_COMPILER_LAUNCHER "${CACHE_LOCATION}")
-    endif()
+
 
 
     #Export these settings (not sure weather this is needed but im scared so ill just include it)
