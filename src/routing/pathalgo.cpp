@@ -77,13 +77,19 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass
 
         if (path.empty())
         {
-            throw excep("No valid path found from start to goal.");
+            throw excep("No valid path found from start to goal.", 500);
         }
         res.status = 200;
         response["PATH"] = path;
         state.out("Finished. Replying;\nresponse:" + response.dump(), 0);
         res.set_header("Access-Control-Allow-Origin", "*");
         res.set_content(response.dump(), "application/json");
+    }
+    catch (const excep &e)
+    {
+        state.out(
+            "Cought a excep, Details:" + std::string(e.what()) + "\n" + "Status Code:" + std::to_string(e.exitCode), 0);
+        ReturnFailedAnswer(res, std::string(e.what()), e.exitCode);
     }
     catch (const std::exception &e)
     {

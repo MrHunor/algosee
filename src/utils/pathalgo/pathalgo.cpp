@@ -87,7 +87,7 @@ void CheckMapValidness(const std::vector<std::vector<int>> &map, const std::pair
 {
     if (map.empty())
     {
-        throw excep("Bad Map: Map is empty.");
+        throw excep("Bad Map: Map is empty.", 400);
     }
     int rows = map.size();
     int cols = map[0].size();
@@ -103,17 +103,17 @@ void CheckMapValidness(const std::vector<std::vector<int>> &map, const std::pair
     }
     if (!sameRowLength)
     {
-        throw excep("Bad Map:Rows dont have same row length.");
+        throw excep("Bad Map:Rows dont have same row length.", 400);
     }
 
     if (start.first < 0 || start.first > cols - 1 || start.second < 0 || start.second > rows - 1)
     {
-        throw excep("Bad Map: Start out of Map Bounds.");
+        throw excep("Bad Map: Start out of Map Bounds.", 400);
     }
 
     if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 || goal.second > rows - 1)
     {
-        throw excep("Bad Map: End out of Map Bounds");
+        throw excep("Bad Map: End out of Map Bounds", 400);
     }
 }
 
@@ -122,7 +122,7 @@ void CheckMapValidness(const std::vector<std::vector<bool>> &map, const std::pai
 {
     if (map.empty())
     {
-        throw excep("Bad Map: Map is empty.");
+        throw excep("Bad Map: Map is empty.", 400);
     }
     int rows = map.size();
     int cols = map[0].size();
@@ -138,17 +138,17 @@ void CheckMapValidness(const std::vector<std::vector<bool>> &map, const std::pai
     }
     if (!sameRowLength)
     {
-        throw excep("Bad Map:Rows dont have same row length.");
+        throw excep("Bad Map:Rows dont have same row length.", 400);
     }
 
     if (start.first < 0 || start.first > cols - 1 || start.second < 0 || start.second > rows - 1)
     {
-        throw excep("Bad Map: Start out of Map Bounds.");
+        throw excep("Bad Map: Start out of Map Bounds.", 400);
     }
 
     if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 || goal.second > rows - 1)
     {
-        throw excep("Bad Map: End out of Map Bounds");
+        throw excep("Bad Map: End out of Map Bounds", 400);
     }
 }
 
@@ -159,12 +159,12 @@ std::vector<std::vector<bool>> CastIntMapToBoolIfNeeded(const json &input)
     for (const auto &row : input["MAP"])
     {
         if (!row.is_array())
-            throw excep("Invalid Map. A extracted row is NOT a array."); // check for map
-                                                                         // validness
+            throw excep("Invalid Map. A extracted row is NOT a array.", 400); // check for map
+                                                                              // validness
         for (const auto &element : row)
         {
             if (element.is_array())
-                throw excep("Invalid Map. A extracted element is an array.");
+                throw excep("Invalid Map. A extracted element IS an array.", 400);
             if (!element.is_boolean())
                 isBool = false;
         }

@@ -79,6 +79,12 @@ void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
         res.set_content(response.dump(), "application/json");
         state.out("Sending response...", 0);
     }
+    catch (const excep &e)
+    {
+        state.out(
+            "Cought a excep, Details:" + std::string(e.what()) + "\n" + "Status Code:" + std::to_string(e.exitCode), 0);
+        ReturnFailedAnswer(res, std::string(e.what()), e.exitCode);
+    }
     catch (const std::exception &e)
     {
         state.out("Cought an exception:" + std::string(e.what()), 0);
