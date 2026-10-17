@@ -25,7 +25,11 @@ endif()
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     #utiltiy build for bundling builds together
     option(CMAKE_UNITY_BUILD "Set CMake unity builds to on" ON)
-    endif()
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    set_property(GLOBAL PROPERTY JOB_POOLS 10)
+endif()
 
 project(algosee VERSION 0.8 LANGUAGES CXX)
 
@@ -83,6 +87,14 @@ configure_file(
 
 target_include_directories(algosee PRIVATE
     "${CMAKE_CURRENT_BINARY_DIR}/generated"
+)
+
+target_precompile_headers(algosee PRIVATE 
+<nlohmann/json.hpp>
+<httplib.h>
+<vector>
+<string>
+<algorithm>
 )
 
 find_package(nlohmann_json REQUIRED)

@@ -23,7 +23,6 @@
 #include "../utils/image/image.h"
 #include "../utils/sortalgo/sortalgo.h"
 #include <algorithm>
-#include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 

@@ -20,7 +20,6 @@
 
 #include "../../defs/types.h"
 #include <algorithm>
-#include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
 #include <random>
 #include <vector>

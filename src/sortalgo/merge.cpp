@@ -21,7 +21,6 @@
 #include "../defs/general.h"
 #include "../defs/types.h"
 #include "../utils/image/image.h"
-#include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
 #include <strings.h>
 #include <vector>
