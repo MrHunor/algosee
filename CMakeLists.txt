@@ -25,9 +25,20 @@ endif()
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     #utiltiy build for bundling builds together
     option(CMAKE_UNITY_BUILD "Set CMake unity builds to on" ON)
+    #Build time optimisations 
+    ##ccache for caching builds 
+    find_program(CCACHE_LOCATION ccache)
+    if(CCACHE_LOCATION)
+        set(CMAKE_C_COMPILER_LAUNCHER "${CCACHE_LOCATION}")
+        set(CMAKE_CXX_COMPILER_LAUNCHER "${CCACHE_LOCATION}")
     endif()
+endif()
+
+
 
 project(algosee VERSION 0.8 LANGUAGES CXX)
+
+
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -42,15 +53,14 @@ add_executable(algosee
     ${ALL_SOURCES_MAIN}
 )
 
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    set_property(GLOBAL PROPERTY JOB_POOLS release_compile=10)
+    set_property(TARGET algosee PROPERTY JOB_POOL_COMPILE release_compile)
+endif()
+
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-    #Build time optimisations 
-    ##ccache for caching builds 
-    find_program(CACHE_LOCATION ccache)
-    if(CCACHE_LOCATION)
-        set(CMAKE_C_COMPILER_LAUNCHER "${CACHE_LOCATION}")
-        set(CMAKE_CXX_COMPILER_LAUNCHER "${CACHE_LOCATION}")
-    endif()
+
 
 
     #Export these settings (not sure weather this is needed but im scared so ill just include it)
@@ -83,6 +93,14 @@ configure_file(
 
 target_include_directories(algosee PRIVATE
     "${CMAKE_CURRENT_BINARY_DIR}/generated"
+)
+
+target_precompile_headers(algosee PRIVATE 
+<nlohmann/json.hpp>
+<httplib.h>
+<vector>
+<string>
+<algorithm>
 )
 
 find_package(nlohmann_json REQUIRED)

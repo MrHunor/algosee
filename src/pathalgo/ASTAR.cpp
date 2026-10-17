@@ -111,7 +111,15 @@ std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
             if (map[yNeighbour][xNeighbour] == -1)
                 continue; // this tile is blocked, skip
 
-            int newDistance = currentDistance + map[yNeighbour][xNeighbour];
+            int newDistance = 0;
+            if (currentDistance > INFINITY_INT - map[yNeighbour][xNeighbour])
+            {
+                newDistance = INFINITY_INT;
+            }
+            else
+            {
+                newDistance = currentDistance + map[yNeighbour][xNeighbour];
+            }
 
             // is the current path to this tile cheaper then the already known path
             // from start to goal?
@@ -129,7 +137,7 @@ std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
 
     // Explored all possible tiles
 
-    response["DISTANCE"] = swapVisitedArray(distance);
+    response["DISTANCE"] = SwapVisitedArray(distance);
 
     // checking if the goal was ever reached, be careful this could theoretically
     // be a false positive if the addition of tiles matches exatly the intmax, but

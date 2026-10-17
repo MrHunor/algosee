@@ -25,7 +25,7 @@
 #include <nlohmann/json.hpp>
 #include <stb_image.h>
 
-void shuffleImage(image &img);
-image loadImage(const httplib::Request &req, const stateClass &state);
-json indexPixelArrToJson(const indexPixel &arr);
+void ShuffleImage(image &img);
+image LoadImage(const httplib::Request &req, const stateClass &state);
+json IndexPixelArrToJson(const indexPixel &arr);
 #endif

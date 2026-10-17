@@ -25,22 +25,22 @@
 #include "../../utils/pathalgo/pathalgo.h"
 #include <httplib/httplib.h>
 
-PathValidReturn validatePath(const httplib::Request &req, stateClass &state)
+PathValidReturn ValidatePath(const httplib::Request &req, stateClass &state)
 {
     PathValidReturn retval;
     state.out("Checking algo URL parameter...", 0);
     if (!req.has_param("algo"))
     {
-        throw excep("URL does not contain a url parameter.");
+        throw excep("URL does not contain a url parameter.", 400);
     }
     retval.algo = req.get_param_value("algo");
     if (retval.algo.empty())
     {
-        throw excep("URL contains a algo parameter but no algo is set.");
+        throw excep("URL contains a algo parameter but no algo is set.", 400);
     }
     if (!implementedPathAlgos.contains(retval.algo))
     {
-        throw excep("Provided algo does not exist or is not implemented.");
+        throw excep("Provided algo does not exist or is not implemented.", 501);
     }
 
     state.out("Parsing body...", 0);
@@ -49,15 +49,15 @@ PathValidReturn validatePath(const httplib::Request &req, stateClass &state)
     state.out("Checking MAP, START and GOAL parameters existance...", 0);
     if (!parsed.contains("MAP"))
     {
-        throw excep("Body does not contain a MAP parameter.");
+        throw excep("Body does not contain a MAP parameter.", 400);
     }
     if (!parsed.contains("START"))
     {
-        throw excep("Body does not contain a START parameter.");
+        throw excep("Body does not contain a START parameter.", 400);
     }
     if (!parsed.contains("GOAL"))
     {
-        throw excep("Body does not contain a GOAL parameter.");
+        throw excep("Body does not contain a GOAL parameter.", 400);
     }
 
     state.out("Casting Map (if needed)...", 0);
@@ -66,15 +66,15 @@ PathValidReturn validatePath(const httplib::Request &req, stateClass &state)
         retval.mapInt = parsed["MAP"];
         if (retval.mapInt.empty())
         {
-            throw excep("MAP does not contain any values.");
+            throw excep("MAP does not contain any values.", 400);
         }
     }
     else
     {
-        retval.mapBool = castIntMapToBoolIfNeeded(parsed);
+        retval.mapBool = CastIntMapToBoolIfNeeded(parsed);
         if (retval.mapBool.empty())
         {
-            throw excep("MAP does not contain any values or failed to parse.");
+            throw excep("MAP does not contain any values or failed to parse.", 400);
         }
     }
 
@@ -84,28 +84,36 @@ PathValidReturn validatePath(const httplib::Request &req, stateClass &state)
 
     state.out("Checking Maps internal validness...", 0);
     if (retval.algo != "dijkstra" && retval.algo != "ASTAR")
-        checkMapValidness(retval.mapBool, retval.start, retval.goal);
+        CheckMapValidness(retval.mapBool, retval.start, retval.goal);
     else
     {
-        checkMapValidness(retval.mapInt, retval.start, retval.goal);
-        if (checkRange(retval.mapInt).first < -1)
+        CheckMapValidness(retval.mapInt, retval.start, retval.goal);
+        auto range = CheckRange(retval.mapInt);
+        if (range.first < -1)
             throw excep("An element in the map is below -1, which is the min "
-                        "required for Djkstra.");
+                        "required for Djkstra/ASTAR.",
+                        400);
+        if (range.second > HIGHEST_ELEMENT_PATH)
+            throw excep("An element in the map is higher then:" + std::to_string(HIGHEST_ELEMENT_PATH) +
+                            " which is the max for Dijkstra/ASTAR",
+                        400);
     }
     if (retval.algo == "ASTAR")
     {
-        if (checkMapForZero(retval.mapInt))
-            throw excep("Map may not contain zero values for this algorithm.");
+        if (CheckMapForZero(retval.mapInt))
+            throw excep("Map may not contain zero values for this algorithm.", 400);
     }
     auto it = implementedPathAlgos.find(retval.algo);
     if (retval.algo == "dijkstra" || retval.algo == "ASTAR")
     {
         if (retval.mapInt.size() * retval.mapInt[0].size() > it->second)
             throw excep("Too many element specified. " + it->first + " only accepts less then " +
-                        std::to_string(it->second) + " elements.");
+                            std::to_string(it->second) + " elements.",
+                        413);
     }
     else if (retval.algo != "dijkstra" && retval.mapBool.size() * retval.mapBool[0].size() > it->second)
         throw excep("Too many element specified. " + it->first + " only accepts less then " +
-                    std::to_string(it->second) + " elements.");
+                        std::to_string(it->second) + " elements.",
+                    413);
     return retval;
 }

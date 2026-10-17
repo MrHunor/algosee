@@ -130,9 +130,14 @@ startBtn.addEventListener('click', async () => {
             body: JSON.stringify({ width: width, height: height, pixels: pixels })
         });
 
-        if (!response.ok) throw new Error('Error while communicating with Backend');
+        // read and print JSON-string
+        const responseText = await response.text();
 
-        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(responseText || `Server-Fehler: ${response.status}`);
+        }
+
+        const data = JSON.parse(responseText);
 
         // give out time
         if (data.TIME !== undefined) {
@@ -152,7 +157,7 @@ startBtn.addEventListener('click', async () => {
 
     } catch (error) {
         console.error("Connection-Error:", error);
-        alert("Error connecting to backend.");
+        alert(error.message);
     } finally {
         startBtn.disabled = false;
         resetBtn.disabled = false;

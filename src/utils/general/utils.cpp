@@ -42,26 +42,31 @@ std::vector<char> randomStringDataset{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I
                                       'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
                                       'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
-int randomInt(int lower, int upper)
+std::mt19937 getRandomGen()
 {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> dist(lower, upper);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    return gen;
+}
 
+int RandomInt(int lower, int upper)
+{
+    std::uniform_int_distribution<int> dist(lower, upper);
+    auto gen = getRandomGen();
     return dist(gen);
 }
 
-std::string generateRandomString(const int &size)
+std::string GenerateRandomString(const int &size)
 {
     std::string retval;
     for (int i = 0; i < size; i++)
     {
-        retval += randomStringDataset[randomInt(0, randomStringDataset.size() - 1)];
+        retval += randomStringDataset[RandomInt(0, randomStringDataset.size() - 1)];
     }
     return retval;
 }
 
-bool checkRateLimit(const clientListType &cList, const int &index)
+bool CheckRateLimit(const clientListType &cList, const int &index)
 {
     std::string targetIP = cList[index].second;
     int matchingEntrysCount = 0;
@@ -80,11 +85,12 @@ bool checkRateLimit(const clientListType &cList, const int &index)
     return false;
 }
 
-void addClient(clientListType &cList,
+void AddClient(clientListType &cList,
                const std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string> &newEntry)
 {
     int index = 0;
     auto now = std::chrono::system_clock::now();
+
     if (!cList.empty())
     {
         for (const auto &element : cList)
@@ -100,7 +106,7 @@ void addClient(clientListType &cList,
     cList.push_back(newEntry);
 }
 
-std::string executeCommand(const std::string &command)
+std::string ExecuteCommand(const std::string &command)
 {
     int exitCode;
     FILE *pipe = popen(command.c_str(), "r");
@@ -130,7 +136,7 @@ std::string executeCommand(const std::string &command)
     return result;
 }
 
-void returnFailedAnswer(httplib::Response &res, const std::string &Details, int exitCode)
+void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int exitCode)
 {
 
     std::cout << "returnFailedAnswer called:" + Details << "; Code:" + std::to_string(exitCode) << std::endl;

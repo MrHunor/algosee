@@ -22,6 +22,6 @@
 #include <vector>
 #ifndef SORTALGO_UTILS_H
 #define SORTALGO_UTILS_H
-void randomise(std::vector<int> &vec);
-void randomise(indexPixel &vec);
+void Randomise(std::vector<int> &vec);
+void Randomise(indexPixel &vec);
 #endif

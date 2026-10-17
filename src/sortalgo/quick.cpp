@@ -21,14 +21,13 @@
 #include "../defs/general.h"
 #include "../defs/types.h"
 #include <algorithm>
-#include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
 #include <utility>
 #include <vector>
 
 // caution, you have to pass the vector as a reference here because the vector
 // is being modified
-int findQuickSortPivot(std::vector<int> &unsorted, int low, int high, json &response)
+int FindQuickSortPivot(std::vector<int> &unsorted, int low, int high, json &response)
 {
     int index;
     int pivot = unsorted[high];
@@ -48,14 +47,14 @@ int findQuickSortPivot(std::vector<int> &unsorted, int low, int high, json &resp
     return lowerPivotIndexBoundry + 1;
 }
 
-void quickSort(std::vector<int> &unsorted, int low, int high, json &response)
+void QuickSort(std::vector<int> &unsorted, int low, int high, json &response)
 {
     if (low < high) // otherwise already sorted
     {
-        int pivot = findQuickSortPivot(unsorted, low, high, response);
+        int pivot = FindQuickSortPivot(unsorted, low, high, response);
 
-        quickSort(unsorted, low, pivot - 1, response); // sort left side recursivly
-        quickSort(unsorted, pivot + 1, high,
+        QuickSort(unsorted, low, pivot - 1, response); // sort left side recursivly
+        QuickSort(unsorted, pivot + 1, high,
                   response); // sort right side recursivly
     }
 }
@@ -64,7 +63,7 @@ void quickSort(std::vector<int> &unsorted, int low, int high, json &response)
 
 // caution, you have to pass the vector as a reference here because the vector
 // is being modified
-int findQuickSortPivot(indexPixel &unsorted, int low, int high, json &response)
+int FindQuickSortPivot(indexPixel &unsorted, int low, int high, json &response)
 {
     int index;
     int pivot = unsorted[high].first;
@@ -84,14 +83,14 @@ int findQuickSortPivot(indexPixel &unsorted, int low, int high, json &response)
     return lowerPivotIndexBoundry + 1;
 }
 
-void quickSort(indexPixel &unsorted, int low, int high, json &response)
+void QuickSort(indexPixel &unsorted, int low, int high, json &response)
 {
     if (low < high) // otherwise already sorted
     {
-        int pivot = findQuickSortPivot(unsorted, low, high, response);
+        int pivot = FindQuickSortPivot(unsorted, low, high, response);
 
-        quickSort(unsorted, low, pivot - 1, response); // sort left side recursivly
-        quickSort(unsorted, pivot + 1, high,
+        QuickSort(unsorted, low, pivot - 1, response); // sort left side recursivly
+        QuickSort(unsorted, pivot + 1, high,
                   response); // sort right side recursivly
     }
 }

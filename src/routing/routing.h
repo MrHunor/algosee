@@ -27,18 +27,15 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void afterSelfTestRun(std::string algorithmName, std::vector<int> &paramPassValues, std::vector<int> &testvalues,
+void AfterSelfTestRun(std::string algorithmName, std::vector<int> &paramPassValues, std::vector<int> &testvalues,
                       std::vector<int> &sortedValues, json &response, json &parampassTest,
                       const std::chrono::steady_clock::time_point &startTime);
-
 void RunStatus(const httplib::Request &req, httplib::Response &res, stateClass &state);
-
-void runSortalgo(const httplib::Request &req, httplib::Response &res, stateClass &state);
-
+void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass &state);
 void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass &state);
-void runImageSort(const httplib::Request &req, httplib::Response &res, stateClass &state);
-httplib::Server::HandlerResponse runPreflightHandler(const httplib::Request &req, httplib::Response &res,
+void RunImageSort(const httplib::Request &req, httplib::Response &res, stateClass &state);
+httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req, httplib::Response &res,
                                                      stateClass &state, clientListType &clientList,
                                                      std::mutex &clientListMutex);
-void runLimits(httplib::Response &res, stateClass &state);
+void RunLimits(httplib::Response &res, stateClass &state);
 #endif

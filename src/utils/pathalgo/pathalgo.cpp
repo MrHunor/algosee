@@ -24,7 +24,7 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-bool checkMapForZero(const std::vector<std::vector<int>> &map)
+bool CheckMapForZero(const std::vector<std::vector<int>> &map)
 {
     for (const auto &row : map)
     {
@@ -37,7 +37,7 @@ bool checkMapForZero(const std::vector<std::vector<int>> &map)
     return false;
 }
 
-std::pair<int, int> checkRange(const std::vector<std::vector<int>> &map)
+std::pair<int, int> CheckRange(const std::vector<std::vector<int>> &map)
 {
     int min = 0;
     int max = 0;
@@ -54,7 +54,7 @@ std::pair<int, int> checkRange(const std::vector<std::vector<int>> &map)
     return std::make_pair(min, max);
 }
 
-json swapVisitedArray(const std::vector<std::vector<bool>> &visited)
+json SwapVisitedArray(const std::vector<std::vector<bool>> &visited)
 {
     std::vector<std::vector<bool>> retval(visited[0].size(), std::vector<bool>(visited.size(), false));
     for (int rows = 0; rows < visited.size(); rows++)
@@ -68,7 +68,7 @@ json swapVisitedArray(const std::vector<std::vector<bool>> &visited)
 }
 
 // dijkstra uses the same thing but as int, so we can overload this
-json swapVisitedArray(const std::vector<std::vector<int>> &visited)
+json SwapVisitedArray(const std::vector<std::vector<int>> &visited)
 {
     std::vector<std::vector<int>> retval(visited[0].size(), std::vector<int>(visited.size(), 0));
 
@@ -82,12 +82,12 @@ json swapVisitedArray(const std::vector<std::vector<int>> &visited)
     return json(retval);
 }
 
-void checkMapValidness(const std::vector<std::vector<int>> &map, const std::pair<int, int> &start,
+void CheckMapValidness(const std::vector<std::vector<int>> &map, const std::pair<int, int> &start,
                        const std::pair<int, int> &goal)
 {
     if (map.empty())
     {
-        throw excep("Bad Map: Map is empty.");
+        throw excep("Bad Map: Map is empty.", 400);
     }
     int rows = map.size();
     int cols = map[0].size();
@@ -103,26 +103,26 @@ void checkMapValidness(const std::vector<std::vector<int>> &map, const std::pair
     }
     if (!sameRowLength)
     {
-        throw excep("Bad Map:Rows dont have same row length.");
+        throw excep("Bad Map:Rows dont have same row length.", 400);
     }
 
     if (start.first < 0 || start.first > cols - 1 || start.second < 0 || start.second > rows - 1)
     {
-        throw excep("Bad Map: Start out of Map Bounds.");
+        throw excep("Bad Map: Start out of Map Bounds.", 400);
     }
 
     if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 || goal.second > rows - 1)
     {
-        throw excep("Bad Map: End out of Map Bounds");
+        throw excep("Bad Map: End out of Map Bounds", 400);
     }
 }
 
-void checkMapValidness(const std::vector<std::vector<bool>> &map, const std::pair<int, int> &start,
+void CheckMapValidness(const std::vector<std::vector<bool>> &map, const std::pair<int, int> &start,
                        const std::pair<int, int> &goal)
 {
     if (map.empty())
     {
-        throw excep("Bad Map: Map is empty.");
+        throw excep("Bad Map: Map is empty.", 400);
     }
     int rows = map.size();
     int cols = map[0].size();
@@ -138,33 +138,33 @@ void checkMapValidness(const std::vector<std::vector<bool>> &map, const std::pai
     }
     if (!sameRowLength)
     {
-        throw excep("Bad Map:Rows dont have same row length.");
+        throw excep("Bad Map:Rows dont have same row length.", 400);
     }
 
     if (start.first < 0 || start.first > cols - 1 || start.second < 0 || start.second > rows - 1)
     {
-        throw excep("Bad Map: Start out of Map Bounds.");
+        throw excep("Bad Map: Start out of Map Bounds.", 400);
     }
 
     if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 || goal.second > rows - 1)
     {
-        throw excep("Bad Map: End out of Map Bounds");
+        throw excep("Bad Map: End out of Map Bounds", 400);
     }
 }
 
-std::vector<std::vector<bool>> castIntMapToBoolIfNeeded(const json &input)
+std::vector<std::vector<bool>> CastIntMapToBoolIfNeeded(const json &input)
 {
     bool isBool = true;
     // check if input array is already boolean
     for (const auto &row : input["MAP"])
     {
         if (!row.is_array())
-            throw excep("Invalid Map. A extracted row is NOT a array."); // check for map
-                                                                         // validness
+            throw excep("Invalid Map. A extracted row is NOT a array.", 400); // check for map
+                                                                              // validness
         for (const auto &element : row)
         {
             if (element.is_array())
-                throw excep("Invalid Map. A extracted element is an array.");
+                throw excep("Invalid Map. A extracted element IS an array.", 400);
             if (!element.is_boolean())
                 isBool = false;
         }

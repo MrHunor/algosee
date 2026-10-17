@@ -33,5 +33,5 @@ struct PathValidReturn
     std::pair<int, int> goal;
 };
 
-PathValidReturn validatePath(const httplib::Request &req, stateClass &state);
+PathValidReturn ValidatePath(const httplib::Request &req, stateClass &state);
 #endif

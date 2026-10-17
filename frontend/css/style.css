@@ -2,12 +2,12 @@
  Copyright (C) 2026 MrHunor, siryanni
   LICENSE:GNU General Public License v3 (GPLv3)
 */
-
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700&display=swap');
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: 'Funnel Display', system-ui, -apple-system, sans-serif;
 }
 
 html {
@@ -594,3 +594,10 @@ footer a:hover {
     color: #cbd5e1;
     font-size: 0.9rem;
 }
+
+/*Ok, I am sorry to the reviewer who had (or didn't have to) go through this. 
+So to whoever's down here reading this,
+I hope your life is filled with joy and luck all throughout 
+(PS: please send me a sign, you've read this message. 
+Have a nice day, wehter adventurer or AI Bot looking for markings
+of your brothers.)

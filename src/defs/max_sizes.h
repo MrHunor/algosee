@@ -18,8 +18,11 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
 #ifndef DEF_MAX_SIZES_H
 #define DEF_MAX_SIZES_H
+
+#include <limits>
 
 #define MAX_ELEMENT_COUNT_SORT                                                                                         \
     2500 // you could customise this for every algo, but thats a future issue
@@ -40,6 +43,7 @@
 #define MAX_ELEMENT_COUNT_DFS MAX_ELEMENT_COUNT_PATH
 #define MAX_ELEMENT_COUNT_BIBFS MAX_ELEMENT_COUNT_PATH
 #define MAX_ELEMENT_COUNT_ASTAR MAX_ELEMENT_COUNT_PATH
+#define HIGHEST_ELEMENT_PATH std::numeric_limits<int>::max() - 1
 
 #define MAX_PIXEL_COUNT_IMAGE 2500
 

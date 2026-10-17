@@ -17,6 +17,7 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+#include "../build_info.h.in"
 #include "../logger/logger.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
@@ -25,8 +26,9 @@ void RunStatus(const httplib::Request &req, httplib::Response &res, stateClass &
 {
     json response;
     response["STATUS"] = "ONLINE";
-    response["VERION"] = "VERSION";
-    state.out("Sending status signal.", 0);
+    response["VERION"] = ALGOSEE_VERSION;
+    response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
+    state.out("Sending status signal...", 0);
     res.status = 200;
     res.set_header("Access-Control-Allow-Origin", "*");
     res.set_content(response.dump(), "application/json");
