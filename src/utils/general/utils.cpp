@@ -42,12 +42,17 @@ std::vector<char> randomStringDataset{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I
                                       'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
                                       'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
+std::mt19937 getRandomGen()
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    return gen;
+}
+
 int RandomInt(int lower, int upper)
 {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dist(lower, upper);
-
+    auto gen = getRandomGen();
     return dist(gen);
 }
 

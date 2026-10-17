@@ -22,6 +22,7 @@
 #define UTILS_H
 #include "../../defs/types.h"
 #include <httplib.h>
+#include <random>
 #include <source_location>
 #include <string>
 int RandomInt(int lower, int upper);
@@ -32,4 +33,5 @@ void AddClient(clientListType &cList,
                const std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string> &newEntry);
 bool CheckRateLimit(const clientListType &cList, const int &index);
 std::string GenerateRandomString(const int &size);
+std::mt19937 getRandomGen();
 #endif

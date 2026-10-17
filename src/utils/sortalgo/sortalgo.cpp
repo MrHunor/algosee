@@ -19,6 +19,7 @@
  */
 
 #include "../../defs/types.h"
+#include "../general/utils.h"
 #include <algorithm>
 #include <nlohmann/json.hpp>
 #include <random>
@@ -26,8 +27,7 @@
 
 void Randomise(std::vector<int> &vec)
 {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
+    auto gen = getRandomGen();
 
     std::shuffle(vec.begin(), vec.end(), gen);
 }
