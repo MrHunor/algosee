@@ -41,8 +41,8 @@ void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
         state.out("Finished.", 0);
 
         json response;
-        response["VERSION"] = ALGOSEE_VERSION;
-        response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
+        generateJsonRetrunArras(response);
+        fillWithMetaData(response);
 
         state.out("Starting time mesurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
@@ -68,7 +68,8 @@ void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
 
         // Default for all algorithms exit
         auto endTime = std::chrono::steady_clock::now();
-        auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+        auto elapsed =
+            std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
         state.out("Ended Time mesurement.", 0);
         response["TIME"] = elapsed.count();
 
@@ -76,13 +77,15 @@ void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
 
         res.status = 200;
         res.set_header("Access-Control-Allow-Origin", "*");
-        res.set_content(response.dump(), "application/json");
-        state.out("Sending response...", 0);
+        std::string responseString = std::move(response.dump());
+        state.out("Sending response:" + responseString, 0);
+        res.set_content(responseString, "application/json");
     }
     catch (const excep &e)
     {
-        state.out(
-            "Cought a excep, Details:" + std::string(e.what()) + "\n" + "Status Code:" + std::to_string(e.exitCode), 0);
+        state.out("Cought a excep, Details:" + std::string(e.what()) + "\n" +
+                      "Status Code:" + std::to_string(e.exitCode),
+                  0);
         ReturnFailedAnswer(res, std::string(e.what()), e.exitCode);
     }
     catch (const std::exception &e)

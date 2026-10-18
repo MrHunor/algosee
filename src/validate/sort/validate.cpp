@@ -61,21 +61,12 @@ SortValidReturn ValidateSort(const httplib::Request &req, stateClass &state)
     if (retval.values.empty())
         throw excep("No values provided.", 400);
 
-    if (retval.algo == "counting")
-    {
-        bool hasNegNumbers = std::any_of(retval.values.begin(), retval.values.end(),
-                                         [](int x) { // some weird callback shit
-                                             return x < 0;
-                                         });
-        if (hasNegNumbers)
-            throw excep("Selected algorithm (counting) does not support negative numbers.", 400);
-    }
-
     auto it = implementedSortAlgos.find(retval.algo);
     if (retval.values.size() > it->second)
     {
-        throw excep("Too many element specified. " + it->first + " only accepts less then " +
-                        std::to_string(it->second) + " elements.",
+        throw excep("Too many element specified. " + it->first +
+                        " only accepts less then " + std::to_string(it->second) +
+                        " elements.",
                     413);
     }
 
@@ -86,6 +77,17 @@ SortValidReturn ValidateSort(const httplib::Request &req, stateClass &state)
             throw excep("The Highest element (max) is higher then the set limit:" +
                             std::to_string(HIGHEST_ELEMENT_COUNTING),
                         413);
+    }
+
+    if (retval.algo == "counting")
+    {
+        bool hasNegNumbers = std::any_of(retval.values.begin(), retval.values.end(),
+                                         [](int x) { // some weird callback shit
+                                             return x < 0;
+                                         });
+        if (hasNegNumbers)
+            throw excep(
+                "Selected algorithm (counting) does not support negative numbers.", 400);
     }
 
     return retval;

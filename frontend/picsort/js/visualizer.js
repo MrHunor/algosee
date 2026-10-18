@@ -74,7 +74,7 @@ imageUpload.addEventListener('change', (e) => {
 });
 
 function renderImageToCanvas(img) {
-    const size = 100; // size for grid
+    const size = 50;
     sourceCanvas.width = size;
     sourceCanvas.height = size;
     targetCanvas.width = size;
@@ -115,7 +115,7 @@ startBtn.addEventListener('click', async () => {
     const pixels = Array.from(imgData.data);
 
     // endpoint for picsort
-    const backendUrl = `${backendBase}/picsortalgo?algo=${algoKey}`;
+    const backendUrl = `${backendBase}/image?algo=${algoKey}`;
 
     startBtn.disabled = true;
     resetBtn.disabled = true;
@@ -124,17 +124,28 @@ startBtn.addEventListener('click', async () => {
     isCancelled = false;
 
     try {
+        // 1. export canvas as blob
+        const blob = await new Promise((resolve) => {
+            sourceCanvas.toBlob(resolve, 'image/png');
+        });
+
+        // 2. create FormData 
+        const formData = new FormData();
+            formData.append('image', blob, 'upload.png');
+
+        // 3. Fetch with multipart/form-data
         const response = await fetch(backendUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ width: width, height: height, pixels: pixels })
+            body: formData 
         });
 
         // read and print JSON-string
         const responseText = await response.text();
 
         if (!response.ok) {
-            throw new Error(responseText || `Server-Fehler: ${response.status}`);
+        let msg = responseText;
+        try { const parsed = JSON.parse(responseText); if (typeof parsed === 'string') msg = parsed; } catch (_) {}
+        throw new Error(msg || `Server-Fehler: ${response.status}`);
         }
 
         const data = JSON.parse(responseText);
@@ -146,13 +157,16 @@ startBtn.addEventListener('click', async () => {
         }
 
         // visualize sorting
-        if (data.STEPS && Array.isArray(data.STEPS)) {
-            await visualizeImageSteps(data.STEPS, width, height);
-        } else if (data.SORTED_PIXELS) {
-            // incase final response gets send
-            renderPixels(data.SORTED_PIXELS, width, height);
+        const sortedPixels = data["SORTED"];  // Array of [index, R, G, B, A]
+        if (sortedPixels && Array.isArray(sortedPixels)) {
+            // convert SORTED-Format to Flat Pixel Array
+            const flatPixels = [];
+            for (const [index, r, g, b, a] of sortedPixels) {
+                flatPixels.push(r, g, b, a);
+            }
+            await visualizeImageSteps([flatPixels], width, height);  // or renderPixels(flatPixels, width, height);
         } else {
-            alert("No valid steps received from backend.");
+            alert("No valid SORTED data received from backend.");
         }
 
     } catch (error) {

@@ -22,6 +22,7 @@
 #define DEF_TESTCASES_H
 #include "max_sizes.h"
 #include <string>
+#include <unordered_map>
 #include <vector>
 const std::vector<std::pair<std::string, int>> testCasesSorting{
 
@@ -82,6 +83,25 @@ const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesPathfind
 
     {"ASTAR", {10, 5}},       {"ASTAR", {20, 5}},       {"ASTAR", {100, 45}},
     {"ASTAR", {250, 150}},    {"ASTAR", {249, 249}},
+};
+
+const std::unordered_map<std::string, std::vector<std::string>>
+    implementedAlgoExpectedResponseType{
+        {"selection", {"MOVES", "SORTED"}},
+        {"bubble", {"MOVES", "SORTED"}},
+        {"quick", {"MOVES", "SORTED"}},
+        {"merge",
+         {"SPLIT (ORIGIN,LEFT,RIGHT)", "SORTED (LEFT,RIGHT)",
+          "MERGED (LEFT,RIGHT,RESULT)", "SORTED"}},
+        {"counting", {"COUNT ARRAY", "SORTED"}},
+        {"cycle", {"SWAPED", "SORTED"}},
+        {"bogo", {"TRIES", "SORTED"}},
+
+        {"BFS", {"VISITED", "SEARCHMAP", "PATH"}},
+        {"dijkstra", {"DISTANCE", "PATH"}},
+        {"DFS", {"VISITED", "SEARCHMAP", "PATH"}},
+        {"BIBFS", {"VISITEDFROMSTART", "VISITEDFROMEND", "PATH"}},
+        {"ASTAR", {"DISTANCE", "PATH"}},
 };
 
 #endif

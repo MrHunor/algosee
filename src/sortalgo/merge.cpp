@@ -78,8 +78,9 @@ void MergeSort(std::vector<int> &unsorted, json &response)
     size_t mid = unsorted.size() / 2; // beg to god rounding logic works
 
     std::vector<int> left(unsorted.begin(),
-                          unsorted.begin() + mid); // fun fact; last iterator is the one NOT to copy anymore, so
-                                                   // actually the last one to copy is last-1
+                          unsorted.begin() +
+                              mid); // fun fact; last iterator is the one NOT to copy
+                                    // anymore, so actually the last one to copy is last-1
     std::vector<int> right(unsorted.begin() + mid, unsorted.end());
     response["SPLIT (ORIGIN,LEFT,RIGHT)"].push_back({unsorted, left, right});
 
@@ -146,16 +147,20 @@ void MergeSort(indexPixel &unsorted, json &response)
     size_t mid = unsorted.size() / 2; // beg to god rounding logic works
 
     indexPixel left(unsorted.begin(),
-                    unsorted.begin() + mid); // fun fact; last iterator is the one NOT to copy anymore, so
-                                             // actually the last one to copy is last-1
+                    unsorted.begin() +
+                        mid); // fun fact; last iterator is the one NOT to copy anymore,
+                              // so actually the last one to copy is last-1
     indexPixel right(unsorted.begin() + mid, unsorted.end());
     // recursion magic
-    response["SPLIT (ORIGIN,LEFT,RIGHT)"].push_back(
-        {IndexPixelArrToJson(unsorted), IndexPixelArrToJson(left), IndexPixelArrToJson(right)});
+    response["SPLIT (ORIGIN,LEFT,RIGHT)"].push_back({IndexPixelArrToJson(unsorted),
+                                                     IndexPixelArrToJson(left),
+                                                     IndexPixelArrToJson(right)});
     MergeSort(left, response);
     MergeSort(right, response);
-    response["SORTED (LEFT,RIGHT)"].push_back({IndexPixelArrToJson(left), IndexPixelArrToJson(right)});
+    response["SORTED (LEFT,RIGHT)"].push_back(
+        {IndexPixelArrToJson(left), IndexPixelArrToJson(right)});
     unsorted = Merge(left, right);
-    response["MERGED (LEFT,RIGHT,RESULT)"].push_back(
-        {IndexPixelArrToJson(left), IndexPixelArrToJson(right), IndexPixelArrToJson(unsorted)});
+    response["MERGED (LEFT,RIGHT,RESULT)"].push_back({IndexPixelArrToJson(left),
+                                                      IndexPixelArrToJson(right),
+                                                      IndexPixelArrToJson(unsorted)});
 }

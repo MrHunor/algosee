@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 container.appendChild(cell);
-                currentRow.push(1); // base-value 1 
+                currentRow.push(0); // base-value 0 (passable for boolean algos)
             }
             grid.push(currentRow);
         }
@@ -141,13 +141,15 @@ document.addEventListener('DOMContentLoaded', () => {
         cell.classList.remove('wall', 'cost-5');
 
         if (currentTool === 'wall') {
-            cell.classList.add('wall');
-            grid[r][c] = -1;
-        } else if (currentTool === 'cost-1') {
-            grid[r][c] = 1;
-        } else if (currentTool === 'cost-5') {
-            cell.classList.add('cost-5');
-            grid[r][c] = 5;
+        cell.classList.add('wall');
+        grid[r][c] = 1; // 1 = blocked (true for boolean algos)
+        } 
+        else if (currentTool === 'cost-1') {
+        grid[r][c] = 0; // 0 = passable (false for boolean algos)
+        } 
+        else if (currentTool === 'cost-5') {
+        cell.classList.add('cost-5');
+        grid[r][c] = 1; // 1 = blocked (true for boolean algos)
         }
     }
 
@@ -189,8 +191,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const responseText = await response.text();
 
                 if (!response.ok) {
-                    // print JSON string
-                    throw new Error(responseText || `Server-Fehler: ${response.status}`);
+                let msg = responseText;
+                try { const parsed = JSON.parse(responseText); if (typeof parsed === 'string') msg = parsed; } catch (_) {}
+                throw new Error(msg || `Server-Fehler: ${response.status}`);
                 }
 
                 const data = JSON.parse(responseText);
@@ -211,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 startBtn.disabled = false;
                 if (resetBtn) resetBtn.disabled = false;
                 if (speedSlider) speedSlider.disabled = false;
-                if (stopBtn) speedBtn.disabled = true; // or stopBtn.disabled = true
+                if (stopBtn) stopBtn.disabled = true;
             }
         });
     }

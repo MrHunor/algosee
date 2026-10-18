@@ -18,6 +18,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../logger/logger.h"
+#include "../utils/general/utils.h"
 #include "build_info.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
@@ -25,11 +26,12 @@
 void RunStatus(const httplib::Request &req, httplib::Response &res, stateClass &state)
 {
     json response;
-    response["STATUS"] = "ONLINE";
-    response["VERSION"] = ALGOSEE_VERSION;
-    response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
+    generateJsonRetrunArras(response);
+    fillWithMetaData(response);
     state.out("Sending status signal...", 0);
     res.status = 200;
     res.set_header("Access-Control-Allow-Origin", "*");
-    res.set_content(response.dump(), "application/json");
+    std::string responseString = std::move(response.dump());
+    state.out("Sending response:" + responseString, 0);
+    res.set_content(responseString, "application/json");
 }

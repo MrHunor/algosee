@@ -25,8 +25,10 @@
 #include <utility>
 #include <vector>
 
-std::vector<std::pair<int, int>> BreadthFirstSearch(std::vector<std::vector<bool>> map, std::pair<int, int> start,
-                                                    std::pair<int, int> goal, json &response)
+std::vector<std::pair<int, int>> BreadthFirstSearch(std::vector<std::vector<bool>> &map,
+                                                    std::pair<int, int> start,
+                                                    std::pair<int, int> goal,
+                                                    json &response)
 {
     // Frontier means what is it going to explore next, hence it being a queue
 
@@ -34,11 +36,14 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(std::vector<std::vector<bool
     const int rows = map.size();
     const int collums = map[0].size();
 
-    std::vector<std::vector<int>> visited(rows, std::vector<int>(collums, -1)); // weird ass constructor
-    std::vector<std::vector<std::pair<int, int>>> parent(rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
+    std::vector<std::vector<int>> visited(
+        rows, std::vector<int>(collums, -1)); // weird ass constructor
+    std::vector<std::vector<std::pair<int, int>>> parent(
+        rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
     std::vector<std::pair<int, int>> path;
 
-    std::vector<std::vector<int>> searchMap(rows, std::vector<int>(collums, -1)); // weird ass constructor
+    std::vector<std::vector<int>> searchMap(
+        rows, std::vector<int>(collums, -1)); // weird ass constructor
 
     std::queue<std::pair<int, int>> frontier;
     frontier.push({start.second, start.first});
@@ -65,7 +70,8 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(std::vector<std::vector<bool
             int yNeighbour = y + directionsRows[i];
             int xNeighbour = x + directionsCollums[i];
 
-            if (yNeighbour < 0 || yNeighbour > rows - 1 || xNeighbour < 0 || xNeighbour > collums - 1)
+            if (yNeighbour < 0 || yNeighbour > rows - 1 || xNeighbour < 0 ||
+                xNeighbour > collums - 1)
                 continue; // current neighboor out of map, skip this iteration
 
             if (map[yNeighbour][xNeighbour] == true)
