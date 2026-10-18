@@ -82,6 +82,22 @@ PathValidReturn ValidatePath(const httplib::Request &req, stateClass &state)
     retval.start = parsed["START"];
     retval.goal = parsed["GOAL"];
 
+    auto it = implementedPathAlgos.find(retval.algo);
+    if (retval.algo == "dijkstra" || retval.algo == "ASTAR")
+    {
+        if (retval.mapInt.size() * retval.mapInt[0].size() > it->second)
+            throw excep("Too many element specified. " + it->first +
+                            " only accepts less then " + std::to_string(it->second) +
+                            " elements.",
+                        413);
+    }
+    else if (retval.algo != "dijkstra" &&
+             retval.mapBool.size() * retval.mapBool[0].size() > it->second)
+        throw excep("Too many element specified. " + it->first +
+                        " only accepts less then " + std::to_string(it->second) +
+                        " elements.",
+                    413);
+
     state.out("Checking Maps internal validness...", 0);
     if (retval.algo != "dijkstra" && retval.algo != "ASTAR")
         CheckMapValidness(retval.mapBool, retval.start, retval.goal);
@@ -104,20 +120,6 @@ PathValidReturn ValidatePath(const httplib::Request &req, stateClass &state)
         if (CheckMapForZero(retval.mapInt))
             throw excep("Map may not contain zero values for this algorithm.", 400);
     }
-    auto it = implementedPathAlgos.find(retval.algo);
-    if (retval.algo == "dijkstra" || retval.algo == "ASTAR")
-    {
-        if (retval.mapInt.size() * retval.mapInt[0].size() > it->second)
-            throw excep("Too many element specified. " + it->first +
-                            " only accepts less then " + std::to_string(it->second) +
-                            " elements.",
-                        413);
-    }
-    else if (retval.algo != "dijkstra" &&
-             retval.mapBool.size() * retval.mapBool[0].size() > it->second)
-        throw excep("Too many element specified. " + it->first +
-                        " only accepts less then " + std::to_string(it->second) +
-                        " elements.",
-                    413);
+
     return retval;
 }

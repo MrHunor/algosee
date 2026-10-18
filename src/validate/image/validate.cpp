@@ -28,8 +28,6 @@ ImageValidReturn ValidateImage(const httplib::Request &req, stateClass &state)
 {
     ImageValidReturn retval;
 
-    retval.img = LoadImage(req, state);
-
     if (!req.has_param("algo"))
     {
         throw excep("URL does not contain a url parameter.", 400);
@@ -59,5 +57,7 @@ ImageValidReturn ValidateImage(const httplib::Request &req, stateClass &state)
                         std::to_string(it->second),
                     413);
     }
+
+    retval.img = LoadImage(req, state);
     return retval;
 }
