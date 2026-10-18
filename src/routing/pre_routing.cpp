@@ -64,6 +64,37 @@ httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req
         ReturnFailedAnswer(res, "You are being rate limited. Try again later.", 429);
         return httplib::Server::HandlerResponse::Handled;
     }
+
+    res.set_chunked_content_provider("application/json", [&state](size_t, httplib::DataSink &sink) {
+        while (true)
+        {
+            json chunk;
+
+            std::unique_lock<std::mutex> lock(
+                state.stream.writeMutex); // has to be a unique_locl because the cv_notify.wait() operations needs one
+
+            state.stream.cv_notify.wait(lock, [&] {
+                return !state.stream.chunks.empty() ||
+                       state.stream.finished; // if either evaluate to true then the wait is finished, so if chunks is
+                                              // not empty or if the stream is finished
+            });
+
+            if (state.stream.chunks.empty() && state.stream.finished)
+                break; // queue is empty and stream is finished, exit out of loop and exit out of handler
+
+            chunk = std::move(state.stream.chunks.front());
+            state.stream.chunks.pop();                           // move the first chunk to chunk and delete from queue
+            if (!sink.write(chunk.dump().c_str(), chunk.size())) //.write should evaluate to true is the sink is still
+                                                                 //viable, if not something bad happend
+            {
+                state.stream.finish();
+                return false; // bad happend, return false (this case is weird)
+            }
+        }
+        sink.done();
+        return true; // everything fine, normal exit return true
+    });
+
     // continue to normal handling
     return httplib::Server::HandlerResponse::Unhandled;
 }

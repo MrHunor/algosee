@@ -21,6 +21,7 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 #include "../defs/general.h"
+#include "../stream/stream.h"
 #include <chrono>
 #include <format>
 #include <fstream>
@@ -92,6 +93,7 @@ class stateClass
 
   public:
     int verbose;
+    StreamClass stream;
     void out(const std::string &output, int importance, const std::string &colour = DEFAULT_COLOUR,
              std::source_location location = std::source_location::current())
     {
