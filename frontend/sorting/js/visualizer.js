@@ -168,9 +168,9 @@ startBtn.addEventListener('click', async () => {
     resetBtn.disabled = true;
     if (sizeSlider) sizeSlider.disabled = true;
     if (speedSlider) speedSlider.disabled = true;
-    stopBtn.disabled = false; // accses stop button 
+    stopBtn.disabled = false; // accses stop button
     isCancelled = false;      // reset cancel flag
-
+//error handling, now adjusted for dynamic error messages
     try {
         const response = await fetch(backendUrl, {
             method: 'POST',
@@ -178,9 +178,14 @@ startBtn.addEventListener('click', async () => {
             body: JSON.stringify({ values: array })
         });
 
-        if (!response.ok) throw new Error('Error while communication with Backend');
+        // read, print JSON string 
+        const responseText = await response.text();
 
-        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(responseText || `Server-Fehler: ${response.status}`);
+        }
+
+        const data = JSON.parse(responseText);
 
         if (data.TIME !== undefined) {
             const timeMs = (data.TIME / 1_000_000).toFixed(2);
@@ -207,7 +212,8 @@ startBtn.addEventListener('click', async () => {
 
     } catch (error) {
         console.error("Connection-Error:", error);
-        alert("Error connecting to backend.");
+        // prints backend JSON string
+        alert(error.message);
     } finally {
         // unlock UI (this'll clean up)
         startBtn.disabled = false;

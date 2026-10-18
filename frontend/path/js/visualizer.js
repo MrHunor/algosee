@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let animationSpeed = 200;
     let isCancelled = false;
-    let currentTool = 'wall'; // 'wall', 'cost-1', 'cost-5'
+    let currentTool = 'wall'; // 'wall', 'cost-1', 'cost-5' 
 
     // 3.tool selct listener
     document.querySelectorAll('.tool-btn').forEach(btn => {
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. web audio api
+    // 4. web audio api 
     let audioCtx = null;
     function playTone(frequency) {
         if (!audioCtx) {
@@ -185,13 +185,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify(payload)
                 });
 
-                const data = await response.json().catch(() => null);
+                // read response as text since backend sends JSON-string
+                const responseText = await response.text();
 
                 if (!response.ok) {
-                    // uses message from backend or http status
-                    const serverMessage = data?.error || data?.message || `Server-Fehler: ${response.status} ${response.statusText}`;
-                    throw new Error(serverMessage);
+                    // print JSON string
+                    throw new Error(responseText || `Server-Fehler: ${response.status}`);
                 }
+
+                const data = JSON.parse(responseText);
 
                 if (data.TIME !== undefined) {
                     const timeMs = (data.TIME / 1_000_000).toFixed(2);
@@ -204,13 +206,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             } catch (error) {
                 console.error("Connection-Error:", error);
-                // dynamic error message (network or backend )
-                alert(error.message || "Fehler bei der Verbindung zum Backend.");
+                alert(error.message);
             } finally {
                 startBtn.disabled = false;
                 if (resetBtn) resetBtn.disabled = false;
                 if (speedSlider) speedSlider.disabled = false;
-                if (stopBtn) stopBtn.disabled = true;
+                if (stopBtn) speedBtn.disabled = true; // or stopBtn.disabled = true
             }
         });
     }

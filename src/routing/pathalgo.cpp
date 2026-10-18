@@ -46,7 +46,7 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass
 
         // parsing
         state.out("Processing values....", 0);
-        PathValidReturn info = validatePath(req, state);
+        PathValidReturn info = ValidatePath(req, state);
 
         state.out("Starting time mesurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
@@ -77,7 +77,7 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass
 
         if (path.empty())
         {
-            throw excep("No valid path found from start to goal.");
+            throw excep("No valid path found from start to goal.", 422);
         }
         res.status = 200;
         response["PATH"] = path;
@@ -85,10 +85,16 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass
         res.set_header("Access-Control-Allow-Origin", "*");
         res.set_content(response.dump(), "application/json");
     }
+    catch (const excep &e)
+    {
+        state.out(
+            "Cought a excep, Details:" + std::string(e.what()) + "\n" + "Status Code:" + std::to_string(e.exitCode), 0);
+        ReturnFailedAnswer(res, std::string(e.what()), e.exitCode);
+    }
     catch (const std::exception &e)
     {
         state.out("Cought an exception:" + std::string(e.what()), 0);
-        returnFailedAnswer(res, std::string(e.what()));
+        ReturnFailedAnswer(res, std::string(e.what()));
     }
     return;
 }

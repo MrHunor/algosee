@@ -38,7 +38,7 @@
 #include <stdexcept>
 #include <vector>
 
-json indexPixelArrToJson(const indexPixel &arr)
+json IndexPixelArrToJson(const indexPixel &arr)
 {
     json jarr = json::array();
     for (const auto &element : arr)
@@ -49,12 +49,12 @@ json indexPixelArrToJson(const indexPixel &arr)
     return jarr;
 }
 
-image loadImage(const httplib::Request &req, const stateClass &state)
+image LoadImage(const httplib::Request &req, const stateClass &state)
 {
 
     // read image from body to file
     if (!req.form.has_file("image"))
-        throw excep("Request does not contain a 'image' file.");
+        throw excep("Request does not contain a 'image' file.", 400);
 
     const auto &image = req.form.get_file("image");
 
@@ -65,17 +65,17 @@ image loadImage(const httplib::Request &req, const stateClass &state)
 
     if (stbi_info_from_memory(reinterpret_cast<const stbi_uc *>(image.content.data()), image.content.size(), &width,
                               &height, nullptr) != true)
-        throw excep("Failed to read Metadata from image.");
+        throw excep("Failed to read Metadata from image.", 500);
     if (width < 1 || height < 1)
-        throw excep("The provided image has invalid dimensions.");
+        throw excep("The provided image has invalid dimensions.", 415);
     if (width * height > MAX_PIXEL_COUNT_IMAGE)
-        throw excep("Image contains too many pixels. Max pixels:" + std::to_string(MAX_PIXEL_COUNT_IMAGE));
+        throw excep("Image contains too many pixels. Max pixels:" + std::to_string(MAX_PIXEL_COUNT_IMAGE), 413);
 
     colour *data = stbi_load_from_memory(reinterpret_cast<const stbi_uc *>(image.content.data()), image.content.size(),
                                          &width, &height, &channels, 4);
 
     if (!data)
-        throw excep("Failed to read saved image into memory.");
+        throw excep("Failed to read saved image into memory.", 500);
 
     // copy to vector
     std::vector<colour> colours(data, data + (width * height * 4));
@@ -112,7 +112,7 @@ image loadImage(const httplib::Request &req, const stateClass &state)
     return retval;
 }
 
-void shuffleImage(image &img)
+void ShuffleImage(image &img)
 {
     std::random_device rd;
     std::mt19937 g(rd());

@@ -29,5 +29,5 @@ struct ImageValidReturn
     std::string algo;
 };
 
-ImageValidReturn validateImage(const httplib::Request &req, stateClass &state);
+ImageValidReturn ValidateImage(const httplib::Request &req, stateClass &state);
 #endif

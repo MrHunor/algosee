@@ -19,21 +19,20 @@
  */
 
 #include "../../defs/types.h"
+#include "../general/utils.h"
 #include <algorithm>
-#include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
 #include <random>
 #include <vector>
 
-void randomise(std::vector<int> &vec)
+void Randomise(std::vector<int> &vec)
 {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
+    auto gen = getRandomGen();
 
     std::shuffle(vec.begin(), vec.end(), gen);
 }
 
-void randomise(indexPixel &vec)
+void Randomise(indexPixel &vec)
 {
     static std::random_device rd;
     static std::mt19937 gen(rd());

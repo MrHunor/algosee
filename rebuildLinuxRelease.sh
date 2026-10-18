@@ -19,4 +19,4 @@ set -euxo pipefail
 
 conan install . --output-folder=build --build=missing -s build_type=Release
 cmake --preset conan-release -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake -G Ninja
-cmake --build build --parallel 10 #why 10 threads? see Issue #150
+cmake --build build --parallel 10

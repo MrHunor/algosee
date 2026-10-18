@@ -26,6 +26,9 @@
 #include <string>
 class excep : public std::runtime_error
 {
+  public:
+    unsigned short exitCode;
+
   private:
     std::string formatMessage(const std::string &message, std::source_location location)
     {
@@ -40,8 +43,11 @@ class excep : public std::runtime_error
     }
 
   public:
-    excep(const std::string &message, std::source_location location = std::source_location::current(),
-          int SetexitCode = 400)
-        : std::runtime_error(formatMessage(message, location)) {};
+    excep(const std::string &message, unsigned short exitCode_,
+          std::source_location location = std::source_location::current(), int SetexitCode = 400)
+        : std::runtime_error(formatMessage(message, location))
+    {
+        exitCode = exitCode_;
+    };
 };
 #endif

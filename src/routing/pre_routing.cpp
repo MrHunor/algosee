@@ -25,7 +25,7 @@
 #include <mutex>
 #include <nlohmann/json.hpp>
 
-httplib::Server::HandlerResponse runPreflightHandler(const httplib::Request &req, httplib::Response &res,
+httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req, httplib::Response &res,
                                                      stateClass &state, clientListType &clientList,
                                                      std::mutex &clientListMutex)
 {
@@ -49,7 +49,7 @@ httplib::Server::HandlerResponse runPreflightHandler(const httplib::Request &req
 
     // prevent a data race
     std::lock_guard<std::mutex> lock(clientListMutex);
-    addClient(clientList, {std::chrono::system_clock::now(), ip});
+    AddClient(clientList, {std::chrono::system_clock::now(), ip});
     state.out("Added to Clientlist:", 0);
     std::string output;
     for (const auto &element : clientList)
@@ -59,9 +59,9 @@ httplib::Server::HandlerResponse runPreflightHandler(const httplib::Request &req
         state.out(output, 0);
     }
 
-    if (checkRateLimit(clientList, clientList.size() - 1))
+    if (CheckRateLimit(clientList, clientList.size() - 1))
     {
-        returnFailedAnswer(res, "You are being rate limited. Try again later.", 429);
+        ReturnFailedAnswer(res, "You are being rate limited. Try again later.", 429);
         return httplib::Server::HandlerResponse::Handled;
     }
     // continue to normal handling

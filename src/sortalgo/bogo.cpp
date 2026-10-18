@@ -23,30 +23,29 @@
 #include "../utils/image/image.h"
 #include "../utils/sortalgo/sortalgo.h"
 #include <algorithm>
-#include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void bogoSort(std::vector<int> &unsorted, json &response)
+void BogoSort(std::vector<int> &unsorted, json &response)
 {
     if (unsorted.size() == 1)
         return; // an array of the size one is already sorted
     while (!std::is_sorted(unsorted.begin(), unsorted.end()))
     {
-        randomise(unsorted);
+        Randomise(unsorted);
         response["TRIES"].push_back(unsorted);
     }
 }
 
 //--------------IMAGE-------------------
-void bogoSort(indexPixel &unsorted, json &response)
+void BogoSort(indexPixel &unsorted, json &response)
 {
     if (unsorted.size() == 1)
         return; // an array of the size one is already sorted
     while (!std::is_sorted(unsorted.begin(), unsorted.end(),
                            [](const auto &a, const auto &b) { return a.first < b.first; }))
     {
-        response["TRIES"].push_back(indexPixelArrToJson(unsorted));
-        randomise(unsorted);
+        response["TRIES"].push_back(IndexPixelArrToJson(unsorted));
+        Randomise(unsorted);
     }
 }

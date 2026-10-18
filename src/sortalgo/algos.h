@@ -27,20 +27,20 @@
 #include <vector>
 
 //--------------------NUMBERS------------------------------
-void selectionSort(std::vector<int> &unsorted, json &response);
-void bogoSort(std::vector<int> &unsorted, json &response);
-void bubbleSort(std::vector<int> &unsorted, json &response);
-void quickSort(std::vector<int> &unsorted, int low, int high, json &response);
-void mergeSort(std::vector<int> &unsorted, json &response);
-void countingSort(std::vector<int> &unsorted, json &response);
-void cycleSort(std::vector<int> &unsorted, json &response);
+void SelectionSort(std::vector<int> &unsorted, json &response);
+void BogoSort(std::vector<int> &unsorted, json &response);
+void BubbleSort(std::vector<int> &unsorted, json &response);
+void QuickSort(std::vector<int> &unsorted, int low, int high, json &response);
+void MergeSort(std::vector<int> &unsorted, json &response);
+void CountingSort(std::vector<int> &unsorted, json &response);
+void CycleSort(std::vector<int> &unsorted, json &response);
 
 //-------------------IMAGES------------------------------------
-void selectionSort(indexPixel &unsorted, json &response);
-void bogoSort(indexPixel &unsorted, json &response);
-void bubbleSort(indexPixel &unsorted, json &response);
-void quickSort(indexPixel &unsorted, int low, int high, json &response);
-void countingSort(indexPixel &unsorted, json &response);
-void cycleSort(indexPixel &unsorted, json &response);
-void mergeSort(indexPixel &unsorted, json &response);
+void SelectionSort(indexPixel &unsorted, json &response);
+void BogoSort(indexPixel &unsorted, json &response);
+void BubbleSort(indexPixel &unsorted, json &response);
+void QuickSort(indexPixel &unsorted, int low, int high, json &response);
+void CountingSort(indexPixel &unsorted, json &response);
+void CycleSort(indexPixel &unsorted, json &response);
+void MergeSort(indexPixel &unsorted, json &response);
 #endif

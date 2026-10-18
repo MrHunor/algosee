@@ -22,12 +22,11 @@
 #include "../../logger/logger.h"
 #include <httplib/httplib.h>
 #include <vector>
-
 struct SortValidReturn
 {
     std::vector<int> values;
     std::string algo;
 };
 
-SortValidReturn validateSort(const httplib::Request &req, stateClass &state);
+SortValidReturn ValidateSort(const httplib::Request &req, stateClass &state);
 #endif

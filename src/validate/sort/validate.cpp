@@ -25,41 +25,41 @@
 #include <httplib/httplib.h>
 #include <vector>
 
-SortValidReturn validateSort(const httplib::Request &req, stateClass &state)
+SortValidReturn ValidateSort(const httplib::Request &req, stateClass &state)
 {
     SortValidReturn retval;
 
     if (!req.has_param("algo"))
     {
-        throw excep("URL does not contain a url parameter.");
+        throw excep("URL does not contain a url parameter.", 400);
     }
     retval.algo = req.get_param_value("algo");
     if (retval.algo.empty())
     {
-        throw excep("URL contains a algo parameter but no algo is set.");
+        throw excep("URL contains a algo parameter but no algo is set.", 400);
     }
     if (!implementedSortAlgos.contains(retval.algo))
     {
-        throw excep("Provided algo does not exist or is not implemented.");
+        throw excep("Provided algo does not exist or is not implemented.", 501);
     }
 
     json parsed = json::parse(req.body);
 
     if (!parsed.contains("values"))
     {
-        throw excep("Body does not contain a values parameter.");
+        throw excep("Body does not contain a values parameter.", 400);
     }
 
     if (!parsed["values"].is_array())
     {
-        throw excep("Values is not an array.");
+        throw excep("Values is not an array.", 400);
     }
 
     // you could check if all elements are integers but nlohman does that
     // internelly and throws itself so it is not really needed
     retval.values = parsed["values"].get<std::vector<int>>();
     if (retval.values.empty())
-        throw excep("No values provided.");
+        throw excep("No values provided.", 400);
 
     if (retval.algo == "counting")
     {
@@ -68,14 +68,15 @@ SortValidReturn validateSort(const httplib::Request &req, stateClass &state)
                                              return x < 0;
                                          });
         if (hasNegNumbers)
-            throw excep("Selected algorithm (counting) does not support negative numbers.");
+            throw excep("Selected algorithm (counting) does not support negative numbers.", 400);
     }
 
     auto it = implementedSortAlgos.find(retval.algo);
     if (retval.values.size() > it->second)
     {
         throw excep("Too many element specified. " + it->first + " only accepts less then " +
-                    std::to_string(it->second) + " elements.");
+                        std::to_string(it->second) + " elements.",
+                    413);
     }
 
     if (retval.algo == "counting")
@@ -83,7 +84,8 @@ SortValidReturn validateSort(const httplib::Request &req, stateClass &state)
         auto range = std::minmax_element(retval.values.begin(), retval.values.end());
         if (*range.second > HIGHEST_ELEMENT_COUNTING)
             throw excep("The Highest element (max) is higher then the set limit:" +
-                        std::to_string(HIGHEST_ELEMENT_COUNTING));
+                            std::to_string(HIGHEST_ELEMENT_COUNTING),
+                        413);
     }
 
     return retval;

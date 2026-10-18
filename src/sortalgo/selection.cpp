@@ -21,12 +21,11 @@
 #include "../defs/general.h"
 #include "../defs/types.h"
 #include <algorithm>
-#include <bits/stdc++.h>
 #include <nlohmann/json.hpp>
 #include <utility>
 #include <vector>
 
-void selectionSort(std::vector<int> &unsorted, json &response)
+void SelectionSort(std::vector<int> &unsorted, json &response)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted
@@ -43,7 +42,7 @@ void selectionSort(std::vector<int> &unsorted, json &response)
 }
 
 //--------------IMAGE-----------------------------
-void selectionSort(indexPixel &unsorted, json &response)
+void SelectionSort(indexPixel &unsorted, json &response)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted

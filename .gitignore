@@ -3,3 +3,4 @@ build-debug/*
 testclient/build/*
 log.txt
 frontend/picsort/notice.md
+frontend/logs.md 

@@ -24,36 +24,36 @@
 #include "../../logger/logger.h"
 #include "../../utils/image/image.h"
 #include <httplib/httplib.h>
-ImageValidReturn validateImage(const httplib::Request &req, stateClass &state)
+ImageValidReturn ValidateImage(const httplib::Request &req, stateClass &state)
 {
     ImageValidReturn retval;
 
-    retval.img = loadImage(req, state);
+    retval.img = LoadImage(req, state);
 
     if (!req.has_param("algo"))
     {
-        throw excep("URL does not contain a url parameter.");
+        throw excep("URL does not contain a url parameter.", 400);
     }
     retval.algo = req.get_param_value("algo");
     if (retval.algo.empty())
     {
-        throw excep("URL contains a algo parameter but no algo is set.");
+        throw excep("URL contains a algo parameter but no algo is set.", 400);
     }
     if (!implementedSortAlgos.contains(retval.algo))
     {
-        throw excep("Provided algo does not exist or is not implemented.");
+        throw excep("Provided algo does not exist or is not implemented.", 501);
     }
     // technically this check isnt needed because stbi_info in loadImage already checks it but im to anxious to delete
     // it :3
     if (retval.img.width * retval.img.height > MAX_PIXEL_COUNT_IMAGE)
     {
-        throw excep("Too many pixels provided. Max:" + std::to_string(MAX_PIXEL_COUNT_IMAGE));
+        throw excep("Too many pixels provided. Max:" + std::to_string(MAX_PIXEL_COUNT_IMAGE), 413);
     }
 
     auto it = implementedSortAlgos.find(retval.algo);
     if (retval.img.width * retval.img.height > it->second)
     {
-        throw excep("Too many elements (pixels) provided. Max for this algorithm:" + std::to_string(it->second));
+        throw excep("Too many elements (pixels) provided. Max for this algorithm:" + std::to_string(it->second), 413);
     }
     return retval;
 }

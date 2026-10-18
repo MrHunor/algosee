@@ -22,14 +22,16 @@
 #define UTILS_H
 #include "../../defs/types.h"
 #include <httplib.h>
+#include <random>
 #include <source_location>
 #include <string>
-int randomInt(int lower, int upper);
-std::string executeCommand(const std::string &command);
+int RandomInt(int lower, int upper);
+std::string ExecuteCommand(const std::string &command);
 void InvalidInputMessage(const std::string &details, std::source_location location = std::source_location::current());
-void returnFailedAnswer(httplib::Response &res, const std::string &Details, int exitCode = 400);
-void addClient(clientListType &cList,
+void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int exitCode = 400);
+void AddClient(clientListType &cList,
                const std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string> &newEntry);
-bool checkRateLimit(const clientListType &cList, const int &index);
-std::string generateRandomString(const int &size);
+bool CheckRateLimit(const clientListType &cList, const int &index);
+std::string GenerateRandomString(const int &size);
+std::mt19937 getRandomGen();
 #endif

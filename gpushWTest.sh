@@ -15,9 +15,10 @@
  #
  #   You should have received a copy of the GNU General Public License
  #   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
+ #
+ # This script is for the true sigmas
 set -euxo pipefail
-#This script is here, cuz I am lazy af :D
-if [ -z "$1" ]; then
+if [ -z "${1-}" ]; then
     echo "Error: Please specify a commit message."
     echo "Usage: ./gpush.sh \"commit message\""
     exit 1
@@ -41,3 +42,4 @@ trap - EXIT
 cd ..
 echo "Creating commit named "$1" and pushing to github"
 git add . && git commit -m "$1" && git pull origin development --rebase && git push origin development
+# this whole file is to be changed, so pretty much unusable right now
