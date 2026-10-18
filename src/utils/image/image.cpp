@@ -67,7 +67,7 @@ image LoadImage(const httplib::Request &req, const stateClass &state)
                               &height, nullptr) != true)
         throw excep("Failed to read Metadata from image.", 500);
     if (width < 1 || height < 1)
-        throw excep("The provided image has invalid dimensions.", 500);
+        throw excep("The provided image has invalid dimensions.", 415);
     if (width * height > MAX_PIXEL_COUNT_IMAGE)
         throw excep("Image contains too many pixels. Max pixels:" + std::to_string(MAX_PIXEL_COUNT_IMAGE), 413);
 
