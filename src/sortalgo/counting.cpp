@@ -36,7 +36,7 @@ void CountingSort(std::vector<int> &unsorted, json &response)
     {
         count[i]++;
     }
-    response["COUNT ARRAY:"] = count;
+    response["COUNT ARRAY"] = count;
     for (size_t i = 0; i < unsorted.size(); i++)
     {
         while (count[countI] == 0)
@@ -68,7 +68,7 @@ void CountingSort(indexPixel &unsorted, json &response)
     {
         count[i.first]++;
     }
-    response["COUNT ARRAY:"] = count;
+    response["COUNT ARRAY"] = count;
     for (size_t i = 0; i < unsorted.size(); i++)
     {
         while (count[countI] == 0)

@@ -20,6 +20,7 @@
  */
 #ifndef UTILS_H
 #define UTILS_H
+#include "../../defs/general.h"
 #include "../../defs/types.h"
 #include <httplib.h>
 #include <random>
@@ -27,6 +28,8 @@
 #include <string>
 int RandomInt(int lower, int upper);
 std::string ExecuteCommand(const std::string &command);
+void fillWithMetaData(json &response);
+void generateJsonRetrunArras(json &response);
 void InvalidInputMessage(const std::string &details, std::source_location location = std::source_location::current());
 void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int exitCode = 400);
 void AddClient(clientListType &cList,

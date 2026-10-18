@@ -22,6 +22,7 @@
 #include "../../defs/general.h"
 #include "../../defs/ratelimits.h"
 #include "../../defs/types.h"
+#include "build_info.h"
 #include <chrono>
 #include <cstdlib>
 #include <httplib.h>
@@ -41,6 +42,37 @@ std::vector<char> randomStringDataset{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I
                                       'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
                                       'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
                                       'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+
+void fillWithMetaData(json &response)
+{
+    response["STATUS"] = "ONLINE";
+    response["VERSION"] = ALGOSEE_VERSION;
+    response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
+}
+
+void generateJsonRetrunArras(json &response)
+{
+    // both
+    response["TIME"] = -1;
+
+    // sortalgos
+    response["MOVES"] = json::array();
+    response["TRIES"] = json::array();
+    response["COUNT ARRAY"] = json::array();
+    response["SWAPED"] = json::array();
+    response["SORTED (LEFT,RIGHT)"] = json::array();
+    response["MERGED (LEFT,RIGHT,RESULT)"] = json::array();
+    response["SPLIT (ORIGIN,LEFT,RIGHT)"] = json::array();
+    response["SORTED"] = json::array();
+
+    // pathalgos
+    response["PATH"] = json::array();
+    response["DISTANCE"] = json::array();
+    response["VISITED"] = json::array();
+    response["SEARCHMAP"] = json::array();
+    response["VISITEDFROMSTART"] = json::array();
+    response["VISITEDFROMEND"] = json::array();
+}
 
 std::mt19937 getRandomGen()
 {

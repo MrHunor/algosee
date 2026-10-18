@@ -38,8 +38,8 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass
         // variables
         std::vector<std::pair<int, int>> path;
         json response;
-        response["VERSION"] = ALGOSEE_VERSION;
-        response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
+        generateJsonRetrunArras(response);
+        fillWithMetaData(response);
         bool sameRowLength = true;
         int collums;
         // log ip

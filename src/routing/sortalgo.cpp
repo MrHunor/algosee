@@ -41,8 +41,8 @@ void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
         state.out("Finished.", 0);
 
         json response;
-        response["VERSION"] = ALGOSEE_VERSION;
-        response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
+        generateJsonRetrunArras(response);
+        fillWithMetaData(response);
 
         state.out("Starting time mesurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
@@ -77,9 +77,8 @@ void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
         res.status = 200;
         res.set_header("Access-Control-Allow-Origin", "*");
         std::string responseString = std::move(response.dump());
-        state.out("Sending response:"+responseString, 0);
+        state.out("Sending response:" + responseString, 0);
         res.set_content(responseString, "application/json");
-        
     }
     catch (const excep &e)
     {

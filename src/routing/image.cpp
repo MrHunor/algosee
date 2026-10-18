@@ -25,6 +25,7 @@
 #include "../utils/general/utils.h"
 #include "../validate/image/validate.h"
 #include "build_info.h"
+#include <algorithm>
 #include <chrono>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
@@ -35,8 +36,8 @@ void RunImageSort(const httplib::Request &req, httplib::Response &res, stateClas
     try
     {
         json response;
-        response["VERSION"] = ALGOSEE_VERSION;
-        response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
+        generateJsonRetrunArras(response);
+        fillWithMetaData(response);
         ImageValidReturn info = ValidateImage(req, state);
         ShuffleImage(info.img);
         response["SHUFFLED (INDEXES)"] = IndexPixelArrToJson(info.img.data);

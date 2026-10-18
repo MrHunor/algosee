@@ -20,6 +20,7 @@
  */
 #include "../defs/max_sizes.h"
 #include "../logger/logger.h"
+#include "../utils/general/utils.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <stb_image.h>
@@ -27,6 +28,8 @@
 void RunLimits(httplib::Response &res, stateClass &state)
 {
     json response;
+    generateJsonRetrunArras(response);
+    fillWithMetaData(response);
     // sort
     response["MAX_ELEMENT_COUNT_SORT"] = MAX_ELEMENT_COUNT_SORT;
     response["MAX_ELEMENT_COUNT_SELECTION"] = MAX_ELEMENT_COUNT_SELECTION;
