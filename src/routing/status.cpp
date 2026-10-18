@@ -31,5 +31,7 @@ void RunStatus(const httplib::Request &req, httplib::Response &res, stateClass &
     state.out("Sending status signal...", 0);
     res.status = 200;
     res.set_header("Access-Control-Allow-Origin", "*");
-    res.set_content(response.dump(), "application/json");
+    std::string responseString = std::move(response.dump());
+    state.out("Sending response:" + responseString, 0);
+    res.set_content(responseString, "application/json");
 }

@@ -50,7 +50,8 @@ void RunLimits(httplib::Response &res, stateClass &state)
     response["MAX_PIXEL_COUNT_IMAGE"] = MAX_PIXEL_COUNT_IMAGE;
     res.status = 200;
     res.set_header("Access-Control-Allow-Origin", "*");
-    res.set_content(response.dump(), "application/json");
-    state.out("Sending response...", 0);
+    std::string responseString = std::move(response.dump());
+    state.out("Sending response:" + responseString, 0);
+    res.set_content(responseString, "application/json");
     return;
 }
