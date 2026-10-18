@@ -18,7 +18,7 @@
  #
  # This script is for the true sigmas
 set -euxo pipefail
-if [ -z "$1" ]; then
+if [ -z "${1-}" ]; then
     echo "Error: Please specify a commit message."
     echo "Usage: ./gpush.sh \"commit message\""
     exit 1
