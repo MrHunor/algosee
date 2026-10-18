@@ -40,7 +40,7 @@ SortValidReturn ValidateSort(const httplib::Request &req, stateClass &state)
     }
     if (!implementedSortAlgos.contains(retval.algo))
     {
-        throw excep("Provided algo does not exist or is not implemented.", 413);
+        throw excep("Provided algo does not exist or is not implemented.", 501);
     }
 
     json parsed = json::parse(req.body);
