@@ -29,6 +29,7 @@
 #include <httplib.h>
 #include <mutex>
 #include <nlohmann/json.hpp>
+#include <stdexcept>
 #include <string>
 
 int main(int argc, char *argv[])
@@ -120,15 +121,23 @@ int main(int argc, char *argv[])
         return;
     });
 
-    // render port detection magic
-    const char *port_env = std::getenv("PORT");
-    int port = port_env ? std::stoi(port_env) : 8080;
-
-    state.out("Listining on:0.0.0.0:" + std::to_string(port), 0);
-    if (!server.listen("0.0.0.0", port))
+    try
     {
-        InvalidInputMessage("Failed to listen on 0.0.0.0:" + std::to_string(port));
-    }
+        // render port detection magic
+        const char *port_env = std::getenv("PORT");
+        int port = port_env ? std::stoi(port_env) : 8080;
 
+        state.out("Listining on:0.0.0.0:" + std::to_string(port), 0);
+        if (!server.listen("0.0.0.0", port))
+        {
+            throw std::runtime_error("Failed to listen on 0.0.0.0:" +
+                                     std::to_string(port));
+        }
+    }
+    catch (const std::exception &e)
+    {
+        InvalidInputMessage("Server failed to startup with an exception:" +
+                            std::string(e.what()));
+    }
     return 0;
 }

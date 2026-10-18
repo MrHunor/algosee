@@ -29,7 +29,7 @@
 // you can just copy the BFS and change the logic which takes the frontier
 // element from "first of queue" to "last added" and boom you have DFS (and
 // replace queue with stack)
-std::vector<std::pair<int, int>> DepthFirstSearch(std::vector<std::vector<bool>> map,
+std::vector<std::pair<int, int>> DepthFirstSearch(std::vector<std::vector<bool>> &map,
                                                   std::pair<int, int> start,
                                                   std::pair<int, int> goal,
                                                   json &response)
