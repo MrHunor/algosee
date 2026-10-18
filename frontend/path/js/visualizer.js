@@ -189,8 +189,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const responseText = await response.text();
 
                 if (!response.ok) {
-                    // print JSON string
-                    throw new Error(responseText || `Server-Fehler: ${response.status}`);
+                let msg = responseText;
+                try { const parsed = JSON.parse(responseText); if (typeof parsed === 'string') msg = parsed; } catch (_) {}
+                throw new Error(msg || `Server-Fehler: ${response.status}`);
                 }
 
                 const data = JSON.parse(responseText);
@@ -211,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 startBtn.disabled = false;
                 if (resetBtn) resetBtn.disabled = false;
                 if (speedSlider) speedSlider.disabled = false;
-                if (stopBtn) speedBtn.disabled = true; // or stopBtn.disabled = true
+                if (stopBtn) stopBtn.disabled = true;
             }
         });
     }
