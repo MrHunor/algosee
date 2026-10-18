@@ -30,7 +30,7 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass &state)
+void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass &state,StreamClass& stream)
 {
     try
     {
@@ -43,27 +43,29 @@ void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
         json response;
         response["VERSION"] = ALGOSEE_VERSION;
         response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
+        stream.sendChunk(std::move(response));
+        response.clear();
 
         state.out("Starting time mesurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
 
         if (info.algo == "selection")
-            SelectionSort(info.values, response);
+            SelectionSort(info.values, response,stream);
         else if (info.algo == "cycle")
             CycleSort(info.values, response);
         else if (info.algo == "bubble")
-            BubbleSort(info.values, response);
+            BubbleSort(info.values, response,stream);
         else if (info.algo == "quick")
-            QuickSort(info.values, 0, info.values.size() - 1, response);
+            QuickSort(info.values, 0, info.values.size() - 1, response,stream);
         else if (info.algo == "merge")
-            MergeSort(info.values, response);
+            MergeSort(info.values, response,stream);
         else if (info.algo == "counting")
         {
-            CountingSort(info.values, response);
+            CountingSort(info.values, response,stream);
         }
         else if (info.algo == "bogo")
         {
-            BogoSort(info.values, response);
+            BogoSort(info.values, response,stream);
         }
 
         // Default for all algorithms exit
@@ -76,8 +78,9 @@ void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
 
         res.status = 200;
         res.set_header("Access-Control-Allow-Origin", "*");
-        res.set_content(response.dump(), "application/json");
-        state.out("Sending response...", 0);
+        stream.sendChunk(std::move(response));
+        response.clear();
+        stream.finish();
     }
     catch (const excep &e)
     {

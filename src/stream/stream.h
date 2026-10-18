@@ -25,8 +25,7 @@
 #include <thread>
 #include <vector>
 
-xxx todo: you cannot have streamclass be a memeber of state because each request has to have its own stream and state is a process wide variable;
-also, chunks.size() is not valid here so you have to use chunks.dump().size() in sink.write()
+
 class StreamClass
 {
   public:

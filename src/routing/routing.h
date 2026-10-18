@@ -31,10 +31,10 @@ void AfterSelfTestRun(std::string algorithmName, std::vector<int> &paramPassValu
                       std::vector<int> &sortedValues, json &response, json &parampassTest,
                       const std::chrono::steady_clock::time_point &startTime);
 void RunStatus(const httplib::Request &req, httplib::Response &res, stateClass &state);
-void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass &state);
+void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass &state,StreamClass& stream);
 void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass &state);
 void RunImageSort(const httplib::Request &req, httplib::Response &res, stateClass &state);
-httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req, httplib::Response &res,
+httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req, httplib::Response &res, 
                                                      stateClass &state, clientListType &clientList,
                                                      std::mutex &clientListMutex);
 void RunLimits(httplib::Response &res, stateClass &state);

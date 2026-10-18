@@ -21,6 +21,7 @@
 #include "../defs/general.h"
 #include "../defs/types.h"
 #include "../utils/image/image.h"
+#include "../stream/stream.h"
 #include <nlohmann/json.hpp>
 #include <strings.h>
 #include <vector>
@@ -70,7 +71,7 @@ std::vector<int> Merge(const std::vector<int> &arr1, const std::vector<int> &arr
     return retval;
 }
 
-void MergeSort(std::vector<int> &unsorted, json &response)
+void MergeSort(std::vector<int> &unsorted, json &response,StreamClass& stream)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted
@@ -84,11 +85,16 @@ void MergeSort(std::vector<int> &unsorted, json &response)
     response["SPLIT (ORIGIN,LEFT,RIGHT)"].push_back({unsorted, left, right});
 
     // recursion magic
-    MergeSort(left, response);
-    MergeSort(right, response);
+    MergeSort(left, response,stream);
+    MergeSort(right, response,stream);
     response["SORTED (LEFT,RIGHT)"].push_back({left, right});
     unsorted = Merge(left, right);
     response["MERGED (LEFT,RIGHT,RESULT)"].push_back({left, right, unsorted});
+    if(response["SPLIT (ORIGIN,LEFT,RIGHT)"].size()>25)//could choose any of the response type as each is called once
+    {
+     stream.sendChunk(std::move(response));
+     response.clear();
+    }
 }
 
 //----------------IMAGE-----------------------------
@@ -138,7 +144,7 @@ indexPixel Merge(indexPixel &arr1, indexPixel &arr2)
     return retval;
 }
 
-void MergeSort(indexPixel &unsorted, json &response)
+void MergeSort(indexPixel &unsorted, json &response,StreamClass& stream)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted
@@ -152,10 +158,15 @@ void MergeSort(indexPixel &unsorted, json &response)
     // recursion magic
     response["SPLIT (ORIGIN,LEFT,RIGHT)"].push_back(
         {IndexPixelArrToJson(unsorted), IndexPixelArrToJson(left), IndexPixelArrToJson(right)});
-    MergeSort(left, response);
-    MergeSort(right, response);
+    MergeSort(left, response,stream);
+    MergeSort(right, response,stream);
     response["SORTED (LEFT,RIGHT)"].push_back({IndexPixelArrToJson(left), IndexPixelArrToJson(right)});
     unsorted = Merge(left, right);
     response["MERGED (LEFT,RIGHT,RESULT)"].push_back(
         {IndexPixelArrToJson(left), IndexPixelArrToJson(right), IndexPixelArrToJson(unsorted)});
+            if(response["SPLIT (ORIGIN,LEFT,RIGHT)"].size()>25)//could choose any of the response type as each is called once
+    {
+     stream.sendChunk(std::move(response));
+     response.clear();
+    }
 }
