@@ -84,7 +84,6 @@ Current plans invlove expanding into other areas of algorithms, like wayfinding 
 <br>  
 
 # ----------------For Contributers-------------------------- 
-***This is not up to date***
 ## Project structure:
 - `./assets` Contains images for this ReadME
 - `./benchmarks` Contains the benchmark script and results
@@ -147,7 +146,11 @@ We thank every author and contribtor of those repositories from :heart: , withou
 
 # AI usage disclosure:
 I, **@MrHunor**, have used AI for explaining what do to when i didn't know anymore, as well as when i wanted to implement something but didn't know how or for scanning the codebase for bugs and possible enhancements. I've also used AI Audits, such as coderabbit on PRs.
-I, **@siryanni**, (TBD [#126](https://github.com/MrHunor/algosee/issues/126))  
+I, **@siryanni**, main usage of AI was during major bughunts, as the codebase has slowly gotten pretty big.
+                  other uses include: -image generation
+                                      -help with concept mapping
+                                      -help with code cleanup
+---                                   -said coderabbit made Issues           
 For anyone looking to contribute we would ask them to follow the line we provided 
 
 # Big :heart: to the following:

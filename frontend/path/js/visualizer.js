@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 container.appendChild(cell);
-                currentRow.push(1); // base-value 1 
+                currentRow.push(0); // base-value 0 (passable for boolean algos)
             }
             grid.push(currentRow);
         }
@@ -141,13 +141,15 @@ document.addEventListener('DOMContentLoaded', () => {
         cell.classList.remove('wall', 'cost-5');
 
         if (currentTool === 'wall') {
-            cell.classList.add('wall');
-            grid[r][c] = -1;
-        } else if (currentTool === 'cost-1') {
-            grid[r][c] = 1;
-        } else if (currentTool === 'cost-5') {
-            cell.classList.add('cost-5');
-            grid[r][c] = 5;
+        cell.classList.add('wall');
+        grid[r][c] = 1; // 1 = blocked (true for boolean algos)
+        } 
+        else if (currentTool === 'cost-1') {
+        grid[r][c] = 0; // 0 = passable (false for boolean algos)
+        } 
+        else if (currentTool === 'cost-5') {
+        cell.classList.add('cost-5');
+        grid[r][c] = 1; // 1 = blocked (true for boolean algos)
         }
     }
 

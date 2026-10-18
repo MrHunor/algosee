@@ -180,10 +180,9 @@ std::vector<std::vector<bool>> CastIntMapToBoolIfNeeded(const json &input)
         retvalRow.clear();
         for (const auto &element : row)
         {
-            if (element == 0)
-                retvalRow.push_back(false);
-            else if (element == 1)
-                retvalRow.push_back(true);
+            if (element == -1) 
+            retvalRow.push_back(true); // -1 = blocked
+            else retvalRow.push_back(false); // 0, 1, 5, ... = walkable
             else
                 return {};
         }
