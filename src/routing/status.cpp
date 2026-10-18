@@ -17,8 +17,8 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#include "../build_info.h.in"
 #include "../logger/logger.h"
+#include "build_info.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 
