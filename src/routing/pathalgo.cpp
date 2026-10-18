@@ -77,7 +77,7 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass
 
         if (path.empty())
         {
-            throw excep("No valid path found from start to goal.", 500);
+            throw excep("No valid path found from start to goal.", 422);
         }
         res.status = 200;
         response["PATH"] = path;
