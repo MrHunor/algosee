@@ -26,6 +26,7 @@
 #include "routing/routing.h"
 
 #include "utils/general/utils.h"
+#include <exception>
 #include <httplib.h>
 #include <mutex>
 #include <nlohmann/json.hpp>
@@ -46,8 +47,15 @@ int main(int argc, char *argv[])
               0, RED);
     state.out(QUOTE, 0, BRIGHT_BLUE);
 
-    std::string asciiArt = readFile("../assets/WideTransparentLogoAsciiArt.txt");
-    state.out("\n" + asciiArt, 0);
+    try
+    {
+        std::string asciiArt = readFile("../assets/WideTransparentLogoAsciiArt.txt");
+        state.out("\n" + asciiArt, 0);
+    }
+    catch (const std::exception &e)
+    {
+        state.out("Non fatal exception:" + std::string(e.what()), 0);
+    }
 
     state.out("Starting...", 0);
     state.out("VERSION:" + std::string(ALGOSEE_VERSION), 0);

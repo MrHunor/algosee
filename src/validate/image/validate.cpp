@@ -41,6 +41,9 @@ ImageValidReturn ValidateImage(const httplib::Request &req, stateClass &state)
     {
         throw excep("Provided algo does not exist or is not implemented.", 501);
     }
+
+    retval.img = LoadImage(req, state);
+
     // technically this check isnt needed because stbi_info in loadImage already checks it
     // but im to anxious to delete it :3
     if (retval.img.width * retval.img.height > MAX_PIXEL_COUNT_IMAGE)
@@ -57,7 +60,5 @@ ImageValidReturn ValidateImage(const httplib::Request &req, stateClass &state)
                         std::to_string(it->second),
                     413);
     }
-
-    retval.img = LoadImage(req, state);
     return retval;
 }
