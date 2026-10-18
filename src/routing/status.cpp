@@ -26,7 +26,7 @@ void RunStatus(const httplib::Request &req, httplib::Response &res, stateClass &
 {
     json response;
     response["STATUS"] = "ONLINE";
-    response["VERION"] = ALGOSEE_VERSION;
+    response["VERSION"] = ALGOSEE_VERSION;
     response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
     state.out("Sending status signal...", 0);
     res.status = 200;
