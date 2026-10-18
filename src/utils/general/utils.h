@@ -28,6 +28,7 @@
 #include <string>
 int RandomInt(int lower, int upper);
 std::string ExecuteCommand(const std::string &command);
+std::string readFile(std::string path);
 void fillWithMetaData(json &response);
 void generateJsonRetrunArras(json &response);
 void InvalidInputMessage(const std::string &details,

@@ -42,9 +42,12 @@ int main(int argc, char *argv[])
               "visit:'https://www.gnu.org/licenses/gpl-3.0.en.html'.\n"
               "This is free software, and you are welcome to redistribute it\n"
               "under certain conditions; visit "
-              "'https://www.gnu.org/licenses/gpl-3.0.en.html' for details.\n",
+              "'https://www.gnu.org/licenses/gpl-3.0.en.html' for details.",
               0, RED);
     state.out(QUOTE, 0, BRIGHT_BLUE);
+
+    std::string asciiArt = readFile("../assets/WideTransparentLogoAsciiArt.txt");
+    state.out("\n" + asciiArt, 0);
 
     state.out("Starting...", 0);
     state.out("VERSION:" + std::string(ALGOSEE_VERSION), 0);

@@ -34,6 +34,7 @@
 #include <random>
 #include <source_location>
 #include <stacktrace>
+#include <stdexcept>
 #include <string>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -50,6 +51,16 @@ void fillWithMetaData(json &response)
     response["STATUS"] = "ONLINE";
     response["VERSION"] = ALGOSEE_VERSION;
     response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
+}
+
+std::string readFile(std::string path)
+{
+    std::ifstream file{path};
+    if (!file)
+        throw std::runtime_error("Failed to open " + path);
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    return buffer.str();
 }
 
 void generateJsonRetrunArras(json &response)
