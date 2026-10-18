@@ -20,6 +20,7 @@
  */
 #include "utils.h"
 #include "../../defs/general.h"
+#include "../../defs/implemented.h"
 #include "../../defs/ratelimits.h"
 #include "../../defs/types.h"
 #include "build_info.h"
@@ -38,10 +39,11 @@
 #include <unistd.h>
 #include <vector>
 
-std::vector<char> randomStringDataset{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
-                                      'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
-                                      'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-                                      'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+std::vector<char> randomStringDataset{
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+    'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
+    'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+    'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
 void fillWithMetaData(json &response)
 {
@@ -52,26 +54,14 @@ void fillWithMetaData(json &response)
 
 void generateJsonRetrunArras(json &response)
 {
-    // both
-    response["TIME"] = -1;
-
-    // sortalgos
-    response["MOVES"] = json::array();
-    response["TRIES"] = json::array();
-    response["COUNT ARRAY"] = json::array();
-    response["SWAPED"] = json::array();
-    response["SORTED (LEFT,RIGHT)"] = json::array();
-    response["MERGED (LEFT,RIGHT,RESULT)"] = json::array();
-    response["SPLIT (ORIGIN,LEFT,RIGHT)"] = json::array();
-    response["SORTED"] = json::array();
-
-    // pathalgos
-    response["PATH"] = json::array();
-    response["DISTANCE"] = json::array();
-    response["VISITED"] = json::array();
-    response["SEARCHMAP"] = json::array();
-    response["VISITEDFROMSTART"] = json::array();
-    response["VISITEDFROMEND"] = json::array();
+    for (const auto &element : implementedArrayReturnTypes)
+    {
+        response[element] = json::array();
+    }
+    for (const auto &element : implementedNonArrayReturnTypes)
+    {
+        response[element] = -1;
+    }
 }
 
 std::mt19937 getRandomGen()
@@ -105,7 +95,8 @@ bool CheckRateLimit(const clientListType &cList, const int &index)
     for (const auto &element : cList)
     {
         if (element.second == targetIP &&
-            element.first > std::chrono::system_clock::now() - std::chrono::minutes(RATE_LIMIT_INTERVALL_MIN))
+            element.first > std::chrono::system_clock::now() -
+                                std::chrono::minutes(RATE_LIMIT_INTERVALL_MIN))
         {
             matchingEntrysCount++;
         }
@@ -118,7 +109,8 @@ bool CheckRateLimit(const clientListType &cList, const int &index)
 }
 
 void AddClient(clientListType &cList,
-               const std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string> &newEntry)
+               const std::pair<std::chrono::time_point<std::chrono::system_clock>,
+                               std::string> &newEntry)
 {
     int index = 0;
     auto now = std::chrono::system_clock::now();
@@ -171,7 +163,8 @@ std::string ExecuteCommand(const std::string &command)
 void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int exitCode)
 {
 
-    std::cout << "returnFailedAnswer called:" + Details << "; Code:" + std::to_string(exitCode) << std::endl;
+    std::cout << "returnFailedAnswer called:" + Details
+              << "; Code:" + std::to_string(exitCode) << std::endl;
     res.status = exitCode;
     res.set_header("Access-Control-Allow-Origin", "*");
     res.set_content(json(Details), "application/json");

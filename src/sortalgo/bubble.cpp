@@ -31,9 +31,10 @@ void BubbleSort(std::vector<int> &unsorted, json &response)
         return; // an array of the size one is already sorted
     for (size_t i = 0; i < unsorted.size(); i++)
     {
-        for (size_t z = 0; z < unsorted.size() - 1 - i; z++) // you can subtract i because the last elements have
-                                                             // already been orderd before, this saves you some time but
-                                                             // doesnt make the horrible O(n^2) much better
+        for (size_t z = 0; z < unsorted.size() - 1 - i;
+             z++) // you can subtract i because the last elements have
+                  // already been orderd before, this saves you some time but
+                  // doesnt make the horrible O(n^2) much better
         {
             if (unsorted[z] > unsorted[z + 1])
             {
@@ -52,9 +53,10 @@ void BubbleSort(indexPixel &unsorted, json &response)
         return; // an array of the size one is already sorted
     for (size_t i = 0; i < unsorted.size(); i++)
     {
-        for (size_t z = 0; z < unsorted.size() - 1 - i; z++) // you can subtract i because the last elements have
-                                                             // already been orderd before, this saves you some time but
-                                                             // doesnt make the horrible O(n^2) much better
+        for (size_t z = 0; z < unsorted.size() - 1 - i;
+             z++) // you can subtract i because the last elements have
+                  // already been orderd before, this saves you some time but
+                  // doesnt make the horrible O(n^2) much better
         {
             if (unsorted[z].first > unsorted[z + 1].first)
             {

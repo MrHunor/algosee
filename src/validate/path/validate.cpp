@@ -94,7 +94,8 @@ PathValidReturn ValidatePath(const httplib::Request &req, stateClass &state)
                         "required for Djkstra/ASTAR.",
                         400);
         if (range.second > HIGHEST_ELEMENT_PATH)
-            throw excep("An element in the map is higher then:" + std::to_string(HIGHEST_ELEMENT_PATH) +
+            throw excep("An element in the map is higher then:" +
+                            std::to_string(HIGHEST_ELEMENT_PATH) +
                             " which is the max for Dijkstra/ASTAR",
                         400);
     }
@@ -107,13 +108,16 @@ PathValidReturn ValidatePath(const httplib::Request &req, stateClass &state)
     if (retval.algo == "dijkstra" || retval.algo == "ASTAR")
     {
         if (retval.mapInt.size() * retval.mapInt[0].size() > it->second)
-            throw excep("Too many element specified. " + it->first + " only accepts less then " +
-                            std::to_string(it->second) + " elements.",
+            throw excep("Too many element specified. " + it->first +
+                            " only accepts less then " + std::to_string(it->second) +
+                            " elements.",
                         413);
     }
-    else if (retval.algo != "dijkstra" && retval.mapBool.size() * retval.mapBool[0].size() > it->second)
-        throw excep("Too many element specified. " + it->first + " only accepts less then " +
-                        std::to_string(it->second) + " elements.",
+    else if (retval.algo != "dijkstra" &&
+             retval.mapBool.size() * retval.mapBool[0].size() > it->second)
+        throw excep("Too many element specified. " + it->first +
+                        " only accepts less then " + std::to_string(it->second) +
+                        " elements.",
                     413);
     return retval;
 }

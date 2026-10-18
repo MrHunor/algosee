@@ -53,18 +53,20 @@ int main(int argc, char *argv[])
     std::mutex clientListMutex;
     //--------------------------PREROUTING HANDLING-------------------
     server.set_pre_routing_handler(
-        [&state, &clientList, &clientListMutex](const httplib::Request &req, httplib::Response &res) {
+        [&state, &clientList, &clientListMutex](const httplib::Request &req,
+                                                httplib::Response &res) {
             return RunPreflightHandler(req, res, state, clientList, clientListMutex);
         });
 
     //-------------------------POSTROUTING HANDLING-------------------------
     // this runs before sending any response
-    server.set_post_routing_handler([&state](const httplib::Request &req, httplib::Response &res) {
-        state.out("Target:" + req.target + "\nBody:" + req.body, 0);
+    server.set_post_routing_handler(
+        [&state](const httplib::Request &req, httplib::Response &res) {
+            state.out("Target:" + req.target + "\nBody:" + req.body, 0);
 
-        res.headers.erase("Access-Control-Allow-Origin");
-        res.set_header("Access-Control-Allow-Origin", "*");
-    });
+            res.headers.erase("Access-Control-Allow-Origin");
+            res.set_header("Access-Control-Allow-Origin", "*");
+        });
 
     //--------------------------OPTIONS-----------------------------------------
     // handle a preflight request from a diffrent origin; firefox & co. considers
@@ -72,7 +74,8 @@ int main(int argc, char *argv[])
     // needed to work
     const auto serverOptionHandler =
         [](const httplib::Request &req,
-           httplib::Response &res) { // first time using callbacks like this kinda nervous >_<
+           httplib::Response
+               &res) { // first time using callbacks like this kinda nervous >_<
             res.set_header("Access-Control-Allow-Origin", "*");
             res.set_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
             res.set_header("Access-Control-Allow-Headers", "Content-Type");

@@ -30,10 +30,13 @@ int RandomInt(int lower, int upper);
 std::string ExecuteCommand(const std::string &command);
 void fillWithMetaData(json &response);
 void generateJsonRetrunArras(json &response);
-void InvalidInputMessage(const std::string &details, std::source_location location = std::source_location::current());
-void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int exitCode = 400);
+void InvalidInputMessage(const std::string &details,
+                         std::source_location location = std::source_location::current());
+void ReturnFailedAnswer(httplib::Response &res, const std::string &Details,
+                        int exitCode = 400);
 void AddClient(clientListType &cList,
-               const std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string> &newEntry);
+               const std::pair<std::chrono::time_point<std::chrono::system_clock>,
+                               std::string> &newEntry);
 bool CheckRateLimit(const clientListType &cList, const int &index);
 std::string GenerateRandomString(const int &size);
 std::mt19937 getRandomGen();

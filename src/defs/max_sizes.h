@@ -24,7 +24,7 @@
 
 #include <limits>
 
-#define MAX_ELEMENT_COUNT_SORT                                                                                         \
+#define MAX_ELEMENT_COUNT_SORT                                                           \
     2500 // you could customise this for every algo, but thats a future issue
          // (Issue #38)
 

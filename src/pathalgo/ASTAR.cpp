@@ -57,7 +57,8 @@ struct CompareNode
 // A* is similar to djkstra, only that is uses a diffrent priority queue, with
 // f(n)=g(n)+h(n) where g(n) is the cost from start to node n (same as djkstra)
 // but also h(n) estimated cost from node n to goal (manhatten distance)
-std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
+std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
+                                       std::pair<int, int> start,
                                        std::pair<int, int> goal, json &response)
 {
     const int rows = map.size();
@@ -66,8 +67,11 @@ std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
     int h = 0;
 
     std::vector<std::vector<int>> distance(
-        rows, std::vector<int>(collums, INFINITY_INT)); // i dont think i'll ever unstand this contructor
-    std::vector<std::vector<std::pair<int, int>>> parent(rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
+        rows,
+        std::vector<int>(collums,
+                         INFINITY_INT)); // i dont think i'll ever unstand this contructor
+    std::vector<std::vector<std::pair<int, int>>> parent(
+        rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
     std::vector<std::pair<int, int>> path;
 
     std::priority_queue<Node, std::vector<Node>, CompareNode> frontier;
@@ -77,7 +81,8 @@ std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
     // push the start into the frontier, because its the lowest distance and also
     // the only element it will be the first element
     frontier.push(
-        {0, std::abs(start.first - goal.first) + std::abs(start.second - goal.second), start.first, start.second});
+        {0, std::abs(start.first - goal.first) + std::abs(start.second - goal.second),
+         start.first, start.second});
 
     std::vector<int> directionsRows = {-1, 1, 0, 0};
     std::vector<int> directionsCollums = {0, 0, 1, -1};
@@ -105,7 +110,8 @@ std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
             int yNeighbour = y + directionsRows[i];
             int xNeighbour = x + directionsCollums[i];
 
-            if (yNeighbour < 0 || yNeighbour > rows - 1 || xNeighbour < 0 || xNeighbour > collums - 1)
+            if (yNeighbour < 0 || yNeighbour > rows - 1 || xNeighbour < 0 ||
+                xNeighbour > collums - 1)
                 continue; // current neighboor out of map, skip this iteration
 
             if (map[yNeighbour][xNeighbour] == -1)
@@ -129,7 +135,8 @@ std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
                 // explored next
                 distance[yNeighbour][xNeighbour] = newDistance;
                 parent[yNeighbour][xNeighbour] = {y, x};
-                h = std::abs(xNeighbour - goal.first) + std::abs(yNeighbour - goal.second);
+                h = std::abs(xNeighbour - goal.first) +
+                    std::abs(yNeighbour - goal.second);
                 frontier.push({newDistance, h, xNeighbour, yNeighbour});
             }
         }

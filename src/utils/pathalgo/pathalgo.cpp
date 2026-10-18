@@ -56,7 +56,8 @@ std::pair<int, int> CheckRange(const std::vector<std::vector<int>> &map)
 
 json SwapVisitedArray(const std::vector<std::vector<bool>> &visited)
 {
-    std::vector<std::vector<bool>> retval(visited[0].size(), std::vector<bool>(visited.size(), false));
+    std::vector<std::vector<bool>> retval(visited[0].size(),
+                                          std::vector<bool>(visited.size(), false));
     for (int rows = 0; rows < visited.size(); rows++)
     {
         for (int cols = 0; cols < visited[rows].size(); cols++)
@@ -70,7 +71,8 @@ json SwapVisitedArray(const std::vector<std::vector<bool>> &visited)
 // dijkstra uses the same thing but as int, so we can overload this
 json SwapVisitedArray(const std::vector<std::vector<int>> &visited)
 {
-    std::vector<std::vector<int>> retval(visited[0].size(), std::vector<int>(visited.size(), 0));
+    std::vector<std::vector<int>> retval(visited[0].size(),
+                                         std::vector<int>(visited.size(), 0));
 
     for (int rows = 0; rows < visited.size(); rows++)
     {
@@ -82,8 +84,8 @@ json SwapVisitedArray(const std::vector<std::vector<int>> &visited)
     return json(retval);
 }
 
-void CheckMapValidness(const std::vector<std::vector<int>> &map, const std::pair<int, int> &start,
-                       const std::pair<int, int> &goal)
+void CheckMapValidness(const std::vector<std::vector<int>> &map,
+                       const std::pair<int, int> &start, const std::pair<int, int> &goal)
 {
     if (map.empty())
     {
@@ -106,19 +108,21 @@ void CheckMapValidness(const std::vector<std::vector<int>> &map, const std::pair
         throw excep("Bad Map:Rows dont have same row length.", 400);
     }
 
-    if (start.first < 0 || start.first > cols - 1 || start.second < 0 || start.second > rows - 1)
+    if (start.first < 0 || start.first > cols - 1 || start.second < 0 ||
+        start.second > rows - 1)
     {
         throw excep("Bad Map: Start out of Map Bounds.", 400);
     }
 
-    if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 || goal.second > rows - 1)
+    if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 ||
+        goal.second > rows - 1)
     {
         throw excep("Bad Map: End out of Map Bounds", 400);
     }
 }
 
-void CheckMapValidness(const std::vector<std::vector<bool>> &map, const std::pair<int, int> &start,
-                       const std::pair<int, int> &goal)
+void CheckMapValidness(const std::vector<std::vector<bool>> &map,
+                       const std::pair<int, int> &start, const std::pair<int, int> &goal)
 {
     if (map.empty())
     {
@@ -141,12 +145,14 @@ void CheckMapValidness(const std::vector<std::vector<bool>> &map, const std::pai
         throw excep("Bad Map:Rows dont have same row length.", 400);
     }
 
-    if (start.first < 0 || start.first > cols - 1 || start.second < 0 || start.second > rows - 1)
+    if (start.first < 0 || start.first > cols - 1 || start.second < 0 ||
+        start.second > rows - 1)
     {
         throw excep("Bad Map: Start out of Map Bounds.", 400);
     }
 
-    if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 || goal.second > rows - 1)
+    if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 ||
+        goal.second > rows - 1)
     {
         throw excep("Bad Map: End out of Map Bounds", 400);
     }
@@ -159,8 +165,9 @@ std::vector<std::vector<bool>> CastIntMapToBoolIfNeeded(const json &input)
     for (const auto &row : input["MAP"])
     {
         if (!row.is_array())
-            throw excep("Invalid Map. A extracted row is NOT a array.", 400); // check for map
-                                                                              // validness
+            throw excep("Invalid Map. A extracted row is NOT a array.",
+                        400); // check for map
+                              // validness
         for (const auto &element : row)
         {
             if (element.is_array())

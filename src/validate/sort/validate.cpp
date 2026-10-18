@@ -68,14 +68,16 @@ SortValidReturn ValidateSort(const httplib::Request &req, stateClass &state)
                                              return x < 0;
                                          });
         if (hasNegNumbers)
-            throw excep("Selected algorithm (counting) does not support negative numbers.", 400);
+            throw excep(
+                "Selected algorithm (counting) does not support negative numbers.", 400);
     }
 
     auto it = implementedSortAlgos.find(retval.algo);
     if (retval.values.size() > it->second)
     {
-        throw excep("Too many element specified. " + it->first + " only accepts less then " +
-                        std::to_string(it->second) + " elements.",
+        throw excep("Too many element specified. " + it->first +
+                        " only accepts less then " + std::to_string(it->second) +
+                        " elements.",
                     413);
     }
 

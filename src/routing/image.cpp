@@ -63,7 +63,8 @@ void RunImageSort(const httplib::Request &req, httplib::Response &res, stateClas
             BogoSort(info.img.data, response);
         }
         auto endTime = std::chrono::steady_clock::now();
-        auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+        auto elapsed =
+            std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
         state.out("Ended Time mesurement.", 0);
         response["TIME"] = elapsed.count();
         response["SORTED"] = IndexPixelArrToJson(info.img.data);
@@ -76,8 +77,9 @@ void RunImageSort(const httplib::Request &req, httplib::Response &res, stateClas
     }
     catch (const excep &e)
     {
-        state.out(
-            "Cought a excep, Details:" + std::string(e.what()) + "\n" + "Status Code:" + std::to_string(e.exitCode), 0);
+        state.out("Cought a excep, Details:" + std::string(e.what()) + "\n" +
+                      "Status Code:" + std::to_string(e.exitCode),
+                  0);
         ReturnFailedAnswer(res, std::string(e.what()), e.exitCode);
     }
     catch (const std::exception &e)

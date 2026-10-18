@@ -52,16 +52,17 @@ void CountingSort(indexPixel &unsorted, json &response)
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted
     int countI = 0;
-    std::vector<int> count(std::max_element(unsorted.begin(), unsorted.end(),
-                                            [](const auto &a, const auto &b) { return a.first < b.first; })
-                               ->first +
-                           1); // so whats going on here is that you cannot pass the begin and end
-                               // and leave the rest to be because max_element does not know which
-                               // element of the pair (first or last) you want it to process, so you
-                               // can give it the instruction in a lamda, what the lambda does seems
-                               // to be clear, the "->first+1" means that max_element should give
-                               // back the first element plus one (compare with the bubblesort
-                               // implemenntation up if you have any concerns)
+    std::vector<int> count(
+        std::max_element(unsorted.begin(), unsorted.end(),
+                         [](const auto &a, const auto &b) { return a.first < b.first; })
+            ->first +
+        1); // so whats going on here is that you cannot pass the begin and end
+            // and leave the rest to be because max_element does not know which
+            // element of the pair (first or last) you want it to process, so you
+            // can give it the instruction in a lamda, what the lambda does seems
+            // to be clear, the "->first+1" means that max_element should give
+            // back the first element plus one (compare with the bubblesort
+            // implemenntation up if you have any concerns)
     std::vector<int> indexes;
     indexes.reserve(unsorted.size());
     for (const auto &i : unsorted)
@@ -77,13 +78,14 @@ void CountingSort(indexPixel &unsorted, json &response)
         count[countI]--;
     }
 
-    // well now we have a sorted array of indexes, but not of a pair so we need to match the indexes to pairs
+    // well now we have a sorted array of indexes, but not of a pair so we need to match
+    // the indexes to pairs
     indexPixel retval;
 
     for (int i = 0; i < indexes.size(); i++)
     {
-        auto it =
-            std::find_if(unsorted.begin(), unsorted.end(), [i](const auto &element) { return element.first == i; });
+        auto it = std::find_if(unsorted.begin(), unsorted.end(),
+                               [i](const auto &element) { return element.first == i; });
         size_t iIndex = std::distance(unsorted.begin(), it);
         retval.push_back(unsorted[iIndex]);
     }

@@ -92,7 +92,8 @@ class stateClass
 
   public:
     int verbose;
-    void out(const std::string &output, int importance, const std::string &colour = DEFAULT_COLOUR,
+    void out(const std::string &output, int importance,
+             const std::string &colour = DEFAULT_COLOUR,
              std::source_location location = std::source_location::current())
     {
         if (importance > verbose)
