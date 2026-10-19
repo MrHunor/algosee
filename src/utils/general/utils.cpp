@@ -21,6 +21,7 @@
 #include "utils.h"
 #include "../../defs/general.h"
 #include "../../defs/ratelimits.h"
+#include "../../stream/stream.h"
 #include "../../defs/types.h"
 #include <chrono>
 #include <cstdlib>
@@ -136,17 +137,25 @@ std::string ExecuteCommand(const std::string &command)
     return result;
 }
 
-void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int exitCode)
+void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int exitCode,StreamClass* stream)
 {
+        
 
     std::cout << "returnFailedAnswer called:" + Details << "; Code:" + std::to_string(exitCode) << std::endl;
     res.status = exitCode;
     res.set_header("Access-Control-Allow-Origin", "*");
-    res.set_content(json(Details), "application/json");
+    
+    
+    if(stream==nullptr)res.set_content(json(Details), "application/json");
+    else {//stream instead of sending, i think the sending once solution could work on a streaming implemented endpoint too but ill just leave it like this, also you have to clean up the stream with stream->finish
+        stream->sendChunk(json(Details));
+        stream->finish();
+    }
 }
 
 void InvalidInputMessage(const std::string &details, std::source_location location)
 {
+
     // yes i thought of making this state out for colour but that would require
     // passing state (which is not always present), or make state global which is
     // not pretty

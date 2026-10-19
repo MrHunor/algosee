@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
 
     //--------------------------IMAGE-----------------------------------------------------------
     server.Post("/image", [&](const httplib::Request &req, httplib::Response &res) {
-        auto stream = std::make_shared<StreamClass>();//see sortalgo
+        auto stream = std::make_shared<StreamClass>(); // see sortalgo
         res.set_chunked_content_provider("application/json", [&state, stream](size_t, httplib::DataSink &sink) {
             while (true)
             {
@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
                 stream->cv_notify.wait(lock, [&] {
                     return !stream->chunks.empty() ||
                            stream->finished; // if either evaluate to true then the wait is finished, so if chunks is
-                                            // not empty or if the stream is finished
+                                             // not empty or if the stream is finished
                 });
 
                 if (stream->chunks.empty() && stream->finished)
@@ -116,10 +116,11 @@ int main(int argc, char *argv[])
 
                 chunk = std::move(stream->chunks.front());
                 stream->chunks.pop(); // move the first chunk to chunk and delete from queue
+                lock.unlock(); // you have to unlock the lock because stream->finish locks the same mutex again
                 if (!sink.write(chunk.dump().c_str(),
                                 chunk.dump().size())) //.write should evaluate to true is the sink is still
                                                       // viable, if not something bad happend
-                {
+                 {
                     stream->finish();
                     return false; // bad happend, return false (this case is weird)
                 }
@@ -128,7 +129,7 @@ int main(int argc, char *argv[])
             return true; // everything fine, normal exit return true
         });
 
-        RunImageSort(req, res, state,*stream);
+        RunImageSort(req, res, state, *stream);
         return;
     });
 
@@ -150,7 +151,9 @@ int main(int argc, char *argv[])
                                              // callback scenario as these are the two exit points of a valid
                                              // destructor, so for any other usecase you can dereference the pointer and
                                              // pass the object
-                                             // Another point you must look out for is that you have to pass stream by value and not by reference because only this way it is shared (so the lifetime is bound to either destructors)
+                                             // Another point you must look out for is that you have to pass stream by
+                                             // value and not by reference because only this way it is shared (so the
+                                             // lifetime is bound to either destructors)
         res.set_chunked_content_provider("application/json", [&state, stream](size_t, httplib::DataSink &sink) {
             while (true)
             {
@@ -162,7 +165,7 @@ int main(int argc, char *argv[])
                 stream->cv_notify.wait(lock, [&] {
                     return !stream->chunks.empty() ||
                            stream->finished; // if either evaluate to true then the wait is finished, so if chunks is
-                                            // not empty or if the stream is finished
+                                             // not empty or if the stream is finished
                 });
 
                 if (stream->chunks.empty() && stream->finished)
@@ -170,10 +173,12 @@ int main(int argc, char *argv[])
 
                 chunk = std::move(stream->chunks.front());
                 stream->chunks.pop(); // move the first chunk to chunk and delete from queue
+                lock.unlock();        // see image
                 if (!sink.write(chunk.dump().c_str(),
                                 chunk.dump().size())) //.write should evaluate to true is the sink is still
                                                       // viable, if not something bad happend
                 {
+
                     stream->finish();
                     return false; // bad happend, return false (this case is weird)
                 }
@@ -188,37 +193,6 @@ int main(int argc, char *argv[])
     //------------------------------PATHALGO----------------------------------------------------------------
     server.Post("/pathalgo", [&](const httplib::Request &req, httplib::Response &res) {
         RunPathalgo(req, res, state);
-        StreamClass stream;
-        res.set_chunked_content_provider("application/json", [&state, &stream](size_t, httplib::DataSink &sink) {
-            while (true)
-            {
-                json chunk;
-
-                std::unique_lock<std::mutex> lock(
-                    stream.writeMutex); // has to be a unique_locl because the cv_notify.wait() operations needs one
-
-                stream.cv_notify.wait(lock, [&] {
-                    return !stream.chunks.empty() ||
-                           stream.finished; // if either evaluate to true then the wait is finished, so if chunks is
-                                            // not empty or if the stream is finished
-                });
-
-                if (stream.chunks.empty() && stream.finished)
-                    break; // queue is empty and stream is finished, exit out of loop and exit out of handler
-
-                chunk = std::move(stream.chunks.front());
-                stream.chunks.pop(); // move the first chunk to chunk and delete from queue
-                if (!sink.write(chunk.dump().c_str(),
-                                chunk.dump().size())) //.write should evaluate to true is the sink is still
-                                                      // viable, if not something bad happend
-                {
-                    stream.finish();
-                    return false; // bad happend, return false (this case is weird)
-                }
-            }
-            sink.done();
-            return true; // everything fine, normal exit return true
-        });
         return;
     });
 

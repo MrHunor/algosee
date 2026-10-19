@@ -37,6 +37,7 @@ class StreamClass
 
     void sendChunk(json chunk) // adds to the class queue of chunks
     {
+        chunk = chunk+"\n";
         std::lock_guard<std::mutex> lock(writeMutex);
         if (finished)
             return;
@@ -46,7 +47,7 @@ class StreamClass
 
     void finish()
     {
-        std::lock_guard<std::mutex> lock(writeMutex);
+        std::unique_lock<std::mutex> lock(writeMutex);
         finished = true;
         cv_notify.notify_all(); // notify all waiting threads to finish operations
     }
