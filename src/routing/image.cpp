@@ -30,7 +30,7 @@
 #include <nlohmann/json.hpp>
 #include <stb_image.h>
 
-void RunImageSort(const httplib::Request &req, httplib::Response &res, stateClass &state)
+void RunImageSort(const httplib::Request &req, httplib::Response &res, stateClass &state,StreamClass& stream)
 {
     try
     {
@@ -44,22 +44,22 @@ void RunImageSort(const httplib::Request &req, httplib::Response &res, stateClas
         auto startTime = std::chrono::steady_clock::now();
 
         if (info.algo == "selection")
-            SelectionSort(info.img.data, response);
+            SelectionSort(info.img.data, response,stream);
         else if (info.algo == "cycle")
-            CycleSort(info.img.data, response);
+            CycleSort(info.img.data, response,stream);
         else if (info.algo == "bubble")
-            BubbleSort(info.img.data, response);
+            BubbleSort(info.img.data, response,stream);
         else if (info.algo == "quick")
-            QuickSort(info.img.data, 0, info.img.data.size() - 1, response);
+            QuickSort(info.img.data, 0, info.img.data.size() - 1, response,stream);
         else if (info.algo == "merge")
-            MergeSort(info.img.data, response);
+            MergeSort(info.img.data, response,stream);
         else if (info.algo == "counting")
         {
-            CountingSort(info.img.data, response);
+            CountingSort(info.img.data, response,stream);
         }
         else if (info.algo == "bogo")
         {
-            BogoSort(info.img.data, response);
+            BogoSort(info.img.data, response,stream);
         }
         auto endTime = std::chrono::steady_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);

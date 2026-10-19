@@ -33,7 +33,7 @@ void AfterSelfTestRun(std::string algorithmName, std::vector<int> &paramPassValu
 void RunStatus(const httplib::Request &req, httplib::Response &res, stateClass &state);
 void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass &state,StreamClass& stream);
 void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass &state);
-void RunImageSort(const httplib::Request &req, httplib::Response &res, stateClass &state);
+void RunImageSort(const httplib::Request &req, httplib::Response &res, stateClass &state,StreamClass& stream);
 httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req, httplib::Response &res, 
                                                      stateClass &state, clientListType &clientList,
                                                      std::mutex &clientListMutex);

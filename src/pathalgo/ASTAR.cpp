@@ -19,6 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../defs/general.h"
+#include "../stream/stream.h"
 #include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
 #include <cmath>

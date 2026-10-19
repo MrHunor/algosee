@@ -21,6 +21,7 @@
 #ifndef PALGOS_H
 #define PALGOS_H
 #include "../defs/general.h"
+#include "../stream/stream.h"
 #include <nlohmann/json.hpp>
 #include <vector>
 

@@ -25,6 +25,7 @@
 #include "logger/logger.h"
 #include "routing/routing.h"
 
+#include "stream/stream.h"
 #include "utils/general/utils.h"
 #include <httplib.h>
 #include <mutex>
@@ -95,31 +96,31 @@ int main(int argc, char *argv[])
 
     //--------------------------IMAGE-----------------------------------------------------------
     server.Post("/image", [&](const httplib::Request &req, httplib::Response &res) {
-        StreamClass stream;
-        res.set_chunked_content_provider("application/json", [&state, &stream](size_t, httplib::DataSink &sink) {
+        auto stream = std::make_shared<StreamClass>();//see sortalgo
+        res.set_chunked_content_provider("application/json", [&state, stream](size_t, httplib::DataSink &sink) {
             while (true)
             {
                 json chunk;
 
                 std::unique_lock<std::mutex> lock(
-                    stream.writeMutex); // has to be a unique_locl because the cv_notify.wait() operations needs one
+                    stream->writeMutex); // has to be a unique_locl because the cv_notify.wait() operations needs one
 
-                stream.cv_notify.wait(lock, [&] {
-                    return !stream.chunks.empty() ||
-                           stream.finished; // if either evaluate to true then the wait is finished, so if chunks is
+                stream->cv_notify.wait(lock, [&] {
+                    return !stream->chunks.empty() ||
+                           stream->finished; // if either evaluate to true then the wait is finished, so if chunks is
                                             // not empty or if the stream is finished
                 });
 
-                if (stream.chunks.empty() && stream.finished)
+                if (stream->chunks.empty() && stream->finished)
                     break; // queue is empty and stream is finished, exit out of loop and exit out of handler
 
-                chunk = std::move(stream.chunks.front());
-                stream.chunks.pop(); // move the first chunk to chunk and delete from queue
+                chunk = std::move(stream->chunks.front());
+                stream->chunks.pop(); // move the first chunk to chunk and delete from queue
                 if (!sink.write(chunk.dump().c_str(),
                                 chunk.dump().size())) //.write should evaluate to true is the sink is still
                                                       // viable, if not something bad happend
                 {
-                    stream.finish();
+                    stream->finish();
                     return false; // bad happend, return false (this case is weird)
                 }
             }
@@ -127,7 +128,7 @@ int main(int argc, char *argv[])
             return true; // everything fine, normal exit return true
         });
 
-        RunImageSort(req, res, state);
+        RunImageSort(req, res, state,*stream);
         return;
     });
 
@@ -139,38 +140,48 @@ int main(int argc, char *argv[])
 
     //------------------------------SORTALGO---------------------------------------------------------------
     server.Post("/sortalgo", [&](const httplib::Request &req, httplib::Response &res) {
-        StreamClass stream;
-        res.set_chunked_content_provider("application/json", [&state, &stream](size_t, httplib::DataSink &sink) {
+        auto stream =
+            std::make_shared<StreamClass>(); // kinda complicated why this is needed, the problem is that this handler
+                                             // /sortalgo might return and run streams destuctor if defined like:
+                                             // StreamClass stream and the set_chunk_content_provided might call it
+                                             // after that because it still has to return a chunk and because the object
+                                             // has been destroyed the lamda acesses invalid memory.
+                                             // Another specialty is that this should only be needed in this specific
+                                             // callback scenario as these are the two exit points of a valid
+                                             // destructor, so for any other usecase you can dereference the pointer and
+                                             // pass the object
+                                             // Another point you must look out for is that you have to pass stream by value and not by reference because only this way it is shared (so the lifetime is bound to either destructors)
+        res.set_chunked_content_provider("application/json", [&state, stream](size_t, httplib::DataSink &sink) {
             while (true)
             {
                 json chunk;
 
                 std::unique_lock<std::mutex> lock(
-                    stream.writeMutex); // has to be a unique_locl because the cv_notify.wait() operations needs one
+                    stream->writeMutex); // has to be a unique_locl because the cv_notify.wait() operations needs one
 
-                stream.cv_notify.wait(lock, [&] {
-                    return !stream.chunks.empty() ||
-                           stream.finished; // if either evaluate to true then the wait is finished, so if chunks is
+                stream->cv_notify.wait(lock, [&] {
+                    return !stream->chunks.empty() ||
+                           stream->finished; // if either evaluate to true then the wait is finished, so if chunks is
                                             // not empty or if the stream is finished
                 });
 
-                if (stream.chunks.empty() && stream.finished)
+                if (stream->chunks.empty() && stream->finished)
                     break; // queue is empty and stream is finished, exit out of loop and exit out of handler
 
-                chunk = std::move(stream.chunks.front());
-                stream.chunks.pop(); // move the first chunk to chunk and delete from queue
+                chunk = std::move(stream->chunks.front());
+                stream->chunks.pop(); // move the first chunk to chunk and delete from queue
                 if (!sink.write(chunk.dump().c_str(),
                                 chunk.dump().size())) //.write should evaluate to true is the sink is still
                                                       // viable, if not something bad happend
                 {
-                    stream.finish();
+                    stream->finish();
                     return false; // bad happend, return false (this case is weird)
                 }
             }
             sink.done();
             return true; // everything fine, normal exit return true
         });
-        RunSortalgo(req, res, state,stream);
+        RunSortalgo(req, res, state, *stream);
         return;
     });
 

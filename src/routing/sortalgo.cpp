@@ -52,7 +52,7 @@ void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
         if (info.algo == "selection")
             SelectionSort(info.values, response,stream);
         else if (info.algo == "cycle")
-            CycleSort(info.values, response);
+            CycleSort(info.values, response,stream);
         else if (info.algo == "bubble")
             BubbleSort(info.values, response,stream);
         else if (info.algo == "quick")
