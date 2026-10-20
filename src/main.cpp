@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
     //--------------------------IMAGE-----------------------------------------------------------
     server.Post("/image", [&](const httplib::Request &req, httplib::Response &res) {
         auto stream = std::make_shared<StreamClass>(); // see sortalgo
-        res.set_chunked_content_provider("application/json", MakeChunkProvider(stream));
+        res.set_chunked_content_provider("application/x-ndjson", MakeChunkProvider(stream));
 
         // extract information from req and res before starting the thread because as soon as the handler returns they
         // will become undefined
@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
                                              // Another point you must look out for is that you have to pass stream by
                                              // value and not by reference because only this way it is shared (so the
                                              // lifetime is bound to either destructors)
-        res.set_chunked_content_provider("application/json", MakeChunkProvider(stream));
+        res.set_chunked_content_provider("application/x-ndjson", MakeChunkProvider(stream));
 
         // extract info
         SortValidReturn info = ValidateSort(req, state);
@@ -143,6 +143,7 @@ int main(int argc, char *argv[])
         std::thread NUMsorter([info, stream, &state] { RunSortalgo(info, state, *stream); });
         NUMsorter.detach();
 
+        
         res.set_header("Access-Control-Allow-Origin", "*");
         return;
     });

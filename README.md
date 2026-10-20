@@ -148,7 +148,7 @@ We thank every author and contribtor of those repositories from :heart: , withou
 # AI usage disclosure:
 I, **@MrHunor**, have used AI for explaining what do to when i didn't know anymore, as well as when i wanted to implement something but didn't know how or for scanning the codebase for bugs and possible enhancements. I've also used AI Audits, such as coderabbit on PRs.
 I, **@siryanni**, (TBD [#126](https://github.com/MrHunor/algosee/issues/126))  
-For anyone looking to contribute we would ask them to follow the line we provided 
+For anyone looking to contribute we would ask them to follow the line we provided.
 
 # Big :heart: to the following:
 - [Render](https://render.com/), for their free tier hosting which the online Backend relies on.

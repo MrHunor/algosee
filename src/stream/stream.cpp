@@ -49,8 +49,9 @@ httplib::ContentProviderWithoutLength MakeChunkProvider(std::shared_ptr<StreamCl
             chunk = std::move(stream->chunks.front());
             stream->chunks.pop(); // move the first chunk to chunk and delete from queue
             lock.unlock();        // you have to unlock the lock because stream->finish locks the same mutex again
-            if (!sink.write(chunk.dump().c_str(),
-                            chunk.dump().size())) //.write should evaluate to true is the sink is still
+            const std::string chunkPlusEnd = chunk.dump()+"\n";
+            if (!sink.write(chunkPlusEnd.data(),
+                            chunkPlusEnd.size())) //.write should evaluate to true is the sink is still
                                                   // viable, if not something bad happend
             {
                 stream->finish();
