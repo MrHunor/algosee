@@ -30,16 +30,10 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass &state,StreamClass& stream)
+void RunSortalgo(SortValidReturn info, stateClass &state, StreamClass &stream)
 {
     try
     {
-        state.out("Processing values....", 0);
-        SortValidReturn info;
-        info = ValidateSort(req, state);
-
-        state.out("Finished.", 0);
-
         json response;
         response["VERSION"] = ALGOSEE_VERSION;
         response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
@@ -50,22 +44,22 @@ void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
         auto startTime = std::chrono::steady_clock::now();
 
         if (info.algo == "selection")
-            SelectionSort(info.values, response,stream);
+            SelectionSort(info.values, response, stream);
         else if (info.algo == "cycle")
-            CycleSort(info.values, response,stream);
+            CycleSort(info.values, response, stream);
         else if (info.algo == "bubble")
-            BubbleSort(info.values, response,stream);
+            BubbleSort(info.values, response, stream);
         else if (info.algo == "quick")
-            QuickSort(info.values, 0, info.values.size() - 1, response,stream);
+            QuickSort(info.values, 0, info.values.size() - 1, response, stream);
         else if (info.algo == "merge")
-            MergeSort(info.values, response,stream);
+            MergeSort(info.values, response, stream);
         else if (info.algo == "counting")
         {
-            CountingSort(info.values, response,stream);
+            CountingSort(info.values, response, stream);
         }
         else if (info.algo == "bogo")
         {
-            BogoSort(info.values, response,stream);
+            BogoSort(info.values, response, stream);
         }
 
         // Default for all algorithms exit
@@ -76,8 +70,6 @@ void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
 
         response["SORTED"] = info.values;
 
-        res.status = 200;
-        res.set_header("Access-Control-Allow-Origin", "*");
         stream.sendChunk(std::move(response));
         response.clear();
         stream.finish();
@@ -86,12 +78,12 @@ void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
     {
         state.out(
             "Cought a excep, Details:" + std::string(e.what()) + "\n" + "Status Code:" + std::to_string(e.exitCode), 0);
-        ReturnFailedAnswer(res, std::string(e.what()), e.exitCode,&stream);
+        ReturnFailedAnswerStreamOnly(std::string(e.what()), e.exitCode, &stream);
     }
     catch (const std::exception &e)
     {
         state.out("Cought an exception:" + std::string(e.what()), 0);
-        ReturnFailedAnswer(res, std::string(e.what()),400,&stream);
+        ReturnFailedAnswerStreamOnly(std::string(e.what()), 400, &stream);
     }
     return;
 }

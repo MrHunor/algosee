@@ -20,10 +20,9 @@
 #ifndef STREAM_H
 #define STREAM_H
 #include "../defs/general.h"
+#include <httplib.h>
 #include <mutex>
 #include <queue>
-#include <thread>
-#include <vector>
 
 
 class StreamClass
@@ -37,7 +36,7 @@ class StreamClass
 
     void sendChunk(json chunk) // adds to the class queue of chunks
     {
-        chunk = chunk+"\n";
+        chunk = chunk;
         std::lock_guard<std::mutex> lock(writeMutex);
         if (finished)
             return;
@@ -53,4 +52,6 @@ class StreamClass
     }
 };
 
+
+httplib::ContentProviderWithoutLength MakeChunkProvider(std::shared_ptr<StreamClass> stream);
 #endif

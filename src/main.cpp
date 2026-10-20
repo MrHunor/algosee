@@ -27,6 +27,8 @@
 
 #include "stream/stream.h"
 #include "utils/general/utils.h"
+#include "validate/image/validate.h"
+#include "validate/sort/validate.h"
 #include <httplib.h>
 #include <mutex>
 #include <nlohmann/json.hpp>
@@ -97,39 +99,18 @@ int main(int argc, char *argv[])
     //--------------------------IMAGE-----------------------------------------------------------
     server.Post("/image", [&](const httplib::Request &req, httplib::Response &res) {
         auto stream = std::make_shared<StreamClass>(); // see sortalgo
-        res.set_chunked_content_provider("application/json", [&state, stream](size_t, httplib::DataSink &sink) {
-            while (true)
-            {
-                json chunk;
+        res.set_chunked_content_provider("application/json", MakeChunkProvider(stream));
 
-                std::unique_lock<std::mutex> lock(
-                    stream->writeMutex); // has to be a unique_locl because the cv_notify.wait() operations needs one
+        // extract information from req and res before starting the thread because as soon as the handler returns they
+        // will become undefined
+        ImageValidReturn info = ValidateImage(req, state);
 
-                stream->cv_notify.wait(lock, [&] {
-                    return !stream->chunks.empty() ||
-                           stream->finished; // if either evaluate to true then the wait is finished, so if chunks is
-                                             // not empty or if the stream is finished
-                });
+        std::thread IMGsorter([stream, &state, info] { RunImageSort(info, state, *stream); });
+        IMGsorter.detach(); // runs the sorting until finished in a seperate thread, writing to the sink in the process,
+                            // allowing the handler to return and the chunkprovider to stream the chunks to the client
+                            // (or atleast thats the thought)
 
-                if (stream->chunks.empty() && stream->finished)
-                    break; // queue is empty and stream is finished, exit out of loop and exit out of handler
-
-                chunk = std::move(stream->chunks.front());
-                stream->chunks.pop(); // move the first chunk to chunk and delete from queue
-                lock.unlock(); // you have to unlock the lock because stream->finish locks the same mutex again
-                if (!sink.write(chunk.dump().c_str(),
-                                chunk.dump().size())) //.write should evaluate to true is the sink is still
-                                                      // viable, if not something bad happend
-                 {
-                    stream->finish();
-                    return false; // bad happend, return false (this case is weird)
-                }
-            }
-            sink.done();
-            return true; // everything fine, normal exit return true
-        });
-
-        RunImageSort(req, res, state, *stream);
+        res.set_header("Access-Control-Allow-Origin", "*"); // must be set here as far as i know
         return;
     });
 
@@ -154,39 +135,15 @@ int main(int argc, char *argv[])
                                              // Another point you must look out for is that you have to pass stream by
                                              // value and not by reference because only this way it is shared (so the
                                              // lifetime is bound to either destructors)
-        res.set_chunked_content_provider("application/json", [&state, stream](size_t, httplib::DataSink &sink) {
-            while (true)
-            {
-                json chunk;
+        res.set_chunked_content_provider("application/json", MakeChunkProvider(stream));
 
-                std::unique_lock<std::mutex> lock(
-                    stream->writeMutex); // has to be a unique_locl because the cv_notify.wait() operations needs one
+        // extract info
+        SortValidReturn info = ValidateSort(req, state);
 
-                stream->cv_notify.wait(lock, [&] {
-                    return !stream->chunks.empty() ||
-                           stream->finished; // if either evaluate to true then the wait is finished, so if chunks is
-                                             // not empty or if the stream is finished
-                });
+        std::thread NUMsorter([info, stream, &state] { RunSortalgo(info, state, *stream); });
+        NUMsorter.detach();
 
-                if (stream->chunks.empty() && stream->finished)
-                    break; // queue is empty and stream is finished, exit out of loop and exit out of handler
-
-                chunk = std::move(stream->chunks.front());
-                stream->chunks.pop(); // move the first chunk to chunk and delete from queue
-                lock.unlock();        // see image
-                if (!sink.write(chunk.dump().c_str(),
-                                chunk.dump().size())) //.write should evaluate to true is the sink is still
-                                                      // viable, if not something bad happend
-                {
-
-                    stream->finish();
-                    return false; // bad happend, return false (this case is weird)
-                }
-            }
-            sink.done();
-            return true; // everything fine, normal exit return true
-        });
-        RunSortalgo(req, res, state, *stream);
+        res.set_header("Access-Control-Allow-Origin", "*");
         return;
     });
 

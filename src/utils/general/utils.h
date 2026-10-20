@@ -29,8 +29,9 @@
 int RandomInt(int lower, int upper);
 std::string ExecuteCommand(const std::string &command);
 void InvalidInputMessage(const std::string &details, std::source_location location = std::source_location::current());
-void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int exitCode=400,
+void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int exitCode = 400,
                         StreamClass *stream = nullptr);
+void ReturnFailedAnswerStreamOnly(const std::string &Details, int exitCode, StreamClass *stream);
 void AddClient(clientListType &cList,
                const std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string> &newEntry);
 bool CheckRateLimit(const clientListType &cList, const int &index);

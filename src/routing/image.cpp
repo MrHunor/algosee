@@ -30,14 +30,13 @@
 #include <nlohmann/json.hpp>
 #include <stb_image.h>
 
-void RunImageSort(const httplib::Request &req, httplib::Response &res, stateClass &state, StreamClass &stream)
+void RunImageSort(ImageValidReturn info, stateClass &state, StreamClass &stream)
 {
     try
     {
         json response;
         response["VERSION"] = ALGOSEE_VERSION;
         response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
-        ImageValidReturn info = ValidateImage(req, state);
         ShuffleImage(info.img);
         response["SHUFFLED (INDEXES)"] = IndexPixelArrToJson(info.img.data);
         stream.sendChunk(std::move(response));
@@ -68,9 +67,7 @@ void RunImageSort(const httplib::Request &req, httplib::Response &res, stateClas
         state.out("Ended Time mesurement.", 0);
         response["TIME"] = elapsed.count();
         response["SORTED"] = IndexPixelArrToJson(info.img.data);
-        
-        res.status = 200;
-        res.set_header("Access-Control-Allow-Origin", "*");
+
         state.out("Sending response...", 0);
         stream.sendChunk(std::move(response));
         stream.finish();
@@ -80,12 +77,12 @@ void RunImageSort(const httplib::Request &req, httplib::Response &res, stateClas
     {
         state.out(
             "Cought a excep, Details:" + std::string(e.what()) + "\n" + "Status Code:" + std::to_string(e.exitCode), 0);
-        ReturnFailedAnswer(res, std::string(e.what()), e.exitCode,&stream);
+        ReturnFailedAnswerStreamOnly(std::string(e.what()), e.exitCode, &stream);
     }
     catch (const std::exception &e)
     {
         state.out("Cought an std::exception, Details:" + std::string(e.what()), 0);
-        ReturnFailedAnswer(res, std::string(e.what()),400,&stream);
+        ReturnFailedAnswerStreamOnly(std::string(e.what()), 400, &stream);
     }
     return;
 }
