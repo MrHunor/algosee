@@ -132,3 +132,36 @@ Main processes terminated with: code=killed, status=15/TERM
 
 
 test 2: Doubling the max:
+
+max_sizes:#define MAX_ELEMENT_COUNT_SORT                                                           \
+    5000 // you could customise this for every algo, but thats a future issue
+         // (Issue #38)
+
+rest unchanged
+
+test output:"          Finished with result: success                    
+Main processes terminated with: code=killed, status=15/TERM
+               Service runtime: 1min 15.360s
+             CPU time consumed: 16.680s
+                   Memory peak: 39M (swap: 0B)
+                      IO Bytes: read 2.1M, written 1.6M
+"
+
+test 3: Triplling the max:
+
+output:          Finished with result: success                    
+Main processes terminated with: code=killed, status=15/TERM
+               Service runtime: 2min 18.415s
+             CPU time consumed: 41.036s
+                   Memory peak: 40M (swap: 0B)
+                      IO Bytes: written 1.7M
+
+test 4: 20000 max
+          Finished with result: success                    
+Main processes terminated with: code=killed, status=15/TERM
+               Service runtime: 8min 1.867s
+             CPU time consumed: 3min 56.920s
+                   Memory peak: 56.2M (swap: 0B)
+                      IO Bytes: read 6M, written 2.1M
+
+

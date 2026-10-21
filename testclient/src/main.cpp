@@ -71,9 +71,9 @@ int main(int argc, char *argv[])
                 R"(-d "{\"values\":[$(seq 1 )" +
                 std::to_string(currentrun.size) + R"( | shuf | paste -sd, -)]}")";
             std::string output = executeCommand(command);
-            state.out("Recived (raw):" + output, 0);
+            state.out("Recived.", 0);
             json response = parseNDJSON(output);
-            state.out("recived (json):" + response.dump(), 0);
+            state.out("Parsed", 0);
             checkForAllResponseTypes(response);
             checkForCertainResponseType(
                 response, implementedAlgoExpectedResponseType.at(currentrun.algoname));
@@ -147,9 +147,9 @@ int main(int argc, char *argv[])
                 std::to_string(start.second) + "],\"GOAL\": [" +
                 std::to_string(goal.first) + "," + std::to_string(goal.second) + "]}'";
             std::string output = executeCommand(command);
-            state.out("Recived (raw):" + output, 0);
+            state.out("Recived",0);
             json response = parseNDJSON(output);
-            state.out("recived:" + response.dump(), 0);
+            state.out("Parsed.", 0);
             checkForAllResponseTypes(response);
             checkForCertainResponseType(
                 response, implementedAlgoExpectedResponseType.at(currentrun.algoname));
