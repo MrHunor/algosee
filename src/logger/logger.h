@@ -21,6 +21,7 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 #include "../defs/general.h"
+#include "../stream/stream.h"
 #include <chrono>
 #include <format>
 #include <fstream>

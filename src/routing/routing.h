@@ -24,6 +24,8 @@
 #include "../logger/logger.h"
 #include <chrono>
 #include <httplib/httplib.h>
+#include "../validate/image/validate.h"
+#include "../validate/sort/validate.h"
 #include <nlohmann/json.hpp>
 #include <vector>
 
@@ -32,13 +34,11 @@ void AfterSelfTestRun(std::string algorithmName, std::vector<int> &paramPassValu
                       json &response, json &parampassTest,
                       const std::chrono::steady_clock::time_point &startTime);
 void RunStatus(const httplib::Request &req, httplib::Response &res, stateClass &state);
-void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass &state);
+void RunSortalgo(SortValidReturn info, stateClass &state, StreamClass &stream);
 void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass &state);
-void RunImageSort(const httplib::Request &req, httplib::Response &res, stateClass &state);
-httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req,
-                                                     httplib::Response &res,
-                                                     stateClass &state,
-                                                     clientListType &clientList,
+void RunImageSort(ImageValidReturn info, stateClass &state, StreamClass &stream);
+httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req, httplib::Response &res, 
+                                                     stateClass &state, clientListType &clientList,
                                                      std::mutex &clientListMutex);
 void RunLimits(httplib::Response &res, stateClass &state);
 #endif

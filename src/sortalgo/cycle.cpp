@@ -19,12 +19,13 @@
  */
 #include "../defs/general.h"
 #include "../defs/types.h"
+#include "../stream/stream.h"
 #include <algorithm>
 #include <nlohmann/json.hpp>
 #include <utility>
 #include <vector>
 
-void CycleSort(std::vector<int> &unsorted, json &response)
+void CycleSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
 {
     int NewPosition = 0;
     int current = 0;
@@ -67,10 +68,16 @@ void CycleSort(std::vector<int> &unsorted, json &response)
             std::swap(current, unsorted[NewPosition]);
             response["SWAPED"].push_back({current, NewPosition});
         }
+
+        if (response["SWAPED"] > 1000)
+        {
+            stream.sendChunk(std::move(response));
+            response.clear();
+        }
     }
 }
 
-void CycleSort(indexPixel &unsorted, json &response)
+void CycleSort(indexPixel &unsorted, json &response, StreamClass &stream)
 {
     int NewPosition = 0;
     std::pair<int, pixel> current = {};
@@ -112,6 +119,11 @@ void CycleSort(indexPixel &unsorted, json &response)
                 NewPosition++;
             std::swap(current, unsorted[NewPosition]);
             response["SWAPED"].push_back({current.first, NewPosition});
+        }
+        if (response["SWAPED"] > 1000)
+        {
+            stream.sendChunk(std::move(response));
+            response.clear();
         }
     }
 }

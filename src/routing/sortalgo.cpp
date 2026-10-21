@@ -30,40 +30,36 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass &state)
+void RunSortalgo(SortValidReturn info, stateClass &state, StreamClass &stream)
 {
     try
     {
-        state.out("Processing values....", 0);
-        SortValidReturn info;
-        info = ValidateSort(req, state);
-
-        state.out("Finished.", 0);
-
         json response;
-        generateJsonRetrunArras(response);
-        fillWithMetaData(response);
+        response["VERSION"] = ALGOSEE_VERSION;
+        response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
+        stream.sendChunk(std::move(response));
+        response.clear();
 
         state.out("Starting time mesurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
 
         if (info.algo == "selection")
-            SelectionSort(info.values, response);
+            SelectionSort(info.values, response, stream);
         else if (info.algo == "cycle")
-            CycleSort(info.values, response);
+            CycleSort(info.values, response, stream);
         else if (info.algo == "bubble")
-            BubbleSort(info.values, response);
+            BubbleSort(info.values, response, stream);
         else if (info.algo == "quick")
-            QuickSort(info.values, 0, info.values.size() - 1, response);
+            QuickSort(info.values, 0, info.values.size() - 1, response, stream);
         else if (info.algo == "merge")
-            MergeSort(info.values, response);
+            MergeSort(info.values, response, stream);
         else if (info.algo == "counting")
         {
-            CountingSort(info.values, response);
+            CountingSort(info.values, response, stream);
         }
         else if (info.algo == "bogo")
         {
-            BogoSort(info.values, response);
+            BogoSort(info.values, response, stream);
         }
 
         // Default for all algorithms exit
@@ -75,23 +71,20 @@ void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
 
         response["SORTED"] = info.values;
 
-        res.status = 200;
-        res.set_header("Access-Control-Allow-Origin", "*");
-        std::string responseString = std::move(response.dump());
-        state.out("Sending response:" + responseString, 0);
-        res.set_content(responseString, "application/json");
+        stream.sendChunk(std::move(response));
+        response.clear();
+        stream.finish();
     }
     catch (const excep &e)
     {
-        state.out("Cought a excep, Details:" + std::string(e.what()) + "\n" +
-                      "Status Code:" + std::to_string(e.exitCode),
-                  0);
-        ReturnFailedAnswer(res, std::string(e.what()), e.exitCode);
+        state.out(
+            "Cought a excep, Details:" + std::string(e.what()) + "\n" + "Status Code:" + std::to_string(e.exitCode), 0);
+        ReturnFailedAnswerStreamOnly(std::string(e.what()), e.exitCode, &stream);
     }
     catch (const std::exception &e)
     {
         state.out("Cought an exception:" + std::string(e.what()), 0);
-        ReturnFailedAnswer(res, std::string(e.what()));
+        ReturnFailedAnswerStreamOnly(std::string(e.what()), 400, &stream);
     }
     return;
 }

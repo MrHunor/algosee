@@ -25,10 +25,8 @@
 #include <mutex>
 #include <nlohmann/json.hpp>
 
-httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req,
-                                                     httplib::Response &res,
-                                                     stateClass &state,
-                                                     clientListType &clientList,
+httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req, httplib::Response &res, 
+                                                     stateClass &state, clientListType &clientList,
                                                      std::mutex &clientListMutex)
 {
 
@@ -67,6 +65,8 @@ httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req
         ReturnFailedAnswer(res, "You are being rate limited. Try again later.", 429);
         return httplib::Server::HandlerResponse::Handled;
     }
+
+  
     // continue to normal handling
     return httplib::Server::HandlerResponse::Unhandled;
 }

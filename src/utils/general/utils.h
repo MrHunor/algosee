@@ -22,19 +22,17 @@
 #define UTILS_H
 #include "../../defs/general.h"
 #include "../../defs/types.h"
+#include "../../stream/stream.h"
 #include <httplib.h>
 #include <random>
 #include <source_location>
 #include <string>
 int RandomInt(int lower, int upper);
 std::string ExecuteCommand(const std::string &command);
-std::string readFile(std::string path);
-void fillWithMetaData(json &response);
-void generateJsonRetrunArras(json &response);
-void InvalidInputMessage(const std::string &details,
-                         std::source_location location = std::source_location::current());
-void ReturnFailedAnswer(httplib::Response &res, const std::string &Details,
-                        int exitCode = 400);
+void InvalidInputMessage(const std::string &details, std::source_location location = std::source_location::current());
+void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int exitCode = 400,
+                        StreamClass *stream = nullptr);
+void ReturnFailedAnswerStreamOnly(const std::string &Details, int exitCode, StreamClass *stream);
 void AddClient(clientListType &cList,
                const std::pair<std::chrono::time_point<std::chrono::system_clock>,
                                std::string> &newEntry);

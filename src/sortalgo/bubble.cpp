@@ -20,12 +20,13 @@
 
 #include "../defs/general.h"
 #include "../defs/types.h"
+#include "../stream/stream.h"
 #include <algorithm>
 #include <nlohmann/json.hpp>
 #include <utility>
 #include <vector>
 
-void BubbleSort(std::vector<int> &unsorted, json &response)
+void BubbleSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted
@@ -38,8 +39,13 @@ void BubbleSort(std::vector<int> &unsorted, json &response)
         {
             if (unsorted[z] > unsorted[z + 1])
             {
-                response["MOVES"].push_back({z, z + 1});
                 std::swap(unsorted[z], unsorted[z + 1]);
+                response["MOVES"].push_back({z, z + 1});
+                if (response["MOVES"].size() > 1000)
+                {
+                    stream.sendChunk(std::move(response));
+                    response.clear();
+                }
             }
         }
     }
@@ -47,7 +53,7 @@ void BubbleSort(std::vector<int> &unsorted, json &response)
 
 //--------------IMAGE-----------------------------------
 
-void BubbleSort(indexPixel &unsorted, json &response)
+void BubbleSort(indexPixel &unsorted, json &response, StreamClass &stream)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted
@@ -60,8 +66,13 @@ void BubbleSort(indexPixel &unsorted, json &response)
         {
             if (unsorted[z].first > unsorted[z + 1].first)
             {
-                response["MOVES"].push_back({z, z + 1});
                 std::swap(unsorted[z], unsorted[z + 1]);
+                response["MOVES"].push_back({z, z + 1});
+                if (response["MOVES"].size() > 1000)
+                {
+                    stream.sendChunk(std::move(response));
+                    response.clear();
+                }
             }
         }
     }
