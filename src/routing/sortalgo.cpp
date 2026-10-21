@@ -35,8 +35,8 @@ void RunSortalgo(SortValidReturn info, stateClass &state, StreamClass &stream)
     try
     {
         json response;
-        response["VERSION"] = ALGOSEE_VERSION;
-        response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
+        generateJsonRetrunArras(response);
+        fillWithMetaData(response);
         stream.sendChunk(std::move(response));
         response.clear();
 
@@ -77,8 +77,9 @@ void RunSortalgo(SortValidReturn info, stateClass &state, StreamClass &stream)
     }
     catch (const excep &e)
     {
-        state.out(
-            "Cought a excep, Details:" + std::string(e.what()) + "\n" + "Status Code:" + std::to_string(e.exitCode), 0);
+        state.out("Cought a excep, Details:" + std::string(e.what()) + "\n" +
+                      "Status Code:" + std::to_string(e.exitCode),
+                  0);
         ReturnFailedAnswerStreamOnly(std::string(e.what()), e.exitCode, &stream);
     }
     catch (const std::exception &e)

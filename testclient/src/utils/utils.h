@@ -29,5 +29,5 @@ void InvalidInputMessage(const std::string &details,
                          std::source_location location = std::source_location::current());
 void checkForCertainResponseType(const json &response, std::vector<std::string> expected);
 void checkForAllResponseTypes(const json &response);
-
+json parseNDJSON(const std::string& output);
 #endif

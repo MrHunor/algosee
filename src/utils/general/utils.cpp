@@ -24,8 +24,10 @@
 #include "../../defs/ratelimits.h"
 #include "../../defs/types.h"
 #include "../../stream/stream.h"
+#include "build_info.h"
 #include <chrono>
 #include <cstdlib>
+#include <fstream>
 #include <httplib.h>
 #include <iostream>
 #include <limits.h>
@@ -171,7 +173,8 @@ std::string ExecuteCommand(const std::string &command)
     return result;
 }
 
-void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int exitCode, StreamClass *stream)
+void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int exitCode,
+                        StreamClass *stream)
 {
 
     std::cout << "returnFailedAnswer called:" + Details
@@ -182,16 +185,19 @@ void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int 
     if (stream == nullptr)
         res.set_content(json(Details), "application/json");
     else
-    { // stream instead of sending, i think the sending once solution could work on a streaming implemented endpoint too
-      // but ill just leave it like this, also you have to clean up the stream with stream->finish
+    { // stream instead of sending, i think the sending once solution could work on a
+      // streaming implemented endpoint too but ill just leave it like this, also you have
+      // to clean up the stream with stream->finish
         stream->sendChunk(json(Details));
         stream->finish();
     }
 }
 
-void ReturnFailedAnswerStreamOnly(const std::string &Details, int exitCode, StreamClass *stream)
+void ReturnFailedAnswerStreamOnly(const std::string &Details, int exitCode,
+                                  StreamClass *stream)
 {
-    std::cout << "returnFailedAnswerStream called:" + Details << "; Code:" + std::to_string(exitCode) << std::endl;
+    std::cout << "returnFailedAnswerStream called:" + Details
+              << "; Code:" + std::to_string(exitCode) << std::endl;
     stream->sendChunk(json(Details));
     stream->finish();
 }

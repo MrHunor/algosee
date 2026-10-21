@@ -113,18 +113,22 @@ int main(int argc, char *argv[])
     //--------------------------IMAGE-----------------------------------------------------------
     server.Post("/image", [&](const httplib::Request &req, httplib::Response &res) {
         auto stream = std::make_shared<StreamClass>(); // see sortalgo
-        res.set_chunked_content_provider("application/x-ndjson", MakeChunkProvider(stream));
+        res.set_chunked_content_provider("application/x-ndjson",
+                                         MakeChunkProvider(stream));
 
-        // extract information from req and res before starting the thread because as soon as the handler returns they
-        // will become undefined
+        // extract information from req and res before starting the thread because as soon
+        // as the handler returns they will become undefined
         ImageValidReturn info = ValidateImage(req, state);
 
-        std::thread IMGsorter([stream, &state, info] { RunImageSort(info, state, *stream); });
-        IMGsorter.detach(); // runs the sorting until finished in a seperate thread, writing to the sink in the process,
-                            // allowing the handler to return and the chunkprovider to stream the chunks to the client
-                            // (or atleast thats the thought)
+        std::thread IMGsorter(
+            [stream, &state, info] { RunImageSort(info, state, *stream); });
+        IMGsorter.detach(); // runs the sorting until finished in a seperate thread,
+                            // writing to the sink in the process, allowing the handler to
+                            // return and the chunkprovider to stream the chunks to the
+                            // client (or atleast thats the thought)
 
-        res.set_header("Access-Control-Allow-Origin", "*"); // must be set here as far as i know
+        res.set_header("Access-Control-Allow-Origin",
+                       "*"); // must be set here as far as i know
         return;
     });
 
@@ -136,28 +140,30 @@ int main(int argc, char *argv[])
 
     //------------------------------SORTALGO---------------------------------------------------------------
     server.Post("/sortalgo", [&](const httplib::Request &req, httplib::Response &res) {
-        auto stream =
-            std::make_shared<StreamClass>(); // kinda complicated why this is needed, the problem is that this handler
-                                             // /sortalgo might return and run streams destuctor if defined like:
-                                             // StreamClass stream and the set_chunk_content_provided might call it
-                                             // after that because it still has to return a chunk and because the object
-                                             // has been destroyed the lamda acesses invalid memory.
-                                             // Another specialty is that this should only be needed in this specific
-                                             // callback scenario as these are the two exit points of a valid
-                                             // destructor, so for any other usecase you can dereference the pointer and
-                                             // pass the object
-                                             // Another point you must look out for is that you have to pass stream by
-                                             // value and not by reference because only this way it is shared (so the
-                                             // lifetime is bound to either destructors)
-        res.set_chunked_content_provider("application/x-ndjson", MakeChunkProvider(stream));
+        auto stream = std::make_shared<
+            StreamClass>(); // kinda complicated why this is needed, the problem is that
+                            // this handler /sortalgo might return and run streams
+                            // destuctor if defined like: StreamClass stream and the
+                            // set_chunk_content_provided might call it after that because
+                            // it still has to return a chunk and because the object has
+                            // been destroyed the lamda acesses invalid memory. Another
+                            // specialty is that this should only be needed in this
+                            // specific callback scenario as these are the two exit points
+                            // of a valid destructor, so for any other usecase you can
+                            // dereference the pointer and pass the object Another point
+                            // you must look out for is that you have to pass stream by
+                            // value and not by reference because only this way it is
+                            // shared (so the lifetime is bound to either destructors)
+        res.set_chunked_content_provider("application/x-ndjson",
+                                         MakeChunkProvider(stream));
 
         // extract info
         SortValidReturn info = ValidateSort(req, state);
 
-        std::thread NUMsorter([info, stream, &state] { RunSortalgo(info, state, *stream); });
+        std::thread NUMsorter(
+            [info, stream, &state] { RunSortalgo(info, state, *stream); });
         NUMsorter.detach();
 
-        
         res.set_header("Access-Control-Allow-Origin", "*");
         return;
     });

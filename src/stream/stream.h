@@ -24,13 +24,12 @@
 #include <mutex>
 #include <queue>
 
-
 class StreamClass
 {
   public:
-    std::mutex writeMutex; // locks the thread to prevent data race
-    std::condition_variable
-        cv_notify; // notifys a thread waiting for new chunks to be written (so the stream callback in httplib)
+    std::mutex writeMutex;             // locks the thread to prevent data race
+    std::condition_variable cv_notify; // notifys a thread waiting for new chunks to be
+                                       // written (so the stream callback in httplib)
     std::queue<json> chunks;
     bool finished = false;
 
@@ -52,6 +51,6 @@ class StreamClass
     }
 };
 
-
-httplib::ContentProviderWithoutLength MakeChunkProvider(std::shared_ptr<StreamClass> stream);
+httplib::ContentProviderWithoutLength MakeChunkProvider(
+    std::shared_ptr<StreamClass> stream);
 #endif

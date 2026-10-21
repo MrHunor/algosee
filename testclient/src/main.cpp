@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
                 std::to_string(currentrun.size) + R"( | shuf | paste -sd, -)]}")";
             std::string output = executeCommand(command);
             state.out("Recived (raw):" + output, 0);
-            json response = json::parse(output);
+            json response = parseNDJSON(output);
             state.out("recived (json):" + response.dump(), 0);
             checkForAllResponseTypes(response);
             checkForCertainResponseType(
@@ -88,6 +88,7 @@ int main(int argc, char *argv[])
         }
         catch (const std::exception &e)
         {
+            state.out("Failed. Details:"+std::string(e.what()),0);
             currentrun.failure = true;
             exitMessage.push_back(currentrun);
         }
@@ -145,7 +146,7 @@ int main(int argc, char *argv[])
                 std::to_string(goal.first) + "," + std::to_string(goal.second) + "]}'";
             std::string output = executeCommand(command);
             state.out("Recived (raw):" + output, 0);
-            json response = json::parse(output);
+            json response = parseNDJSON(output);
             state.out("recived:" + response.dump(), 0);
             checkForAllResponseTypes(response);
             checkForCertainResponseType(

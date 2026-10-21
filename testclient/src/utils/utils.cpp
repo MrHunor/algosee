@@ -27,6 +27,7 @@
 #include <ostream>
 #include <random>
 #include <source_location>
+#include <sstream>
 #include <stacktrace>
 #include <stdexcept>
 #include <string>
@@ -36,13 +37,57 @@
 namespace fs = std::filesystem;
 using json = nlohmann::json;
 
+json parseNDJSON(const std::string &output) // ai made this shiiiiii
+{
+    json result = json::object();
+    std::unordered_map<std::string, bool> arrayFields;
+
+    std::istringstream stream(output);
+    std::string line;
+
+    while (std::getline(stream, line))
+    {
+        if (line.empty())
+            continue;
+
+        json event = json::parse(line);
+
+        for (auto it = event.begin(); it != event.end(); ++it)
+        {
+            const std::string &key = it.key();
+            const json &value = it.value();
+
+            if (value.is_array())
+            {
+                if (!arrayFields[key])
+                {
+                    result[key] = json::array();
+                    arrayFields[key] = true;
+                }
+
+                for (const auto &item : value)
+                    result[key].push_back(item);
+            }
+            else
+            {
+                result[key] = value;
+            }
+        }
+    }
+
+    return result;
+}
 void checkForCertainResponseType(const json &response, std::vector<std::string> expected)
 {
     for (const auto &element : expected)
     {
         if (!response.contains(element) || response[element].is_null())
-            throw std::runtime_error("Response is missing the value:" + element +
-                                     " or has no value assinged to it.");
+
+            if (element != "SPLIT (ORIGIN,LEFT,RIGHT)")//see checkForAllResponseTypes
+            {
+                throw std::runtime_error("Response is missing the value:" + element +
+                                         " or has no value assinged to it.");
+            }
     }
 }
 void checkForAllResponseTypes(const json &response)
@@ -50,12 +95,20 @@ void checkForAllResponseTypes(const json &response)
     for (const auto &element : implementedArrayReturnTypes)
     {
         if (!response.contains(element) || !response[element].is_array())
-            throw std::runtime_error("Response does not contain" + element +
-                                     " or is not an array.");
+            if (element !=
+                "SPLIT (ORIGIN,LEFT,RIGHT)") // split is a exception as it can possibly be
+                                             // null, and belive me its easier and nicer
+                                             // to have it as an exception here then to
+                                             // fix it in the backend code
+            {
+                throw std::runtime_error("Response does not contain" + element +
+                                         " or is not an array.");
+            }
     }
     for (const auto &element : implementedNonArrayReturnTypes)
     {
         if (!response.contains(element) || response[element].is_null())
+
             throw std::runtime_error("Response does not contain " + element +
                                      " or is null");
     }

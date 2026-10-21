@@ -77,8 +77,9 @@ void RunImageSort(ImageValidReturn info, stateClass &state, StreamClass &stream)
     }
     catch (const excep &e)
     {
-        state.out(
-            "Cought a excep, Details:" + std::string(e.what()) + "\n" + "Status Code:" + std::to_string(e.exitCode), 0);
+        state.out("Cought a excep, Details:" + std::string(e.what()) + "\n" +
+                      "Status Code:" + std::to_string(e.exitCode),
+                  0);
         ReturnFailedAnswerStreamOnly(std::string(e.what()), e.exitCode, &stream);
     }
     catch (const std::exception &e)

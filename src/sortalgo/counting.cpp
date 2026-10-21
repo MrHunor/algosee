@@ -19,13 +19,13 @@
  */
 
 #include "../defs/general.h"
-#include "../stream/stream.h"
 #include "../defs/types.h"
+#include "../stream/stream.h"
 #include <algorithm>
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void CountingSort(std::vector<int> &unsorted, json &response,StreamClass& stream)
+void CountingSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted
@@ -50,7 +50,7 @@ void CountingSort(std::vector<int> &unsorted, json &response,StreamClass& stream
 
     unsorted = retval;
 }
-void CountingSort(indexPixel &unsorted, json &response,StreamClass& stream)
+void CountingSort(indexPixel &unsorted, json &response, StreamClass &stream)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted

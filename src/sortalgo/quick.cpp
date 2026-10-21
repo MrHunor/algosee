@@ -48,9 +48,10 @@ int FindQuickSortPivot(std::vector<int> &unsorted, int low, int high, json &resp
     return lowerPivotIndexBoundry + 1;
 }
 
-void QuickSort(std::vector<int> &unsorted, int low, int high, json &response,StreamClass& stream)
+void QuickSort(std::vector<int> &unsorted, int low, int high, json &response,
+               StreamClass &stream)
 {
-    if(response["MOVES"].size()>1000)
+    if (response["MOVES"].size() > 1000)
     {
         stream.sendChunk(std::move(response));
         response.clear();
@@ -59,9 +60,10 @@ void QuickSort(std::vector<int> &unsorted, int low, int high, json &response,Str
     {
         int pivot = FindQuickSortPivot(unsorted, low, high, response);
 
-        QuickSort(unsorted, low, pivot - 1, response,stream); // sort left side recursivly
-        QuickSort(unsorted, pivot + 1, high,
-                  response,stream); // sort right side recursivly
+        QuickSort(unsorted, low, pivot - 1, response,
+                  stream); // sort left side recursivly
+        QuickSort(unsorted, pivot + 1, high, response,
+                  stream); // sort right side recursivly
     }
 }
 
@@ -89,20 +91,22 @@ int FindQuickSortPivot(indexPixel &unsorted, int low, int high, json &response)
     return lowerPivotIndexBoundry + 1;
 }
 
-void QuickSort(indexPixel &unsorted, int low, int high, json &response,StreamClass& stream)
+void QuickSort(indexPixel &unsorted, int low, int high, json &response,
+               StreamClass &stream)
 {
-     if(response["MOVES"].size()>1000)
+    if (response["MOVES"].size() > 1000)
     {
         stream.sendChunk(std::move(response));
         response.clear();
     }
-   
+
     if (low < high) // otherwise already sorted
     {
         int pivot = FindQuickSortPivot(unsorted, low, high, response);
 
-        QuickSort(unsorted, low, pivot - 1, response,stream); // sort left side recursivly
-        QuickSort(unsorted, pivot + 1, high,
-                  response,stream); // sort right side recursivly
+        QuickSort(unsorted, low, pivot - 1, response,
+                  stream); // sort left side recursivly
+        QuickSort(unsorted, pivot + 1, high, response,
+                  stream); // sort right side recursivly
     }
 }

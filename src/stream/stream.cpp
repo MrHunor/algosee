@@ -27,7 +27,11 @@
 #include <thread>
 #include <vector>
 
-httplib::ContentProviderWithoutLength MakeChunkProvider(std::shared_ptr<StreamClass> stream)//this returns a lamda, you cant have auto here because you want to use the lamda somewhere else so you have to explicitly state that this is a contentprovider
+httplib::ContentProviderWithoutLength MakeChunkProvider(
+    std::shared_ptr<StreamClass>
+        stream) // this returns a lamda, you cant have auto here because you want to use
+                // the lamda somewhere else so you have to explicitly state that this is a
+                // contentprovider
 {
     return [stream](size_t, httplib::DataSink &sink) {
         while (true)
@@ -35,23 +39,28 @@ httplib::ContentProviderWithoutLength MakeChunkProvider(std::shared_ptr<StreamCl
             json chunk;
 
             std::unique_lock<std::mutex> lock(
-                stream->writeMutex); // has to be a unique_locl because the cv_notify.wait() operations needs one
+                stream->writeMutex); // has to be a unique_locl because the
+                                     // cv_notify.wait() operations needs one
 
             stream->cv_notify.wait(lock, [&] {
                 return !stream->chunks.empty() ||
-                       stream->finished; // if either evaluate to true then the wait is finished, so if chunks is
-                                         // not empty or if the stream is finished
+                       stream->finished; // if either evaluate to true then the wait is
+                                         // finished, so if chunks is not empty or if the
+                                         // stream is finished
             });
 
             if (stream->chunks.empty() && stream->finished)
-                break; // queue is empty and stream is finished, exit out of loop and exit out of handler
+                break; // queue is empty and stream is finished, exit out of loop and exit
+                       // out of handler
 
             chunk = std::move(stream->chunks.front());
             stream->chunks.pop(); // move the first chunk to chunk and delete from queue
-            lock.unlock();        // you have to unlock the lock because stream->finish locks the same mutex again
-            const std::string chunkPlusEnd = chunk.dump()+"\n";
+            lock.unlock(); // you have to unlock the lock because stream->finish locks the
+                           // same mutex again
+            const std::string chunkPlusEnd = chunk.dump() + "\n";
             if (!sink.write(chunkPlusEnd.data(),
-                            chunkPlusEnd.size())) //.write should evaluate to true is the sink is still
+                            chunkPlusEnd.size())) //.write should evaluate to true is the
+                                                  //sink is still
                                                   // viable, if not something bad happend
             {
                 stream->finish();

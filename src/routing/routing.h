@@ -22,10 +22,10 @@
 #define ROUTING_H
 #include "../defs/types.h"
 #include "../logger/logger.h"
-#include <chrono>
-#include <httplib/httplib.h>
 #include "../validate/image/validate.h"
 #include "../validate/sort/validate.h"
+#include <chrono>
+#include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 
@@ -37,8 +37,10 @@ void RunStatus(const httplib::Request &req, httplib::Response &res, stateClass &
 void RunSortalgo(SortValidReturn info, stateClass &state, StreamClass &stream);
 void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass &state);
 void RunImageSort(ImageValidReturn info, stateClass &state, StreamClass &stream);
-httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req, httplib::Response &res, 
-                                                     stateClass &state, clientListType &clientList,
+httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req,
+                                                     httplib::Response &res,
+                                                     stateClass &state,
+                                                     clientListType &clientList,
                                                      std::mutex &clientListMutex);
 void RunLimits(httplib::Response &res, stateClass &state);
 #endif
