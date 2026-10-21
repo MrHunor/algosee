@@ -70,7 +70,7 @@ json parseNDJSON(const std::string &output) // ai made this shiiiiii
             }
             else
             {
-                result[key] = value;
+                result[key] = value; 
             }
         }
     }

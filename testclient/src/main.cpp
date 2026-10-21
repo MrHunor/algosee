@@ -84,6 +84,8 @@ int main(int argc, char *argv[])
 
                 currentrun.failure = true;
             }
+            if(currentrun.failure)state.out("Failed.",0);
+            else state.out("Sucess.",0);
             exitMessage.push_back(currentrun);
         }
         catch (const std::exception &e)
