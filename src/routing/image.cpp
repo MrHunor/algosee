@@ -25,6 +25,7 @@
 #include "../utils/general/utils.h"
 #include "../validate/image/validate.h"
 #include "build_info.h"
+#include <algorithm>
 #include <chrono>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
@@ -63,7 +64,8 @@ void RunImageSort(ImageValidReturn info, stateClass &state, StreamClass &stream)
             BogoSort(info.img.data, response, stream);
         }
         auto endTime = std::chrono::steady_clock::now();
-        auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+        auto elapsed =
+            std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
         state.out("Ended Time mesurement.", 0);
         response["TIME"] = elapsed.count();
         response["SORTED"] = IndexPixelArrToJson(info.img.data);

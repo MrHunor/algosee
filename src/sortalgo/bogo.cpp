@@ -48,8 +48,9 @@ void BogoSort(indexPixel &unsorted, json &response, StreamClass &stream)
 {
     if (unsorted.size() == 1)
         return; // an array of the size one is already sorted
-    while (!std::is_sorted(unsorted.begin(), unsorted.end(),
-                           [](const auto &a, const auto &b) { return a.first < b.first; }))
+    while (
+        !std::is_sorted(unsorted.begin(), unsorted.end(),
+                        [](const auto &a, const auto &b) { return a.first < b.first; }))
     {
         Randomise(unsorted);
         response["TRIES"].push_back(IndexPixelArrToJson(unsorted));

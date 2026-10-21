@@ -20,13 +20,15 @@
  */
 #include "../defs/max_sizes.h"
 #include "../logger/logger.h"
+#include "../utils/general/utils.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
-#include <stb_image.h>
 
 void RunLimits(httplib::Response &res, stateClass &state)
 {
     json response;
+    generateJsonRetrunArras(response);
+    fillWithMetaData(response);
     // sort
     response["MAX_ELEMENT_COUNT_SORT"] = MAX_ELEMENT_COUNT_SORT;
     response["MAX_ELEMENT_COUNT_SELECTION"] = MAX_ELEMENT_COUNT_SELECTION;
@@ -44,13 +46,13 @@ void RunLimits(httplib::Response &res, stateClass &state)
     response["MAX_ELEMENT_COUNT_DFS"] = MAX_ELEMENT_COUNT_DFS;
     response["MAX_ELEMENT_COUNT_BIBFS"] = MAX_ELEMENT_COUNT_BIBFS;
     response["MAX_ELEMENT_COUNT_ASTAR"] = MAX_ELEMENT_COUNT_ASTAR;
-    response["MAX_PIXEL_COUNT_IMAGE"] = MAX_PIXEL_COUNT_IMAGE;
 
     // image
     response["MAX_PIXEL_COUNT_IMAGE"] = MAX_PIXEL_COUNT_IMAGE;
     res.status = 200;
     res.set_header("Access-Control-Allow-Origin", "*");
-    res.set_content(response.dump(), "application/json");
-    state.out("Sending response...", 0);
+    std::string responseString = std::move(response.dump());
+    state.out("Sending response:" + responseString, 0);
+    res.set_content(responseString, "application/json");
     return;
 }

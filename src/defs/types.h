@@ -24,7 +24,8 @@
 #include <chrono>
 #include <vector>
 
-typedef std::vector<std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string>>
+typedef std::vector<
+    std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string>>
     clientListType; // time and IP
 
 typedef unsigned char colour;

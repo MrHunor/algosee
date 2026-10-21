@@ -64,7 +64,8 @@ void RunSortalgo(SortValidReturn info, stateClass &state, StreamClass &stream)
 
         // Default for all algorithms exit
         auto endTime = std::chrono::steady_clock::now();
-        auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+        auto elapsed =
+            std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
         state.out("Ended Time mesurement.", 0);
         response["TIME"] = elapsed.count();
 

@@ -53,7 +53,8 @@ int main(int argc, char *argv[])
         currentrun.size = testcase.second;
         currentrun.mapSize = {-1, -1};
 
-        state.out("Testing Sorting validness with: " + currentrun.algoname + " size:" + std::to_string(currentrun.size),
+        state.out("Testing Sorting validness with: " + currentrun.algoname +
+                      " size:" + std::to_string(currentrun.size),
                   0);
         try
         {
@@ -62,15 +63,20 @@ int main(int argc, char *argv[])
             std::iota(testValues.begin(), testValues.end(), 1);
             std::sort(testValues.begin(), testValues.end());
             std::vector<int> sorted = testValues;
-            std::string command = "curl -v -X POST \"http://127.0.0.1:8080/sortalgo?algo=" + currentrun.algoname +
-                                  "\" "
-                                  "-H \"Content-Type: application/json\" "
-                                  R"(-d "{\"values\":[$(seq 1 )" +
-                                  std::to_string(currentrun.size) + R"( | shuf | paste -sd, -)]}")";
+            std::string command =
+                "curl -v -X POST \"http://127.0.0.1:8080/sortalgo?algo=" +
+                currentrun.algoname +
+                "\" "
+                "-H \"Content-Type: application/json\" "
+                R"(-d "{\"values\":[$(seq 1 )" +
+                std::to_string(currentrun.size) + R"( | shuf | paste -sd, -)]}")";
             std::string output = executeCommand(command);
             state.out("Recived (raw):" + output, 0);
             json response = json::parse(output);
             state.out("recived (json):" + response.dump(), 0);
+            checkForAllResponseTypes(response);
+            checkForCertainResponseType(
+                response, implementedAlgoExpectedResponseType.at(currentrun.algoname));
             std::vector<int> sortedByAlgosee = response["SORTED"];
 
             if (sortedByAlgosee != sorted)
@@ -97,15 +103,17 @@ int main(int argc, char *argv[])
         currentrun.size = -1;
         currentrun.mapSize = testcase.second;
         unsigned short mapInitValue = 0;
-        state.out("Testing path validness for:" + currentrun.algoname + " on Mapsize:" +
-                      std::to_string(currentrun.mapSize.first) + "x" + std::to_string(currentrun.mapSize.second),
+        state.out("Testing path validness for:" + currentrun.algoname +
+                      " on Mapsize:" + std::to_string(currentrun.mapSize.first) + "x" +
+                      std::to_string(currentrun.mapSize.second),
                   0);
         if (currentrun.algoname == "ASTAR")
         { // A* needs non zero map values so init a diffrent vector
             mapInitValue = 1;
         }
-        std::vector<std::vector<int>> map(testcase.second.second,
-                                          std::vector<int>(testcase.second.first, mapInitValue));
+        std::vector<std::vector<int>> map(
+            testcase.second.second,
+            std::vector<int>(testcase.second.first, mapInitValue));
         try
         {
             std::string mapString;
@@ -125,17 +133,23 @@ int main(int argc, char *argv[])
             mapString.erase(mapString.size() - 1, 1);
             mapString += "]";
             std::pair<int, int> start = {0, 0};
-            std::pair<int, int> goal = {testcase.second.first - 1, testcase.second.second - 1};
-            std::string command = "curl -X POST \"http://127.0.0.1:8080/pathalgo?algo=" + currentrun.algoname + "\"" +
-                                  " -H \"Content-Type: application/json\""
-                                  " -d '{\"MAP\": " +
-                                  mapString + ",\"START\": [" + std::to_string(start.first) + "," +
-                                  std::to_string(start.second) + "],\"GOAL\": [" + std::to_string(goal.first) + "," +
-                                  std::to_string(goal.second) + "]}'";
+            std::pair<int, int> goal = {testcase.second.first - 1,
+                                        testcase.second.second - 1};
+            std::string command =
+                "curl -X POST \"http://127.0.0.1:8080/pathalgo?algo=" +
+                currentrun.algoname + "\"" +
+                " -H \"Content-Type: application/json\""
+                " -d '{\"MAP\": " +
+                mapString + ",\"START\": [" + std::to_string(start.first) + "," +
+                std::to_string(start.second) + "],\"GOAL\": [" +
+                std::to_string(goal.first) + "," + std::to_string(goal.second) + "]}'";
             std::string output = executeCommand(command);
             state.out("Recived (raw):" + output, 0);
             json response = json::parse(output);
             state.out("recived:" + response.dump(), 0);
+            checkForAllResponseTypes(response);
+            checkForCertainResponseType(
+                response, implementedAlgoExpectedResponseType.at(currentrun.algoname));
             std::vector<std::pair<int, int>> path = response["PATH"];
 
             for (int i = 0; i < path.size(); i++)
@@ -181,8 +195,10 @@ int main(int argc, char *argv[])
     for (const auto &element : exitMessage)
     {
         if (element.failure == false)
-            state.out("Algorithm:" + element.algoname + ", Size:" + std::to_string(element.size) + "Map Size:" +
-                          std::to_string(element.mapSize.first) + "," + std::to_string(element.mapSize.second),
+            state.out("Algorithm:" + element.algoname +
+                          ", Size:" + std::to_string(element.size) +
+                          "Map Size:" + std::to_string(element.mapSize.first) + "," +
+                          std::to_string(element.mapSize.second),
                       0);
     }
 
@@ -190,8 +206,10 @@ int main(int argc, char *argv[])
     for (const auto &element : exitMessage)
     {
         if (element.failure == true)
-            state.out("Algorithm:" + element.algoname + ", Size:" + std::to_string(element.size) + "Map Size:" +
-                          std::to_string(element.mapSize.first) + "," + std::to_string(element.mapSize.second),
+            state.out("Algorithm:" + element.algoname +
+                          ", Size:" + std::to_string(element.size) +
+                          "Map Size:" + std::to_string(element.mapSize.first) + "," +
+                          std::to_string(element.mapSize.second),
                       0);
     }
 

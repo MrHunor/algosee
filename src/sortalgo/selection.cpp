@@ -32,8 +32,9 @@ void SelectionSort(std::vector<int> &unsorted, json &response,StreamClass& strea
         return; // an array of the size one is already sorted
     int index;
 
-    for (size_t i = 0; i < unsorted.size() - 1; i++) // unsorted.size() is valid because the last element is sorted due
-                                                     // to the other elements already being sorted
+    for (size_t i = 0; i < unsorted.size() - 1;
+         i++) // unsorted.size() is valid because the last element is sorted due
+              // to the other elements already being sorted
     {
         auto minT = std::min_element(unsorted.begin() + i, unsorted.end());
         index = minT - unsorted.begin();
@@ -49,11 +50,13 @@ void SelectionSort(indexPixel &unsorted, json &response,StreamClass& stream)
         return; // an array of the size one is already sorted
     int index;
 
-    for (size_t i = 0; i < unsorted.size() - 1; i++) // unsorted.size() is valid because the last element is sorted due
-                                                     // to the other elements already being sorted
+    for (size_t i = 0; i < unsorted.size() - 1;
+         i++) // unsorted.size() is valid because the last element is sorted due
+              // to the other elements already being sorted
     {
-        auto minT = std::min_element(unsorted.begin() + i, unsorted.end(),
-                                     [](const auto &a, const auto &b) { return a.first < b.first; });
+        auto minT = std::min_element(
+            unsorted.begin() + i, unsorted.end(),
+            [](const auto &a, const auto &b) { return a.first < b.first; });
         index = minT - unsorted.begin();
         std::swap(unsorted[i], unsorted[index]);
         response["MOVES"].push_back({i, index});

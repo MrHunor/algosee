@@ -55,7 +55,8 @@ httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req
     for (const auto &element : clientList)
     {
         output = "";
-        output = std::format("Clientlist Element: Time:{}; IP:{}", element.first, element.second);
+        output = std::format("Clientlist Element: Time:{}; IP:{}", element.first,
+                             element.second);
         state.out(output, 0);
     }
 

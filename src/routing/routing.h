@@ -29,8 +29,9 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void AfterSelfTestRun(std::string algorithmName, std::vector<int> &paramPassValues, std::vector<int> &testvalues,
-                      std::vector<int> &sortedValues, json &response, json &parampassTest,
+void AfterSelfTestRun(std::string algorithmName, std::vector<int> &paramPassValues,
+                      std::vector<int> &testvalues, std::vector<int> &sortedValues,
+                      json &response, json &parampassTest,
                       const std::chrono::steady_clock::time_point &startTime);
 void RunStatus(const httplib::Request &req, httplib::Response &res, stateClass &state);
 void RunSortalgo(SortValidReturn info, stateClass &state, StreamClass &stream);

@@ -19,12 +19,15 @@
  */
 #ifndef UTILS_H
 #define UTILS_H
+#include "../../src/defs/general.h"
 #include <source_location>
 #include <string>
+#include <vector>
 int randomInt(int lower, int upper);
 std::string executeCommand(const std::string &command);
-void InvalidInputMessage(
-    const std::string &details,
-    std::source_location location = std::source_location::current());
+void InvalidInputMessage(const std::string &details,
+                         std::source_location location = std::source_location::current());
+void checkForCertainResponseType(const json &response, std::vector<std::string> expected);
+void checkForAllResponseTypes(const json &response);
 
 #endif

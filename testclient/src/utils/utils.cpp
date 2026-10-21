@@ -18,6 +18,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "utils.h"
+#include "../../src/defs/implemented.h"
 #include <chrono>
 #include <cstdlib>
 #include <iostream>
@@ -27,6 +28,7 @@
 #include <random>
 #include <source_location>
 #include <stacktrace>
+#include <stdexcept>
 #include <string>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -34,58 +36,85 @@
 namespace fs = std::filesystem;
 using json = nlohmann::json;
 
-int randomInt(int lower, int upper) {
-  static std::random_device rd;
-  static std::mt19937 gen(rd());
-  std::uniform_int_distribution<int> dist(lower, upper);
-
-  return dist(gen);
+void checkForCertainResponseType(const json &response, std::vector<std::string> expected)
+{
+    for (const auto &element : expected)
+    {
+        if (!response.contains(element) || response[element].is_null())
+            throw std::runtime_error("Response is missing the value:" + element +
+                                     " or has no value assinged to it.");
+    }
+}
+void checkForAllResponseTypes(const json &response)
+{
+    for (const auto &element : implementedArrayReturnTypes)
+    {
+        if (!response.contains(element) || !response[element].is_array())
+            throw std::runtime_error("Response does not contain" + element +
+                                     " or is not an array.");
+    }
+    for (const auto &element : implementedNonArrayReturnTypes)
+    {
+        if (!response.contains(element) || response[element].is_null())
+            throw std::runtime_error("Response does not contain " + element +
+                                     " or is null");
+    }
 }
 
-std::string executeCommand(const std::string &command) {
-  int exitCode;
-  FILE *pipe = popen(command.c_str(), "r");
-  if (!pipe)
-    InvalidInputMessage("Failed to open Pipe for executing command:" + command);
+int randomInt(int lower, int upper)
+{
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dist(lower, upper);
 
-  char buffer[256];
-  std::string result;
-
-  while (fgets(buffer, sizeof(buffer),
-               pipe)) // this works because fgets returns a pointer to the data,
-                      // and if no data is available it return nullptr
-  {
-    result += buffer;
-  }
-
-  // i know the reference exit code is kinda ugly but the other option would be
-  // to return an pair or struct which would require a lot of work and im lazy
-  int status = pclose(pipe);
-  exitCode = -1;
-  if (WIFEXITED(status)) {
-    exitCode = WEXITSTATUS(status);
-  }
-  if (exitCode != 0)
-    InvalidInputMessage("Shell Command:'" + command + "' has failed.");
-  return result;
+    return dist(gen);
 }
 
+std::string executeCommand(const std::string &command)
+{
+    int exitCode;
+    FILE *pipe = popen(command.c_str(), "r");
+    if (!pipe)
+        InvalidInputMessage("Failed to open Pipe for executing command:" + command);
 
+    char buffer[256];
+    std::string result;
 
-void InvalidInputMessage(const std::string &details,
-                         std::source_location location) {
-  // yes i thought of making this state out for colour but that would require
-  // passing state (which is not always present), or make state global which is
-  // not pretty
-  auto now = std::chrono::system_clock::now();
-  std::cout << "TIME:" << now << std::endl;
-  std::cout << std::stacktrace::current() << std::endl;
-  std::cout << "Filename:" << location.file_name() << std::endl;
-  std::cout << "Function:" << location.function_name() << std::endl;
-  std::cout << "Line:" << location.line() << std::endl;
-  std::cout << "Column:" << location.column() << std::endl;
-  if (!details.empty()) {
-    std::cout << "Details provided:" << details << std::endl;
-  }
-  exit(1);
+    while (fgets(buffer, sizeof(buffer),
+                 pipe)) // this works because fgets returns a pointer to the data,
+                        // and if no data is available it return nullptr
+    {
+        result += buffer;
+    }
+
+    // i know the reference exit code is kinda ugly but the other option would be
+    // to return an pair or struct which would require a lot of work and im lazy
+    int status = pclose(pipe);
+    exitCode = -1;
+    if (WIFEXITED(status))
+    {
+        exitCode = WEXITSTATUS(status);
+    }
+    if (exitCode != 0)
+        InvalidInputMessage("Shell Command:'" + command + "' has failed.");
+    return result;
+}
+
+void InvalidInputMessage(const std::string &details, std::source_location location)
+{
+    // yes i thought of making this state out for colour but that would require
+    // passing state (which is not always present), or make state global which is
+    // not pretty
+    auto now = std::chrono::system_clock::now();
+    std::cout << "TIME:" << now << std::endl;
+    std::cout << std::stacktrace::current() << std::endl;
+    std::cout << "Filename:" << location.file_name() << std::endl;
+    std::cout << "Function:" << location.function_name() << std::endl;
+    std::cout << "Line:" << location.line() << std::endl;
+    std::cout << "Column:" << location.column() << std::endl;
+    if (!details.empty())
+    {
+        std::cout << "Details provided:" << details << std::endl;
+    }
+    exit(1);
 }

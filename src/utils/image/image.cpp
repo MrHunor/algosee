@@ -43,8 +43,8 @@ json IndexPixelArrToJson(const indexPixel &arr)
     json jarr = json::array();
     for (const auto &element : arr)
     {
-        jarr.push_back(
-            json::array({element.first, element.second.R, element.second.G, element.second.B, element.second.A}));
+        jarr.push_back(json::array({element.first, element.second.R, element.second.G,
+                                    element.second.B, element.second.A}));
     }
     return jarr;
 }
@@ -63,16 +63,19 @@ image LoadImage(const httplib::Request &req, const stateClass &state)
     int height = 0;
     int channels = 0;
 
-    if (stbi_info_from_memory(reinterpret_cast<const stbi_uc *>(image.content.data()), image.content.size(), &width,
-                              &height, nullptr) != true)
+    if (stbi_info_from_memory(reinterpret_cast<const stbi_uc *>(image.content.data()),
+                              image.content.size(), &width, &height, nullptr) != true)
         throw excep("Failed to read Metadata from image.", 500);
     if (width < 1 || height < 1)
         throw excep("The provided image has invalid dimensions.", 415);
     if (width * height > MAX_PIXEL_COUNT_IMAGE)
-        throw excep("Image contains too many pixels. Max pixels:" + std::to_string(MAX_PIXEL_COUNT_IMAGE), 413);
+        throw excep("Image contains too many pixels. Max pixels:" +
+                        std::to_string(MAX_PIXEL_COUNT_IMAGE),
+                    413);
 
-    colour *data = stbi_load_from_memory(reinterpret_cast<const stbi_uc *>(image.content.data()), image.content.size(),
-                                         &width, &height, &channels, 4);
+    colour *data =
+        stbi_load_from_memory(reinterpret_cast<const stbi_uc *>(image.content.data()),
+                              image.content.size(), &width, &height, &channels, 4);
 
     if (!data)
         throw excep("Failed to read saved image into memory.", 500);

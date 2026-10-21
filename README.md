@@ -65,7 +65,7 @@ To test the backend via a curl command [go here](#to-test-the-backend-online-lin
 - **Hosting:** Github Pages (Frontend), Render (Backend) 
 
 ## Plans: 
-Current plans invlove expanding into other areas of algorithms, like wayfinding algorithms.
+Current plans invlove Streaming and more, have a look [here](https://github.com/MrHunor/algosee/milestones).
 
 ## Workflow:
 1. Currently a visitor on https://mrhunor.github.io/algosee is shown the newest version of the fronend (./frontend).

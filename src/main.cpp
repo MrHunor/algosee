@@ -32,6 +32,7 @@
 #include <httplib.h>
 #include <mutex>
 #include <nlohmann/json.hpp>
+#include <stdexcept>
 #include <string>
 
 int main(int argc, char *argv[])
@@ -44,9 +45,19 @@ int main(int argc, char *argv[])
               "visit:'https://www.gnu.org/licenses/gpl-3.0.en.html'.\n"
               "This is free software, and you are welcome to redistribute it\n"
               "under certain conditions; visit "
-              "'https://www.gnu.org/licenses/gpl-3.0.en.html' for details.\n",
+              "'https://www.gnu.org/licenses/gpl-3.0.en.html' for details.",
               0, RED);
     state.out(QUOTE, 0, BRIGHT_BLUE);
+
+    try
+    {
+        std::string asciiArt = readFile("../assets/WideTransparentLogoAsciiArt.txt");
+        state.out("\n" + asciiArt, 0);
+    }
+    catch (const std::exception &e)
+    {
+        state.out("Non fatal exception:" + std::string(e.what()), 0);
+    }
 
     state.out("Starting...", 0);
     state.out("VERSION:" + std::string(ALGOSEE_VERSION), 0);
@@ -56,18 +67,20 @@ int main(int argc, char *argv[])
     std::mutex clientListMutex;
     //--------------------------PREROUTING HANDLING-------------------
     server.set_pre_routing_handler(
-        [&state, &clientList, &clientListMutex](const httplib::Request &req, httplib::Response &res) {
+        [&state, &clientList, &clientListMutex](const httplib::Request &req,
+                                                httplib::Response &res) {
             return RunPreflightHandler(req, res, state, clientList, clientListMutex);
         });
 
     //-------------------------POSTROUTING HANDLING-------------------------
     // this runs before sending any response
-    server.set_post_routing_handler([&state](const httplib::Request &req, httplib::Response &res) {
-        state.out("Target:" + req.target + "\nBody:" + req.body, 0);
+    server.set_post_routing_handler(
+        [&state](const httplib::Request &req, httplib::Response &res) {
+            state.out("Target:" + req.target + "\nBody:" + req.body, 0);
 
-        res.headers.erase("Access-Control-Allow-Origin");
-        res.set_header("Access-Control-Allow-Origin", "*");
-    });
+            res.headers.erase("Access-Control-Allow-Origin");
+            res.set_header("Access-Control-Allow-Origin", "*");
+        });
 
     //--------------------------OPTIONS-----------------------------------------
     // handle a preflight request from a diffrent origin; firefox & co. considers
@@ -75,7 +88,8 @@ int main(int argc, char *argv[])
     // needed to work
     const auto serverOptionHandler =
         [](const httplib::Request &req,
-           httplib::Response &res) { // first time using callbacks like this kinda nervous >_<
+           httplib::Response
+               &res) { // first time using callbacks like this kinda nervous >_<
             res.set_header("Access-Control-Allow-Origin", "*");
             res.set_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
             res.set_header("Access-Control-Allow-Headers", "Content-Type");
@@ -154,15 +168,23 @@ int main(int argc, char *argv[])
         return;
     });
 
-    // render port detection magic
-    const char *port_env = std::getenv("PORT");
-    int port = port_env ? std::stoi(port_env) : 8080;
-
-    state.out("Listining on:0.0.0.0:" + std::to_string(port), 0);
-    if (!server.listen("0.0.0.0", port))
+    try
     {
-        InvalidInputMessage("Failed to listen on 0.0.0.0:" + std::to_string(port));
-    }
+        // render port detection magic
+        const char *port_env = std::getenv("PORT");
+        int port = port_env ? std::stoi(port_env) : 8080;
 
+        state.out("Listining on:0.0.0.0:" + std::to_string(port), 0);
+        if (!server.listen("0.0.0.0", port))
+        {
+            throw std::runtime_error("Failed to listen on 0.0.0.0:" +
+                                     std::to_string(port));
+        }
+    }
+    catch (const std::exception &e)
+    {
+        InvalidInputMessage("Server failed to startup with an exception:" +
+                            std::string(e.what()));
+    }
     return 0;
 }

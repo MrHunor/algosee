@@ -28,8 +28,6 @@ ImageValidReturn ValidateImage(const httplib::Request &req, stateClass &state)
 {
     ImageValidReturn retval;
 
-    retval.img = LoadImage(req, state);
-
     if (!req.has_param("algo"))
     {
         throw excep("URL does not contain a url parameter.", 400);
@@ -43,17 +41,24 @@ ImageValidReturn ValidateImage(const httplib::Request &req, stateClass &state)
     {
         throw excep("Provided algo does not exist or is not implemented.", 501);
     }
-    // technically this check isnt needed because stbi_info in loadImage already checks it but im to anxious to delete
-    // it :3
+
+    retval.img = LoadImage(req, state);
+
+    // technically this check isnt needed because stbi_info in loadImage already checks it
+    // but im to anxious to delete it :3
     if (retval.img.width * retval.img.height > MAX_PIXEL_COUNT_IMAGE)
     {
-        throw excep("Too many pixels provided. Max:" + std::to_string(MAX_PIXEL_COUNT_IMAGE), 413);
+        throw excep("Too many pixels provided. Max:" +
+                        std::to_string(MAX_PIXEL_COUNT_IMAGE),
+                    413);
     }
 
     auto it = implementedSortAlgos.find(retval.algo);
     if (retval.img.width * retval.img.height > it->second)
     {
-        throw excep("Too many elements (pixels) provided. Max for this algorithm:" + std::to_string(it->second), 413);
+        throw excep("Too many elements (pixels) provided. Max for this algorithm:" +
+                        std::to_string(it->second),
+                    413);
     }
     return retval;
 }

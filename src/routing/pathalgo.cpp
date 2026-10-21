@@ -38,8 +38,8 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass
         // variables
         std::vector<std::pair<int, int>> path;
         json response;
-        response["VERSION"] = ALGOSEE_VERSION;
-        response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
+        generateJsonRetrunArras(response);
+        fillWithMetaData(response);
         bool sameRowLength = true;
         int collums;
         // log ip
@@ -71,7 +71,8 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass
                 path = ASTAR(info.mapInt, info.start, info.goal, response);
         }
         auto endTime = std::chrono::steady_clock::now();
-        auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+        auto elapsed =
+            std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
         state.out("Ended time measurement.", 0);
         response["TIME"] = elapsed.count();
 
@@ -81,14 +82,16 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass
         }
         res.status = 200;
         response["PATH"] = path;
-        state.out("Finished. Replying;\nresponse:" + response.dump(), 0);
         res.set_header("Access-Control-Allow-Origin", "*");
-        res.set_content(response.dump(), "application/json");
+        std::string responseString = std::move(response.dump());
+        state.out("Sending response:" + responseString, 0);
+        res.set_content(responseString, "application/json");
     }
     catch (const excep &e)
     {
-        state.out(
-            "Cought a excep, Details:" + std::string(e.what()) + "\n" + "Status Code:" + std::to_string(e.exitCode), 0);
+        state.out("Cought a excep, Details:" + std::string(e.what()) + "\n" +
+                      "Status Code:" + std::to_string(e.exitCode),
+                  0);
         ReturnFailedAnswer(res, std::string(e.what()), e.exitCode);
     }
     catch (const std::exception &e)

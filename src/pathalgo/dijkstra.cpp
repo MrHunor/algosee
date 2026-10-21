@@ -26,7 +26,8 @@
 #include <utility>
 #include <vector>
 
-std::vector<std::pair<int, int>> Dijkstra(const std::vector<std::vector<int>> &map, std::pair<int, int> start,
+std::vector<std::pair<int, int>> Dijkstra(const std::vector<std::vector<int>> &map,
+                                          std::pair<int, int> start,
                                           std::pair<int, int> goal, json &response)
 {
     const int rows = map.size();
@@ -36,8 +37,11 @@ std::vector<std::pair<int, int>> Dijkstra(const std::vector<std::vector<int>> &m
     // it uses a cost based vector<int> so this is effectivly just: "What is the
     // cheapest possible distance to this point in the map"
     std::vector<std::vector<int>> distance(
-        rows, std::vector<int>(collums, INFINITY_INT)); // i dont think i'll ever unstand this contructor
-    std::vector<std::vector<std::pair<int, int>>> parent(rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
+        rows,
+        std::vector<int>(collums,
+                         INFINITY_INT)); // i dont think i'll ever unstand this contructor
+    std::vector<std::vector<std::pair<int, int>>> parent(
+        rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
     std::vector<std::pair<int, int>> path;
 
     // in contrast to BFS we need a reverse "priority" queue, this means the first
@@ -78,7 +82,8 @@ std::vector<std::pair<int, int>> Dijkstra(const std::vector<std::vector<int>> &m
             int yNeighbour = y + directionsRows[i];
             int xNeighbour = x + directionsCollums[i];
 
-            if (yNeighbour < 0 || yNeighbour > rows - 1 || xNeighbour < 0 || xNeighbour > collums - 1)
+            if (yNeighbour < 0 || yNeighbour > rows - 1 || xNeighbour < 0 ||
+                xNeighbour > collums - 1)
                 continue; // current neighboor out of map, skip this iteration
 
             if (map[yNeighbour][xNeighbour] == -1)

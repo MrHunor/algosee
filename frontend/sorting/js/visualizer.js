@@ -182,7 +182,9 @@ startBtn.addEventListener('click', async () => {
         const responseText = await response.text();
 
         if (!response.ok) {
-            throw new Error(responseText || `Server-Fehler: ${response.status}`);
+        let msg = responseText;
+        try { const parsed = JSON.parse(responseText); if (typeof parsed === 'string') msg = parsed; } catch (_) {}
+        throw new Error(msg || `Server-Fehler: ${response.status}`);
         }
 
         const data = JSON.parse(responseText);

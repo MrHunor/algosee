@@ -37,14 +37,15 @@ class excep : public std::runtime_error
         auto now = std::chrono::system_clock::now();
         retval += std::format("@{}->Function name:{}\nFile "
                               "name:{}\nLine:{}\nCollum:{}:Threw an exception:{}",
-                              now, location.function_name(), location.file_name(), location.line(), location.column(),
-                              message);
+                              now, location.function_name(), location.file_name(),
+                              location.line(), location.column(), message);
         return retval;
     }
 
   public:
     excep(const std::string &message, unsigned short exitCode_,
-          std::source_location location = std::source_location::current(), int SetexitCode = 400)
+          std::source_location location = std::source_location::current(),
+          int SetexitCode = 400)
         : std::runtime_error(formatMessage(message, location))
     {
         exitCode = exitCode_;

@@ -20,6 +20,7 @@
  */
 #ifndef UTILS_H
 #define UTILS_H
+#include "../../defs/general.h"
 #include "../../defs/types.h"
 #include "../../stream/stream.h"
 #include <httplib.h>
@@ -33,7 +34,8 @@ void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int 
                         StreamClass *stream = nullptr);
 void ReturnFailedAnswerStreamOnly(const std::string &Details, int exitCode, StreamClass *stream);
 void AddClient(clientListType &cList,
-               const std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string> &newEntry);
+               const std::pair<std::chrono::time_point<std::chrono::system_clock>,
+                               std::string> &newEntry);
 bool CheckRateLimit(const clientListType &cList, const int &index);
 std::string GenerateRandomString(const int &size);
 std::mt19937 getRandomGen();
