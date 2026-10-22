@@ -121,5 +121,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_link_libraries(algosee_testclient
         nlohmann_json::nlohmann_json
         stdc++exp
+        httplib::httplib #Not required by the project but they share a logger.h which does indeed require it
     )
 endif()

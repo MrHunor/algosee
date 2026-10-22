@@ -23,6 +23,16 @@
 #include <source_location>
 #include <string>
 #include <vector>
+
+struct run
+{
+    std::string algoname;
+    int size;
+    std::pair<int, int> mapSize;
+    bool failure;
+};
+
+
 int randomInt(int lower, int upper);
 std::string executeCommand(const std::string &command);
 void InvalidInputMessage(const std::string &details,
