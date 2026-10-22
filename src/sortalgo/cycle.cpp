@@ -69,7 +69,7 @@ void CycleSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
             response["SWAPED"].push_back({current, NewPosition});
         }
 
-        if (response["SWAPED"] > 1000)
+        if (response["SWAPED"].size() > 1000)
         {
             stream.sendChunk(std::move(response));
             response.clear();
@@ -120,7 +120,7 @@ void CycleSort(indexPixel &unsorted, json &response, StreamClass &stream)
             std::swap(current, unsorted[NewPosition]);
             response["SWAPED"].push_back({current.first, NewPosition});
         }
-        if (response["SWAPED"] > 1000)
+        if (response["SWAPED"].size() > 1000)
         {
             stream.sendChunk(std::move(response));
             response.clear();
