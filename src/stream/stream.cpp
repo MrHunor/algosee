@@ -60,7 +60,7 @@ httplib::ContentProviderWithoutLength MakeChunkProvider(
             const std::string chunkPlusEnd = chunk.dump() + "\n";
             if (!sink.write(chunkPlusEnd.data(),
                             chunkPlusEnd.size())) //.write should evaluate to true is the
-                                                  //sink is still
+                                                  // sink is still
                                                   // viable, if not something bad happend
             {
                 stream->finish();

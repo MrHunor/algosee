@@ -37,7 +37,7 @@ void CountingSort(std::vector<int> &unsorted, json &response, StreamClass &strea
     {
         count[i]++;
     }
-    response["COUNT ARRAY:"] = count;
+    response["COUNT ARRAY"] = count;
     stream.sendChunk(std::move(response));
     response.clear();
     for (size_t i = 0; i < unsorted.size(); i++)
@@ -72,7 +72,7 @@ void CountingSort(indexPixel &unsorted, json &response, StreamClass &stream)
     {
         count[i.first]++;
     }
-    response["COUNT ARRAY:"] = count;
+    response["COUNT ARRAY"] = count;
     stream.sendChunk(std::move(response));
     response.clear();
     for (size_t i = 0; i < unsorted.size(); i++)
