@@ -18,13 +18,11 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#include "tests/tests.h"
 #include "../../src/logger/logger.h"
+#include "tests/tests.h"
 #include "utils/utils.h"
 #include <string>
 #include <utility>
-
-
 
 int main(int argc, char *argv[])
 {
@@ -38,32 +36,13 @@ int main(int argc, char *argv[])
     runPathalgoTest(exitMessage, state);
 
     state.out("Finished", 0);
-    state.out("Succededed for:", 0);
-    for (const auto &element : exitMessage)
-    {
-        if (element.failure == false)
-            state.out("Algorithm:" + element.algoname +
-                          ", Size:" + std::to_string(element.size) +
-                          "Map Size:" + std::to_string(element.mapSize.first) + "," +
-                          std::to_string(element.mapSize.second),
-                      0);
-    }
 
-    state.out("Failed for:", 0);
-    for (const auto &element : exitMessage)
-    {
-        if (element.failure == true)
-            state.out("Algorithm:" + element.algoname +
-                          ", Size:" + std::to_string(element.size) +
-                          "Map Size:" + std::to_string(element.mapSize.first) + "," +
-                          std::to_string(element.mapSize.second),
-                      0);
-    }
-
+    printReport(exitMessage, state);
     for (const auto &element : exitMessage)
     {
         if (element.failure == true)
             return -1;
     }
+
     return 0;
 }

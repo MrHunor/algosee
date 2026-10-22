@@ -19,6 +19,7 @@
  */
 #include "utils.h"
 #include "../../src/defs/implemented.h"
+#include "../../src/logger/logger.h"
 #include <chrono>
 #include <cstdlib>
 #include <iostream>
@@ -29,6 +30,8 @@
 #include <source_location>
 #include <sstream>
 #include <stacktrace>
+#include <stb_image.h>
+#include <stb_image_write.h>
 #include <stdexcept>
 #include <string>
 #include <sys/wait.h>
@@ -36,6 +39,48 @@
 
 namespace fs = std::filesystem;
 using json = nlohmann::json;
+
+unsigned char *makeRandomImage(int w, int h)
+{
+    size_t size = w*h*4;
+    unsigned char *retval = new unsigned char
+        [size]; // since stb expects a char* pointer you have to define it as such,
+                     // loosing all of the cpp perks of std:: namespace but yeah, also
+                     // dont create a unsinged char var because that would go out of scope
+                     // as soon as the function return and return a invalid pointer, you
+                     // could of course return it as an object and then point a pointer to
+                     // it but not what im going for here
+    for(int i = 0; i<size; i++)
+    {
+        
+    }
+    
+                    }
+
+void printReport(const std::vector<run> &exitMessage, stateClass &state)
+{
+    state.out("Succededed for:", 0);
+    for (const auto &element : exitMessage)
+    {
+        if (element.failure == false)
+            state.out("Algorithm:" + element.algoname +
+                          ", Size:" + std::to_string(element.size) +
+                          "Map Size:" + std::to_string(element.mapSize.first) + "," +
+                          std::to_string(element.mapSize.second),
+                      0);
+    }
+
+    state.out("Failed for:", 0);
+    for (const auto &element : exitMessage)
+    {
+        if (element.failure == true)
+            state.out("Algorithm:" + element.algoname +
+                          ", Size:" + std::to_string(element.size) +
+                          "Map Size:" + std::to_string(element.mapSize.first) + "," +
+                          std::to_string(element.mapSize.second),
+                      0);
+    }
+}
 
 json parseNDJSON(const std::string &output) // ai made this shiiiiii
 {
@@ -70,7 +115,7 @@ json parseNDJSON(const std::string &output) // ai made this shiiiiii
             }
             else
             {
-                result[key] = value; 
+                result[key] = value;
             }
         }
     }
@@ -83,7 +128,7 @@ void checkForCertainResponseType(const json &response, std::vector<std::string> 
     {
         if (!response.contains(element) || response[element].is_null())
 
-            if (element != "SPLIT (ORIGIN,LEFT,RIGHT)")//see checkForAllResponseTypes
+            if (element != "SPLIT (ORIGIN,LEFT,RIGHT)") // see checkForAllResponseTypes
             {
                 throw std::runtime_error("Response is missing the value:" + element +
                                          " or has no value assinged to it.");

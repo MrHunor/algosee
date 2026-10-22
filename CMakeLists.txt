@@ -122,5 +122,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         nlohmann_json::nlohmann_json
         stdc++exp
         httplib::httplib #Not required by the project but they share a logger.h which does indeed require it
+        stb::stb
     )
 endif()
