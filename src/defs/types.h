@@ -39,6 +39,15 @@ struct pixel
 
 typedef std::vector<std::pair<int, pixel>> indexPixel;
 
+struct rawImage
+{
+    int width;
+    int height;
+    int channels = 4;
+    unsigned char *data;
+
+};
+
 struct image
 {
     int width;

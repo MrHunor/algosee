@@ -19,6 +19,7 @@
  */
 #include "utils.h"
 #include "../../src/defs/implemented.h"
+#include "../../src/defs/types.h"
 #include "../../src/logger/logger.h"
 #include <chrono>
 #include <cstdlib>
@@ -40,22 +41,47 @@
 namespace fs = std::filesystem;
 using json = nlohmann::json;
 
+void writeMemToImage(const rawImage &img)
+{
+    if (stbi_write_png("testfile.png", img.width, img.height, img.channels, img.data,
+                       img.width * img.width) != 1)
+        throw std::runtime_error("Failed to write testimage.png");
+}
+
+rawImage RawImageFromJson(const json &j)
+{
+    rawImage retval;
+    retval.width=1;//not extractable from info
+    retval.height=1;
+    retval.channels=4;
+    for (int i = 0; i < j["SORTED"].size(); i = i + 4)
+    {
+        const auto &entry = j["SORTED"].at(i / 4);
+        retval.data[i + 1] = entry.at(0);
+        retval.data[i + 2] = entry.at(1);
+        retval.data[i + 3] = entry.at(2);
+        retval.data[i + 4] = entry.at(3);
+    }
+    return retval;
+}
+
 unsigned char *makeRandomImage(int w, int h)
 {
-    size_t size = w*h*4;
-    unsigned char *retval = new unsigned char
-        [size]; // since stb expects a char* pointer you have to define it as such,
-                     // loosing all of the cpp perks of std:: namespace but yeah, also
-                     // dont create a unsinged char var because that would go out of scope
-                     // as soon as the function return and return a invalid pointer, you
-                     // could of course return it as an object and then point a pointer to
-                     // it but not what im going for here
-    for(int i = 0; i<size; i++)
+    size_t size = w * h * 4;
+    unsigned char *retval =
+        new unsigned char[size]; // since stb expects a char* pointer you have to define
+                                 // it as such, loosing all of the cpp perks of std::
+                                 // namespace but yeah, also dont create a unsinged char
+                                 // var because that would go out of scope as soon as the
+                                 // function return and return a invalid pointer, you
+                                 // could of course return it as an object and then point
+                                 // a pointer to it but not what im going for here
+    for (int i = 0; i < size; i++)
     {
-        
+        retval[i] = randomInt(0, 255);
     }
-    
-                    }
+    return retval;
+}
 
 void printReport(const std::vector<run> &exitMessage, stateClass &state)
 {

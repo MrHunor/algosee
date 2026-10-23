@@ -20,17 +20,42 @@
  */
 #include "../../src/defs/general.h"
 #include "../../src/defs/testcases.h"
+#include "../../src/defs/types.h"
 #include "../../src/logger/logger.h"
 #include "../utils/utils.h"
 #include <cmath>
 #include <string>
 #include <utility>
 
-void runImageTest(std::vector<run>& exitMessage,stateClass& state)
+void runImageTest(std::vector<run> &exitMessage, stateClass &state)
 {
-for(const auto& element : testCasesImage)
-{
+    for (const auto &element : testCasesImage)
+    {
+        run currentrun;
+        currentrun.algoname=element.first;
+        currentrun.mapSize={element.second.first,element.second.second};
+        rawImage img;
+        img.width = currentrun.mapSize.first;
+        img.height = currentrun.mapSize.second;
+        img.channels = 4;
+        state.out("Making img in memory",0);
+        img.data = makeRandomImage(img.width, img.height);
+        state.out("Writing to disk...",0);
+        writeMemToImage(img);
+        std::string command = "curl -N --fail-with-body -F 'image=@./testimage.png' "
+                      "'http://127.0.0.1:8080/image?algo='" +
+                      currentrun.algoname;
+        std::string output = executeCommand(command);
+        state.out("Recived",0);
+        json response = parseNDJSON(output);
+        indexPixel returnarr =IPFromJson(response);
+        checkForAllResponseTypes(response);
+        checkForCertainResponseType(response, implementedAlgoExpectedResponseType.at(element.first));
 
-    
-}
+        for(int i = 0; i<img.width*img.height*img.channels;i++)
+        {
+        
+            if(img.data[i]!=response["SORTED"])
+        }
+    }
 }
