@@ -22,22 +22,7 @@
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 
-/**
- * @brief Run the Status endpoint
- *
- * @details Fills response with a server online notice
- *
- * @param req A httplib::Request
- *
- * @param res A httplib::Response
- *
- * @param state The global logger object
- *
- * @throws Only when something goes very wrong
- *
- * @returns Nothing
- *
- */
+
 void RunStatus(const httplib::Request &req, httplib::Response &res, StateClass &state)
 {
     json response;

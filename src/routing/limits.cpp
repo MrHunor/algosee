@@ -24,23 +24,7 @@
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 
-/**
- * @brief Run the Limits endpoint
- *
- * @details Sets response to the Limits
- *
- * @see ../defs/max_sizes.h for Limit defintions
- *
- * @param res A httplib::Response
- *
- * @param state The global logger object
- *
- * @throws Never, unless something goes really wrong
- *
- * @returns Nothing
- *
- *
- */
+
 void RunLimits(httplib::Response &res, StateClass &state)
 {
     json response;

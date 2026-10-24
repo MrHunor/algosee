@@ -42,6 +42,7 @@ jobs:
         github-cli \
         python \
         python-pipx \
+        python-filelock \ #due to dependencie issue see #218
         ninja
 
      - name: Install Conan and configure # weird command syntax but should work like this

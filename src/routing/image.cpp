@@ -31,25 +31,6 @@
 #include <nlohmann/json.hpp>
 #include <stb_image.h>
 
-/**
- * @brief Run The Image Sorting Endpoint
- *
- * @details Streams json chunks of the input image but randomised pixel positions,
- * instructions on how to viszulise the way to the original from the randomised image and
- * the sorted image (which should be the original)
- *
- * @param info A ImageValidReturn struct containing all of the needed information
- * @param state The Global Logger object
- * @param StreamClass The Request bound stream object
- *
- * @throws If any information inside info is invalid, but exception is handled within the
- * function
- *
- * @warning Construct info only via ValidateImage because this function itself will not
- * obey any boundrys
- *
- * @returns Nothing, will throw on error
- */
 void RunImageSort(ImageValidReturn info, StateClass &state, StreamClass &stream)
 {
     try
