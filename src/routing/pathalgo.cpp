@@ -31,7 +31,6 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-
 void RunPathalgo(const httplib::Request &req, httplib::Response &res, StateClass &state)
 {
     try

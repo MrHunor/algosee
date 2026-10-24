@@ -24,7 +24,6 @@
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 
-
 void RunLimits(httplib::Response &res, StateClass &state)
 {
     json response;

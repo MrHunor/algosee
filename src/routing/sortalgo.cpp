@@ -29,7 +29,6 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-
 void RunSortalgo(SortValidReturn info, StateClass &state, StreamClass &stream)
 {
     try

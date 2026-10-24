@@ -25,8 +25,6 @@
 #include <mutex>
 #include <nlohmann/json.hpp>
 
-
-
 httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req,
                                                      httplib::Response &res,
                                                      StateClass &state,

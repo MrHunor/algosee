@@ -22,7 +22,6 @@
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 
-
 void RunStatus(const httplib::Request &req, httplib::Response &res, StateClass &state)
 {
     json response;
