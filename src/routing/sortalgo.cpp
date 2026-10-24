@@ -68,8 +68,9 @@ void RunSortalgo(SortValidReturn info, stateClass &state, StreamClass &stream)
             std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
         state.out("Ended Time mesurement.", 0);
         response["TIME"] = elapsed.count();
-
         response["SORTED"] = info.values;
+        response["ERROR"] = "";
+        response["ERRORCODE"] = 0;
 
         stream.sendChunk(std::move(response));
         response.clear();

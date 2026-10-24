@@ -182,13 +182,16 @@ void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int 
     res.status = exitCode;
     res.set_header("Access-Control-Allow-Origin", "*");
 
+    json out;
+    out["ERROR"] = Details;
+    out["ERRORCODE"] = exitCode;
     if (stream == nullptr)
-        res.set_content(json(Details), "application/json");
+        res.set_content(out, "application/json");
     else
     { // stream instead of sending, i think the sending once solution could work on a
       // streaming implemented endpoint too but ill just leave it like this, also you have
       // to clean up the stream with stream->finish
-        stream->sendChunk(json(Details));
+        stream->sendChunk(out);
         stream->finish();
     }
 }
@@ -198,7 +201,11 @@ void ReturnFailedAnswerStreamOnly(const std::string &Details, int exitCode,
 {
     std::cout << "returnFailedAnswerStream called:" + Details
               << "; Code:" + std::to_string(exitCode) << std::endl;
-    stream->sendChunk(json(Details));
+
+    json out;
+    out["ERROR"] = Details;
+    out["ERRORCODE"] = exitCode;
+    stream->sendChunk(json(out));
     stream->finish();
 }
 

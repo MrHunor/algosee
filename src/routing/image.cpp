@@ -69,6 +69,8 @@ void RunImageSort(ImageValidReturn info, stateClass &state, StreamClass &stream)
         state.out("Ended Time mesurement.", 0);
         response["TIME"] = elapsed.count();
         response["SORTED"] = IndexPixelArrToJson(info.img.data);
+        response["ERROR"] = "";
+        response["ERRORCODE"] = 0;
 
         state.out("Sending response...", 0);
         stream.sendChunk(std::move(response));

@@ -49,6 +49,8 @@ void RunLimits(httplib::Response &res, stateClass &state)
 
     // image
     response["MAX_PIXEL_COUNT_IMAGE"] = MAX_PIXEL_COUNT_IMAGE;
+    response["ERROR"] = "";
+    response["ERRORCODE"] = 0;
     res.status = 200;
     res.set_header("Access-Control-Allow-Origin", "*");
     std::string responseString = std::move(response.dump());

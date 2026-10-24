@@ -82,6 +82,8 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass
         }
         res.status = 200;
         response["PATH"] = path;
+        response["ERROR"] = "";
+        response["ERRORCODE"] = 0;
         res.set_header("Access-Control-Allow-Origin", "*");
         std::string responseString = std::move(response.dump());
         state.out("Sending response:" + responseString, 0);

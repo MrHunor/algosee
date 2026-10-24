@@ -28,6 +28,8 @@ void RunStatus(const httplib::Request &req, httplib::Response &res, stateClass &
     json response;
     generateJsonRetrunArras(response);
     fillWithMetaData(response);
+    response["ERROR"] = "";
+    response["ERRORCODE"] = 0;
     state.out("Sending status signal...", 0);
     res.status = 200;
     res.set_header("Access-Control-Allow-Origin", "*");
