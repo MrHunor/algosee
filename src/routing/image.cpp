@@ -36,8 +36,8 @@ void RunImageSort(ImageValidReturn info, stateClass &state, StreamClass &stream)
     try
     {
         json response;
-        response["VERSION"] = ALGOSEE_VERSION;
-        response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
+        generateJsonRetrunArras(response);
+        fillWithMetaData(response);
         ShuffleImage(info.img);
         response["SHUFFLED (INDEXES)"] = IndexPixelArrToJson(info.img.data);
         stream.sendChunk(std::move(response));

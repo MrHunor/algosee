@@ -32,35 +32,44 @@
 #include <sstream>
 #include <stacktrace>
 #include <stb_image.h>
+#define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb_image_write.h>
 #include <stdexcept>
 #include <string>
 #include <sys/wait.h>
 #include <unistd.h>
 
-namespace fs = std::filesystem;
 using json = nlohmann::json;
 
 void writeMemToImage(const rawImage &img)
 {
-    if (stbi_write_png("testfile.png", img.width, img.height, img.channels, img.data,
-                       img.width * img.width) != 1)
+    if (stbi_write_png("testimage.png", img.width, img.height, img.channels, img.data,
+                       img.width * img.channels) != 1)
         throw std::runtime_error("Failed to write testimage.png");
 }
 
 rawImage RawImageFromJson(const json &j)
 {
+
     rawImage retval;
-    retval.width=1;//not extractable from info
-    retval.height=1;
-    retval.channels=4;
-    for (int i = 0; i < j["SORTED"].size(); i = i + 4)
+
+    retval.width = -1; // not extractable from info
+    retval.height = -1;
+    retval.size = j["SORTED"].size() * retval.channels;
+    retval.data = new unsigned char[retval.size];
+    int retvalI = 0;
+    int JI = 0;
+    while (JI < j["SORTED"].size())
     {
-        const auto &entry = j["SORTED"].at(i / 4);
-        retval.data[i + 1] = entry.at(0);
-        retval.data[i + 2] = entry.at(1);
-        retval.data[i + 3] = entry.at(2);
-        retval.data[i + 4] = entry.at(3);
+        const auto entry = j["SORTED"].at(JI);
+        retval.data[retvalI] = entry.at(
+            1); // ignore the first value, its a index because SORTED is a indexPixel
+        retval.data[retvalI + 1] = entry.at(2);
+        retval.data[retvalI + 2] = entry.at(3);
+        retval.data[retvalI + 3] = entry.at(4);
+
+        retvalI = retvalI + 4;
+        JI++;
     }
     return retval;
 }

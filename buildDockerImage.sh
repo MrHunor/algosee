@@ -14,5 +14,5 @@
  #
  #   You should have received a copy of the GNU General Public License
  #   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
-set -x 
+set -euxo pipefail
 docker build -t algosee .

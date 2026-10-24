@@ -66,10 +66,9 @@ const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesImage{
     {"cycle", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}},
 
     // bogo is factorial time: keep sizes tiny
-    {"bogo", {3, 2}},
-    {"bogo", {4, 4}},
-    {"bogo",
-     {sqrt(MAX_PIXEL_COUNT_IMAGE_BOGO) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE_BOGO) - 1}},
+    {"bogo", {1, 2}},
+    {"bogo", {2, 3}},
+    {"bogo", {sqrt(MAX_ELEMENT_COUNT_BOGO) - 1, sqrt(MAX_ELEMENT_COUNT_BOGO) - 1}},
 };
 
 const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesPathfinding{

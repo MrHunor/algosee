@@ -35,7 +35,7 @@ struct run
 };
 
 unsigned char *makeRandomImage(int w, int h);
-indexPixel IPFromJson(const json &j);
+rawImage RawImageFromJson(const json &j);
 int randomInt(int lower, int upper);
 std::string executeCommand(const std::string &command);
 void InvalidInputMessage(const std::string &details,

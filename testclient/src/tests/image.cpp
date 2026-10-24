@@ -24,6 +24,7 @@
 #include "../../src/logger/logger.h"
 #include "../utils/utils.h"
 #include <cmath>
+#include <stdexcept>
 #include <string>
 #include <utility>
 
@@ -32,30 +33,57 @@ void runImageTest(std::vector<run> &exitMessage, stateClass &state)
     for (const auto &element : testCasesImage)
     {
         run currentrun;
-        currentrun.algoname=element.first;
-        currentrun.mapSize={element.second.first,element.second.second};
+        currentrun.algoname = element.first;
+        currentrun.mapSize = {element.second.first, element.second.second};
+        state.out("Testing image sorting validness with algo" + currentrun.algoname +
+                      " and dimesions:" + std::to_string(element.second.first) + "x" +
+                      std::to_string(element.second.second),
+                  0);
         rawImage img;
-        img.width = currentrun.mapSize.first;
-        img.height = currentrun.mapSize.second;
-        img.channels = 4;
-        state.out("Making img in memory",0);
-        img.data = makeRandomImage(img.width, img.height);
-        state.out("Writing to disk...",0);
-        writeMemToImage(img);
-        std::string command = "curl -N --fail-with-body -F 'image=@./testimage.png' "
-                      "'http://127.0.0.1:8080/image?algo='" +
-                      currentrun.algoname;
-        std::string output = executeCommand(command);
-        state.out("Recived",0);
-        json response = parseNDJSON(output);
-        indexPixel returnarr =IPFromJson(response);
-        checkForAllResponseTypes(response);
-        checkForCertainResponseType(response, implementedAlgoExpectedResponseType.at(element.first));
-
-        for(int i = 0; i<img.width*img.height*img.channels;i++)
+        rawImage returnImg;
+        try
         {
-        
-            if(img.data[i]!=response["SORTED"])
+
+            img.width = currentrun.mapSize.first;
+            img.height = currentrun.mapSize.second;
+            img.channels = 4;
+            img.size = img.width * img.height * img.channels;
+            state.out("Making img in memory", 0);
+            img.data = makeRandomImage(img.width, img.height);
+            state.out("Writing to disk...", 0);
+            remove("testimage.png");
+            writeMemToImage(img);
+            std::string command = "curl -N --fail-with-body -F 'image=@./testimage.png' "
+                                  "'http://127.0.0.1:8080/image?algo='" +
+                                  currentrun.algoname;
+            std::string output = executeCommand(command);
+            state.out("Recived", 0);
+            json response = parseNDJSON(output);
+            checkForAllResponseTypes(response);
+            checkForCertainResponseType(
+                response, implementedAlgoExpectedResponseType.at(element.first));
+            returnImg = RawImageFromJson(response);
+
+            for (int i = 0; i < img.size; i++)
+            {
+                if (img.data[i] != returnImg.data[i])
+                {
+                    throw std::runtime_error(
+                        "At iteration:" + std::to_string(i) + "\nOriginal Image:" +
+                        std::to_string(img.data[i]) + "\nSorted Answer from server:" +
+                        std::to_string(returnImg.data[i]) + "\n MISMATCH.");
+                }
+            }
+            delete[] img.data;
+            delete[] returnImg.data;
+        }
+        catch (const std::exception &e)
+        {
+            delete[] img.data;
+            delete[] returnImg.data;
+            state.out("Failed. Details:" + std::string(e.what()), 0);
+            currentrun.failure = true;
+            exitMessage.push_back(currentrun);
         }
     }
 }

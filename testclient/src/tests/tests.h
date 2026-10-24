@@ -20,14 +20,11 @@
  */
 #ifndef TESTS_H
 #define TESTS_H
-#include "../../src/defs/general.h"
-#include "../../src/defs/testcases.h"
 #include "../../src/logger/logger.h"
 #include "../utils/utils.h"
-#include <string>
-#include <utility>
 
 void runPathalgoTest(std::vector<run> &exitMessage, stateClass &state);
 void runSortalgoTest(std::vector<run> &exitMessage, stateClass &state);
+void runImageTest(std::vector<run> &exitMessage, stateClass &state);
 
 #endif

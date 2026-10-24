@@ -43,9 +43,9 @@ struct rawImage
 {
     int width;
     int height;
+    int size;
     int channels = 4;
     unsigned char *data;
-
 };
 
 struct image

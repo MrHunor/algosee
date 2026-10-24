@@ -22,7 +22,6 @@
 #include "tests/tests.h"
 #include "utils/utils.h"
 #include <string>
-#include <utility>
 
 int main(int argc, char *argv[])
 {
@@ -34,6 +33,7 @@ int main(int argc, char *argv[])
 
     runSortalgoTest(exitMessage, state);
     runPathalgoTest(exitMessage, state);
+    runImageTest(exitMessage,state);
 
     state.out("Finished", 0);
 

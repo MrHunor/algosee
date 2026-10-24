@@ -46,6 +46,5 @@
 #define HIGHEST_ELEMENT_PATH std::numeric_limits<int>::max() - 1
 
 #define MAX_PIXEL_COUNT_IMAGE 2500
-#define MAX_PIXEL_COUNT_IMAGE_BOGO 25
 
 #endif
