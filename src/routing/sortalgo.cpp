@@ -23,14 +23,31 @@
 #include "../sortalgo/algos.h"
 #include "../utils/general/utils.h"
 #include "../validate/sort/validate.h"
-#include "build_info.h"
 #include <chrono>
 #include <exception>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void RunSortalgo(SortValidReturn info, stateClass &state, StreamClass &stream)
+/**
+ * @brief Run the Sorting Algorithm Endpoint
+ *
+ * @details Streams the visulizasion Instructions on how to order the input array to a
+ * ascending order and an array containing that sorted order
+ *
+ * @param info A SortValidReturn Object containing the nessasery info
+ *
+ * @param state The global logger object
+ *
+ * @param stream A StreamClass object used for this request
+ *
+ * @throws On Invalid info, but is handled within the function
+ *
+ * @returns Nothing
+ *
+ *
+ */
+void RunSortalgo(SortValidReturn info, StateClass &state, StreamClass &stream)
 {
     try
     {

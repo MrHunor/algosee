@@ -25,9 +25,33 @@
 #include <mutex>
 #include <nlohmann/json.hpp>
 
+/**
+ * @brief Runs Preflight Handler
+ *
+ * @details Logs IP, prints last seens IPs and checks weather the request should be rate
+ * limited
+ *
+ * @param req A httplib::Request
+ *
+ * @param res A httplib::response
+ *
+ * @param state The global logger object
+ *
+ * @param clientList A clientListType vector used for checking if rate limiting should
+ * take place
+ *
+ * @param clientListMutex A std::mutex to temporarily lock acess to clientlist and prevent
+ * a datarace
+ *
+ * @throws Never, unless someone manipulates the X-Forwarded-For header
+ *
+ * @returns httplib::Server::HandlerReponse, HandlerResponse::Handled in case of rate
+ * limiting, HandlerResponse::Unhandled in case of not limiting
+ */
+
 httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req,
                                                      httplib::Response &res,
-                                                     stateClass &state,
+                                                     StateClass &state,
                                                      clientListType &clientList,
                                                      std::mutex &clientListMutex)
 {

@@ -19,11 +19,26 @@
  */
 #include "../logger/logger.h"
 #include "../utils/general/utils.h"
-#include "build_info.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 
-void RunStatus(const httplib::Request &req, httplib::Response &res, stateClass &state)
+/**
+ * @brief Run the Status endpoint
+ *
+ * @details Fills response with a server online notice
+ *
+ * @param req A httplib::Request
+ *
+ * @param res A httplib::Response
+ *
+ * @param state The global logger object
+ *
+ * @throws Only when something goes very wrong
+ *
+ * @returns Nothing
+ *
+ */
+void RunStatus(const httplib::Request &req, httplib::Response &res, StateClass &state)
 {
     json response;
     generateJsonRetrunArras(response);

@@ -92,7 +92,7 @@ unsigned char *makeRandomImage(int w, int h)
     return retval;
 }
 
-void printReport(const std::vector<run> &exitMessage, stateClass &state)
+void printReport(const std::vector<run> &exitMessage, StateClass &state)
 {
     state.out("Succededed for:", 0);
     for (const auto &element : exitMessage)

@@ -28,7 +28,7 @@
 #include <string>
 #include <utility>
 
-void runImageTest(std::vector<run> &exitMessage, stateClass &state)
+void runImageTest(std::vector<run> &exitMessage, StateClass &state)
 {
     for (const auto &element : testCasesImage)
     {

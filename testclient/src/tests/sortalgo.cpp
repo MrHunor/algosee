@@ -25,7 +25,7 @@
 #include <string>
 #include <utility>
 
-void runSortalgoTest(std::vector<run> &exitMessage, stateClass &state)
+void runSortalgoTest(std::vector<run> &exitMessage, StateClass &state)
 {
     for (const auto &testcase : testCasesSorting)
     {

@@ -31,7 +31,25 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass &state)
+/**
+ * @brief Run pathfinding algorithm endpoint
+ *
+ * @details Sets response to be the path from Start to Goal and some type of "visited" map
+ * that shows which tiles it visited
+ *
+ * @param req A httplib::Request containing
+ *
+ * @param res A httplib::Response
+ *
+ * @param state The global logger object
+ *
+ *
+ * @throws On Invalid input in req, but exception is handled inside the function
+ *
+ * @returns Nothing
+ *
+ */
+void RunPathalgo(const httplib::Request &req, httplib::Response &res, StateClass &state)
 {
     try
     {

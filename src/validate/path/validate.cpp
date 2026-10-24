@@ -25,7 +25,7 @@
 #include "../../utils/pathalgo/pathalgo.h"
 #include <httplib/httplib.h>
 
-PathValidReturn ValidatePath(const httplib::Request &req, stateClass &state)
+PathValidReturn ValidatePath(const httplib::Request &req, StateClass &state)
 {
     PathValidReturn retval;
     state.out("Checking algo URL parameter...", 0);

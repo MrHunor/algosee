@@ -18,6 +18,13 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+/**
+ * @file routing.h
+ *
+ * @brief Provides function defintions for API endpoints
+ *
+ */
 #ifndef ROUTING_H
 #define ROUTING_H
 #include "../defs/types.h"
@@ -33,14 +40,14 @@ void AfterSelfTestRun(std::string algorithmName, std::vector<int> &paramPassValu
                       std::vector<int> &testvalues, std::vector<int> &sortedValues,
                       json &response, json &parampassTest,
                       const std::chrono::steady_clock::time_point &startTime);
-void RunStatus(const httplib::Request &req, httplib::Response &res, stateClass &state);
-void RunSortalgo(SortValidReturn info, stateClass &state, StreamClass &stream);
-void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass &state);
-void RunImageSort(ImageValidReturn info, stateClass &state, StreamClass &stream);
+void RunStatus(const httplib::Request &req, httplib::Response &res, StateClass &state);
+void RunSortalgo(SortValidReturn info, StateClass &state, StreamClass &stream);
+void RunPathalgo(const httplib::Request &req, httplib::Response &res, StateClass &state);
+void RunImageSort(ImageValidReturn info, StateClass &state, StreamClass &stream);
 httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req,
                                                      httplib::Response &res,
-                                                     stateClass &state,
+                                                     StateClass &state,
                                                      clientListType &clientList,
                                                      std::mutex &clientListMutex);
-void RunLimits(httplib::Response &res, stateClass &state);
+void RunLimits(httplib::Response &res, StateClass &state);
 #endif

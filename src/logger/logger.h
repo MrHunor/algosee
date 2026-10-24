@@ -85,7 +85,7 @@
 #define HIDDEN "\033[8m"
 #define STRIKE "\033[9m"
 
-class stateClass
+class StateClass
 {
   private:
     std::ofstream logFile{"log.txt"};

@@ -44,5 +44,5 @@ void checkForCertainResponseType(const json &response, std::vector<std::string> 
 void checkForAllResponseTypes(const json &response);
 json parseNDJSON(const std::string &output);
 void writeMemToImage(const rawImage &img);
-void printReport(const std::vector<run> &exitMessage, stateClass &state);
+void printReport(const std::vector<run> &exitMessage, StateClass &state);
 #endif

@@ -23,8 +23,8 @@
 #include "../../src/logger/logger.h"
 #include "../utils/utils.h"
 
-void runPathalgoTest(std::vector<run> &exitMessage, stateClass &state);
-void runSortalgoTest(std::vector<run> &exitMessage, stateClass &state);
-void runImageTest(std::vector<run> &exitMessage, stateClass &state);
+void runPathalgoTest(std::vector<run> &exitMessage, StateClass &state);
+void runSortalgoTest(std::vector<run> &exitMessage, StateClass &state);
+void runImageTest(std::vector<run> &exitMessage, StateClass &state);
 
 #endif

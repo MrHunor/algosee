@@ -40,7 +40,7 @@
 int main(int argc, char *argv[])
 {
     remove("log.txt");
-    stateClass state;
+    StateClass state;
     state.verbose = 0;
     state.out("algosee Copyright (C) 2026  MrHunor, siryanni (as equals)\n"
               "This program comes with ABSOLUTELY NO WARRANTY; for details "
