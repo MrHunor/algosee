@@ -18,6 +18,13 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+/**
+ * @file algo.h
+ *
+ * @brief Header containing pathfinding algorithm defintions
+ *
+ */
 #ifndef PALGOS_H
 #define PALGOS_H
 #include "../defs/general.h"
