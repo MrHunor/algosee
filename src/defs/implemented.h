@@ -18,6 +18,14 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+/**
+ * @file implemented.h
+ *
+ * @brief Contains arrays and maps of implemented algorithms and their boundries as well
+ * as what json return objects should be returned
+ *
+ *
+ */
 #ifndef DEF_IMPLEMENTED_H
 #define DEF_IMPLEMENTED_H
 #include "max_sizes.h"
