@@ -28,10 +28,14 @@
 
 void BubbleSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
 {
+    bool sorted;
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted
     for (size_t i = 0; i < unsorted.size(); i++)
     {
+        sorted = true; // This is the early exit flag from issue #217, it sets sorted to
+                       // true in the outer loop and if the inner loop produces no swap
+                       // then the input must already be sorted
         for (size_t z = 0; z < unsorted.size() - 1 - i;
              z++) // you can subtract i because the last elements have
                   // already been orderd before, this saves you some time but
@@ -39,6 +43,7 @@ void BubbleSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
         {
             if (unsorted[z] > unsorted[z + 1])
             {
+                sorted = false;
                 std::swap(unsorted[z], unsorted[z + 1]);
                 response["MOVES"].push_back({z, z + 1});
                 if (response["MOVES"].size() > 1000)
@@ -48,6 +53,8 @@ void BubbleSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
                 }
             }
         }
+        if (sorted)
+            break;
     }
 }
 
@@ -55,10 +62,12 @@ void BubbleSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
 
 void BubbleSort(indexPixel &unsorted, json &response, StreamClass &stream)
 {
+    bool sorted;
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted
     for (size_t i = 0; i < unsorted.size(); i++)
     {
+        sorted = true;
         for (size_t z = 0; z < unsorted.size() - 1 - i;
              z++) // you can subtract i because the last elements have
                   // already been orderd before, this saves you some time but
@@ -66,14 +75,18 @@ void BubbleSort(indexPixel &unsorted, json &response, StreamClass &stream)
         {
             if (unsorted[z].first > unsorted[z + 1].first)
             {
+                sorted = false;
                 std::swap(unsorted[z], unsorted[z + 1]);
                 response["MOVES"].push_back({z, z + 1});
                 if (response["MOVES"].size() > 1000)
                 {
+
                     stream.sendChunk(std::move(response));
                     response.clear();
                 }
             }
         }
+        if (sorted)
+            break;
     }
 }
