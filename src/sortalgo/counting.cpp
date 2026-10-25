@@ -50,6 +50,8 @@ void CountingSort(std::vector<int> &unsorted, json &response, StreamClass &strea
 
     unsorted = retval;
 }
+
+//---------------------IMAGE---------------------
 void CountingSort(indexPixel &unsorted, json &response, StreamClass &stream)
 {
     if (unsorted.size() <= 1)
@@ -86,13 +88,18 @@ void CountingSort(indexPixel &unsorted, json &response, StreamClass &stream)
     // well now we have a sorted array of indexes, but not of a pair so we need to match
     // the indexes to pairs
     indexPixel retval;
+    indexPixel lookupArr(indexes.size() + 1);
 
-    for (int i = 0; i < indexes.size(); i++)
+    // this specific lookupArr implementaion only works because there are never any
+    // douplicate, if the unsorted[n].first could contain douplicates this breaks
+    for (const auto &element : unsorted)
     {
-        auto it = std::find_if(unsorted.begin(), unsorted.end(),
-                               [i](const auto &element) { return element.first == i; });
-        size_t iIndex = std::distance(unsorted.begin(), it);
-        retval.push_back(unsorted[iIndex]);
+        lookupArr[element.first] = element; // set the nth element to its correct position
     }
+    for (const auto &index : indexes)
+    {
+        retval.push_back(lookupArr[index]);
+    }
+
     unsorted = retval;
 }
