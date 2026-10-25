@@ -24,6 +24,9 @@
 #include "../utils/utils.h"
 #include <string>
 #include <utility>
+#include <numeric>
+#include <algorithm>
+#include <vector>
 
 void runSortalgoTest(std::vector<run> &exitMessage, StateClass &state)
 {
