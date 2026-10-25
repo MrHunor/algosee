@@ -68,8 +68,7 @@ const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesImage{
     // bogo is factorial time: keep sizes tiny
     {"bogo", {1, 2}},
     {"bogo", {2, 3}},
-    {"bogo", {sqrt(MAX_ELEMENT_COUNT_BOGO) - 1, sqrt(MAX_ELEMENT_COUNT_BOGO) - 1}},
-};
+    {"bogo", {sqrt(MAX_ELEMENT_COUNT_BOGO) - 1, sqrt(MAX_ELEMENT_COUNT_BOGO) - 1}}};
 
 const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesPathfinding{
     {"BFS", {10, 5}},         {"BFS", {20, 5}},         {"BFS", {100, 45}},
@@ -86,7 +85,9 @@ const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesPathfind
 
     {"ASTAR", {10, 5}},       {"ASTAR", {20, 5}},       {"ASTAR", {100, 45}},
     {"ASTAR", {250, 150}},    {"ASTAR", {249, 249}},
-};
+
+    {"GBFS", {10, 5}},        {"GBFS", {20, 5}},        {"GBFS", {100, 45}},
+    {"GBFS", {250, 150}},     {"GBFS", {249, 249}}};
 
 const std::vector<std::pair<std::string, int>> testCasesSorting{
 
@@ -129,8 +130,7 @@ const std::vector<std::pair<std::string, int>> testCasesSorting{
     // bogo is factorial time: keep sizes tiny
     {"bogo", 3},
     {"bogo", 5},
-    {"bogo", MAX_ELEMENT_COUNT_BOGO - 1},
-};
+    {"bogo", MAX_ELEMENT_COUNT_BOGO - 1}};
 
 const std::unordered_map<std::string, std::vector<std::string>>
     implementedAlgoExpectedResponseType{

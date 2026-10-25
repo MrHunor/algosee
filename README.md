@@ -45,7 +45,7 @@ The implementation will roughly follow the order given in the table.
 | Depth first search (DFS) | Supported |
 | Bidirectional Breadth first search (BIBFS) | Supported |
 | A* | Supported | 
-| Greedy Best-First-Search | TBD |
+| Greedy Best-First-Search (GBFS) | Supported |
 | Jump point search (JPS) | TBD |
 | D* | TBD |
 | Bellman-Ford | TBD |

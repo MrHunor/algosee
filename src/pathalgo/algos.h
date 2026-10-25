@@ -28,7 +28,6 @@
 #ifndef PALGOS_H
 #define PALGOS_H
 #include "../defs/general.h"
-#include "../stream/stream.h"
 #include <nlohmann/json.hpp>
 #include <vector>
 
@@ -49,4 +48,7 @@ std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> &map,
 std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
                                        std::pair<int, int> start,
                                        std::pair<int, int> goal, json &response);
+std::vector<std::pair<int, int>> GBFS(const std::vector<std::vector<int>> &map,
+                                      std::pair<int, int> start, std::pair<int, int> goal,
+                                      json &response);
 #endif
