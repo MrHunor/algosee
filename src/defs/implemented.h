@@ -31,11 +31,9 @@ const std::unordered_map<std::string, int> implementedSortAlgos = {
     {"cycle", MAX_ELEMENT_COUNT_CYCLE}};
 
 const std::unordered_map<std::string, int> implementedPathAlgos = {
-    {"BFS", MAX_ELEMENT_COUNT_BFS},
-    {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA},
-    {"DFS", MAX_ELEMENT_COUNT_DFS},
-    {"BIBFS", MAX_ELEMENT_COUNT_BIBFS},
-    {"ASTAR", MAX_ELEMENT_COUNT_ASTAR}};
+    {"BFS", MAX_ELEMENT_COUNT_BFS},     {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA},
+    {"DFS", MAX_ELEMENT_COUNT_DFS},     {"BIBFS", MAX_ELEMENT_COUNT_BIBFS},
+    {"ASTAR", MAX_ELEMENT_COUNT_ASTAR}, {"GBFS", MAX_ELEMENT_COUNT_GBFS}};
 
 const std::vector<std::string> implementedArrayReturnTypes = {
     "MOVES",

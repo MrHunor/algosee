@@ -26,7 +26,7 @@
 int main(int argc, char *argv[])
 {
     remove("testclientlog.txt");
-    StateClass state;
+    StateClass state("testclientLog.txt");
     state.out("Testing sorting algorithms", 0);
 
     std::vector<run> exitMessage;

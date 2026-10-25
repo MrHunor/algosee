@@ -46,7 +46,7 @@
 class StateClass
 {
   private:
-    std::ofstream logFile{"log.txt"};
+    std::ofstream logFile;
     std::mutex outMutex;
 
   public:
@@ -74,6 +74,11 @@ class StateClass
      *
      * @returns Nothing
      */
+
+    StateClass(std::string logFilePath)
+    {
+        logFile.open(logFilePath);
+    }
     void out(const std::string &output, int importance,
              const std::string &colour = DEFAULT_COLOUR,
              std::source_location location = std::source_location::current())
