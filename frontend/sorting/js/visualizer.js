@@ -206,6 +206,10 @@ startBtn.addEventListener('click', async () => {
             const steps = data.SORTED.length;
             const dynamicSpeed = Math.max(5, Math.floor((animationSpeed * 10) / steps));
             await visualizeCounting(data.SORTED, dynamicSpeed);
+        } else if (algoKey === 'cycle') {  // checks algo name now
+            const steps = data.SWAPED.length;
+            const dynamicSpeed = steps > 0 ? Math.max(5, Math.floor((animationSpeed * 20) / steps)) : animationSpeed;
+            await visualizeCycle(data.SWAPED, dynamicSpeed);
         } else {
             const steps = data.MOVES.length;
             const dynamicSpeed = steps > 0 ? Math.max(5, Math.floor((animationSpeed * 20) / steps)) : animationSpeed;
@@ -403,6 +407,29 @@ async function visualizeCounting(sortedArray, speed) {
     if (!isCancelled) {
         await playSuccessWave();
     }
+}
+
+// CycleSort Animation (reads SWAPED)
+async function visualizeCycle(moves, speed) {
+    const bars = container.children;
+    for (let k = 0; k < moves.length; k++) {
+        if (isCancelled) { generateArray(); return; }
+
+        const move = Array.isArray(moves[k]) ? moves[k] : Object.values(moves[k]);
+        const [value, position] = move;
+
+        if (!bars[position]) continue;
+
+        bars[position].style.backgroundColor = '#ef4444';
+        playTone(150 + (value * 6));
+        bars[position].style.height = `${value * 3}px`;  // Jetzt funktioniert das!
+        if (arraySize <= 20) bars[position].innerText = value;
+        array[position] = value;
+
+        await new Promise(resolve => setTimeout(resolve, speed));
+        bars[position].style.backgroundColor = '#3b82f6';
+    }
+    if (!isCancelled) await playSuccessWave();
 }
 
 //400ll lol XD
