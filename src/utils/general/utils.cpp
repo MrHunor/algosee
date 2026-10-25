@@ -186,7 +186,7 @@ void ReturnFailedAnswer(httplib::Response &res, const std::string &Details, int 
     out["ERROR"] = Details;
     out["ERRORCODE"] = exitCode;
     if (stream == nullptr)
-        res.set_content(out, "application/json");
+        res.set_content(out.dump(), "application/json");
     else
     { // stream instead of sending, i think the sending once solution could work on a
       // streaming implemented endpoint too but ill just leave it like this, also you have

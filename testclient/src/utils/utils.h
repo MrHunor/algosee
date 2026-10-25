@@ -28,10 +28,10 @@
 
 struct run
 {
-    std::string algoname;
-    int size;
-    std::pair<int, int> mapSize;
-    bool failure;
+    std::string algoname="";
+    int size=-1;
+    std::pair<int, int> mapSize={-1,-1};
+    bool failure=false;
 };
 
 unsigned char *makeRandomImage(int w, int h);

@@ -129,13 +129,13 @@ int main(int argc, char *argv[])
             state.out("Cought a excep, Details:" + std::string(e.what()) + "\n" +
                           "Status Code:" + std::to_string(e.exitCode),
                       0);
-            ReturnFailedAnswerStreamOnly(std::string(e.what()), e.exitCode, &*stream);
+            ReturnFailedAnswer(res, e.what(), e.exitCode);
             return;
         }
         catch (const std::exception &e)
         {
             state.out("Cought an std::exception, Details:" + std::string(e.what()), 0);
-            ReturnFailedAnswerStreamOnly(std::string(e.what()), 400, &*stream);
+            ReturnFailedAnswer(res, e.what());
             return;
         }
 
@@ -188,13 +188,13 @@ int main(int argc, char *argv[])
             state.out("Cought a excep, Details:" + std::string(e.what()) + "\n" +
                           "Status Code:" + std::to_string(e.exitCode),
                       0);
-            ReturnFailedAnswerStreamOnly(std::string(e.what()), e.exitCode, &*stream);
+            ReturnFailedAnswer(res, e.what(), e.exitCode);
             return;
         }
         catch (const std::exception &e)
         {
             state.out("Cought an std::exception, Details:" + std::string(e.what()), 0);
-            ReturnFailedAnswerStreamOnly(std::string(e.what()), 400, &*stream);
+            ReturnFailedAnswer(res, e.what());
             return;
         }
 

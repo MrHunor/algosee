@@ -86,6 +86,7 @@ void runPathalgoTest(std::vector<run> &exitMessage, StateClass &state)
                 response, implementedAlgoExpectedResponseType.at(currentrun.algoname));
             std::vector<std::pair<int, int>> path = response["PATH"];
 
+            if(path.empty()||path.front()!=start||path.back()!=goal)throw std::runtime_error("Path is either empty, does not start at start or does not end at end.");
             for (int i = 0; i < path.size(); i++)
             {
                 if (i == 0)

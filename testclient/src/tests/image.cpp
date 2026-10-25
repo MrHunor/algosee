@@ -64,6 +64,7 @@ void runImageTest(std::vector<run> &exitMessage, StateClass &state)
                 response, implementedAlgoExpectedResponseType.at(element.first));
             returnImg = RawImageFromJson(response);
 
+            if(img.size!=returnImg.size)throw std::runtime_error("Data size mismatch:\nSend Size:"+std::to_string(img.size)+"\nRecived Size"+std::to_string(returnImg.size));
             for (int i = 0; i < img.size; i++)
             {
                 if (img.data[i] != returnImg.data[i])
@@ -76,6 +77,8 @@ void runImageTest(std::vector<run> &exitMessage, StateClass &state)
             }
             delete[] img.data;
             delete[] returnImg.data;
+            state.out("Sucess.",0);
+            exitMessage.push_back(currentrun);
         }
         catch (const std::exception &e)
         {
