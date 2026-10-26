@@ -20,12 +20,13 @@
 
 #include "../defs/general.h"
 #include "../defs/types.h"
+#include "../stream/stream.h"
 #include <algorithm>
 #include <nlohmann/json.hpp>
 #include <utility>
 #include <vector>
 
-void SelectionSort(std::vector<int> &unsorted, json &response)
+void SelectionSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted
@@ -37,13 +38,13 @@ void SelectionSort(std::vector<int> &unsorted, json &response)
     {
         auto minT = std::min_element(unsorted.begin() + i, unsorted.end());
         index = minT - unsorted.begin();
-        response["MOVES"].push_back({i, index});
         std::swap(unsorted[i], unsorted[index]);
+        response["MOVES"].push_back({i, index});
     }
 }
 
 //--------------IMAGE-----------------------------
-void SelectionSort(indexPixel &unsorted, json &response)
+void SelectionSort(indexPixel &unsorted, json &response, StreamClass &stream)
 {
     if (unsorted.size() <= 1)
         return; // an array of the size one is already sorted
@@ -57,7 +58,12 @@ void SelectionSort(indexPixel &unsorted, json &response)
             unsorted.begin() + i, unsorted.end(),
             [](const auto &a, const auto &b) { return a.first < b.first; });
         index = minT - unsorted.begin();
-        response["MOVES"].push_back({i, index});
         std::swap(unsorted[i], unsorted[index]);
+        response["MOVES"].push_back({i, index});
+        if (response["MOVES"].size() > 1000)
+        {
+            stream.sendChunk(std::move(response));
+            response.clear();
+        }
     }
 }

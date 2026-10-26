@@ -26,6 +26,6 @@
 #include <stb_image.h>
 
 void ShuffleImage(image &img);
-image LoadImage(const httplib::Request &req, const stateClass &state);
+image LoadImage(const httplib::Request &req, const StateClass &state);
 json IndexPixelArrToJson(const indexPixel &arr);
 #endif

@@ -49,7 +49,7 @@ json IndexPixelArrToJson(const indexPixel &arr)
     return jarr;
 }
 
-image LoadImage(const httplib::Request &req, const stateClass &state)
+image LoadImage(const httplib::Request &req, const StateClass &state)
 {
 
     // read image from body to file

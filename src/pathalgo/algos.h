@@ -18,6 +18,13 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+/**
+ * @file algo.h
+ *
+ * @brief Header containing pathfinding algorithm defintions
+ *
+ */
 #ifndef PALGOS_H
 #define PALGOS_H
 #include "../defs/general.h"
@@ -41,4 +48,7 @@ std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> &map,
 std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
                                        std::pair<int, int> start,
                                        std::pair<int, int> goal, json &response);
+std::vector<std::pair<int, int>> GBFS(const std::vector<std::vector<int>> &map,
+                                      std::pair<int, int> start, std::pair<int, int> goal,
+                                      json &response);
 #endif

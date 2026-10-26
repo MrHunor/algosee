@@ -28,5 +28,5 @@ struct SortValidReturn
     std::string algo;
 };
 
-SortValidReturn ValidateSort(const httplib::Request &req, stateClass &state);
+SortValidReturn ValidateSort(const httplib::Request &req, StateClass &state);
 #endif

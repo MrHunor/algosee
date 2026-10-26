@@ -9,7 +9,7 @@ const algoKey = urlParams.get('algo') || 'selection';
 
 const backendBase = getBackendBase();
 
-// adjust title 
+// adjust title
 const algoNames = {
     bogo: "BogoSort",
     miracle: "MiracleSort",
@@ -33,7 +33,7 @@ const stopBtn = document.getElementById('stop-btn');
 
 let animationSpeed = 200;
 let isCancelled = false;
-
+const BATCH_SIZE = 50;
 //---------------------------------------
 //webaudio api 
 let audioCtx = null;
@@ -153,7 +153,129 @@ function generateArray() {
 resetBtn.addEventListener('click', generateArray);
 
 //--------------------------------------
+// --- New functions for streaming ---
 
+// gen func MOVES
+async function* movesGenerator(moves) {
+    for (let i = 0; i < moves.length; i += BATCH_SIZE) {
+        const batch = moves.slice(i, i + BATCH_SIZE);
+        yield batch;
+        await new Promise(resolve => setTimeout(resolve, 0));
+    }
+}
+
+// gen func TRIES (BogoSort)
+async function* triesGenerator(tries) {
+    for (let i = 0; i < tries.length; i += BATCH_SIZE) {
+        const batch = tries.slice(i, i + BATCH_SIZE);
+        yield batch;
+        await new Promise(resolve => setTimeout(resolve, 0));
+    }
+}
+
+// gen func MERGE
+async function* mergeGenerator(mergeSteps) {
+    for (let i = 0; i < mergeSteps.length; i += BATCH_SIZE) {
+        const batch = mergeSteps.slice(i, i + BATCH_SIZE);
+        yield batch;
+        await new Promise(resolve => setTimeout(resolve, 0));
+    }
+}
+
+// gen func COUNTING
+async function* countingGenerator(sortedArray) {
+    for (let i = 0; i < sortedArray.length; i += BATCH_SIZE) {
+        const batch = sortedArray.slice(i, i + BATCH_SIZE);
+        yield batch;
+        await new Promise(resolve => setTimeout(resolve, 0));
+    }
+}
+//------------------------------------------------------
+// MOVES anim
+async function visualizeMovesBatch(movesBatch, speed) {
+    const bars = container.children;
+    for (const [i, j] of movesBatch) {
+        if (isCancelled) { generateArray(); return; }
+        if (!bars[i] || !bars[j]) continue;
+
+        bars[i].style.backgroundColor = '#ef4444';
+        bars[j].style.backgroundColor = '#ef4444';
+        playTone(150 + (array[i] * 6));
+
+        let tempHeight = bars[i].style.height;
+        let tempText = bars[i].innerText;
+        let tempValue = array[i];
+
+        bars[i].style.height = bars[j].style.height;
+        bars[i].innerText = bars[j].innerText;
+        bars[j].style.height = tempHeight;
+        bars[j].innerText = tempText;
+        array[i] = array[j];
+        array[j] = tempValue;
+
+        await new Promise(resolve => setTimeout(resolve, speed));
+        bars[i].style.backgroundColor = '#3b82f6';
+        bars[j].style.backgroundColor = '#3b82f6';
+    }
+}
+
+// TRIES (BogoSort) anim
+async function visualizeTriesBatch(triesBatch, speed) {
+    const bars = container.children;
+    for (const currentTry of triesBatch) {
+        if (isCancelled) { generateArray(); return; }
+        for (let i = 0; i < currentTry.length; i++) {
+            if (!bars[i]) continue;
+            const val = currentTry[i];
+            bars[i].style.height = `${val * 3}px`;
+            if (arraySize <= 20) { bars[i].innerText = val; }
+            bars[i].style.backgroundColor = '#3b82f6';
+        }
+        array = [...currentTry];
+        if (currentTry.length > 0) { playTone(150 + (currentTry[0] * 6)); }
+        await new Promise(resolve => setTimeout(resolve, speed));
+    }
+}
+
+// MERGE anim
+async function visualizeMergeBatch(mergeBatch, speed) {
+    const bars = container.children;
+    for (const mergeStep of mergeBatch) {
+        if (isCancelled) { generateArray(); return; }
+        const result = mergeStep[2];
+        for (let i = 0; i < result.length; i++) {
+            if (!bars[i]) continue;
+            const val = result[i];
+            bars[i].style.height = `${val * 3}px`;
+            if (arraySize <= 20) { bars[i].innerText = val; }
+            bars[i].style.backgroundColor = '#3b82f6';
+        }
+        array = [...result];
+        if (result.length > 0) { playTone(150 + (result[0] * 6)); }
+        await new Promise(resolve => setTimeout(resolve, speed));
+    }
+}
+
+//COUNTING anim
+async function visualizeCountingBatch(countingBatch, speed) {
+    const bars = container.children;
+    for (let idx = 0; idx < countingBatch.length; idx++) {
+        if (isCancelled) { generateArray(); return; }
+        const val = countingBatch[idx];
+        if (!bars[idx]) continue;
+
+        bars[idx].style.backgroundColor = '#ef4444';
+        await new Promise(resolve => setTimeout(resolve, speed / 2));
+
+        bars[idx].style.height = `${val * 3}px`;
+        if (arraySize <= 20) { bars[idx].innerText = val; }
+        array[idx] = val;
+        playTone(150 + (val * 6));
+        bars[idx].style.backgroundColor = '#22c55e';
+        await new Promise(resolve => setTimeout(resolve, speed / 2));
+    }
+}
+//------------------------------------------------------
 //Start-button (!!!)
 //run asap 
 startBtn.addEventListener('click', async () => {
@@ -162,15 +284,15 @@ startBtn.addEventListener('click', async () => {
         return;
     }
 
-    const backendUrl = `${backendBase}/sortalgo?algo=${algoKey}`;
+    const backendUrl = getAlgoApiUrl(algoKey);
 
     startBtn.disabled = true;
     resetBtn.disabled = true;
     if (sizeSlider) sizeSlider.disabled = true;
     if (speedSlider) speedSlider.disabled = true;
-    stopBtn.disabled = false; // accses stop button
-    isCancelled = false;      // reset cancel flag
-//error handling, now adjusted for dynamic error messages
+    stopBtn.disabled = false;
+    isCancelled = false;
+
     try {
         const response = await fetch(backendUrl, {
             method: 'POST',
@@ -178,13 +300,12 @@ startBtn.addEventListener('click', async () => {
             body: JSON.stringify({ values: array })
         });
 
-        // read, print JSON string 
         const responseText = await response.text();
 
         if (!response.ok) {
-        let msg = responseText;
-        try { const parsed = JSON.parse(responseText); if (typeof parsed === 'string') msg = parsed; } catch (_) {}
-        throw new Error(msg || `Server-Fehler: ${response.status}`);
+            let msg = responseText;
+            try { const parsed = JSON.parse(responseText); if (typeof parsed === 'string') msg = parsed; } catch (_) {}
+            throw new Error(msg || `Server-Fehler: ${response.status}`);
         }
 
         const data = JSON.parse(responseText);
@@ -194,30 +315,51 @@ startBtn.addEventListener('click', async () => {
             document.getElementById('time-val').innerText = timeMs;
         }
 
+        // dynamic speed
+        let dynamicSpeed;
+        let generator;
+        let processBatchFn;
+
         if (algoKey === 'bogo') {
             const steps = data.TRIES.length;
-            const dynamicSpeed = Math.max(5, Math.floor((animationSpeed * 20) / steps));
-            await visualizeTries(data.TRIES, dynamicSpeed);
+            dynamicSpeed = Math.max(5, Math.floor((animationSpeed * 20) / steps));
+            generator = triesGenerator(data.TRIES);
+            processBatchFn = visualizeTriesBatch;
         } else if (algoKey === 'merge') {
             const steps = data["MERGED (LEFT,RIGHT,RESULT)"].length;
-            const dynamicSpeed = Math.max(5, Math.floor((animationSpeed * 50) / steps));
-            await visualizeMerge(data["MERGED (LEFT,RIGHT,RESULT)"], dynamicSpeed);
+            dynamicSpeed = Math.max(5, Math.floor((animationSpeed * 50) / steps));
+            generator = mergeGenerator(data["MERGED (LEFT,RIGHT,RESULT)"]);
+            processBatchFn = visualizeMergeBatch;
         } else if (algoKey === 'counting') {
             const steps = data.SORTED.length;
-            const dynamicSpeed = Math.max(5, Math.floor((animationSpeed * 10) / steps));
-            await visualizeCounting(data.SORTED, dynamicSpeed);
+            dynamicSpeed = Math.max(5, Math.floor((animationSpeed * 10) / steps));
+            generator = countingGenerator(data.SORTED);
+            processBatchFn = visualizeCountingBatch;
         } else {
             const steps = data.MOVES.length;
-            const dynamicSpeed = steps > 0 ? Math.max(5, Math.floor((animationSpeed * 20) / steps)) : animationSpeed;
-            await visualizeMoves(data.MOVES, dynamicSpeed);
+            dynamicSpeed = steps > 0 ? Math.max(5, Math.floor((animationSpeed * 20) / steps)) : animationSpeed;
+            generator = movesGenerator(data.MOVES);
+            processBatchFn = visualizeMovesBatch;
+        }
+
+        // batch processing
+        for await (const batch of generator) {
+            if (isCancelled) {
+                generateArray();
+                break;
+            }
+            await processBatchFn(batch, dynamicSpeed);
+        }
+
+        // success wave 
+        if (!isCancelled) {
+            await playSuccessWave();
         }
 
     } catch (error) {
         console.error("Connection-Error:", error);
-        // prints backend JSON string
         alert(error.message);
     } finally {
-        // unlock UI (this'll clean up)
         startBtn.disabled = false;
         resetBtn.disabled = false;
         if (sizeSlider) sizeSlider.disabled = false;
@@ -403,6 +545,29 @@ async function visualizeCounting(sortedArray, speed) {
     if (!isCancelled) {
         await playSuccessWave();
     }
+}
+
+// CycleSort Animation (reads SWAPED)
+async function visualizeCycle(moves, speed) {
+    const bars = container.children;
+    for (let k = 0; k < moves.length; k++) {
+        if (isCancelled) { generateArray(); return; }
+
+        const move = Array.isArray(moves[k]) ? moves[k] : Object.values(moves[k]);
+        const [value, position] = move;
+
+        if (!bars[position]) continue;
+
+        bars[position].style.backgroundColor = '#ef4444';
+        playTone(150 + (value * 6));
+        bars[position].style.height = `${value * 3}px`;  
+        if (arraySize <= 20) bars[position].innerText = value;
+        array[position] = value;
+
+        await new Promise(resolve => setTimeout(resolve, speed));
+        bars[position].style.backgroundColor = '#3b82f6';
+    }
+    if (!isCancelled) await playSuccessWave();
 }
 
 //400ll lol XD

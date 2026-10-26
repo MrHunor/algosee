@@ -24,7 +24,7 @@
 #include "../../logger/logger.h"
 #include "../../utils/image/image.h"
 #include <httplib/httplib.h>
-ImageValidReturn ValidateImage(const httplib::Request &req, stateClass &state)
+ImageValidReturn ValidateImage(const httplib::Request &req, StateClass &state)
 {
     ImageValidReturn retval;
 
