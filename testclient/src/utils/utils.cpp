@@ -55,21 +55,33 @@ rawImage RawImageFromJson(const json &j)
 
     retval.width = -1; // not extractable from info
     retval.height = -1;
-    retval.size = j["SORTED"].size() * retval.channels;
-    retval.data = new unsigned char[retval.size];
-    int retvalI = 0;
-    int JI = 0;
-    while (JI < j["SORTED"].size())
-    {
-        const auto entry = j["SORTED"].at(JI);
-        retval.data[retvalI] = entry.at(
-            1); // ignore the first value, its a index because SORTED is a indexPixel
-        retval.data[retvalI + 1] = entry.at(2);
-        retval.data[retvalI + 2] = entry.at(3);
-        retval.data[retvalI + 3] = entry.at(4);
 
-        retvalI = retvalI + 4;
-        JI++;
+    retval.size = j["SORTED"].size() * retval.channels;
+    try
+    {
+        retval.data = new unsigned char[retval.size];
+        int retvalI = 0;
+        int JI = 0;
+        while (JI < j["SORTED"].size())
+        {
+            const auto entry = j["SORTED"].at(JI);
+            retval.data[retvalI] = entry.at(
+                1); // ignore the first value, its a index because SORTED is a indexPixel
+            retval.data[retvalI + 1] = entry.at(2);
+            retval.data[retvalI + 2] = entry.at(3);
+            retval.data[retvalI + 3] = entry.at(4);
+
+            retvalI = retvalI + 4;
+            JI++;
+        }
+    }
+    catch (const std::exception &e)
+    {
+        InvalidInputMessage(
+            "An exception occureed, a bad one. Details:" +
+            std::string(
+                e.what())); // you might think of freeing memory, but this function call
+                            // terminates the testclient so the OS does that anyway
     }
     return retval;
 }
