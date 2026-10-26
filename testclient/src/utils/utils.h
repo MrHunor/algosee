@@ -34,7 +34,7 @@ struct run
     bool failure=false;
 };
 
-unsigned char *makeRandomImage(int w, int h);
+unsigned char *makeRandomImage(size_t w,size_t h);
 rawImage RawImageFromJson(const json &j);
 int randomInt(int lower, int upper);
 std::string executeCommand(const std::string &command);

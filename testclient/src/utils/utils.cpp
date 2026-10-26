@@ -74,7 +74,7 @@ rawImage RawImageFromJson(const json &j)
     return retval;
 }
 
-unsigned char *makeRandomImage(int w, int h)
+unsigned char *makeRandomImage(size_t w, size_t h)
 {
     size_t size = w * h * 4;
     unsigned char *retval =

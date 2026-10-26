@@ -23,7 +23,7 @@ cd assets
 inkscape Wide.png --export-text-to-path --export-filename=Wide.svg
 chafa --symbols ascii -s 100x Wide.png > WideASCII100.txt
 
-inkscape 1_1.png --export-text-to-path --export-filename=1_1.png
+inkscape 1_1.png --export-text-to-path --export-filename=1_1.svg
 chafa --symbols ascii -s 50x 1_1.png > 1_1ASCII50.txt 
 
 cd ..
