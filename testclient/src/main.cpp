@@ -23,6 +23,18 @@
 #include "utils/utils.h"
 #include <string>
 
+/**
+ * @brief Main entry point
+ *
+ * @param argc Integer of arguments passed, usually at least one, which is the name of the executable
+ *
+ * @param argv Pointer to a array of char containing the arguments which are passed
+ *
+ * @throws When bad input from the user is passed, but is handled internally. (Unless ofc something goes very wrong)
+ *
+ * @returns Exitcode
+ *
+ */
 int main(int argc, char *argv[])
 {
     remove("testClientLog.txt");

@@ -41,6 +41,7 @@
 
 using json = nlohmann::json;
 
+ 
 void writeMemToImage(const rawImage &img)
 {
     if (stbi_write_png("testimage.png", img.width, img.height, img.channels, img.data,
@@ -220,7 +221,7 @@ std::string executeCommand(const std::string &command)
     int exitCode;
     FILE *pipe = popen(command.c_str(), "r");
     if (!pipe)
-        InvalidInputMessage("Failed to open Pipe for executing command:" + command);
+        throw("Failed to open Pipe for executing command:" + command);
 
     char buffer[256];
     std::string result;
@@ -241,7 +242,7 @@ std::string executeCommand(const std::string &command)
         exitCode = WEXITSTATUS(status);
     }
     if (exitCode != 0)
-        InvalidInputMessage("Shell Command:'" + command + "' has failed.");
+        throw("Shell Command:'" + command + "' has failed.");
     return result;
 }
 
