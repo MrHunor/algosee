@@ -58,8 +58,6 @@ rawImage RawImageFromJson(const json &j)
     retval.height = -1;
 
     retval.size = j["SORTED"].size() * retval.channels;
-    try
-    {
         retval.data = new unsigned char[retval.size];
         int retvalI = 0;
         int JI = 0;
@@ -75,15 +73,6 @@ rawImage RawImageFromJson(const json &j)
             retvalI = retvalI + 4;
             JI++;
         }
-    }
-    catch (const std::exception &e)
-    {
-        InvalidInputMessage(
-            "An exception occureed, a bad one. Details:" +
-            std::string(
-                e.what())); // you might think of freeing memory, but this function call
-                            // terminates the testclient so the OS does that anyway
-    }
     return retval;
 }
 
