@@ -26,8 +26,6 @@
 #include <utility>
 #include <vector>
 
-
-
 //------------------MAP BASED------------------------------
 
 std::vector<std::pair<int, int>> BreadthFirstSearch(const MapBool &map,
@@ -123,5 +121,79 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(const MapBool &map,
     return path;
 }
 
-
 //-----------------GRAPH BASED-------------------------------
+
+/**
+ * @brief Execute a BreadFirst Search on a given graph
+ *
+ * @param graph A Graph object with the layout graph[ID]={connections}
+ *
+ * @param start A integer specifiying which graph ID is the start
+ *
+ * @param end A integer specifiying which graph ID is the goal
+ *
+ * @param response A json object used for setting the response
+ *
+ * @note This was written after the map based version, so comments used there arent used
+ * here, so if your struggling to first try to understand the map based version (even tho
+ * thats harder but that ones one me)
+ *
+ * @note Yeah this version is WAY easier then the other one
+ * */
+std::vector<int> BreadthFirstSearch(const Graph &graph, int start, int goal,
+                                    json &response)
+{
+    unsigned int iteration = 0;
+    const int rows = graph.size();
+
+    std::vector<int> visited(rows, -1);
+    std::vector<int> parent(rows,-1);
+
+    std::vector<int> path;
+
+    std::vector<int> searchMap(rows, -1);
+
+    std::queue<int> frontier;
+    frontier.push(start);
+    visited[start] = 0;
+
+    while (!frontier.empty())
+    {
+        int ID = frontier.front();//which Node we are currently looking at 
+        searchMap[ID] = iteration;
+        frontier.pop();
+
+        if (ID == goal)
+            break; // reached goal
+
+        for (int i = 0; i < graph[ID].size(); i++)
+        {
+            int NeighboorID = graph[ID].at(i);
+
+            if (visited[NeighboorID] != -1)
+                continue;
+
+            visited[NeighboorID] = 1;
+            parent[NeighboorID] = ID;
+            frontier.push(NeighboorID);
+        }
+        iteration++;
+    }
+
+    response["VISITED"] = visited;
+    response["SEARCHMAP"] = searchMap;
+    if (visited[goal] == -1)
+        return {};
+
+    int current = goal;
+    while (current != start)
+    {
+        path.push_back(current);
+        current = parent[current];
+    }
+    path.push_back(start);
+
+    std::reverse(path.begin(), path.end());
+
+    return path;
+}
