@@ -46,6 +46,7 @@ void RunLimits(httplib::Response &res, StateClass &state)
     response["MAX_ELEMENT_COUNT_DFS"] = MAX_ELEMENT_COUNT_DFS;
     response["MAX_ELEMENT_COUNT_BIBFS"] = MAX_ELEMENT_COUNT_BIBFS;
     response["MAX_ELEMENT_COUNT_ASTAR"] = MAX_ELEMENT_COUNT_ASTAR;
+    response["MAX_ELEMENT_COUNT_GBFS"]=MAX_ELEMENT_COUNT_GBFS;
 
     // image
     response["MAX_PIXEL_COUNT_IMAGE"] = MAX_PIXEL_COUNT_IMAGE;

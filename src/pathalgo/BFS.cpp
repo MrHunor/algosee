@@ -28,6 +28,19 @@
 
 //------------------MAP BASED------------------------------
 
+/**
+ * @brief Run a BreadthFirst search on A Map
+ *
+ * @param map A MapBool object in the format map[x][y]=true/false, with true meaning blocked and false meaning passable
+ *
+ * @param start A std::pair of integers containing the cooridnates of the start in format {x,y}
+ *
+ * @param goal A std::pair of integers containing the cooridnates of the goal in format {x,y} 
+ * 
+ * @throws Hopefully never
+ *
+ * @returns The Path in format of a step to step by x,y
+ */
 std::vector<std::pair<int, int>> BreadthFirstSearch(const MapBool &map,
                                                     std::pair<int, int> start,
                                                     std::pair<int, int> goal,
@@ -134,11 +147,15 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(const MapBool &map,
  *
  * @param response A json object used for setting the response
  *
+ * @throws Hopefully never
+ *
  * @note This was written after the map based version, so comments used there arent used
  * here, so if your struggling to first try to understand the map based version (even tho
  * thats harder but that ones one me)
  *
  * @note Yeah this version is WAY easier then the other one
+ *
+ * @returns The Path in steps from NodeID to NodeID
  * */
 std::vector<int> BreadthFirstSearch(const Graph &graph, int start, int goal,
                                     json &response)

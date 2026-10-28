@@ -35,7 +35,6 @@ class StreamClass
 
     void sendChunk(json chunk) // adds to the class queue of chunks
     {
-        chunk = chunk;
         std::lock_guard<std::mutex> lock(writeMutex);
         if (finished)
             return;
