@@ -18,6 +18,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../defs/general.h"
+#include "../defs/types.h"
 #include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
 #include <limits>
@@ -26,7 +27,7 @@
 #include <utility>
 #include <vector>
 
-std::vector<std::pair<int, int>> Dijkstra(const std::vector<std::vector<int>> &map,
+std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
                                           std::pair<int, int> start,
                                           std::pair<int, int> goal, json &response)
 {

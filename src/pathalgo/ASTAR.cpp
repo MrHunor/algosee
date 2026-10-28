@@ -19,6 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../defs/general.h"
+#include "../defs/types.h"
 #include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
 #include <cmath>
@@ -56,7 +57,7 @@ struct CompareNodeASTAR
 // A* is similar to djkstra, only that is uses a diffrent priority queue, with
 // f(n)=g(n)+h(n) where g(n) is the cost from start to node n (same as djkstra)
 // but also h(n) estimated cost from node n to goal (manhatten distance)
-std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
+std::vector<std::pair<int, int>> ASTAR(const MapInt &map,
                                        std::pair<int, int> start,
                                        std::pair<int, int> goal, json &response)
 {

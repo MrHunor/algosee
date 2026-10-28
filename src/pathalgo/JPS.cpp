@@ -19,6 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../defs/general.h"
+#include "../defs/types.h"
 #include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
 #include <cmath>
@@ -56,7 +57,7 @@ struct CompareNodeJPS
     }
 };
 
-NodeJPS findNextJumpPoint(const std::vector<std::vector<int>> &map,
+NodeJPS findNextJumpPoint(const MapInt &map,
                           std::pair<int, int> goal, const int rows, const int cols,
                           const NodeJPS &input, const char direction)
 {

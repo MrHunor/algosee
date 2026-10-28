@@ -18,6 +18,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../defs/general.h"
+#include "../defs/types.h"
 #include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
 #include <nlohmann/json.hpp>
@@ -25,7 +26,7 @@
 #include <utility>
 #include <vector>
 
-std::vector<std::pair<int, int>> BIBFS(std::vector<std::vector<bool>> &map,
+std::vector<std::pair<int, int>> BIBFS(const MapBool &map,
                                        std::pair<int, int> start,
                                        std::pair<int, int> goal, json &response)
 {

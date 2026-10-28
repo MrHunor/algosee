@@ -18,6 +18,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../defs/general.h"
+#include "../defs/types.h"
 #include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
 #include <nlohmann/json.hpp>
@@ -25,7 +26,11 @@
 #include <utility>
 #include <vector>
 
-std::vector<std::pair<int, int>> BreadthFirstSearch(std::vector<std::vector<bool>> &map,
+
+
+//------------------MAP BASED------------------------------
+
+std::vector<std::pair<int, int>> BreadthFirstSearch(const MapBool &map,
                                                     std::pair<int, int> start,
                                                     std::pair<int, int> goal,
                                                     json &response)
@@ -117,3 +122,6 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(std::vector<std::vector<bool
     }
     return path;
 }
+
+
+//-----------------GRAPH BASED-------------------------------
