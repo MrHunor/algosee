@@ -23,9 +23,12 @@
 #include <algorithm>
 #include <nlohmann/json.hpp>
 #include <stack>
-#include <unordered_map>
 #include <utility>
 #include <vector>
+
+
+
+//------------------------MAP BASED------------------------------------
 
 // you can just copy the BFS and change the logic which takes the frontier
 // element from "first of queue" to "last added" and boom you have DFS (and
@@ -119,5 +122,67 @@ std::vector<std::pair<int, int>> DepthFirstSearch(const MapBool &map,
     {
         std::swap(path[i].first, path[i].second);
     }
+    return path;
+}
+
+
+
+//-----------------------GRAPH BASED----------------------------------------
+
+std::vector<int> DepthFirstSearch(const GraphUnweight &graph, int start, int goal,
+                                    json &response)
+{
+    unsigned int iteration = 0;
+    const int rows = graph.size();
+
+    std::vector<int> visited(rows, -1);
+    std::vector<int> parent(rows,-1);
+
+    std::vector<int> path;
+
+    std::vector<int> searchMap(rows, -1);
+
+    std::stack<int> frontier;
+    frontier.push(start);
+    visited[start] = 0;
+
+    while (!frontier.empty())
+    {
+        int ID = frontier.top();//which Node we are currently looking at 
+        searchMap[ID] = iteration;
+        frontier.pop();
+
+        if (ID == goal)
+            break; // reached goal
+
+        for (int i = 0; i < graph[ID].size(); i++)
+        {
+            int NeighboorID = graph[ID].at(i);
+
+            if (visited[NeighboorID] != -1)
+                continue;
+
+            visited[NeighboorID] = 1;
+            parent[NeighboorID] = ID;
+            frontier.push(NeighboorID);
+        }
+        iteration++;
+    }
+
+    response["VISITED"] = visited;
+    response["SEARCHMAP"] = searchMap;
+    if (visited[goal] == -1)
+        return {};
+
+    int current = goal;
+    while (current != start)
+    {
+        path.push_back(current);
+        current = parent[current];
+    }
+    path.push_back(start);
+
+    std::reverse(path.begin(), path.end());
+
     return path;
 }

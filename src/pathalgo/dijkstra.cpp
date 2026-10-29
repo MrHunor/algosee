@@ -21,12 +21,14 @@
 #include "../defs/types.h"
 #include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
-#include <limits>
 #include <nlohmann/json.hpp>
 #include <queue>
 #include <utility>
 #include <vector>
 
+
+
+//-------------------------MAP BASED---------------------------------------
 std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
                                           std::pair<int, int> start,
                                           std::pair<int, int> goal, json &response)
@@ -142,6 +144,109 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
     {
         std::swap(path[i].first, path[i].second);
     }
+
+    return path;
+}
+
+
+//-----------------------GRAPH BASED-----------------------------------------
+
+
+
+std::vector<int> Dijkstra(const GraphWeighted& graph,
+                                          int start,
+                                          int goal, json &response)
+{
+    const int rows = graph.size();
+
+    // dijkstra uses something similar to BFS but instead of vector<bool> visited,
+    // it uses a cost based vector<int> so this is effectivly just: "What is the
+    // cheapest possible distance to this point in the map"
+    std::vector<int> distance(rows,INFINITY_INT); // i dont think i'll ever unstand this contructor
+    std::vector<int> parent(rows,-1);
+    std::vector<int> path;
+
+    // in contrast to BFS we need a reverse "priority" queue, this means the first
+    // element of the queue is the one with the lowest "priority" which in Djkstras
+    // case is the distance
+    using Node = std::pair<int, int>;
+    std::priority_queue<Node, std::vector<Node>, std::greater<Node>> frontier;//yeah so in contrary to A* this implementation used weight,ID
+
+    distance[start] = 0;
+
+    // push the start into the frontier, because its the lowest distance and also
+    // the only element it will be the first element
+    frontier.push({0, start});
+
+    while (!frontier.empty())
+    {
+        // extract info from the first frontier element
+        int currentDistance = frontier.top().first;
+        int currentID = frontier.top().second;
+
+        // because the info fron the first frontier element is now stored in the
+        // above declared variables, we can delete the first element from frontier
+        frontier.pop();
+
+        if (currentDistance != distance[currentID])
+            continue; // already discovered
+
+        if (currentID == goal)
+            break; // finished, goal discovered
+
+        // check all neighbours
+        for (int i = 0; i < graph[currentID].size(); i++)
+        {
+            std::pair<int,int> currentNID = graph[currentID].at(i);
+
+
+            int newDistance = 0;
+            if (currentDistance > INFINITY_INT - currentNID.first)
+            {
+                newDistance = INFINITY_INT;
+            }
+            else
+            {
+                newDistance = currentDistance + currentNID.first;
+            }
+
+            // is the current path to this tile cheaper then the already known path
+            // from start to goal?
+            if (newDistance < distance[currentNID.second])
+            {
+                // yes, save all info about the new tile and add it to frontier to be
+                // explored next
+                distance[currentNID.second] = newDistance;
+                parent[currentNID.second] = currentID;
+                frontier.push({newDistance,currentNID.second});
+            }
+        }
+    }
+
+    // Explored all possible tiles
+
+    response["DISTANCE"] = distance;
+
+    // checking if the goal was ever reached, be careful this could theoretically
+    // be a false positive if the addition of tiles matches exatly the intmax, but
+    // the likelyhood is very small
+    if (distance[goal] == INFINITY_INT)
+        return {};
+
+    // copy paste from BFS, same logic
+    int current = goal;
+
+    while (current != start)
+    {
+        path.push_back(current);
+        current = parent[current];
+    }
+
+    // push back start pour fini
+    path.push_back(start);
+
+    // due to starting with goal, the path must be reversed to start from start
+    std::reverse(path.begin(), path.end());
 
     return path;
 }
