@@ -22,6 +22,7 @@
 #ifndef PATHALGO_UTILS_H
 #define PATHALGO_UTILS_H
 #include "../../defs/general.h"
+#include "../../defs/types.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
@@ -33,6 +34,8 @@ void CheckMapValidness(const std::vector<std::vector<int>> &mapInt,
 void CheckMapValidness(const std::vector<std::vector<bool>> &map,
                        const std::pair<int, int> &start, const std::pair<int, int> &goal);
 std::pair<int, int> CheckRange(const std::vector<std::vector<int>> &map);
+std::pair<int, int> CheckRange(const GraphWeighted &graph);
 std::vector<std::vector<bool>> CastIntMapToBoolIfNeeded(const json &input);
 bool CheckMapForZero(const std::vector<std::vector<int>> &map);
+bool CheckMapForZero(const GraphWeighted &graph);
 #endif

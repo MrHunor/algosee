@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
         };
 
     server.Options("(/sortalgo)", serverOptionHandler);
-    server.Options("(/pathalgo)", serverOptionHandler);
+    server.Options("(/pathalgoMap)", serverOptionHandler);
     server.Options("(/status)", serverOptionHandler);
     server.Options("(/image)", serverOptionHandler);
     server.Options("(/limits)", serverOptionHandler);
@@ -223,12 +223,18 @@ int main(int argc, char *argv[])
         return;
     });
 
-    //------------------------------PATHALGO----------------------------------------------------------------
-    server.Post("/pathalgo", [&](const httplib::Request &req, httplib::Response &res) {
-        RunPathalgo(req, res, state);
+    //------------------------------PATHALGOMAP----------------------------------------------------------------
+    server.Post("/pathalgoMap", [&](const httplib::Request &req, httplib::Response &res) {
+        RunPathalgoMap(req, res, state);
         return;
     });
 
+    //---------------------------PATHALGOGRAPH----------------------------------------------------------------
+    server.Post("/pathalgoGraph",[&](const httplib::Request &req,httplib::Response& res)
+{
+
+    return;
+});
     try
     {
         // render port detection magic

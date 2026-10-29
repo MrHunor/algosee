@@ -174,4 +174,17 @@ std::vector<std::pair<int, int>> GBFS(const MapInt &map, std::pair<int, int> sta
  * */
 std::vector<int> BreadthFirstSearch(const GraphUnweight &graph, int start, int goal,
                                     json &response);
+
+std::vector<int> ASTAR(const GraphWeighted &graph, int start, int goal, json &response);
+
+std::vector<int> BIBFS(const GraphUnweight &graph, const int start, const int goal,
+                       json &response);
+
+std::vector<int> DepthFirstSearch(const GraphUnweight &graph, int start, int goal,
+                                  json &response);
+
+std::vector<int> Dijkstra(const GraphWeighted &graph, int start, int goal,
+                          json &response);
+
+std::vector<int> GBFS(const GraphWeighted &graph, int start, int goal, json &response);
 #endif

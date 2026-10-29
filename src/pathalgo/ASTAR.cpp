@@ -188,7 +188,7 @@ std::vector<std::pair<int, int>> ASTAR(const MapInt &map,
 
 
 
-//graph Based
+//-------------------------GRAPH BASED----------------------------------
 struct NodeASTARGraph
 {
     int g = 0;

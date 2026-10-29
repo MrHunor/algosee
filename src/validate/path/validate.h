@@ -22,7 +22,7 @@
 #include "../../logger/logger.h"
 #include <httplib/httplib.h>
 
-struct PathValidReturn
+struct PathValidReturnMap
 {
     std::string algo;
 
@@ -33,5 +33,18 @@ struct PathValidReturn
     std::pair<int, int> goal;
 };
 
-PathValidReturn ValidatePath(const httplib::Request &req, StateClass &state);
+struct PathValidReturnGraph
+{
+    std::string algo;
+
+    std::vector<std::vector<int>> graphUnweight;
+    std::vector<std::vector<std::pair<int,int>>> graphWeighted;
+
+    unsigned int start;
+    unsigned int goal;
+};
+
+
+
+PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &state);
 #endif

@@ -70,7 +70,7 @@ void runPathalgoTest(std::vector<run> &exitMessage, StateClass &state)
             std::pair<int, int> goal = {testcase.second.first - 1,
                                         testcase.second.second - 1};
             std::string command =
-                "curl -X POST \"http://127.0.0.1:8080/pathalgo?algo=" +
+                "curl -X POST \"http://127.0.0.1:8080/pathalgoMap?algo=" +
                 currentrun.algoname + "\"" +
                 " -H \"Content-Type: application/json\""
                 " -d '{\"MAP\": " +

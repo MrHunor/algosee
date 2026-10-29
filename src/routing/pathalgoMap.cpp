@@ -30,7 +30,7 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void RunPathalgo(const httplib::Request &req, httplib::Response &res, StateClass &state)
+void RunPathalgoMap(const httplib::Request &req, httplib::Response &res, StateClass &state)
 {
     try
     {
@@ -39,13 +39,10 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, StateClass
         json response;
         generateJsonRetrunArras(response);
         fillWithMetaData(response);
-        bool sameRowLength = true;
-        int collums;
-        // log ip
 
         // parsing
         state.out("Processing values....", 0);
-        PathValidReturn info = ValidatePath(req, state);
+        PathValidReturnMap info = ValidatePathMap(req, state);
 
         state.out("Starting time mesurement...", 0);
         auto startTime = std::chrono::steady_clock::now();

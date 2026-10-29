@@ -19,10 +19,24 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../../defs/general.h"
+#include "../../defs/types.h"
 #include "../../exception/exception.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
+
+
+bool CheckMapForZero(const GraphWeighted& graph)
+{
+    for(const auto& row : graph)
+    {
+        for(const auto& element : row)
+        {
+            if(element.second==0) return true;
+        }
+    }
+    return false;
+}
 
 bool CheckMapForZero(const std::vector<std::vector<int>> &map)
 {
@@ -35,6 +49,27 @@ bool CheckMapForZero(const std::vector<std::vector<int>> &map)
         }
     }
     return false;
+}
+
+std::pair<int,int> CheckRange(const GraphWeighted& graph)
+{
+    int min = 0;
+    int max = 0;
+    for(const auto& row : graph)
+    {
+        for(const auto& element : row)
+        {
+            if(element.second>max)
+            {
+             max=element.second;
+            }
+            if(element.second<min)
+            {
+                min=element.second;
+            }
+        }
+    }
+    return {min,max};
 }
 
 std::pair<int, int> CheckRange(const std::vector<std::vector<int>> &map)
