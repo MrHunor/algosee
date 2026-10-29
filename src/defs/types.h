@@ -25,7 +25,9 @@
 #include <vector>
 
 
-typedef std::vector<std::vector<int>> Graph;
+typedef std::vector<std::vector<int>> GraphUnweight;
+
+typedef std::vector<std::vector<std::pair<int,int>>> GraphWeighted;
 
 typedef std::vector<std::vector<int>> MapInt;
 

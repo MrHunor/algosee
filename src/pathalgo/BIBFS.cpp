@@ -26,8 +26,9 @@
 #include <utility>
 #include <vector>
 
-std::vector<std::pair<int, int>> BIBFS(const MapBool &map,
-                                       std::pair<int, int> start,
+//---------------MAP BASED------------------------------
+
+std::vector<std::pair<int, int>> BIBFS(const MapBool &map, std::pair<int, int> start,
                                        std::pair<int, int> goal, json &response)
 {
     int iteration = 0;
@@ -182,6 +183,125 @@ std::vector<std::pair<int, int>> BIBFS(const MapBool &map,
     {
         std::swap(pathFromStart[i].first, pathFromStart[i].second);
     }
+
+    return pathFromStart;
+}
+
+//--------------------------GRAPH BASED-------------------------------------
+std::vector<int> BIBFS(const GraphUnweight &graph, const int start, const int goal,
+                       json &response)
+{
+    int iteration = 0;
+    const int rows = graph.size();
+
+    int meetingPoint = -1;
+    std::vector<int> visitedFromStart(rows, -1); // weird ass constructor once again
+    std::vector<int> visitedFromEnd(rows, -1);   // weird ass constructor once again
+
+    std::vector<int> parentFromStart(rows, -1);
+    std::vector<int> parentFromEnd(rows, -1);
+
+    std::vector<int> pathFromStart;
+    std::vector<int> pathFromEnd;
+
+    std::queue<int> frontierFromStart;
+    std::queue<int> frontierFromEnd;
+
+    frontierFromStart.push(start);
+    frontierFromEnd.push(goal);
+    visitedFromStart[start] = 0;
+    visitedFromEnd[start] = 0;
+
+    while (!frontierFromStart.empty() && !frontierFromEnd.empty() && meetingPoint == -1)
+    {
+        int currentFromStartID = frontierFromStart.front();
+        int currentFromEndID = frontierFromEnd.front();
+        frontierFromStart.pop();
+        frontierFromEnd.pop();
+
+        // this only works if they perfectly meet, the other condition later should
+        // catch that but ill leave that here because im scared
+        if (currentFromStartID==currentFromEndID)
+        {
+            meetingPoint=currentFromStartID;
+            break; // both paths met, so a path to the goal has been found
+        }
+
+
+        for(int i = 0; i<graph[currentFromStartID].size();i++)
+        {
+            int currentNFromStartID=graph[currentFromStartID].at(i);
+            //check for already visited
+
+            if(visitedFromStart[currentNFromStartID]!=-1)
+            {
+             continue;
+            }
+
+            visitedFromStart[currentNFromStartID]=iteration;
+            parentFromStart[currentNFromStartID]=currentFromStartID;
+            frontierFromStart.push(currentNFromStartID);
+            if(visitedFromEnd[currentNFromStartID]!=-1)//did we already discover this point from the other direction?
+            {
+             meetingPoint=currentNFromStartID;
+             break;
+            }
+        }
+
+        for (int i = 0; i < graph[currentFromEndID].size(); i++) // check all neighbours
+        {
+            int currentNFromEndID = graph[currentFromEndID].at(i);
+
+            if(visitedFromEnd[currentNFromEndID]!=-1)
+            {
+                continue;
+            }
+           
+            visitedFromEnd[currentNFromEndID]=iteration;
+            parentFromEnd[currentNFromEndID]=currentFromEndID;
+            frontierFromEnd.push(currentNFromEndID);
+            if(visitedFromStart[currentNFromEndID]!=-1)
+            {
+                meetingPoint=currentNFromEndID;
+                break;
+            }
+
+        }
+        iteration++;
+    }
+    response["VISITEDFROMSTART"] = visitedFromStart;
+    response["VISITEDFROMEND"] = visitedFromEnd;
+
+    if (meetingPoint == -1)
+        return {};
+
+    // fist retrace all steps from the BFS starting at start
+    int current = meetingPoint;
+
+    while (current != start)
+    {
+        pathFromStart.push_back(current);
+        current = parentFromStart[current];
+    }
+    pathFromStart.push_back(start);
+
+    std::reverse(pathFromStart.begin(), pathFromStart.end());
+
+    // and now same thing from the other direciton
+    current = meetingPoint;
+
+    while (current != goal)
+    {
+        pathFromEnd.push_back(current);
+        current = parentFromEnd[current];
+    }
+    pathFromEnd.push_back(goal);
+
+    // we do not have to reverse here because it is already the right order
+
+    // now put em together
+    // NOTE: +1 to skip the meeting point which is present in both
+    pathFromStart.insert(pathFromStart.end(), pathFromEnd.begin() + 1, pathFromEnd.end());
 
     return pathFromStart;
 }

@@ -172,6 +172,6 @@ std::vector<std::pair<int, int>> GBFS(const MapInt &map, std::pair<int, int> sta
  *
  * @returns The Path in steps from NodeID to NodeID
  * */
-std::vector<int> BreadthFirstSearch(const Graph &graph, int start, int goal,
+std::vector<int> BreadthFirstSearch(const GraphUnweight &graph, int start, int goal,
                                     json &response);
 #endif

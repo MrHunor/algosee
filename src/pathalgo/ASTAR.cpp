@@ -28,7 +28,18 @@
 #include <utility>
 #include <vector>
 
-struct NodeASTAR
+
+
+
+
+
+
+
+
+
+
+//-----------------MAP BASED----------------------
+struct NodeASTARMap
 {
     int g = 0;
     int h = 0;
@@ -47,9 +58,9 @@ struct NodeASTAR
     }
 };
 
-struct CompareNodeASTAR
+struct CompareNodeASTARMap
 { // this is needed for priority queue
-    bool operator()(const NodeASTAR &a, const NodeASTAR &b) const
+    bool operator()(const NodeASTARMap &a, const NodeASTARMap &b) const
     {
         return a.f() > b.f();
     }
@@ -74,7 +85,7 @@ std::vector<std::pair<int, int>> ASTAR(const MapInt &map,
         rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
     std::vector<std::pair<int, int>> path;
 
-    std::priority_queue<NodeASTAR, std::vector<NodeASTAR>, CompareNodeASTAR> frontier;
+    std::priority_queue<NodeASTARMap, std::vector<NodeASTARMap>, CompareNodeASTARMap> frontier;
 
     distance[start.second][start.first] = 0;
 
@@ -174,3 +185,124 @@ std::vector<std::pair<int, int>> ASTAR(const MapInt &map,
 
     return path;
 }
+
+
+
+//graph Based
+struct NodeASTARGraph
+{
+    int g = 0;
+    int h = 0;
+    int ID=-1;
+    int f() const
+    {
+        if (g > INFINITY_INT - h)
+        {
+            return INFINITY_INT;
+        }
+        else
+        {
+            return g + h;
+        }
+    }
+};
+
+struct CompareNodeASTARGraph
+{ // this is needed for priority queue
+    bool operator()(const NodeASTARGraph &a, const NodeASTARGraph &b) const
+    {
+        return a.f() > b.f();
+    }
+};
+std::vector<int> ASTAR(const GraphWeighted& graph,
+                                       int start,
+                                       int goal, json &response)
+{
+    //implementaion wise, graph[i] is a array of pair<int,int> with .first being the ID of the node the connection is to and .second is the weight
+    const size_t rows = graph.size();
+
+    int h = 0;
+    std::vector<int> distance(rows,INFINITY_INT);
+    std::vector<int> parent(rows,-1);
+    std::vector<int> path;
+
+    std::priority_queue<NodeASTARGraph, std::vector<NodeASTARGraph>, CompareNodeASTARGraph> frontier;
+
+    distance[start] = 0;
+
+    NodeASTARGraph startNode{0,0,start};
+    frontier.push(startNode);
+
+    while (!frontier.empty())
+    {
+        // extract info from the first frontier element
+        int currentDistance = frontier.top().g;
+        int currentID=frontier.top().ID;
+        frontier.pop();
+
+        if (currentDistance != distance[currentID])
+            continue; // already discovered
+
+        if (currentID == goal)
+            break; // finished, goal discovered
+
+        // check all neighbours
+        for (int i = 0; i < graph[currentID].size(); i++)
+        {
+
+            std::pair<int,int> loopID=graph[currentID].at(i);
+            
+            int newDistance = 0;
+            
+            if (currentDistance > INFINITY_INT - loopID.second)
+            {
+                newDistance = INFINITY_INT;
+            }
+            else
+            {
+                newDistance = currentDistance + loopID.second;
+            }
+
+            // is the current path to this tile cheaper then the already known path
+            // from start to goal?
+            if (newDistance < distance[loopID.first])
+            {
+                // yes, save all info about the new tile and add it to frontier to be
+                // explored next
+                distance[loopID.first] = newDistance;
+                parent[loopID.first] = currentID;
+                h = goal-loopID.first;
+                frontier.push({newDistance, h,loopID.first});
+            }
+        }
+    }
+
+    // Explored all possible tiles
+
+    response["DISTANCE"] = distance;
+
+    // checking if the goal was ever reached, be careful this could theoretically
+    // be a false positive if the addition of tiles matches exatly the intmax, but
+    // the likelyhood is very small
+    if (distance[goal] == INFINITY_INT)
+        return {};
+
+    // copy paste from BFS, same logic
+    int current = goal;
+
+    while (current != start)
+    {
+        path.push_back(current);
+        current = parent[current];
+    }
+
+    // push back start pour fini
+    path.push_back(start);
+
+    // due to starting with goal, the path must be reversed to start from start
+    std::reverse(path.begin(), path.end());
+
+
+    return path;
+}
+
