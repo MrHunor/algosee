@@ -40,8 +40,49 @@ void RunPathAlgoGraph(const httplib::Request &req, httplib::Response &res,
         generateJsonRetrunArras(response);
         fillWithMetaData(response);
 
-        state.out("Processing values.....",0);
-        
+        state.out("Processing values.....", 0);
+        PathValidReturnGraph info = ValdiatePathGraph(req, state);
+
+        state.out("Starting time measurement...", 0);
+        auto startTime = std::chrono::steady_clock::now();
+
+        if (info.algo == "ASTAR" || info.algo == "GBFS" || info.algo == "dijkstra")
+        {
+            if (info.algo == "ASTAR")
+                path = ASTAR(info.graphWeighted, info.start, info.goal, response);
+            if (info.algo == "GBFS")
+                path = GBFS(info.graphWeighted, info.start, info.goal, response);
+            if (info.algo == "dijkstra")
+                path = Dijkstra(info.graphWeighted, info.start, info.goal, response);
+        }
+        else
+        {
+            if (info.algo == "BFS")
+                path = BreadthFirstSearch(info.graphUnweight, info.start, info.goal,
+                                          response);
+            if (info.algo == "DFS")
+                path =
+                    DepthFirstSearch(info.graphUnweight, info.start, info.goal, response);
+            if (info.algo == "BIBFS")
+                path = BIBFS(info.graphUnweight, info.start, info.goal, response);
+        }
+        auto endTime = std::chrono::steady_clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime-startTime);
+        state.out("Ended time measurement...",0);
+        response["TIME"]=elapsed.count();
+
+        if(path.empty())
+        {
+            throw excep("No valid path found...");
+        }
+        res.status=200;
+        response["PATH"]=path;
+        response["ERROR"]="";
+        response["ERRORCODE"]=0;
+        res.set_header("Access-Control-Allow-Origin", "*");
+        std::string responseString = std::move(response.dump());
+        state.out("Sending response:" + responseString, 0);
+        res.set_content(responseString, "application/json");
     }
     catch (const excep &e)
     {

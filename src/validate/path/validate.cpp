@@ -125,7 +125,7 @@ PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &stat
     return retval;
 }
 
-PathValidReturnGraph ValdiatePathGrapgh(httplib::Request &req, StateClass &state)
+PathValidReturnGraph ValdiatePathGraph(const httplib::Request &req, StateClass &state)
 {
     PathValidReturnGraph retval;
     state.out("Checking algo URL parameter...", 0);

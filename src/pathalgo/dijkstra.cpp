@@ -27,6 +27,14 @@
 #include <vector>
 
 
+using Node = std::pair<int, std::pair<int, int>>;
+struct CompareNodeDijkstra
+{
+    bool operator()(const Node& a, const Node& b)
+    {
+        return a.second>b.second;
+    }
+};
 
 //-------------------------MAP BASED---------------------------------------
 std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
@@ -50,8 +58,8 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
     // in contrast to BFS we need a reverse "priority" queue, this means the first
     // eleent of the queue is the one with the lowest "priority" which in Djkstras
     // case is the distance
-    using Node = std::pair<int, std::pair<int, int>>;
-    std::priority_queue<Node, std::vector<Node>, std::greater<Node>> frontier;
+    
+    std::priority_queue<Node, std::vector<Node>, CompareNodeDijkstra> frontier;
 
     distance[start.second][start.first] = 0;
 

@@ -47,4 +47,5 @@ struct PathValidReturnGraph
 
 
 PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &state);
+PathValidReturnGraph ValdiatePathGraph(const httplib::Request &req, StateClass &state);
 #endif
