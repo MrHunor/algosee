@@ -210,7 +210,7 @@ std::string executeCommand(const std::string &command)
     int exitCode;
     FILE *pipe = popen(command.c_str(), "r");
     if (!pipe)
-        throw("Failed to open Pipe for executing command:" + command);
+        throw std::runtime_error("Failed to open Pipe for executing command:" + command);
 
     char buffer[256];
     std::string result;
@@ -231,7 +231,7 @@ std::string executeCommand(const std::string &command)
         exitCode = WEXITSTATUS(status);
     }
     if (exitCode != 0)
-        throw("Shell Command:'" + command + "' has failed.");
+        throw std::runtime_error("Shell Command:'" + command + "' has failed.");
     return result;
 }
 

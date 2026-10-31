@@ -22,8 +22,9 @@
 #define TESTS_H
 #include "../../src/logger/logger.h"
 #include "../utils/utils.h"
+#include <httplib.h>
 
-void runPathalgoTest(std::vector<run> &exitMessage, StateClass &state);
+void runPathalgoTest(std::vector<run> &exitMessage,httplib::Client& client, StateClass &state);
 void runSortalgoTest(std::vector<run> &exitMessage, StateClass &state);
 void runImageTest(std::vector<run> &exitMessage, StateClass &state);
 

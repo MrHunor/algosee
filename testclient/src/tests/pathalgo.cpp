@@ -21,14 +21,16 @@
 #include "../../src/defs/general.h"
 #include "../../src/defs/testcases.h"
 #include "../../src/logger/logger.h"
+#include <httplib.h>
 #include "../utils/utils.h"
 #include <cmath>
+#include <stdexcept>
 #include <string>
 #include <utility>
 
-void runPathalgoTest(std::vector<run> &exitMessage, StateClass &state)
+void runPathalgoTest(std::vector<run> &exitMessage, httplib::Client& client, StateClass &state)
 {
-    for (const auto &testcase : testCasesPathfinding)
+    for (const auto &testcase : testCasesPathfindingMap)
     {
 
         run currentrun;
@@ -47,9 +49,17 @@ void runPathalgoTest(std::vector<run> &exitMessage, StateClass &state)
         }
         std::vector<std::vector<int>> map(
             testcase.second.second,
-            std::vector<int>(testcase.second.first, mapInitValue));
+            std::vector<int>(testcase.second.first,0));
+        
         try
         {
+            for( auto& row : map)
+        {
+            for( auto& element : row)
+            {
+                element=randomInt(mapInitValue,INFINITY_INT-2);
+            }
+        }
             std::string mapString;
             mapString += "[";
             for (const auto &row : map)
@@ -69,17 +79,20 @@ void runPathalgoTest(std::vector<run> &exitMessage, StateClass &state)
             std::pair<int, int> start = {0, 0};
             std::pair<int, int> goal = {testcase.second.first - 1,
                                         testcase.second.second - 1};
-            std::string command =
-                "curl -X POST \"http://127.0.0.1:8080/pathalgoMap?algo=" +
-                currentrun.algoname + "\"" +
-                " -H \"Content-Type: application/json\""
-                " -d '{\"MAP\": " +
-                mapString + ",\"START\": [" + std::to_string(start.first) + "," +
-                std::to_string(start.second) + "],\"GOAL\": [" +
-                std::to_string(goal.first) + "," + std::to_string(goal.second) + "]}'";
-            std::string output = executeCommand(command);
+
+            json reqBody = {
+                {"MAP",map},
+                { "START", start},
+                {"GOAL",goal}
+                };
+            
+            auto res = client.Post("pathalgoMap?algo="+currentrun.algoname,reqBody.dump(),"application/json");
+
+            if(!res) throw std::runtime_error("Request failed.");
+            if(res->status!=200) throw std::runtime_error("Non 200 Code returned:\nerrorCode:"+std::to_string(res->status)+"\nserver details:"+res->body);
+
             state.out("Recived", 0);
-            json response = parseNDJSON(output);
+            json response = json::parse(res->body);
             state.out("Parsed.", 0);
             checkForAllResponseTypes(response);
             checkForCertainResponseType(
@@ -123,5 +136,6 @@ void runPathalgoTest(std::vector<run> &exitMessage, StateClass &state)
             currentrun.failure = true;
             exitMessage.push_back(currentrun);
         }
+
     }
 }

@@ -19,6 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../../src/logger/logger.h"
+#include <httplib.h>
 #include "tests/tests.h"
 #include "utils/utils.h"
 #include <string>
@@ -42,9 +43,10 @@ int main(int argc, char *argv[])
     state.out("Testing sorting algorithms", 0);
 
     std::vector<run> exitMessage;
+    httplib::Client client("0.0.0.0",8080);
 
     runSortalgoTest(exitMessage, state);
-    runPathalgoTest(exitMessage, state);
+    runPathalgoTest(exitMessage,client, state);
     runImageTest(exitMessage,state);
 
     state.out("Finished", 0);

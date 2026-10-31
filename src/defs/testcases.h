@@ -70,7 +70,7 @@ const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesImage{
     {"bogo", {2, 3}},
     {"bogo", {sqrt(MAX_ELEMENT_COUNT_BOGO) - 1, sqrt(MAX_ELEMENT_COUNT_BOGO) - 1}}};
 
-const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesPathfinding{
+const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesPathfindingMap{
     {"BFS", {10, 5}},         {"BFS", {20, 5}},         {"BFS", {100, 45}},
     {"BFS", {250, 150}},      {"BFS", {249, 249}},
 
