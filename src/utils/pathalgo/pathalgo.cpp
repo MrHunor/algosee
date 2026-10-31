@@ -104,7 +104,7 @@ json SwapVisitedArray(const std::vector<std::vector<bool>> &visited)
 }
 
 // dijkstra uses the same thing but as int, so we can overload this
-json SwapVisitedArray(const std::vector<std::vector<int>> &visited)
+json SwapVisitedArray(const std::vector<std::vector<uint64_t>> &visited)
 {
     std::vector<std::vector<int>> retval(visited[0].size(),
                                          std::vector<int>(visited.size(), 0));

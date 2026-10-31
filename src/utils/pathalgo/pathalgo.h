@@ -23,12 +23,13 @@
 #define PATHALGO_UTILS_H
 #include "../../defs/general.h"
 #include "../../defs/types.h"
+#include <cstdint>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 
 json SwapVisitedArray(const std::vector<std::vector<bool>> &visited);
-json SwapVisitedArray(const std::vector<std::vector<int>> &visited);
+json SwapVisitedArray(const std::vector<std::vector<uint64_t>> &visited);
 void CheckMapValidness(const std::vector<std::vector<int>> &mapInt,
                        const std::pair<int, int> &start, const std::pair<int, int> &goal);
 void CheckMapValidness(const std::vector<std::vector<bool>> &map,

@@ -20,14 +20,15 @@
 #ifndef PATHVALIDATE_H
 #define PATHVALIDATE_H
 #include "../../logger/logger.h"
+#include "../../defs/types.h"
 #include <httplib/httplib.h>
 
 struct PathValidReturnMap
 {
     std::string algo;
 
-    std::vector<std::vector<int>> mapInt;
-    std::vector<std::vector<bool>> mapBool;
+    MapInt mapInt;
+    MapBool mapBool;
 
     std::pair<int, int> start;
     std::pair<int, int> goal;
@@ -37,8 +38,8 @@ struct PathValidReturnGraph
 {
     std::string algo;
 
-    std::vector<std::vector<int>> graphUnweight;
-    std::vector<std::vector<std::pair<int,int>>> graphWeighted;
+    GraphUnweight graphUnweight;
+    GraphUnweight graphWeighted;
 
     unsigned int start;
     unsigned int goal;

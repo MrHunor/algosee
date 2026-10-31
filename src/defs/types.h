@@ -25,11 +25,11 @@
 #include <vector>
 
 
-typedef std::vector<std::vector<int>> GraphUnweight;
+typedef std::vector<std::vector<uint32_t>> GraphUnweight;
 
-typedef std::vector<std::vector<std::pair<int,int>>> GraphWeighted;
+typedef std::vector<std::vector<std::pair<uint32_t,uint32_t>>> GraphWeighted;
 
-typedef std::vector<std::vector<int>> MapInt;
+typedef std::vector<std::vector<uint32_t>> MapInt;
 
 typedef std::vector<std::vector<bool>> MapBool;
 
