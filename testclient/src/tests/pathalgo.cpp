@@ -57,7 +57,7 @@ void runPathalgoTest(std::vector<run> &exitMessage, httplib::Client& client, Sta
         {
             for( auto& element : row)
             {
-                element=randomInt(mapInitValue,INFINITY_INT-2);
+                element=mapInitValue;
             }
         }
             std::string mapString;
@@ -86,7 +86,7 @@ void runPathalgoTest(std::vector<run> &exitMessage, httplib::Client& client, Sta
                 {"GOAL",goal}
                 };
             
-            auto res = client.Post("pathalgoMap?algo="+currentrun.algoname,reqBody.dump(),"application/json");
+            auto res = client.Post("/pathalgoMap?algo="+currentrun.algoname,reqBody.dump(),"application/json");
 
             if(!res) throw std::runtime_error("Request failed.");
             if(res->status!=200) throw std::runtime_error("Non 200 Code returned:\nerrorCode:"+std::to_string(res->status)+"\nserver details:"+res->body);
