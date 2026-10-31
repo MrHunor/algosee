@@ -38,7 +38,7 @@ PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &stat
     {
         throw excep("URL contains a algo parameter but no algo is set.", 400);
     }
-    if (!implementedPathAlgos.contains(retval.algo))
+    if (!implementedPathAlgosSize.contains(retval.algo))
     {
         throw excep("Provided algo does not exist or is not implemented.", 501);
     }
@@ -83,7 +83,7 @@ PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &stat
     retval.goal = parsed["GOAL"];
 
     state.out("Checking element count...", 0);
-    auto it = implementedPathAlgos.find(retval.algo);
+    auto it = implementedPathAlgosSize.find(retval.algo);
     if (retval.algo == "dijkstra" || retval.algo == "ASTAR" || retval.algo == "GBFS")
     {
         if (retval.mapInt.size() * retval.mapInt[0].size() > it->second)
@@ -138,7 +138,7 @@ PathValidReturnGraph ValdiatePathGraph(const httplib::Request &req, StateClass &
     {
         throw excep("URL contains a algo parameter but no algo is set.", 400);
     }
-    if (!implementedPathAlgos.contains(retval.algo))
+    if (!implementedPathAlgosSize.contains(retval.algo))
     {
         throw excep("Provided algo does not exist or is not implemented.", 501);
     }
@@ -180,7 +180,7 @@ PathValidReturnGraph ValdiatePathGraph(const httplib::Request &req, StateClass &
     retval.goal = parsed["GOAL"];
 
     state.out("Checking element count...", 0);
-    auto it = implementedPathAlgos.find(retval.algo);
+    auto it = implementedPathAlgosSize.find(retval.algo);
     if (retval.algo == "dijkstra" || retval.algo == "ASTAR" || retval.algo == "GBFS")
     {
         if (retval.graphWeighted.size() > it->second)

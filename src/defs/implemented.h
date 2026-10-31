@@ -38,10 +38,14 @@ const std::unordered_map<std::string, int> implementedSortAlgos = {
     {"merge", MAX_ELEMENT_COUNT_MERGE},         {"counting", MAX_ELEMENT_COUNT_COUNTING},
     {"cycle", MAX_ELEMENT_COUNT_CYCLE}};
 
-const std::unordered_map<std::string, int> implementedPathAlgos = {
+const std::unordered_map<std::string, int> implementedPathAlgosSize = {
     {"BFS", MAX_ELEMENT_COUNT_BFS},     {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA},
     {"DFS", MAX_ELEMENT_COUNT_DFS},     {"BIBFS", MAX_ELEMENT_COUNT_BIBFS},
     {"ASTAR", MAX_ELEMENT_COUNT_ASTAR}, {"GBFS", MAX_ELEMENT_COUNT_GBFS}};
+
+const std::unordered_map<std::string, char> implementedPathAlgoCatagory = {//U(nweighted) or W(eighted)
+    {"BFS", 'U'},   {"dijkstra", 'W'}, {"DFS", 'U'},
+    {"BIBFS", 'U'}, {"ASTAR", 'W'},    {"GBFS", 'W'}};
 
 const std::vector<std::string> implementedArrayReturnTypes = {
     "MOVES",

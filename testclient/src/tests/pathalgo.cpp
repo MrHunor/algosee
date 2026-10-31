@@ -20,12 +20,16 @@
  */
 #include "../../src/defs/general.h"
 #include "../../src/defs/testcases.h"
+#include "../../src/defs/implemented.h"
 #include "../../src/logger/logger.h"
+#include <cstdint>
 #include <httplib.h>
 #include "../utils/utils.h"
 #include <cmath>
+#include <limits>
 #include <stdexcept>
 #include <string>
+#include <sys/types.h>
 #include <utility>
 
 void runPathalgoTest(std::vector<run> &exitMessage,httplib::Client& client, StateClass &state)
@@ -57,8 +61,15 @@ void runPathalgoTest(std::vector<run> &exitMessage,httplib::Client& client, Stat
         {
             for( auto& element : row)
             {
+                if(implementedPathAlgoCatagory.at(currentrun.algoname)=='W')
+                {
+                    element=randomInt(mapInitValue,std::numeric_limits<u_int8_t>::max());
+                }
+                else
+                {
                 element=mapInitValue;
             }
+        }
         }
             std::string mapString;
             mapString += "[";
