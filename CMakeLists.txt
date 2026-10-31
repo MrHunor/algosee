@@ -75,6 +75,10 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     )
     target_include_directories(algosee_testclient PRIVATE
         "${CMAKE_CURRENT_BINARY_DIR}/generated"
+  
+    )
+    target_sources(algosee_testclient PRIVATE #this is needed for some shared functions
+          "${CMAKE_CURRENT_SOURCE_DIR}/src/utils/general/utils.cpp"
     )
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     target_compile_options(algosee PRIVATE

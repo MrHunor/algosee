@@ -23,8 +23,8 @@
  * @brief Contains function declarations for helper functions
  *
  */
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef TESTCLIENT_UTILS_H
+#define TESTCLIENT_UTILS_H
 #include "../../src/defs/general.h"
 #include "../../src/defs/types.h"
 #include "../../src/logger/logger.h"
@@ -98,20 +98,6 @@ int randomInt(int lower, int upper);
  */
 std::string executeCommand(const std::string &command);
 
-/**
- * @brief Exit the programm with a stacktrace and a Error String
- *
- * @param details A string specifying the details of the Crash
- *
- * @param location A std::source_location specifying the calling function, defaults to
- * source_location::current()
- *
- * @throws No
- *
- * @returns Nothing
- */
-void InvalidInputMessage(const std::string &details,
-                         std::source_location location = std::source_location::current());
 
 /**
  * @brief Check a json object for all expected keys

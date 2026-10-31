@@ -18,8 +18,8 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef ALGOSEE_UTILS_H
+#define ALGOSEE_UTILS_H
 #include "../../defs/general.h"
 #include "../../defs/types.h"
 #include "../../stream/stream.h"
@@ -28,6 +28,7 @@
 #include <source_location>
 #include <string>
 int RandomInt(int lower, int upper);
+std::mt19937 getRandomGen();
 std::string ExecuteCommand(const std::string &command);
 void InvalidInputMessage(const std::string &details,
                          std::source_location location = std::source_location::current());

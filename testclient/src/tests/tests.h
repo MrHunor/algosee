@@ -25,7 +25,7 @@
 #include <httplib.h>
 
 void runPathalgoTest(std::vector<run> &exitMessage,httplib::Client& client, StateClass &state);
-void runSortalgoTest(std::vector<run> &exitMessage, StateClass &state);
+void runSortalgoTest(std::vector<run> &exitMessage,httplib::Client& client, StateClass &state);
 void runImageTest(std::vector<run> &exitMessage, StateClass &state);
 
 #endif

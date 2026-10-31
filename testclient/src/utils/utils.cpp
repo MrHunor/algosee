@@ -235,21 +235,3 @@ std::string executeCommand(const std::string &command)
     return result;
 }
 
-void InvalidInputMessage(const std::string &details, std::source_location location)
-{
-    // yes i thought of making this state out for colour but that would require
-    // passing state (which is not always present), or make state global which is
-    // not pretty
-    auto now = std::chrono::system_clock::now();
-    std::cout << "TIME:" << now << std::endl;
-    std::cout << std::stacktrace::current() << std::endl;
-    std::cout << "Filename:" << location.file_name() << std::endl;
-    std::cout << "Function:" << location.function_name() << std::endl;
-    std::cout << "Line:" << location.line() << std::endl;
-    std::cout << "Column:" << location.column() << std::endl;
-    if (!details.empty())
-    {
-        std::cout << "Details provided:" << details << std::endl;
-    }
-    exit(1);
-}

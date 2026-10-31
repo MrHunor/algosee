@@ -28,7 +28,7 @@
 #include <string>
 #include <utility>
 
-void runPathalgoTest(std::vector<run> &exitMessage, httplib::Client& client, StateClass &state)
+void runPathalgoTest(std::vector<run> &exitMessage,httplib::Client& client, StateClass &state)
 {
     for (const auto &testcase : testCasesPathfindingMap)
     {

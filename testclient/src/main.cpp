@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     std::vector<run> exitMessage;
     httplib::Client client("0.0.0.0",8080);
 
-    runSortalgoTest(exitMessage, state);
+    runSortalgoTest(exitMessage, client,state);
     runPathalgoTest(exitMessage,client, state);
     runImageTest(exitMessage,state);
 
