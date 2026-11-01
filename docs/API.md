@@ -29,7 +29,7 @@ Any sucessfull (and most unsucessful) requests will returns a array containing a
 - 'ERROR' -> " " " an errormessage if the server threw one and is streaming its response, if not it will return its errormessage with an non 200 status code  
 - 'ERRORCODE' -> " " " an errorcode if the server threw one, only when streaming its response (born because after you accept the request you must set the response status), **ALWAYS** check if this is 0 when gettig a streamed response, if it isn't an error occured  
 
-*Tip: You can view the defintion of these keys in src/defs/implemented.h*
+*Tip: You can view the defintion of these keys in [src/defs/implemented.h](./../src/defs/implemented.h)*
 
 ### 1. /status 
 The status endpoint can be used to check if the server is online.  
@@ -60,13 +60,27 @@ It returns all keys documented in 0. and:
 ***Image:***
 - 'MAX_PIXEL_COUNT_IMAGE'  
 
-*Tip: You can view the defintion of these keys in src/routing/limits.cpp*
+*Tip: You can view the defintion of these keys in [src/routing/limits.cpp](../src/routing/limits.cpp)*
 
 ### 3. /sortalgo
 The sortalgo endpoint can be used to sort an array of integer elements.  
-It expects the URL argument algo being equal to one of the implemented sorting algorithms. (see docs/Implemented_Algorithms.md)  
+It expects the URL argument algo being equal to one of the implemented sorting algorithms. (see [docs/Implemented_Algorithms.md](./Implemented_Algorithms.md))  
 Furthermore it requires the body to have a array of 'values'.  
 It will return the default keys defined in 0. and some other keys depending on the chosen alorithm:
-***Sorting:***
-
+- ***Selection***:
+  - 'MOVES' containing a array of integer pairs representing the indexes of the values array to swap  
+- ***Cycle***:
+  - 'SWAPED' contains an array of inegers paris represeting the number thats being swaped INTO the array and the index of the element in the values array thats being swaped OUT (and being used as the next element to sort)  
+- ***Bubble***:
+  - 'MOVES' [*see selection*](#L72)  
+- ***Quick***:
+  - 'MOVES' [*see selection*](#L72)  
+- ***Merge***:
+  - 'SPLIT (ORIGIN,LEFT,RIGHT)' contains an array of three elements, first being the original array, then the left area of the split array, and finally the right area  
+  - 'SORTED (LEFT,RIGHT)' contains an array of two elements, first being the sorted left part of the array, and secondly the sorted right part of the array  
+  - 'MERGED (LEFT,RIGHT,RESULT)' contains an array of three elements, first being the left area of the soon to be merged array, secondly the right area and finally the result of the merge  
+- ***Counting***:
+  - 'COUNT ARRAY' contains an array which represents the values array in the format of countarr[n]=number of occurences of the number n in the values array  
+- Bogo:
+  - 'TRIES' contains an array of arrays, the inner part being some random variation of the original values array  
 
