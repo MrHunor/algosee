@@ -19,15 +19,16 @@
  */
 #include "../logger/logger.h"
 #include "../utils/general/utils.h"
-#include "build_info.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 
-void RunStatus(const httplib::Request &req, httplib::Response &res, stateClass &state)
+void RunStatus(const httplib::Request &req, httplib::Response &res, StateClass &state)
 {
     json response;
     generateJsonRetrunArras(response);
     fillWithMetaData(response);
+    response["ERROR"] = "";
+    response["ERRORCODE"] = 0;
     state.out("Sending status signal...", 0);
     res.status = 200;
     res.set_header("Access-Control-Allow-Origin", "*");

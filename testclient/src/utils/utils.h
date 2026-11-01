@@ -20,14 +20,29 @@
 #ifndef UTILS_H
 #define UTILS_H
 #include "../../src/defs/general.h"
+#include "../../src/defs/types.h"
+#include "../../src/logger/logger.h"
 #include <source_location>
 #include <string>
 #include <vector>
+
+struct run
+{
+    std::string algoname="";
+    int size=-1;
+    std::pair<int, int> mapSize={-1,-1};
+    bool failure=false;
+};
+
+unsigned char *makeRandomImage(size_t w,size_t h);
+rawImage RawImageFromJson(const json &j);
 int randomInt(int lower, int upper);
 std::string executeCommand(const std::string &command);
 void InvalidInputMessage(const std::string &details,
                          std::source_location location = std::source_location::current());
 void checkForCertainResponseType(const json &response, std::vector<std::string> expected);
 void checkForAllResponseTypes(const json &response);
-
+json parseNDJSON(const std::string &output);
+void writeMemToImage(const rawImage &img);
+void printReport(const std::vector<run> &exitMessage, StateClass &state);
 #endif

@@ -1,0 +1,169 @@
+# Testing streaming RAM consumtion via the command:
+`sudo systemd-run \
+        --wait \
+        --pipe \
+        --collect \
+        --working-directory="$PWD" \
+        --unit="benchmark-$(date +%s)" \
+        -p MemoryAccounting=yes \
+        -p IOAccounting=yes \
+        -p TasksAccounting=yes \
+        -p MemoryMax=4G \
+        -p RuntimeMaxSec=300 \
+        /usr/bin/time -v -- "$PWD/algosee"` ->The command is from chatgpt because i have no idea about systemd-run syntax
+
+for testclient
+
+## Test 1
+
+Max_sizes.h:
+"#define MAX_ELEMENT_COUNT_SORT                                                           \
+    2500 // you could customise this for every algo, but thats a future issue
+         // (Issue #38)
+
+#define MAX_ELEMENT_COUNT_SELECTION MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_BOGO 9
+#define MAX_ELEMENT_COUNT_BUBBLE MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_QUICK MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_MERGE MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_COUNTING MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_CYCLE MAX_ELEMENT_COUNT_SORT
+#define HIGHEST_ELEMENT_COUNTING 1000000
+
+#define MAX_ELEMENT_COUNT_PATH 62500
+#define MAX_ELEMENT_COUNT_BFS MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_DIJKSTRA MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_DFS MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_BIBFS MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_ASTAR MAX_ELEMENT_COUNT_PATH
+#define HIGHEST_ELEMENT_PATH std::numeric_limits<int>::max() - 1
+
+#define MAX_PIXEL_COUNT_IMAGE 2500"
+
+testcases.h
+"const std::vector<std::pair<std::string, int>> testCasesSorting{
+
+    {"selection", 5},
+    {"selection", 25},
+    {"selection", 100},
+    {"selection", 1000},
+    {"selection", MAX_ELEMENT_COUNT_SORT - 1},
+
+    {"bubble", 5},
+    {"bubble", 25},
+    {"bubble", 100},
+    {"bubble", 1000},
+    {"bubble", MAX_ELEMENT_COUNT_SORT - 1},
+
+    {"quick", 5},
+    {"quick", 25},
+    {"quick", 100},
+    {"quick", 1000},
+    {"quick", MAX_ELEMENT_COUNT_SORT - 1},
+
+    {"merge", 5},
+    {"merge", 25},
+    {"merge", 100},
+    {"merge", 1000},
+    {"merge", MAX_ELEMENT_COUNT_SORT - 1},
+
+    {"counting", 5},
+    {"counting", 25},
+    {"counting", 100},
+    {"counting", 1000},
+    {"counting", MAX_ELEMENT_COUNT_SORT - 1},
+
+    {"cycle", 5},
+    {"cycle", 25},
+    {"cycle", 100},
+    {"cycle", 1000},
+    {"cycle", MAX_ELEMENT_COUNT_SORT - 1},
+
+    // bogo is factorial time: keep sizes tiny
+    {"bogo", 3},
+    {"bogo", 5},
+    {"bogo", MAX_ELEMENT_COUNT_BOGO - 1},
+};
+
+const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesPathfinding{
+    {"BFS", {10, 5}},         {"BFS", {20, 5}},         {"BFS", {100, 45}},
+    {"BFS", {250, 150}},      {"BFS", {249, 249}},
+
+    {"dijkstra", {10, 5}},    {"dijkstra", {20, 5}},    {"dijkstra", {100, 45}},
+    {"dijkstra", {250, 150}}, {"dijkstra", {249, 249}},
+
+    {"DFS", {10, 5}},         {"DFS", {20, 5}},         {"DFS", {100, 45}},
+    {"DFS", {250, 150}},      {"DFS", {249, 249}},
+
+    {"BIBFS", {10, 5}},       {"BIBFS", {20, 5}},       {"BIBFS", {100, 45}},
+    {"BIBFS", {250, 150}},    {"BIBFS", {249, 249}},
+
+    {"ASTAR", {10, 5}},       {"ASTAR", {20, 5}},       {"ASTAR", {100, 45}},
+    {"ASTAR", {250, 150}},    {"ASTAR", {249, 249}},
+};
+
+const std::unordered_map<std::string, std::vector<std::string>>
+    implementedAlgoExpectedResponseType{
+        {"selection", {"MOVES", "SORTED"}},
+        {"bubble", {"MOVES", "SORTED"}},
+        {"quick", {"MOVES", "SORTED"}},
+        {"merge",
+         {"SPLIT (ORIGIN,LEFT,RIGHT)", "SORTED (LEFT,RIGHT)",
+          "MERGED (LEFT,RIGHT,RESULT)", "SORTED"}},
+        {"counting", {"COUNT ARRAY", "SORTED"}},
+        {"cycle", {"SWAPED", "SORTED"}},
+        {"bogo", {"TRIES", "SORTED"}},
+
+        {"BFS", {"VISITED", "SEARCHMAP", "PATH"}},
+        {"dijkstra", {"DISTANCE", "PATH"}},
+        {"DFS", {"VISITED", "SEARCHMAP", "PATH"}},
+        {"BIBFS", {"VISITEDFROMSTART", "VISITEDFROMEND", "PATH"}},
+        {"ASTAR", {"DISTANCE", "PATH"}},
+};"
+
+test output:"          Finished with result: success                    
+Main processes terminated with: code=killed, status=15/TERM
+               Service runtime: 1min 15.816s
+             CPU time consumed: 588ms
+                   Memory peak: 24.5M (swap: 0B)
+                      IO Bytes: read 88K, written 800K
+"
+
+
+
+test 2: Doubling the max:
+
+max_sizes:#define MAX_ELEMENT_COUNT_SORT                                                           \
+    5000 // you could customise this for every algo, but thats a future issue
+         // (Issue #38)
+
+rest unchanged
+
+test output:"          Finished with result: success                    
+Main processes terminated with: code=killed, status=15/TERM
+               Service runtime: 1min 15.360s
+             CPU time consumed: 16.680s
+                   Memory peak: 39M (swap: 0B)
+                      IO Bytes: read 2.1M, written 1.6M
+"
+
+test 3: Triplling the max:
+
+output:          Finished with result: success                    
+Main processes terminated with: code=killed, status=15/TERM
+               Service runtime: 2min 18.415s
+             CPU time consumed: 41.036s
+                   Memory peak: 40M (swap: 0B)
+                      IO Bytes: written 1.7M
+
+test 4: 20000 max
+          Finished with result: success                    
+Main processes terminated with: code=killed, status=15/TERM
+               Service runtime: 8min 1.867s
+             CPU time consumed: 3min 56.920s
+                   Memory peak: 56.2M (swap: 0B)
+                      IO Bytes: read 6M, written 2.1M
+
+
+
+

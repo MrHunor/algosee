@@ -18,6 +18,14 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+/**
+ * @file implemented.h
+ *
+ * @brief Contains arrays and maps of implemented algorithms and their boundries as well
+ * as what json return objects should be returned
+ *
+ *
+ */
 #ifndef DEF_IMPLEMENTED_H
 #define DEF_IMPLEMENTED_H
 #include "max_sizes.h"
@@ -31,11 +39,9 @@ const std::unordered_map<std::string, int> implementedSortAlgos = {
     {"cycle", MAX_ELEMENT_COUNT_CYCLE}};
 
 const std::unordered_map<std::string, int> implementedPathAlgos = {
-    {"BFS", MAX_ELEMENT_COUNT_BFS},
-    {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA},
-    {"DFS", MAX_ELEMENT_COUNT_DFS},
-    {"BIBFS", MAX_ELEMENT_COUNT_BIBFS},
-    {"ASTAR", MAX_ELEMENT_COUNT_ASTAR}};
+    {"BFS", MAX_ELEMENT_COUNT_BFS},     {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA},
+    {"DFS", MAX_ELEMENT_COUNT_DFS},     {"BIBFS", MAX_ELEMENT_COUNT_BIBFS},
+    {"ASTAR", MAX_ELEMENT_COUNT_ASTAR}, {"GBFS", MAX_ELEMENT_COUNT_GBFS}};
 
 const std::vector<std::string> implementedArrayReturnTypes = {
     "MOVES",

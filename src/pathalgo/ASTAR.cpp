@@ -22,13 +22,12 @@
 #include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
 #include <cmath>
-#include <limits>
 #include <nlohmann/json.hpp>
 #include <queue>
 #include <utility>
 #include <vector>
 
-struct Node
+struct NodeASTAR
 {
     int g = 0;
     int h = 0;
@@ -47,9 +46,9 @@ struct Node
     }
 };
 
-struct CompareNode
+struct CompareNodeASTAR
 { // this is needed for priority queue
-    bool operator()(const Node &a, const Node &b) const
+    bool operator()(const NodeASTAR &a, const NodeASTAR &b) const
     {
         return a.f() > b.f();
     }
@@ -74,7 +73,7 @@ std::vector<std::pair<int, int>> ASTAR(const std::vector<std::vector<int>> &map,
         rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
     std::vector<std::pair<int, int>> path;
 
-    std::priority_queue<Node, std::vector<Node>, CompareNode> frontier;
+    std::priority_queue<NodeASTAR, std::vector<NodeASTAR>, CompareNodeASTAR> frontier;
 
     distance[start.second][start.first] = 0;
 

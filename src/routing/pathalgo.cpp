@@ -24,14 +24,13 @@
 #include "../pathalgo/algos.h"
 #include "../utils/general/utils.h"
 #include "../validate/path/validate.h"
-#include "build_info.h"
 #include <chrono>
 #include <exception>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass &state)
+void RunPathalgo(const httplib::Request &req, httplib::Response &res, StateClass &state)
 {
     try
     {
@@ -69,6 +68,8 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass
                 path = Dijkstra(info.mapInt, info.start, info.goal, response);
             else if (info.algo == "ASTAR")
                 path = ASTAR(info.mapInt, info.start, info.goal, response);
+            else if (info.algo == "GBFS")
+                path = GBFS(info.mapInt, info.start, info.goal, response);
         }
         auto endTime = std::chrono::steady_clock::now();
         auto elapsed =
@@ -82,6 +83,8 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, stateClass
         }
         res.status = 200;
         response["PATH"] = path;
+        response["ERROR"] = "";
+        response["ERRORCODE"] = 0;
         res.set_header("Access-Control-Allow-Origin", "*");
         std::string responseString = std::move(response.dump());
         state.out("Sending response:" + responseString, 0);

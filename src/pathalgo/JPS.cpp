@@ -1,0 +1,242 @@
+/*
+ *   algosee; a algorithm visulizer
+ *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
+ * Zapata.
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.(root/LICENSE)  If not, see
+ * <https://www.gnu.org/licenses/>.
+ */
+#include "../defs/general.h"
+#include "../utils/pathalgo/pathalgo.h"
+#include <algorithm>
+#include <cmath>
+#include <nlohmann/json.hpp>
+#include <queue>
+#include <utility>
+#include <vector>
+
+// JPS is more or less also just Astar with the caveat of it it "jumping" over cells that
+// are not important, so those which are not walls or out of bounds
+struct NodeJPS
+{
+    int g = 0;
+    int h = 0;
+    int x = 0;
+    int y = 0;
+    int f() const
+    {
+        if (g > INFINITY_INT - h)
+        {
+            return INFINITY_INT;
+        }
+        else
+        {
+            return g + h;
+        }
+    }
+};
+
+struct CompareNodeJPS
+{ // this is needed for priority queue
+    bool operator()(const NodeJPS &a, const NodeJPS &b) const
+    {
+        return a.f() > b.f();
+    }
+};
+
+NodeJPS findNextJumpPoint(const std::vector<std::vector<int>> &map,
+                          std::pair<int, int> goal, const int rows, const int cols,
+                          const NodeJPS &input, const char direction)
+{
+
+    NodeJPS retval;
+    retval.x = input.x;
+    retval.y = input.y;
+    retval.g = input.g;
+    bool exit = false;
+    int distance = 1;
+    int xtry = input.x;
+    int ytry = input.y;
+    while (!exit)
+    {
+        switch (direction)
+        {
+        case 'U':
+            ytry++;
+            break;
+
+        case 'R':
+            xtry++;
+            break;
+
+        case 'D':
+            ytry--;
+            break;
+
+        case 'L':
+            xtry--;
+            break;
+        }
+        if (xtry < 0 || xtry > rows - 1 || ytry < 0 || ytry > cols - 1)
+            exit = true;
+        if (map[ytry][xtry] == -1)
+            exit = true;
+        if (!exit)
+        {
+            retval.x = xtry;
+            retval.y = ytry;
+            retval.g = retval.g + map[retval.x][retval.y];
+        }
+    }
+    retval.h = std::abs(retval.y - goal.first) + std::abs(retval.x - goal.second);
+    return retval;
+}
+std::vector<std::pair<int, int>> JPS(const std::vector<std::vector<int>> &map,
+                                     std::pair<int, int> start, std::pair<int, int> goal,
+                                     json &response)
+{
+    const int rows = map.size();
+    const int collums = map[0].size();
+
+    int h = 0;
+
+    std::vector<std::vector<int>> distance(
+        rows,
+        std::vector<int>(collums,
+                         INFINITY_INT)); // i dont think i'll ever unstand this contructor
+    std::vector<std::vector<std::pair<int, int>>> parent(
+        rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
+    std::vector<std::pair<int, int>> path;
+
+    std::priority_queue<NodeJPS, std::vector<NodeJPS>, CompareNodeJPS> frontier;
+
+    distance[start.second][start.first] = 0;
+
+    // push the start into the frontier, because its the lowest distance and also
+    // the only element it will be the first element
+    frontier.push(
+        {0, std::abs(start.first - goal.first) + std::abs(start.second - goal.second),
+         start.first, start.second});
+
+    std::vector<int> directionsRows = {-1, 1, 0, 0};
+    std::vector<int> directionsCollums = {0, 0, 1, -1};
+
+    while (!frontier.empty())
+    {
+        // extract info from the first frontier element
+        int currentDistance = frontier.top().g;
+        int y = frontier.top().y;
+        int x = frontier.top().x;
+
+        // because the info fron the first frontier element is now stored in the
+        // above declared variables, we can delete the first element from frontier
+        frontier.pop();
+
+        if (currentDistance != distance[y][x])
+            continue; // already discovered
+
+        if (std::make_pair(x, y) == goal)
+            break; // finished, goal discovered
+
+        // check all neighbours
+        for (int i = 0; i < 4; i++)
+        {
+            int yNeighbour = y + directionsRows[i];
+            int xNeighbour = x + directionsCollums[i];
+
+            if (yNeighbour < 0 || yNeighbour > rows - 1 || xNeighbour < 0 ||
+                xNeighbour > collums - 1)
+                continue; // current neighboor out of map, skip this iteration
+
+            if (map[yNeighbour][xNeighbour] == -1)
+                continue; // this tile is blocked, skip
+
+            int newDistance = 0;
+            if (currentDistance > INFINITY_INT - map[yNeighbour][xNeighbour])
+            {
+                newDistance = INFINITY_INT;
+            }
+            else
+            {
+                newDistance = currentDistance + map[yNeighbour][xNeighbour];
+            }
+
+            // is the current path to this tile cheaper then the already known path
+            // from start to goal?
+            if (newDistance < distance[yNeighbour][xNeighbour])
+            {
+                // yes, save all info about the new tile and add it to frontier to be
+                // explored next
+                distance[yNeighbour][xNeighbour] = newDistance;
+                parent[yNeighbour][xNeighbour] = {y, x};
+                h = std::abs(xNeighbour - goal.first) +
+                    std::abs(yNeighbour - goal.second);
+                char direction;
+                switch (i)
+                {
+                case 0:
+                    direction = 'D';
+                    break;
+                case 1:
+                    direction = 'U';
+
+                    break;
+                case 2:
+
+                    direction = 'R';
+                    break;
+
+                case 3:
+                    direction = 'L';
+                    break;
+                }
+                frontier.push(findNextJumpPoint(map, goal, rows, collums,
+                                                {newDistance, h, x, y}, direction));
+            }
+        }
+    }
+
+    // Explored all possible tiles
+
+    response["DISTANCE"] = SwapVisitedArray(distance);
+
+    // checking if the goal was ever reached, be careful this could theoretically
+    // be a false positive if the addition of tiles matches exatly the intmax, but
+    // the likelyhood is very small
+    if (distance[goal.second][goal.first] == INFINITY_INT)
+        return {};
+
+    // copy paste from BFS, same logic
+    std::pair<int, int> current = {goal.second, goal.first};
+
+    while (current != std::make_pair(start.second, start.first))
+    {
+        path.push_back(current);
+        current = parent[current.first][current.second];
+    }
+
+    // push back start pour fini
+    path.push_back({start.second, start.first});
+
+    // due to starting with goal, the path must be reversed to start from start
+    std::reverse(path.begin(), path.end());
+
+    for (int i = 0; i < path.size(); i++)
+    {
+        std::swap(path[i].first, path[i].second);
+    }
+
+    return path;
+}

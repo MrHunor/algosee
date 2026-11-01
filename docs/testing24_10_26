@@ -1,0 +1,49 @@
+Testing memory consumtion by the server using:
+`sudo systemd-run \
+        --wait \
+        --pipe \
+        --collect \
+        --working-directory="$PWD" \
+        --unit="benchmark-$(date +%s)" \
+        -p MemoryAccounting=yes \
+        -p IOAccounting=yes \
+        -p TasksAccounting=yes \
+        -p MemoryMax=4G \
+        -p RuntimeMaxSec=300 \
+        /usr/bin/time -v -- "$PWD/algosee"` 
+
+    
+Current local repo copy is up to date with 5f968437bbaf134f999d4313d430aa9301b3379e
+
+Test 0: no changed parameters
+result:
+          Finished with result: success                    
+Main processes terminated with: code=killed, status=15/TERM
+               Service runtime: 46.809s
+             CPU time consumed: 11.801s
+                   Memory peak: 44.4M (swap: 0B)
+                      IO Bytes: read 24K, written 1.6M
+
+Test 1: Doubling Relevant Parameters (Max_element_count_sorting & Max_pixel_count)
+          Finished with result: success                    
+Main processes terminated with: code=killed, status=15/TERM
+               Service runtime: 1min 28.775s
+             CPU time consumed: 33.706s
+                   Memory peak: 51.7M (swap: 0B)
+                      IO Bytes: written 1.6M
+
+Test 2: Tripling the Revelant Parameters:
+          Finished with result: success                    
+Main processes terminated with: code=killed, status=15/TERM
+               Service runtime: 2min 33.024s
+             CPU time consumed: 1min 5.088s
+                   Memory peak: 59.7M (swap: 0B)
+                      IO Bytes: written 1.7M
+
+Test 3: 5x the relevant paramets
+          Finished with result: success                    
+Main processes terminated with: code=killed, status=15/TERM
+               Service runtime: 6min 14.644s
+             CPU time consumed: 3min 2.602s
+                   Memory peak: 80M (swap: 0B)
+                      IO Bytes: read 224K, written 1.9M

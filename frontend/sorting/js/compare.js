@@ -229,6 +229,7 @@ async function visualizeAlgo(containerElement, data, key) {
     if (key === 'bogo') moves = data.TRIES || [];
     else if (key === 'merge') moves = data["MERGED (LEFT,RIGHT,RESULT)"] || [];
     else if (key === 'counting') moves = data.SORTED || [];
+    else if (key === 'cycle') moves = data.SWAPED || [];  // checks algo
     else moves = data.MOVES || [];
 
     const dynamicSpeed = Math.max(2, Math.floor((animationSpeed * 15) / Math.max(moves.length, 1)));
@@ -250,7 +251,7 @@ async function visualizeAlgo(containerElement, data, key) {
             if (result.length > 0) {
                 playTone(150 + (result[0] * 6));
             }
-        } else if (key === 'bogo' || key === 'counting') {
+        } else if (key === 'bogo') {
             const currentArr = moves[k];
             if (Array.isArray(currentArr)) {
                 for (let i = 0; i < currentArr.length; i++) {
@@ -262,6 +263,27 @@ async function visualizeAlgo(containerElement, data, key) {
                 if (currentArr.length > 0) {
                     playTone(150 + (currentArr[0] * 6));
                 }
+            }
+        } else if (key === 'counting') {
+            const val = moves[k];
+            if (bars[k]) {
+                bars[k].style.height = `${val * 3}px`;
+                if (bars.length <= 20) bars[k].innerText = val;
+                bars[k].style.backgroundColor = '#22c55e';
+                playTone(150 + (val * 6));
+            }
+        } else if (key === 'cycle') {
+            // CycleSort: {value, position} writes
+            const [value, position] = moves[k];
+            if (bars[position]) {
+                bars[position].style.backgroundColor = '#ef4444';
+                playTone(150 + (value * 6));
+                bars[position].style.height = `${value * 3}px`;
+                if (bars.length <= 20) bars[position].innerText = value;
+
+                await new Promise(resolve => setTimeout(resolve, dynamicSpeed));
+
+                bars[position].style.backgroundColor = '#3b82f6';
             }
         } else {
             // Standard Moves [i, j] Swap

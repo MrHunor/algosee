@@ -39,10 +39,21 @@ struct pixel
 
 typedef std::vector<std::pair<int, pixel>> indexPixel;
 
+struct rawImage
+{
+    int width = -1;
+    int height = -1;
+    int size = -1;
+    int channels =
+        4; // the nicer pattern would be to initlise as -1 but all functions ever in this
+           // project will use 4 chanels so this is bastically a constant
+    unsigned char *data = nullptr;
+};
+
 struct image
 {
-    int width;
-    int height;
+    int width = -1;
+    int height = -1;
     indexPixel data;
 };
 

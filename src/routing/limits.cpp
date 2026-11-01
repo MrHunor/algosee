@@ -24,7 +24,7 @@
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 
-void RunLimits(httplib::Response &res, stateClass &state)
+void RunLimits(httplib::Response &res, StateClass &state)
 {
     json response;
     generateJsonRetrunArras(response);
@@ -49,6 +49,8 @@ void RunLimits(httplib::Response &res, stateClass &state)
 
     // image
     response["MAX_PIXEL_COUNT_IMAGE"] = MAX_PIXEL_COUNT_IMAGE;
+    response["ERROR"] = "";
+    response["ERRORCODE"] = 0;
     res.status = 200;
     res.set_header("Access-Control-Allow-Origin", "*");
     std::string responseString = std::move(response.dump());

@@ -24,6 +24,71 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesImage{
+
+    {"selection", {5, 5}},
+    {"selection", {15, 12}},
+    {"selection", {25, 25}},
+    {"selection", {25, 12}},
+    {"selection",
+     {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1,
+      sqrt(MAX_PIXEL_COUNT_IMAGE) -
+          1}}, // the -1 is there is there in case of weird float to int casting
+
+    {"bubble", {5, 5}},
+    {"bubble", {15, 12}},
+    {"bubble", {25, 25}},
+    {"bubble", {25, 12}},
+    {"bubble", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}},
+
+    {"quick", {5, 5}},
+    {"quick", {15, 12}},
+    {"quick", {25, 25}},
+    {"quick", {25, 12}},
+    {"quick", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}},
+
+    {"merge", {5, 5}},
+    {"merge", {15, 12}},
+    {"merge", {25, 25}},
+    {"merge", {25, 12}},
+    {"merge", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}},
+
+    {"counting", {5, 5}},
+    {"counting", {15, 12}},
+    {"counting", {25, 25}},
+    {"counting", {25, 12}},
+    {"counting", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}},
+
+    {"cycle", {5, 5}},
+    {"cycle", {15, 12}},
+    {"cycle", {25, 25}},
+    {"cycle", {25, 12}},
+    {"cycle", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}},
+
+    // bogo is factorial time: keep sizes tiny
+    {"bogo", {1, 2}},
+    {"bogo", {2, 3}},
+    {"bogo", {sqrt(MAX_ELEMENT_COUNT_BOGO) - 1, sqrt(MAX_ELEMENT_COUNT_BOGO) - 1}}};
+
+const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesPathfinding{
+    {"BFS", {10, 5}},         {"BFS", {20, 5}},         {"BFS", {100, 45}},
+    {"BFS", {250, 150}},      {"BFS", {249, 249}},
+
+    {"dijkstra", {10, 5}},    {"dijkstra", {20, 5}},    {"dijkstra", {100, 45}},
+    {"dijkstra", {250, 150}}, {"dijkstra", {249, 249}},
+
+    {"DFS", {10, 5}},         {"DFS", {20, 5}},         {"DFS", {100, 45}},
+    {"DFS", {250, 150}},      {"DFS", {249, 249}},
+
+    {"BIBFS", {10, 5}},       {"BIBFS", {20, 5}},       {"BIBFS", {100, 45}},
+    {"BIBFS", {250, 150}},    {"BIBFS", {249, 249}},
+
+    {"ASTAR", {10, 5}},       {"ASTAR", {20, 5}},       {"ASTAR", {100, 45}},
+    {"ASTAR", {250, 150}},    {"ASTAR", {249, 249}},
+
+    {"GBFS", {10, 5}},        {"GBFS", {20, 5}},        {"GBFS", {100, 45}},
+    {"GBFS", {250, 150}},     {"GBFS", {249, 249}}};
+
 const std::vector<std::pair<std::string, int>> testCasesSorting{
 
     {"selection", 5},
@@ -65,25 +130,7 @@ const std::vector<std::pair<std::string, int>> testCasesSorting{
     // bogo is factorial time: keep sizes tiny
     {"bogo", 3},
     {"bogo", 5},
-    {"bogo", MAX_ELEMENT_COUNT_BOGO - 1},
-};
-
-const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesPathfinding{
-    {"BFS", {10, 5}},         {"BFS", {20, 5}},         {"BFS", {100, 45}},
-    {"BFS", {250, 150}},      {"BFS", {249, 249}},
-
-    {"dijkstra", {10, 5}},    {"dijkstra", {20, 5}},    {"dijkstra", {100, 45}},
-    {"dijkstra", {250, 150}}, {"dijkstra", {249, 249}},
-
-    {"DFS", {10, 5}},         {"DFS", {20, 5}},         {"DFS", {100, 45}},
-    {"DFS", {250, 150}},      {"DFS", {249, 249}},
-
-    {"BIBFS", {10, 5}},       {"BIBFS", {20, 5}},       {"BIBFS", {100, 45}},
-    {"BIBFS", {250, 150}},    {"BIBFS", {249, 249}},
-
-    {"ASTAR", {10, 5}},       {"ASTAR", {20, 5}},       {"ASTAR", {100, 45}},
-    {"ASTAR", {250, 150}},    {"ASTAR", {249, 249}},
-};
+    {"bogo", MAX_ELEMENT_COUNT_BOGO - 1}};
 
 const std::unordered_map<std::string, std::vector<std::string>>
     implementedAlgoExpectedResponseType{
@@ -102,6 +149,8 @@ const std::unordered_map<std::string, std::vector<std::string>>
         {"DFS", {"VISITED", "SEARCHMAP", "PATH"}},
         {"BIBFS", {"VISITEDFROMSTART", "VISITEDFROMEND", "PATH"}},
         {"ASTAR", {"DISTANCE", "PATH"}},
-};
+        {"IMAGE", {"SHUFFLED (INDEXES)"}}, // image is a special case because its returns
+                                           // this array as well
+        {"GBFS", {"DISTANCE", "PATH"}}};
 
 #endif

@@ -18,6 +18,13 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+/**
+ * @file general.h
+ *
+ * @brief Contains general defintions
+ *
+ *
+ */
 #ifndef DEF_GENERAL_H
 #define DEF_GENERAL_H
 #include "nlohmann/json.hpp"

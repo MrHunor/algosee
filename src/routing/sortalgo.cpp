@@ -23,47 +23,42 @@
 #include "../sortalgo/algos.h"
 #include "../utils/general/utils.h"
 #include "../validate/sort/validate.h"
-#include "build_info.h"
 #include <chrono>
 #include <exception>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass &state)
+void RunSortalgo(SortValidReturn info, StateClass &state, StreamClass &stream)
 {
     try
     {
-        state.out("Processing values....", 0);
-        SortValidReturn info;
-        info = ValidateSort(req, state);
-
-        state.out("Finished.", 0);
-
         json response;
         generateJsonRetrunArras(response);
         fillWithMetaData(response);
+        stream.sendChunk(std::move(response));
+        response.clear();
 
         state.out("Starting time mesurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
 
         if (info.algo == "selection")
-            SelectionSort(info.values, response);
+            SelectionSort(info.values, response, stream);
         else if (info.algo == "cycle")
-            CycleSort(info.values, response);
+            CycleSort(info.values, response, stream);
         else if (info.algo == "bubble")
-            BubbleSort(info.values, response);
+            BubbleSort(info.values, response, stream);
         else if (info.algo == "quick")
-            QuickSort(info.values, 0, info.values.size() - 1, response);
+            QuickSort(info.values, 0, info.values.size() - 1, response, stream);
         else if (info.algo == "merge")
-            MergeSort(info.values, response);
+            MergeSort(info.values, response, stream);
         else if (info.algo == "counting")
         {
-            CountingSort(info.values, response);
+            CountingSort(info.values, response, stream);
         }
         else if (info.algo == "bogo")
         {
-            BogoSort(info.values, response);
+            BogoSort(info.values, response, stream);
         }
 
         // Default for all algorithms exit
@@ -72,26 +67,25 @@ void RunSortalgo(const httplib::Request &req, httplib::Response &res, stateClass
             std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
         state.out("Ended Time mesurement.", 0);
         response["TIME"] = elapsed.count();
-
         response["SORTED"] = info.values;
+        response["ERROR"] = "";
+        response["ERRORCODE"] = 0;
 
-        res.status = 200;
-        res.set_header("Access-Control-Allow-Origin", "*");
-        std::string responseString = std::move(response.dump());
-        state.out("Sending response:" + responseString, 0);
-        res.set_content(responseString, "application/json");
+        stream.sendChunk(std::move(response));
+        response.clear();
+        stream.finish();
     }
     catch (const excep &e)
     {
         state.out("Cought a excep, Details:" + std::string(e.what()) + "\n" +
                       "Status Code:" + std::to_string(e.exitCode),
                   0);
-        ReturnFailedAnswer(res, std::string(e.what()), e.exitCode);
+        ReturnFailedAnswerStreamOnly(std::string(e.what()), e.exitCode, &stream);
     }
     catch (const std::exception &e)
     {
         state.out("Cought an exception:" + std::string(e.what()), 0);
-        ReturnFailedAnswer(res, std::string(e.what()));
+        ReturnFailedAnswerStreamOnly(std::string(e.what()), 400, &stream);
     }
     return;
 }

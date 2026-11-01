@@ -26,19 +26,25 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void BogoSort(std::vector<int> &unsorted, json &response)
+void BogoSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
 {
+
     if (unsorted.size() == 1)
         return; // an array of the size one is already sorted
     while (!std::is_sorted(unsorted.begin(), unsorted.end()))
     {
         Randomise(unsorted);
         response["TRIES"].push_back(unsorted);
+        if (response["TRIES"].size() > 1000)
+        { // if more then 100 tries recorded then send a streaming chunk
+            stream.sendChunk(std::move(response));
+            response.clear();
+        }
     }
 }
 
 //--------------IMAGE-------------------
-void BogoSort(indexPixel &unsorted, json &response)
+void BogoSort(indexPixel &unsorted, json &response, StreamClass &stream)
 {
     if (unsorted.size() == 1)
         return; // an array of the size one is already sorted
@@ -46,7 +52,12 @@ void BogoSort(indexPixel &unsorted, json &response)
         !std::is_sorted(unsorted.begin(), unsorted.end(),
                         [](const auto &a, const auto &b) { return a.first < b.first; }))
     {
-        response["TRIES"].push_back(IndexPixelArrToJson(unsorted));
         Randomise(unsorted);
+        response["TRIES"].push_back(IndexPixelArrToJson(unsorted));
+        if (response["TRIES"].size() > 1000)
+        { // if more then 100 tries recorded then send a streaming chunk
+            stream.sendChunk(std::move(response));
+            response.clear();
+        }
     }
 }

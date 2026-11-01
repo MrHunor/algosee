@@ -18,16 +18,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef LOGGER_H
-#define LOGGER_H
-#include "../../src/defs/general.h"
-#include <chrono>
-#include <format>
-#include <fstream>
-#include <iostream>
-#include <nlohmann/json.hpp>
-#include <source_location>
-#include <string>
+/**
+ * @file colours.h
+ *
+ * @brief Header containing all Console colours and similiar text modifications
+ *
+ */
+#ifndef COLOURS_H
+#define COLOURS_H
 
 // Colors
 //  Reset
@@ -82,30 +80,4 @@
 #define REVERSE "\033[7m"
 #define HIDDEN "\033[8m"
 #define STRIKE "\033[9m"
-
-class stateClass {
-public:
-  std::ofstream logFile{"testclientlog.txt"};
-  int verbose=0;
-  void out(const std::string &output, int importance,
-           const std::string &colour = DEFAULT_COLOUR,
-           std::source_location location = std::source_location::current()) {
-    if (importance > verbose)
-      return;
-    std::string message = colour;
-    if (verbose >= VERBOSE_LEVEL_NEEDED_FOR_TIME) {
-      auto now = std::chrono::system_clock::now();
-      message += std::format("@{} -> ", now);
-    }
-    if (verbose >= 4)
-      message += std::format("{}->", location.function_name());
-    message += output;
-    message += RESET;
-    std::cout << message;
-    std::cout << std::endl;
-    if (logFile.is_open())
-      logFile << message << std::endl;
-  }
-};
-
 #endif
