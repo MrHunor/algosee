@@ -18,6 +18,12 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+/**
+ * @file pathalgo.h
+ *
+ * @brief Contains function defintions for utilitiy functions for pathfinding algorithms
+ *
+ */
 
 #ifndef PATHALGO_UTILS_H
 #define PATHALGO_UTILS_H
@@ -28,12 +34,21 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
+/**
+ * @brief Swap the 2 Dimensions in a 2D MapBool Array
+ *
+ * @param visited The MapBool array to swap
+ *
+ * @throws Never
+ *
+ * @returns The swapped input array as a json object
+ * */
 json SwapVisitedArray(const MapBool &visited);
 json SwapVisitedArray(const std::vector<std::vector<uint64_t>> &visited);
-void CheckMapValidness(const MapInt &mapInt,
-                       const std::pair<int, int> &start, const std::pair<int, int> &goal);
-void CheckMapValidness(const MapBool &map,
-                       const std::pair<int, int> &start, const std::pair<int, int> &goal);
+void CheckMapValidness(const MapInt &mapInt, const std::pair<int, int> &start,
+                       const std::pair<int, int> &goal);
+void CheckMapValidness(const MapBool &map, const std::pair<int, int> &start,
+                       const std::pair<int, int> &goal);
 std::pair<int, int> CheckRange(const MapInt &map);
 std::pair<int, int> CheckRange(const GraphWeighted &graph);
 std::vector<std::vector<bool>> CastIntMapToBoolIfNeeded(const json &input);

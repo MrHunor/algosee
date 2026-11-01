@@ -22,6 +22,7 @@
 #include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
 #include <cstdint>
+#include <limits>
 #include <nlohmann/json.hpp>
 #include <queue>
 #include <utility>
@@ -131,7 +132,7 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
     // checking if the goal was ever reached, be careful this could theoretically
     // be a false positive if the addition of tiles matches exatly the intmax, but
     // the likelyhood is very small
-    if (distance[goal.second][goal.first] == INFINITY_INT)
+    if (distance[goal.second][goal.first] == std::numeric_limits<uint64_t>::max())
         return {};
 
     // copy paste from BFS, same logic
@@ -171,7 +172,7 @@ std::vector<int> Dijkstra(const GraphWeighted& graph,
     // dijkstra uses something similar to BFS but instead of vector<bool> visited,
     // it uses a cost based vector<int> so this is effectivly just: "What is the
     // cheapest possible distance to this point in the map"
-    std::vector<int> distance(rows,INFINITY_INT); // i dont think i'll ever unstand this contructor
+    std::vector<uint64_t> distance(rows,std::numeric_limits<uint64_t>::max()); // i dont think i'll ever unstand this contructor
     std::vector<int> parent(rows,-1);
     std::vector<int> path;
 
@@ -239,7 +240,7 @@ std::vector<int> Dijkstra(const GraphWeighted& graph,
     // checking if the goal was ever reached, be careful this could theoretically
     // be a false positive if the addition of tiles matches exatly the intmax, but
     // the likelyhood is very small
-    if (distance[goal] == INFINITY_INT)
+    if (distance[goal] == std::numeric_limits<uint64_t>::max())
         return {};
 
     // copy paste from BFS, same logic

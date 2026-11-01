@@ -17,11 +17,36 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+/**
+ * @file sortalgo.h
+ *
+ * @brief Contains defintions for sortalgo utility functions
+ *
+ */
 
 #include "../../defs/types.h"
 #include <vector>
 #ifndef SORTALGO_UTILS_H
 #define SORTALGO_UTILS_H
+/**
+ * @brief Randomise a integer vector in place
+ *
+ * @param vec The vector of integer to randomise (or more specifially std::shuffle)
+ *
+ * @throws Never
+ *
+ * @returns Nothing
+ */
 void Randomise(std::vector<int> &vec);
+
+/**
+ * @brief Randomise a indexPixel vector in place
+ *
+ * @param vec The vector of indexpixel to randomise (or more specifially std::shuffle)
+ *
+ * @throws Never
+ *
+ * @returns Nothing
+ */
 void Randomise(indexPixel &vec);
 #endif
