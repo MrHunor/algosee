@@ -42,6 +42,7 @@ struct run
     int size = -1;
     std::pair<int, int> mapSize = {-1, -1};
     bool failure = false;
+    std::string failureReason="";
 };
 
 /**

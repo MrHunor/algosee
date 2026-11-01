@@ -19,6 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../utils/pathalgo/pathalgo.h"
+#include "../defs/implemented.h"
 #include "../exception/exception.h"
 #include "../logger/logger.h"
 #include "../pathalgo/algos.h"
@@ -47,7 +48,7 @@ void RunPathalgoMap(const httplib::Request &req, httplib::Response &res, StateCl
         state.out("Starting time mesurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
 
-        if (info.algo == "BFS" || info.algo == "DFS" || info.algo == "BIBFS")
+        if (implementedPathAlgoCatagory.at(info.algo)=='W')
         {
 
             // this could very likely throw

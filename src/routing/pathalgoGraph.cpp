@@ -23,6 +23,7 @@
 #include "../pathalgo/algos.h"
 #include "../utils/general/utils.h"
 #include "../utils/pathalgo/pathalgo.h"
+#include "../defs/implemented.h"
 #include "../validate/path/validate.h"
 #include <chrono>
 #include <exception>
@@ -46,7 +47,7 @@ void RunPathAlgoGraph(const httplib::Request &req, httplib::Response &res,
         state.out("Starting time measurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
 
-        if (info.algo == "ASTAR" || info.algo == "GBFS" || info.algo == "dijkstra")
+        if (implementedPathAlgoCatagory.at(info.algo)=='W')
         {
             if (info.algo == "ASTAR")
                 path = ASTAR(info.graphWeighted, info.start, info.goal, response);

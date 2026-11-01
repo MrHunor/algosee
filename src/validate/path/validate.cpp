@@ -61,7 +61,7 @@ PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &stat
     }
 
     state.out("Casting Map (if needed)...", 0);
-    if (retval.algo == "dijkstra" || retval.algo == "ASTAR" || retval.algo == "GBFS")
+    if (implementedPathAlgoCatagory.at(retval.algo)=='W')
     {
         retval.mapInt = parsed["MAP"];
         if (retval.mapInt.empty())
@@ -84,7 +84,7 @@ PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &stat
 
     state.out("Checking element count...", 0);
     auto it = implementedPathAlgosSize.find(retval.algo);
-    if (retval.algo == "dijkstra" || retval.algo == "ASTAR" || retval.algo == "GBFS")
+    if (implementedPathAlgoCatagory.at(retval.algo)=='W')
     {
         if (retval.mapInt.size() * retval.mapInt[0].size() > it->second)
             throw excep("Too many element specified. " + it->first +
@@ -92,7 +92,7 @@ PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &stat
                             " elements.",
                         413);
     }
-    else if (retval.algo != "dijkstra" &&
+    else if (
              retval.mapBool.size() * retval.mapBool[0].size() > it->second)
         throw excep("Too many element specified. " + it->first +
                         " only accepts less then " + std::to_string(it->second) +
@@ -100,7 +100,7 @@ PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &stat
                     413);
 
     state.out("Checking Maps internal validness...", 0);
-    if (retval.algo != "dijkstra" && retval.algo != "ASTAR" && retval.algo != "GBFS")
+    if (implementedPathAlgoCatagory.at(retval.algo)=='W')
         CheckMapValidness(retval.mapBool, retval.start, retval.goal);
     else
     {

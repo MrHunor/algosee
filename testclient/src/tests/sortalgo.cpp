@@ -88,6 +88,7 @@ void runSortalgoTest(std::vector<run> &exitMessage, httplib::Client &client,
         {
             state.out("Failed. Details:" + std::string(e.what()), 0);
             currentrun.failure = true;
+            currentrun.failureReason=e.what();
             exitMessage.push_back(currentrun);
         }
     }

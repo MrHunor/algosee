@@ -145,6 +145,7 @@ void runPathalgoTest(std::vector<run> &exitMessage,httplib::Client& client, Stat
         {
             state.out("Path test failed for " + currentrun.algoname + ": " + e.what(), 0);
             currentrun.failure = true;
+            currentrun.failureReason=e.what();
             exitMessage.push_back(currentrun);
         }
 
