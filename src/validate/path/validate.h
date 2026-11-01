@@ -19,9 +19,15 @@
  */
 #ifndef PATHVALIDATE_H
 #define PATHVALIDATE_H
-#include "../../logger/logger.h"
 #include "../../defs/types.h"
+#include "../../logger/logger.h"
 #include <httplib/httplib.h>
+/**
+ * @file validate.h
+ *
+ * @brief Contains defintions for Validation functions and their custom return structs
+ *
+ */
 
 struct PathValidReturnMap
 {
@@ -45,8 +51,26 @@ struct PathValidReturnGraph
     unsigned int goal;
 };
 
-
-
+/**
+ * @brief Check if a request matches the requirements
+ *
+ * @details Checks for: the algo URL parameter being present, the algo URL parameter being
+ *          equal to an implemented algorithm, the body containing an MAP array and a
+ *          START and GOAL parameter, the number of map elements not exceeding the
+ *          implemented max, the map not being empty, the map rows not being the same
+ *          length, the start or goal being out of the map bounds, an element being below
+ *          -1 for dijkstra/ASTAR/GBFS, an element not being higher then the implemented
+ *          maximum for dijkstra/ASTAR/GBFS and the map not containing any zero values for
+ *          ASTAR
+ *
+ * @param req A httplib::Request
+ *
+ * @param state The global StateClass logger
+ *
+ * @throws On a case of the request not meeting a requirement
+ *
+ * @returns A custom return struct containing all needed variables for the algorithm to execute
+ * */
 PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &state);
 PathValidReturnGraph ValdiatePathGraph(const httplib::Request &req, StateClass &state);
 #endif
