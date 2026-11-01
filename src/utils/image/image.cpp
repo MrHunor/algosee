@@ -21,21 +21,18 @@
 
 #ifndef STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
-#include <cstdio>
 #endif
 #include "../../defs/general.h"
 #include "../../defs/max_sizes.h"
 #include "../../defs/types.h"
 #include "../../exception/exception.h"
 #include "../../logger/logger.h"
-#include "../../utils/general/utils.h"
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 
 #include <algorithm>
 #include <random>
 #include <stb_image.h>
-#include <stdexcept>
 #include <vector>
 
 json IndexPixelArrToJson(const indexPixel &arr)

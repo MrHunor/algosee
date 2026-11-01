@@ -21,16 +21,11 @@
 #include "../../src/defs/implemented.h"
 #include "../../src/defs/types.h"
 #include "../../src/logger/logger.h"
-#include <chrono>
 #include <cstdlib>
-#include <iostream>
 #include <limits.h>
 #include <nlohmann/json.hpp>
-#include <ostream>
 #include <random>
-#include <source_location>
 #include <sstream>
-#include <stacktrace>
 #include <stb_image.h>
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb_image_write.h>

@@ -22,7 +22,6 @@
 #include "../../src/defs/testcases.h"
 #include "../../src/defs/implemented.h"
 #include "../../src/logger/logger.h"
-#include <cstdint>
 #include <httplib.h>
 #include "../utils/utils.h"
 #include <cmath>

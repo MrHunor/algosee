@@ -32,10 +32,8 @@
 #include "../stream/stream.h"
 #include "../validate/image/validate.h"
 #include "../validate/sort/validate.h"
-#include <chrono>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
-#include <vector>
 
 /**
  * @brief Run the Status endpoint

@@ -24,8 +24,6 @@
 #include <nlohmann/json.hpp>
 #include <queue>
 #include <string>
-#include <thread>
-#include <vector>
 
 httplib::ContentProviderWithoutLength MakeChunkProvider(
     std::shared_ptr<StreamClass>

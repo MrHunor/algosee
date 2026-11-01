@@ -23,7 +23,6 @@
 #include "../../src/defs/types.h"
 #include "../../src/logger/logger.h"
 #include "../utils/utils.h"
-#include <cmath>
 #include <stdexcept>
 #include <string>
 #include <utility>

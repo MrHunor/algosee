@@ -28,7 +28,6 @@
 #include "../../src/defs/general.h"
 #include "../../src/defs/types.h"
 #include "../../src/logger/logger.h"
-#include <source_location>
 #include <string>
 #include <vector>
 

@@ -22,7 +22,6 @@
 #ifndef DEF_MAX_SIZES_H
 #define DEF_MAX_SIZES_H
 
-#include <limits>
 
 #define MAX_ELEMENT_COUNT_SORT                                                           \
     2500 // you could customise this for every algo, but thats a future issue

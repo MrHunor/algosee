@@ -18,7 +18,6 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#include "../utils/pathalgo/pathalgo.h"
 #include "../defs/implemented.h"
 #include "../exception/exception.h"
 #include "../logger/logger.h"
