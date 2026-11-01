@@ -21,6 +21,7 @@
 #include "../defs/types.h"
 #include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
+#include <cstdint>
 #include <nlohmann/json.hpp>
 #include <queue>
 #include <utility>
@@ -38,8 +39,8 @@ struct CompareNodeDijkstra
 
 //-------------------------MAP BASED---------------------------------------
 std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
-                                          std::pair<int, int> start,
-                                          std::pair<int, int> goal, json &response)
+                                          const std::pair<int, int> start,
+                                          const std::pair<int, int> goal, json &response)
 {
     const int rows = map.size();
     const int collums = map[0].size();
@@ -47,10 +48,10 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
     // dijkstra uses something similar to BFS but instead of vector<bool> visited,
     // it uses a cost based vector<int> so this is effectivly just: "What is the
     // cheapest possible distance to this point in the map"
-    std::vector<std::vector<int>> distance(
+    std::vector<std::vector<uint64_t>> distance(
         rows,
-        std::vector<int>(collums,
-                         INFINITY_INT)); // i dont think i'll ever unstand this contructor
+        std::vector<uint64_t>(collums,
+                         std::numeric_limits<uint64_t>::max())); // i dont think i'll ever unstand this contructor
     std::vector<std::vector<std::pair<int, int>>> parent(
         rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
     std::vector<std::pair<int, int>> path;
@@ -162,8 +163,8 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
 
 
 std::vector<int> Dijkstra(const GraphWeighted& graph,
-                                          int start,
-                                          int goal, json &response)
+                                          const int start,
+                                          const int goal, json &response)
 {
     const int rows = graph.size();
 

@@ -29,8 +29,8 @@
 //------------------MAP BASED------------------------------
 
 std::vector<std::pair<int, int>> BreadthFirstSearch(const MapBool &map,
-                                                    std::pair<int, int> start,
-                                                    std::pair<int, int> goal,
+                                                    const std::pair<int, int> start,
+                                                    const std::pair<int, int> goal,
                                                     json &response)
 {
     // Frontier means what is it going to explore next, hence it being a queue
@@ -39,8 +39,8 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(const MapBool &map,
     const int rows = map.size();
     const int collums = map[0].size();
 
-    std::vector<std::vector<int>> visited(
-        rows, std::vector<int>(collums, -1)); // weird ass constructor
+    std::vector<std::vector<bool>> visited(
+        rows, std::vector<bool>(collums, 0)); // weird ass constructor
     std::vector<std::vector<std::pair<int, int>>> parent(
         rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
     std::vector<std::pair<int, int>> path;
@@ -80,7 +80,7 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(const MapBool &map,
             if (map[yNeighbour][xNeighbour] == true)
                 continue; // current Neighboor not a valid tile, skip
 
-            if (visited[yNeighbour][xNeighbour] != -1)
+            if (visited[yNeighbour][xNeighbour] == 1)
                 continue; // been there done that, so skip
 
             // if everything thus far was negative that means we have a valid
@@ -95,7 +95,7 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(const MapBool &map,
 
     response["VISITED"] = SwapVisitedArray(visited);
     response["SEARCHMAP"] = searchMap;
-    if (visited[goal.second][goal.first] == -1)
+    if (visited[goal.second][goal.first] == 0)
         return {}; // never once reached the goal means there was no path found to
                    // the goal
 
@@ -123,7 +123,7 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(const MapBool &map,
 
 //-----------------GRAPH BASED-------------------------------
 
-std::vector<int> BreadthFirstSearch(const GraphUnweight &graph, int start, int goal,
+std::vector<int> BreadthFirstSearch(const GraphUnweighted &graph,const int start,const int goal,
                                     json &response)
 {
     unsigned int iteration = 0;

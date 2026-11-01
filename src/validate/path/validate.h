@@ -38,8 +38,8 @@ struct PathValidReturnGraph
 {
     std::string algo;
 
-    GraphUnweight graphUnweight;
-    GraphUnweight graphWeighted;
+    GraphUnweighted graphUnweight;
+    GraphWeighted graphWeighted;
 
     unsigned int start;
     unsigned int goal;

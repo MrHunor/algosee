@@ -28,15 +28,15 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-json SwapVisitedArray(const std::vector<std::vector<bool>> &visited);
+json SwapVisitedArray(const MapBool &visited);
 json SwapVisitedArray(const std::vector<std::vector<uint64_t>> &visited);
-void CheckMapValidness(const std::vector<std::vector<int>> &mapInt,
+void CheckMapValidness(const MapInt &mapInt,
                        const std::pair<int, int> &start, const std::pair<int, int> &goal);
-void CheckMapValidness(const std::vector<std::vector<bool>> &map,
+void CheckMapValidness(const MapBool &map,
                        const std::pair<int, int> &start, const std::pair<int, int> &goal);
-std::pair<int, int> CheckRange(const std::vector<std::vector<int>> &map);
+std::pair<int, int> CheckRange(const MapInt &map);
 std::pair<int, int> CheckRange(const GraphWeighted &graph);
 std::vector<std::vector<bool>> CastIntMapToBoolIfNeeded(const json &input);
-bool CheckMapForZero(const std::vector<std::vector<int>> &map);
+bool CheckMapForZero(const MapInt &map);
 bool CheckMapForZero(const GraphWeighted &graph);
 #endif

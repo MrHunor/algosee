@@ -30,20 +30,10 @@
 #include <utility>
 #include <vector>
 
-
-
-
-
-
-
-
-
-
-
 //-----------------MAP BASED----------------------
 struct NodeASTARMap
 {
-    uint64_t g  = 0;
+    uint64_t g = 0;
     uint64_t h = 0;
     int x = 0;
     int y = 0;
@@ -70,32 +60,33 @@ struct CompareNodeASTARMap
 // A* is similar to djkstra, only that is uses a diffrent priority queue, with
 // f(n)=g(n)+h(n) where g(n) is the cost from start to node n (same as djkstra)
 // but also h(n) estimated cost from node n to goal (manhatten distance)
-std::vector<std::pair<int, int>> ASTAR(const MapInt &map,
-                                       std::pair<int, int> start,
-                                       std::pair<int, int> goal, json &response)
+std::vector<std::pair<int, int>> ASTAR(const MapInt &map, const std::pair<int, int> start,
+                                       const std::pair<int, int> goal, json &response)
 {
     const int rows = map.size();
     const int collums = map[0].size();
 
-
     std::vector<std::vector<uint64_t>> distance(
-        rows,
-        std::vector<uint64_t>(collums,
-                         std::numeric_limits<uint32_t>::max())); // i dont think i'll ever unstand this contructor
-    
+        rows, std::vector<uint64_t>(
+                  collums,
+                  std::numeric_limits<uint32_t>::max())); // i dont think i'll ever
+                                                          // unstand this contructor
+
     std::vector<std::vector<std::pair<int, int>>> parent(
         rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
     std::vector<std::pair<int, int>> path;
 
-    std::priority_queue<NodeASTARMap, std::vector<NodeASTARMap>, CompareNodeASTARMap> frontier;
+    std::priority_queue<NodeASTARMap, std::vector<NodeASTARMap>, CompareNodeASTARMap>
+        frontier;
 
     distance[start.second][start.first] = 0;
 
     // push the start into the frontier, because its the lowest distance and also
     // the only element it will be the first element
-    frontier.push(
-        {0, static_cast<uint64_t>(std::abs(start.first - goal.first) + std::abs(start.second - goal.second)),
-         start.first, start.second});
+    frontier.push({0,
+                   static_cast<uint64_t>(std::abs(start.first - goal.first) +
+                                         std::abs(start.second - goal.second)),
+                   start.first, start.second});
 
     std::vector<int> directionsRows = {-1, 1, 0, 0};
     std::vector<int> directionsCollums = {0, 0, 1, -1};
@@ -148,8 +139,8 @@ std::vector<std::pair<int, int>> ASTAR(const MapInt &map,
                 // explored next
                 distance[yNeighbour][xNeighbour] = newDistance;
                 parent[yNeighbour][xNeighbour] = {y, x};
-               uint64_t h = std::abs(xNeighbour - goal.first) +
-                    std::abs(yNeighbour - goal.second);
+                uint64_t h = std::abs(xNeighbour - goal.first) +
+                             std::abs(yNeighbour - goal.second);
                 frontier.push({newDistance, h, xNeighbour, yNeighbour});
             }
         }
@@ -188,14 +179,12 @@ std::vector<std::pair<int, int>> ASTAR(const MapInt &map,
     return path;
 }
 
-
-
 //-------------------------GRAPH BASED----------------------------------
 struct NodeASTARGraph
 {
     uint64_t g = 0;
     uint64_t h = 0;
-    int ID=-1;
+    int ID = -1;
     uint64_t f() const
     {
         if (g > std::numeric_limits<uint64_t>::max() - h)
@@ -216,29 +205,31 @@ struct CompareNodeASTARGraph
         return a.f() > b.f();
     }
 };
-std::vector<int> ASTAR(const GraphWeighted& graph,
-                                       int start,
-                                       int goal, json &response)
+std::vector<int> ASTAR(const GraphWeighted &graph, const int start, const int goal,
+                       json &response)
 {
-    //implementaion wise, graph[i] is a array of pair<int,int> with .first being the ID of the node the connection is to and .second is the weight
+    // implementaion wise, graph[i] is a array of pair<int,int> with .first being the ID
+    // of the node the connection is to and .second is the weight
     const size_t rows = graph.size();
 
-    std::vector<uint64_t> distance(rows,std::numeric_limits<uint64_t>::max());
-    std::vector<int> parent(rows,-1);
+    std::vector<uint64_t> distance(rows, std::numeric_limits<uint64_t>::max());
+    std::vector<int> parent(rows, -1);
     std::vector<int> path;
 
-    std::priority_queue<NodeASTARGraph, std::vector<NodeASTARGraph>, CompareNodeASTARGraph> frontier;
+    std::priority_queue<NodeASTARGraph, std::vector<NodeASTARGraph>,
+                        CompareNodeASTARGraph>
+        frontier;
 
     distance[start] = 0;
 
-    NodeASTARGraph startNode{0,0,start};
+    NodeASTARGraph startNode{0, 0, start};
     frontier.push(startNode);
 
     while (!frontier.empty())
     {
         // extract info from the first frontier element
         int currentDistance = frontier.top().g;
-        int currentID=frontier.top().ID;
+        int currentID = frontier.top().ID;
         frontier.pop();
 
         if (currentDistance != distance[currentID])
@@ -251,10 +242,10 @@ std::vector<int> ASTAR(const GraphWeighted& graph,
         for (int i = 0; i < graph[currentID].size(); i++)
         {
 
-            std::pair<int,int> loopID=graph[currentID].at(i);
-            
+            std::pair<int, int> loopID = graph[currentID].at(i);
+
             uint64_t newDistance = 0;
-            
+
             if (currentDistance > INFINITY_INT - loopID.second)
             {
                 newDistance = INFINITY_INT;
@@ -272,8 +263,8 @@ std::vector<int> ASTAR(const GraphWeighted& graph,
                 // explored next
                 distance[loopID.first] = newDistance;
                 parent[loopID.first] = currentID;
-                uint64_t h = goal-loopID.first;
-                frontier.push({newDistance, h,loopID.first});
+                uint64_t h = goal - loopID.first;
+                frontier.push({newDistance, h, loopID.first});
             }
         }
     }
@@ -303,7 +294,5 @@ std::vector<int> ASTAR(const GraphWeighted& graph,
     // due to starting with goal, the path must be reversed to start from start
     std::reverse(path.begin(), path.end());
 
-
     return path;
 }
-

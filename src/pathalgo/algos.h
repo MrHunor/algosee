@@ -49,8 +49,8 @@
  * the path
  *
  */
-std::vector<std::pair<int, int>> ASTAR(const MapInt &map, std::pair<int, int> start,
-                                       std::pair<int, int> goal, json &response);
+std::vector<std::pair<int, int>> ASTAR(const MapInt &map, const std::pair<int, int> start,
+                                       const std::pair<int, int> goal, json &response);
 
 /**
  * @brief Run a Bi Directional Breadth first search on A Map
@@ -68,8 +68,9 @@ std::vector<std::pair<int, int>> ASTAR(const MapInt &map, std::pair<int, int> st
  *
  * @returns The Path in format of a step to step by x,y
  */
-std::vector<std::pair<int, int>> BIBFS(const MapBool &map, std::pair<int, int> start,
-                                       std::pair<int, int> goal, json &response);
+std::vector<std::pair<int, int>> BIBFS(const MapBool &map,
+                                       const std::pair<int, int> start,
+                                       const std::pair<int, int> goal, json &response);
 
 /**
  * @brief Run a BreadthFirst search on A Map
@@ -88,8 +89,8 @@ std::vector<std::pair<int, int>> BIBFS(const MapBool &map, std::pair<int, int> s
  * @returns The Path in format of a step to step by x,y
  */
 std::vector<std::pair<int, int>> BreadthFirstSearch(const MapBool &map,
-                                                    std::pair<int, int> start,
-                                                    std::pair<int, int> goal,
+                                                    const std::pair<int, int> start,
+                                                    const std::pair<int, int> goal,
                                                     json &response);
 
 /**
@@ -109,8 +110,8 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(const MapBool &map,
  * @returns The Path in format of a step to step by x,y
  */
 std::vector<std::pair<int, int>> DepthFirstSearch(const MapBool &map,
-                                                  std::pair<int, int> start,
-                                                  std::pair<int, int> goal,
+                                                  const std::pair<int, int> start,
+                                                  const std::pair<int, int> goal,
                                                   json &response);
 
 /**
@@ -128,8 +129,9 @@ std::vector<std::pair<int, int>> DepthFirstSearch(const MapBool &map,
  * the path
  *
  */
-std::vector<std::pair<int, int>> Dijkstra(const MapInt &map, std::pair<int, int> start,
-                                          std::pair<int, int> goal, json &response);
+std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
+                                          const std::pair<int, int> start,
+                                          const std::pair<int, int> goal, json &response);
 
 /**
  * @brief Run the Greedy Best First Search algorithm on a Map
@@ -146,8 +148,8 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map, std::pair<int, int>
  * the path
  *
  */
-std::vector<std::pair<int, int>> GBFS(const MapInt &map, std::pair<int, int> start,
-                                      std::pair<int, int> goal, json &response);
+std::vector<std::pair<int, int>> GBFS(const MapInt &map, const std::pair<int, int> start,
+                                      const std::pair<int, int> goal, json &response);
 
 //--------------------GRAPH BASED---------------------------------------------
 
@@ -172,19 +174,21 @@ std::vector<std::pair<int, int>> GBFS(const MapInt &map, std::pair<int, int> sta
  *
  * @returns The Path in steps from NodeID to NodeID
  * */
-std::vector<int> BreadthFirstSearch(const GraphUnweight &graph, int start, int goal,
-                                    json &response);
+std::vector<int> BreadthFirstSearch(const GraphUnweighted &graph, const int start,
+                                    const int goal, json &response);
 
-std::vector<int> ASTAR(const GraphWeighted &graph, int start, int goal, json &response);
-
-std::vector<int> BIBFS(const GraphUnweight &graph, const int start, const int goal,
+std::vector<int> ASTAR(const GraphWeighted &graph, const int start, const int goal,
                        json &response);
 
-std::vector<int> DepthFirstSearch(const GraphUnweight &graph, int start, int goal,
-                                  json &response);
+std::vector<int> BIBFS(const GraphUnweighted &graph, const int start, const int goal,
+                       json &response);
 
-std::vector<int> Dijkstra(const GraphWeighted &graph, int start, int goal,
+std::vector<int> DepthFirstSearch(const GraphUnweighted &graph, const int start,
+                                  const int goal, json &response);
+
+std::vector<int> Dijkstra(const GraphWeighted &graph, const int start, const int goal,
                           json &response);
 
-std::vector<int> GBFS(const GraphWeighted &graph, int start, int goal, json &response);
+std::vector<int> GBFS(const GraphWeighted &graph, const int start, const int goal,
+                      json &response);
 #endif

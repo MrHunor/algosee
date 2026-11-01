@@ -21,6 +21,7 @@
 #include "../../defs/general.h"
 #include "../../defs/types.h"
 #include "../../exception/exception.h"
+#include <cstdint>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
@@ -38,7 +39,7 @@ bool CheckMapForZero(const GraphWeighted& graph)
     return false;
 }
 
-bool CheckMapForZero(const std::vector<std::vector<int>> &map)
+bool CheckMapForZero(const MapInt &map)
 {
     for (const auto &row : map)
     {
@@ -72,7 +73,7 @@ std::pair<int,int> CheckRange(const GraphWeighted& graph)
     return {min,max};
 }
 
-std::pair<int, int> CheckRange(const std::vector<std::vector<int>> &map)
+std::pair<int, int> CheckRange(const MapInt &map)
 {
     int min = 0;
     int max = 0;
@@ -89,7 +90,7 @@ std::pair<int, int> CheckRange(const std::vector<std::vector<int>> &map)
     return std::make_pair(min, max);
 }
 
-json SwapVisitedArray(const std::vector<std::vector<bool>> &visited)
+json SwapVisitedArray(const MapBool &visited)
 {
     std::vector<std::vector<bool>> retval(visited[0].size(),
                                           std::vector<bool>(visited.size(), false));
@@ -104,10 +105,10 @@ json SwapVisitedArray(const std::vector<std::vector<bool>> &visited)
 }
 
 // dijkstra uses the same thing but as int, so we can overload this
-json SwapVisitedArray(const std::vector<std::vector<uint64_t>> &visited)
+json SwapVisitedArray(const std::vector<std::vector<uint64_t>> &visited)//cannot used mapInt here because your using thsi function with the distance array which is defined as uint64
 {
-    std::vector<std::vector<int>> retval(visited[0].size(),
-                                         std::vector<int>(visited.size(), 0));
+    std::vector<std::vector<uint64_t>> retval(visited[0].size(),
+                                         std::vector<uint64_t>(visited.size(), 0));
 
     for (int rows = 0; rows < visited.size(); rows++)
     {
@@ -119,7 +120,7 @@ json SwapVisitedArray(const std::vector<std::vector<uint64_t>> &visited)
     return json(retval);
 }
 
-void CheckMapValidness(const std::vector<std::vector<int>> &map,
+void CheckMapValidness(const MapInt &map,
                        const std::pair<int, int> &start, const std::pair<int, int> &goal)
 {
     if (map.empty())
@@ -156,7 +157,7 @@ void CheckMapValidness(const std::vector<std::vector<int>> &map,
     }
 }
 
-void CheckMapValidness(const std::vector<std::vector<bool>> &map,
+void CheckMapValidness(const MapBool &map,
                        const std::pair<int, int> &start, const std::pair<int, int> &goal)
 {
     if (map.empty())

@@ -23,6 +23,7 @@
 #include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
 #include <cmath>
+#include <cstdint>
 #include <nlohmann/json.hpp>
 #include <queue>
 #include <utility>
@@ -53,18 +54,18 @@ struct CompareNodeGBFSMap
 // A* is similar to djkstra, only that is uses a diffrent priority queue, with
 // f(n)=g(n)+h(n) where g(n) is the cost from start to node n (same as djkstra)
 // but also h(n) estimated cost from node n to goal (manhatten distance)
-std::vector<std::pair<int, int>> GBFS(const MapInt &map, std::pair<int, int> start,
-                                      std::pair<int, int> goal, json &response)
+std::vector<std::pair<int, int>> GBFS(const MapInt &map,const std::pair<int, int> start,
+                                      const std::pair<int, int> goal, json &response)
 {
     const int rows = map.size();
     const int collums = map[0].size();
 
     int h = 0;
 
-    std::vector<std::vector<int>> distance(
+    std::vector<std::vector<uint64_t>> distance(
         rows,
-        std::vector<int>(collums,
-                         INFINITY_INT)); // i dont think i'll ever unstand this contructor
+        std::vector<uint64_t>(collums,
+                         std::numeric_limits<uint64_t>::max()-1)); // i dont think i'll ever unstand this contructor
     std::vector<std::vector<std::pair<int, int>>> parent(
         rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
     std::vector<std::pair<int, int>> path;
@@ -190,7 +191,7 @@ struct CompareNodeGBFSGraph
         return a.f() > b.f();
     }
 };
-std::vector<int> GBFS(const GraphWeighted &graph, int start, int goal, json &response)
+std::vector<int> GBFS(const GraphWeighted &graph,const int start,const int goal, json &response)
 {
     // implementaion wise, graph[i] is a array of pair<int,int> with .first being the ID
     // of the node the connection is to and .second is the weight
