@@ -308,7 +308,7 @@ startBtn.addEventListener('click', async () => {
             throw new Error(msg || `Server-Fehler: ${response.status}`);
         }
 
-        // --- NDJSON zeilenweise parsen und zusammenführen ---
+        // --- NDJSON zeilenweise parsen und zusammenführen  ---
         const lines = responseText.split('\n').filter(line => line.trim() !== '');
         let aggregatedData = {
             TRIES: [],
