@@ -28,14 +28,18 @@
 #include <vector>
 
 //--------------------NUMBERS------------------------------
-void SelectionSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
+void SelectionSort(std::vector<int> &unsorted, json &response,
+                    StreamClass &stream);
 void BogoSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
 void BubbleSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
 void QuickSort(std::vector<int> &unsorted, int low, int high, json &response,
-               StreamClass &stream);
-void MergeSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
-void CountingSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
-void CycleSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
+                StreamClass &stream);
+void MergeSort(std::vector<int> &unsorted, json &response,
+                StreamClass &stream);
+void CountingSort(std::vector<int> &unsorted, json &response,
+                   StreamClass &stream);
+void CycleSort(std::vector<int> &unsorted, json &response,
+                StreamClass &stream);
 
 //-------------------IMAGES------------------------------------
 void SelectionSort(indexPixel &unsorted, json &response, StreamClass &stream);
