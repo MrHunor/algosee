@@ -81,6 +81,19 @@ It will return the default keys defined in 0. and some other keys depending on t
   - 'MERGED (LEFT,RIGHT,RESULT)' contains an array of three elements, first being the left area of the soon to be merged array, secondly the right area and finally the result of the merge  
 - ***Counting***:
   - 'COUNT ARRAY' contains an array which represents the values array in the format of countarr[n]=number of occurences of the number n in the values array  
-- Bogo:
+- ***Bogo***:
   - 'TRIES' contains an array of arrays, the inner part being some random variation of the original values array  
 
+
+### 4. /pathalgoMAP
+The pathfinding endpoint for maps can be used to find a path throught a (un-)weighted "Map" or more precisely a 2 dimensional array.  
+Similiar to the [sorting endpoint](#3-sortalgo) it requires a URL arugment named algo being equal to one of the implemented Pathfinding algorithms (see [docs/Implemented_Algorithms.md](./Implemented_Algorithms.md)).  
+It also requires the following body values:
+  - 'MAP' containing either an 2D array of positive integers (except 0 for A*) and -1 (being blocked), which would be a weighted map or a 2D array of boolean with 0 being traversable and 1 being blocked, which would be a unweighted map, the map MUST have equal row lengths
+  - 'START' A pair of integers containing the start in the format of x,y (so inner, outer)
+  - 'GOAL' See above  
+
+It will returns a json object containing the keys defined in 0. and some other (non algorithm specific like [sorting](#3-sortalgo)):
+  - 'VISITED' A 2D array of positive integers showcasing which tile was explored (1) or not (-1)  
+  - 'SEARCHMAP' A 2D array of positive integers showcasing which tile was explored at which iteration or not at all (-1)  
+  - 'PATH' A array of pairs in the format x,y representing the path step by step, from start to goal
