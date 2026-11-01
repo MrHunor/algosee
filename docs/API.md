@@ -29,7 +29,7 @@ Any sucessfull (and most unsucessful) requests will returns a array containing a
 - 'ERROR' -> " " " an errormessage if the server threw one and is streaming its response, if not it will return its errormessage with an non 200 status code  
 - 'ERRORCODE' -> " " " an errorcode if the server threw one, only when streaming its response (born because after you accept the request you must set the response status), **ALWAYS** check if this is 0 when gettig a streamed response, if it isn't an error occured  
 
-*Tip: You can view the defintion of these keys in src/defs/implemented*
+*Tip: You can view the defintion of these keys in src/defs/implemented.h*
 
 ### 1. /status 
 The status endpoint can be used to check if the server is online.  
@@ -40,9 +40,33 @@ It will return a json object along the lines of 0.
 The limits endpoint can be used to get the maximum Size of elements that a algorithm will accept.   
 It takes not URL arguments or Body, as it is also a GET request.  
 It returns all keys documented in 0. and:  
+***Sorting:***  
 - 'MAX_ELEMENT_COUNT_SORT'
 - 'MAX_ELEMENT_COUNT_SELECTION'
 - 'MAX_ELEMENT_COUNT_BOGO'
 - 'MAX_ELEMENT_COUNT_BUBBLE'
+- 'MAX_ELEMENT_COUNT_QUICK'
+- 'MAX_ELEMENT_COUNT_MERGE'
+- 'MAX_ELEMENT_COUNT_COUNTING'
+- 'MAX_ELEMENT_COUNT_CYCLE'
+- 'HIGHEST_ELEMENT_COUNTING'  
+***Pathfinding:***
+- 'MAX_ELEMENT_COUNT_BFS'
+- 'MAX_ELEMENT_COUNT_DIJKSTRA'
+- 'MAX_ELEMENT_COUNT_DFS'
+- 'MAX_ELEMENT_COUNT_BIBFS'
+- 'MAX_ELEMENT_COUNT_ASTAR'
+- 'MAX_ELEMENT_COUNT_GBFS'  
+***Image:***
+- 'MAX_PIXEL_COUNT_IMAGE'  
 
-**TO BE FINISHED**
+*Tip: You can view the defintion of these keys in src/routing/limits.cpp*
+
+### 3. /sortalgo
+The sortalgo endpoint can be used to sort an array of integer elements.  
+It expects the URL argument algo being equal to one of the implemented sorting algorithms. (see docs/Implemented_Algorithms.md)  
+Furthermore it requires the body to have a array of 'values'.  
+It will return the default keys defined in 0. and some other keys depending on the chosen alorithm:
+***Sorting:***
+
+
