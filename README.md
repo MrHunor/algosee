@@ -8,8 +8,8 @@
 ![Hackatime Badge](https://hackatime-badge.hackclub.com/U0A2D73JM9R/algosee)
 
 ## Demo:
-![Demo](./assets/Screenshot_Overview.png)    
-![Demo](./assets/Screenshot_Bubble_140.png)
+![Demo](./assets/demoVideo/sorting.gif)    
+![Demo](./assets/demoVideo/pathfinding.gif)
 
 ## Features:
 - **Choose between 6 sorting algorithms**
