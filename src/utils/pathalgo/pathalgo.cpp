@@ -153,7 +153,11 @@ void CheckMapValidness(const MapInt &map,
     if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 ||
         goal.second > rows - 1)
     {
-        throw excep("Bad Map: End out of Map Bounds", 400);
+        throw excep("Bad Map: Goal out of Map Bounds", 400);
+    }
+    if(start.first ==goal.first && start.second==goal.second)
+    {
+        throw excep("Bad Map: Start = Goal");
     }
 }
 
@@ -191,6 +195,10 @@ void CheckMapValidness(const MapBool &map,
         goal.second > rows - 1)
     {
         throw excep("Bad Map: End out of Map Bounds", 400);
+    }
+     if(start.first ==goal.first && start.second==goal.second)
+    {
+        throw excep("Bad Map: Start = Goal");
     }
 }
 
