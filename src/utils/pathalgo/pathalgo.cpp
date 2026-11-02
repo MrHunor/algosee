@@ -75,8 +75,8 @@ std::pair<int,int> CheckRange(const GraphWeighted& graph)
 
 std::pair<int, int> CheckRange(const MapInt &map)
 {
-    int min = 0;
-    int max = 0;
+    uint64_t max = 0;
+    int64_t min = 0;
     for (const auto &row : map)
     {
         for (const auto &element : row)
