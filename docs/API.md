@@ -4,7 +4,7 @@
 Currently there are six diffrent API endpoints:
 
 ### 0. Default Response Keys  
-Any sucessfull (and most unsucessful) requests will returns a array containing all of these **uninitilised** keys, only those keys that are actually used by the response will be filled, the rest will be empty:  
+Any sucessfull (and most unsucessful) requests will return a json object containing all of these **uninitilised** keys, only those keys that are actually used by the response will be filled, the rest will be empty:  
 ***Array types:*** 
 - 'MOVES'
 - 'TRIES'
