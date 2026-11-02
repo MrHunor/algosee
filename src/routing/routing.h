@@ -112,6 +112,8 @@ void RunPathalgoMap(const httplib::Request &req, httplib::Response &res, StateCl
  *
  * @returns Nothing, will throw on error
  */
+void RunPathAlgoGraph(const httplib::Request &req, httplib::Response &res,
+                      StateClass &state);
 
 void RunImageSort(ImageValidReturn info, StateClass &state, StreamClass &stream);
 /**

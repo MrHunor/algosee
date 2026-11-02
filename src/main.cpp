@@ -245,7 +245,7 @@ int main(int argc, char *argv[])
 
         //---------------------------PATHALGOGRAPH----------------------------------------------------------------
         server.Post("/pathalgoGraph",
-                    [&](const httplib::Request &req, httplib::Response &res) { return; });
+                    [&](const httplib::Request &req, httplib::Response &res) { RunPathAlgoGraph(req, res, state);return 0; });
         try
         {
             // render port detection magic
