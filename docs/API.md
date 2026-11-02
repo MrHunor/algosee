@@ -85,7 +85,7 @@ It will return the default keys defined in 0. and some other keys depending on t
   - 'TRIES' contains an array of arrays, the inner part being some random variation of the original values array  
 
 
-### 4. /pathalgoMAP
+### 4. /pathalgoMap
 The pathfinding endpoint for maps can be used to find a path throught a (un-)weighted "Map" or more precisely a 2 dimensional array.  
 Similiar to the [sorting endpoint](#3-sortalgo) it requires a URL arugment named algo being equal to one of the implemented Pathfinding algorithms (see [docs/Implemented_Algorithms.md](./Implemented_Algorithms.md)).  
 It also requires the following body values:
