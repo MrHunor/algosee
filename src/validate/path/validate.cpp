@@ -61,7 +61,7 @@ PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &stat
     }
 
     state.out("Casting Map (if needed)...", 0);
-    if (implementedPathAlgoCatagory.at(retval.algo)=='W')
+    if (implementedPathAlgoCatagory.at(retval.algo) == 'W')
     {
         retval.mapInt = parsed["MAP"];
         if (retval.mapInt.empty())
@@ -84,7 +84,7 @@ PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &stat
 
     state.out("Checking element count...", 0);
     auto it = implementedPathAlgosSize.find(retval.algo);
-    if (implementedPathAlgoCatagory.at(retval.algo)=='W')
+    if (implementedPathAlgoCatagory.at(retval.algo) == 'W')
     {
         if (retval.mapInt.size() * retval.mapInt[0].size() > it->second)
             throw excep("Too many element specified. " + it->first +
@@ -92,15 +92,14 @@ PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &stat
                             " elements.",
                         413);
     }
-    else if (
-             retval.mapBool.size() * retval.mapBool[0].size() > it->second)
+    else if (retval.mapBool.size() * retval.mapBool[0].size() > it->second)
         throw excep("Too many element specified. " + it->first +
                         " only accepts less then " + std::to_string(it->second) +
                         " elements.",
                     413);
 
     state.out("Checking Maps internal validness...", 0);
-    if (implementedPathAlgoCatagory.at(retval.algo)=='U')
+    if (implementedPathAlgoCatagory.at(retval.algo) == 'U')
         CheckMapValidness(retval.mapBool, retval.start, retval.goal);
     else
     {
@@ -161,7 +160,7 @@ PathValidReturnGraph ValdiatePathGraph(const httplib::Request &req, StateClass &
         throw excep("Body does not contain a GOAL parameter.", 400);
     }
 
-    if (retval.algo == "ASTAR" || retval.algo == "dijkstra" || retval.algo == "GBFS")
+    if (implementedPathAlgoCatagory.at(retval.algo) == 'W')
     {
         retval.graphWeighted = parsed["GRAPH"];
         if (retval.graphWeighted.empty())
@@ -179,9 +178,57 @@ PathValidReturnGraph ValdiatePathGraph(const httplib::Request &req, StateClass &
     retval.start = parsed["START"];
     retval.goal = parsed["GOAL"];
 
+    state.out("Checking start and goal bounds", 1);
+    if (retval.start < 0 || retval.goal < 0)
+        throw excep("Start or goal out of bounds (smaller then 0)");
+
+    if (implementedPathAlgoCatagory.at(retval.algo) == 'W')
+    {
+        if (retval.start > retval.graphWeighted.size() ||
+            retval.goal > retval.graphWeighted.size())
+            throw excep(
+                "Start or Goal out of bounds (bigger then total number of Nodes)");
+    }
+    else
+    {
+        if (retval.start > retval.graphUnweight.size() ||
+            retval.goal > retval.graphUnweight.size())
+            throw excep(
+                "Start or Goal out of bounds (bigger then total number of Nodes)");
+    }
+
+    state.out("Checking connected nodes existance", 0);
+
+    if (implementedPathAlgoCatagory.at(retval.algo) == 'W')
+    {
+        const uint64_t rows = retval.graphWeighted.size();
+        for (const auto &row : retval.graphWeighted)
+        {
+            for (const auto &connection : row)
+            {
+                if (connection.first >= rows)
+                    throw excep(
+                        "A connection in the graph is bigger then the total Node count");
+            }
+        }
+    }
+    else
+    {
+        const uint64_t rows = retval.graphUnweight.size();
+        for (const auto &row : retval.graphUnweight)
+        {
+            for (const auto &connection : row)
+            {
+                if (connection >= rows)
+                    throw excep(
+                        "A connection in the graph is bigger then the total Node count");
+            }
+        }
+    }
+    
     state.out("Checking element count...", 0);
     auto it = implementedPathAlgosSize.find(retval.algo);
-    if (retval.algo == "dijkstra" || retval.algo == "ASTAR" || retval.algo == "GBFS")
+    if (implementedPathAlgoCatagory.at(retval.algo) == 'W')
     {
         if (retval.graphWeighted.size() > it->second)
             throw excep("Too many element specified. " + it->first +

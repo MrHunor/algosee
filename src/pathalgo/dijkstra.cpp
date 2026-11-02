@@ -34,7 +34,7 @@ struct CompareNodeDijkstra
 {
     bool operator()(const Node& a, const Node& b)
     {
-        return a.second>b.second;
+        return a.first>b.first;
     }
 };
 
