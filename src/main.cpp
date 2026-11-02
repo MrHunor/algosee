@@ -122,6 +122,7 @@ int main(int argc, char *argv[])
 
         server.Options("(/sortalgo)", serverOptionHandler);
         server.Options("(/pathalgoMap)", serverOptionHandler);
+        server.Options("(/pathalgoGraph)", serverOptionHandler);
         server.Options("(/status)", serverOptionHandler);
         server.Options("(/image)", serverOptionHandler);
         server.Options("(/limits)", serverOptionHandler);
