@@ -109,15 +109,17 @@ target_precompile_headers(algosee PRIVATE
 
 find_package(nlohmann_json REQUIRED)
 
-
 find_package(httplib REQUIRED)
 
 find_package(stb REQUIRED)
+
+find_package(CLI11 REQUIRED)
 
 target_link_libraries(algosee
     nlohmann_json::nlohmann_json
     httplib::httplib
     stb::stb
+    CLI11::CLI11
     stdc++exp
 )
 

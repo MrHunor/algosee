@@ -35,8 +35,24 @@
 #include <unistd.h>
 
 using json = nlohmann::json;
-
  
+GraphUnweighted generateGU(int size,int start,int goal)
+{
+    GraphUnweighted retval(size);
+while(true)
+{
+for(auto& row: retval)
+{
+    for(int i = 0; i<randomInt(0,10);i++)
+    {
+        row.push_back(randomInt(0,size-1));
+    }
+}
+
+}
+return retval;
+}
+
 void writeMemToImage(const rawImage &img)
 {
     if (stbi_write_png("testimage.png", img.width, img.height, img.channels, img.data,

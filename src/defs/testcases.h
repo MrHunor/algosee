@@ -21,6 +21,7 @@
 #ifndef DEF_TESTCASES_H
 #define DEF_TESTCASES_H
 #include "max_sizes.h"
+#include <cstdint>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -70,24 +71,62 @@ const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesImage{
     {"bogo", {2, 3}},
     {"bogo", {sqrt(MAX_ELEMENT_COUNT_BOGO) - 1, sqrt(MAX_ELEMENT_COUNT_BOGO) - 1}}};
 
-const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesPathfindingMap{
-    {"BFS", {10, 5}},         {"BFS", {20, 5}},         {"BFS", {100, 45}},
-    {"BFS", {250, 150}},      {"BFS", {249, 249}},
+const std::vector<std::pair<std::string, std::pair<uint8_t, uint8_t>>>
+    testCasesPathfindingMap{
+        {"BFS", {10, 5}},         {"BFS", {20, 5}},         {"BFS", {100, 45}},
+        {"BFS", {250, 150}},      {"BFS", {249, 249}},
 
-    {"dijkstra", {10, 5}},    {"dijkstra", {20, 5}},    {"dijkstra", {100, 45}},
-    {"dijkstra", {250, 150}}, {"dijkstra", {249, 249}},
+        {"dijkstra", {10, 5}},    {"dijkstra", {20, 5}},    {"dijkstra", {100, 45}},
+        {"dijkstra", {250, 150}}, {"dijkstra", {249, 249}},
 
-    {"DFS", {10, 5}},         {"DFS", {20, 5}},         {"DFS", {100, 45}},
-    {"DFS", {250, 150}},      {"DFS", {249, 249}},
+        {"DFS", {10, 5}},         {"DFS", {20, 5}},         {"DFS", {100, 45}},
+        {"DFS", {250, 150}},      {"DFS", {249, 249}},
 
-    {"BIBFS", {10, 5}},       {"BIBFS", {20, 5}},       {"BIBFS", {100, 45}},
-    {"BIBFS", {250, 150}},    {"BIBFS", {249, 249}},
+        {"BIBFS", {10, 5}},       {"BIBFS", {20, 5}},       {"BIBFS", {100, 45}},
+        {"BIBFS", {250, 150}},    {"BIBFS", {249, 249}},
 
-    {"ASTAR", {10, 5}},       {"ASTAR", {20, 5}},       {"ASTAR", {100, 45}},
-    {"ASTAR", {250, 150}},    {"ASTAR", {249, 249}},
+        {"ASTAR", {10, 5}},       {"ASTAR", {20, 5}},       {"ASTAR", {100, 45}},
+        {"ASTAR", {250, 150}},    {"ASTAR", {249, 249}},
 
-    {"GBFS", {10, 5}},        {"GBFS", {20, 5}},        {"GBFS", {100, 45}},
-    {"GBFS", {250, 150}},     {"GBFS", {249, 249}}};
+        {"GBFS", {10, 5}},        {"GBFS", {20, 5}},        {"GBFS", {100, 45}},
+        {"GBFS", {250, 150}},     {"GBFS", {249, 249}}};
+
+const std::vector<std::pair<std::string, uint16_t>> testCasesPathfindingGraph{
+    {"BFS", 50},
+    {"BFS", 100},
+    {"BFS", 4500},
+    {"BFS", 37500},
+    {"BFS", MAX_ELEMENT_COUNT_BFS - 1},
+
+    {"dijkstra", 50},
+    {"dijkstra", 100},
+    {"dijkstra", 4500},
+    {"dijkstra", 37500},
+    {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA - 1},
+
+    {"DFS", 50},
+    {"DFS", 100},
+    {"DFS", 4500},
+    {"DFS", 37500},
+    {"DFS", MAX_ELEMENT_COUNT_DFS - 1},
+
+    {"BIBFS", 50},
+    {"BIBFS", 100},
+    {"BIBFS", 4500},
+    {"BIBFS", 37500},
+    {"BIBFS", MAX_ELEMENT_COUNT_BIBFS - 1},
+
+    {"ASTAR", 50},
+    {"ASTAR", 100},
+    {"ASTAR", 4500},
+    {"ASTAR", 37500},
+    {"ASTAR", MAX_ELEMENT_COUNT_ASTAR - 1},
+
+    {"GBFS", 50},
+    {"GBFS", 100},
+    {"GBFS", 4500},
+    {"GBFS", 50},
+    {"GBFS", MAX_ELEMENT_COUNT_GBFS - 1}};
 
 const std::vector<std::pair<std::string, int>> testCasesSorting{
 

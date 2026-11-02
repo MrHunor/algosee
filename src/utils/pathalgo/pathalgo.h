@@ -44,7 +44,25 @@
  * @returns The swapped input array as a json object
  * */
 json SwapVisitedArray(const MapBool &visited);
+
 json SwapVisitedArray(const std::vector<std::vector<uint64_t>> &visited);
+
+/**
+ * @brief Check maps internal validness
+ *
+ * @details Checks if the Map is empty, if all rows are the same length and if the start or goal is out of bounds
+ *
+ * @param mapInt A Map Int to analyse
+ *
+ * @param start A std::pair of int desciribing the start 
+ *
+ * @param goal A std::pair of int descirbing the goal
+ *
+ * @throws If a map is invalid 
+ *
+ * @returns Nothig
+ *
+ * */
 void CheckMapValidness(const MapInt &mapInt, const std::pair<int, int> &start,
                        const std::pair<int, int> &goal);
 void CheckMapValidness(const MapBool &map, const std::pair<int, int> &start,
