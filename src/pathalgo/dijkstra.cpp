@@ -29,7 +29,7 @@
 #include <vector>
 
 
-using Node = std::pair<int, std::pair<int, int>>;
+using Node = std::pair<uint64_t, std::pair<int, int>>;
 struct CompareNodeDijkstra
 {
     bool operator()(const Node& a, const Node& b)
@@ -75,7 +75,7 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
     while (!frontier.empty())
     {
         // extract info from the first frontier element
-        int currentDistance = frontier.top().first;
+        uint64_t currentDistance = frontier.top().first;
         int y = frontier.top().second.first;
         int x = frontier.top().second.second;
 
@@ -102,10 +102,10 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
             if (map[yNeighbour][xNeighbour] == -1)
                 continue; // this tile is blocked, skip
 
-            int newDistance = 0;
-            if (currentDistance > INFINITY_INT - map[yNeighbour][xNeighbour])
+            uint64_t newDistance = 0;
+            if (currentDistance > std::numeric_limits<uint64_t>::max() - map[yNeighbour][xNeighbour])
             {
-                newDistance = INFINITY_INT;
+                newDistance = std::numeric_limits<uint64_t>::max();
             }
             else
             {
