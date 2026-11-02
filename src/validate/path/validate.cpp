@@ -100,7 +100,7 @@ PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &stat
                     413);
 
     state.out("Checking Maps internal validness...", 0);
-    if (implementedPathAlgoCatagory.at(retval.algo)=='W')
+    if (implementedPathAlgoCatagory.at(retval.algo)=='U')
         CheckMapValidness(retval.mapBool, retval.start, retval.goal);
     else
     {
