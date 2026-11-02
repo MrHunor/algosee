@@ -214,7 +214,7 @@ std::vector<int> BIBFS(const GraphUnweighted &graph, const int start, const int 
     frontierFromStart.push(start);
     frontierFromEnd.push(goal);
     visitedFromStart[start] = 0;
-    visitedFromEnd[start] = 0;
+    visitedFromEnd[goal] = 0;
 
     while (!frontierFromStart.empty() && !frontierFromEnd.empty() && meetingPoint == -1)
     {
