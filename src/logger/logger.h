@@ -50,7 +50,7 @@ class StateClass
     std::mutex outMutex;
 
   public:
-    int verbose=4;
+    int verbose;
     /**
      * @brief Print something to console and write it to log.txt
      *

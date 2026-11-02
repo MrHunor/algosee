@@ -75,17 +75,17 @@ int main(int argc, char *argv[])
 
         try
         {
-            std::string asciiArt = readFile("../assets/WideTransparentLogoAsciiArt.txt");
+            std::string asciiArt = readFile("../assets/WideASCII100.txt");
             state.out("\n" + asciiArt, 0);
         }
         catch (const std::exception &e)
         {
-            state.out("Non fatal exception:" + std::string(e.what()), 0);
+            state.out("Non fatal exception:" + std::string(e.what()), 1);
         }
 
-        state.out("Starting...", 0);
-        state.out("VERSION:" + std::string(ALGOSEE_VERSION), 0);
-        state.out("Build on:" + std::string(ALGOSEE_BUILD_TIME), 0);
+        state.out("Starting...", 1);
+        state.out("VERSION:" + std::string(ALGOSEE_VERSION), 1);
+        state.out("Build on:" + std::string(ALGOSEE_BUILD_TIME), 1);
         httplib::Server server;
         clientListType clientList;
         std::mutex clientListMutex;
@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
         // this runs before sending any response
         server.set_post_routing_handler(
             [&state](const httplib::Request &req, httplib::Response &res) {
-                state.out("Target:" + req.target + "\nBody:" + req.body, 0);
+                state.out("Target:" + req.target + "\nBody:" + req.body, 2);
 
                 res.headers.erase("Access-Control-Allow-Origin");
                 res.set_header("Access-Control-Allow-Origin", "*");
@@ -150,14 +150,14 @@ int main(int argc, char *argv[])
             {
                 state.out("Cought a excep, Details:" + std::string(e.what()) + "\n" +
                               "Status Code:" + std::to_string(e.exitCode),
-                          0);
+                          1);
                 ReturnFailedAnswer(res, e.what(), e.exitCode);
                 return;
             }
             catch (const std::exception &e)
             {
                 state.out("Cought an std::exception, Details:" + std::string(e.what()),
-                          0);
+                          1);
                 ReturnFailedAnswer(res, e.what());
                 return;
             }
@@ -212,14 +212,14 @@ int main(int argc, char *argv[])
             {
                 state.out("Cought a excep, Details:" + std::string(e.what()) + "\n" +
                               "Status Code:" + std::to_string(e.exitCode),
-                          0);
+                          1);
                 ReturnFailedAnswer(res, e.what(), e.exitCode);
                 return;
             }
             catch (const std::exception &e)
             {
                 state.out("Cought an std::exception, Details:" + std::string(e.what()),
-                          0);
+                          1);
                 ReturnFailedAnswer(res, e.what());
                 return;
             }
@@ -251,7 +251,7 @@ int main(int argc, char *argv[])
             const char *port_env = std::getenv("PORT");
             int port = port_env ? std::stoi(port_env) : 8080;
 
-            state.out("Listining on:0.0.0.0:" + std::to_string(port), 0);
+            state.out("Listining on:0.0.0.0:" + std::to_string(port), 1);
             if (!server.listen("0.0.0.0", port))
             {
                 throw std::runtime_error("Failed to listen on 0.0.0.0:" +
