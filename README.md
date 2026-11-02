@@ -55,7 +55,6 @@ The implementation will roughly follow the order given in the table.
 
 ## Test it out yourself!
 Click [here](https://mrhunor.github.io/algosee) to test if out yourself!
-To test the backend via a curl command [go here](#to-test-the-backend-online-linux).
 
 ## Tech Stack:
 - **Frontend:** HTML,CSS,JS
@@ -75,13 +74,8 @@ Current plans invlove Streaming and more, have a look [here](https://github.com/
 5. The backend return the sorted array, a set of instructions on how to visulise the sorting and metadata like backend version and time in nanoseconds.
 6. The frontend visulises the instructions returned by the backend.   
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>  
+## Documentation:
+You can view the documentation about the API, Branches and building the project in [./docs](./docs/)
 
 # License(s)
 This Project is published under the GPL3 License which you can find [here](./LICENSE.md).  
