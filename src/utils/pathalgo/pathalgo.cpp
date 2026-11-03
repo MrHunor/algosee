@@ -73,7 +73,7 @@ std::pair<int, int> CheckRange(const GraphWeighted &graph)
     return {min, max};
 }
 
-std::pair<int, int> CheckRange(const MapInt &map)
+std::pair<int64_t, uint64_t> CheckRange(const MapInt &map)
 {
     uint64_t max = 0;
     int64_t min = 0;
