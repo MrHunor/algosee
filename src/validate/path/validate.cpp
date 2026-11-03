@@ -184,15 +184,15 @@ PathValidReturnGraph ValdiatePathGraph(const httplib::Request &req, StateClass &
 
     if (implementedPathAlgoCatagory.at(retval.algo) == 'W')
     {
-        if (retval.start > retval.graphWeighted.size() ||
-            retval.goal > retval.graphWeighted.size())
+        if (retval.start >= retval.graphWeighted.size() ||
+            retval.goal >= retval.graphWeighted.size())
             throw excep(
                 "Start or Goal out of bounds (bigger then total number of Nodes)");
     }
     else
     {
-        if (retval.start > retval.graphUnweight.size() ||
-            retval.goal > retval.graphUnweight.size())
+        if (retval.start >= retval.graphUnweight.size() ||
+            retval.goal >= retval.graphUnweight.size())
             throw excep(
                 "Start or Goal out of bounds (bigger then total number of Nodes)");
     }
