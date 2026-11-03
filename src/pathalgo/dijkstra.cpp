@@ -28,12 +28,12 @@
 #include <utility>
 #include <vector>
 
-using Node = std::pair<uint64_t, std::pair<int, int>>;
+using Node = std::pair<std::pair<uint64_t,uint64_t>,uint64_t>;//Cords, weight
 struct CompareNodeDijkstra
 {
     bool operator()(const Node &a, const Node &b)
     {
-        return a.first > b.first;
+        return a.second > b.second;
     }
 };
 
@@ -67,7 +67,7 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
 
     // push the start into the frontier, because its the lowest distance and also
     // the only element it will be the first element
-    frontier.push({0, {start.second, start.first}});
+    frontier.push({{start.second, start.first},0});
 
     std::vector<int> directionsRows = {-1, 1, 0, 0};
     std::vector<int> directionsCollums = {0, 0, 1, -1};
@@ -75,9 +75,9 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
     while (!frontier.empty())
     {
         // extract info from the first frontier element
-        uint64_t currentDistance = frontier.top().first;
-        int y = frontier.top().second.first;
-        int x = frontier.top().second.second;
+        uint64_t currentDistance = frontier.top().second;
+        int y = frontier.top().first.first;
+        int x = frontier.top().first.second;
 
         // because the info fron the first frontier element is now stored in the
         // above declared variables, we can delete the first element from frontier
@@ -121,7 +121,7 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
                 // explored next
                 distance[yNeighbour][xNeighbour] = newDistance;
                 parent[yNeighbour][xNeighbour] = {y, x};
-                frontier.push({newDistance, {yNeighbour, xNeighbour}});
+                frontier.push({ {yNeighbour, xNeighbour},newDistance});
             }
         }
     }

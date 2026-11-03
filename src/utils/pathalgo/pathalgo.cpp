@@ -52,10 +52,10 @@ bool CheckMapForZero(const MapInt &map)
     return false;
 }
 
-std::pair<int, int> CheckRange(const GraphWeighted &graph)
+std::pair<int64_t,uint64_t> CheckRange(const GraphWeighted &graph)
 {
-    int min = 0;
-    int max = 0;
+    int64_t min = 0;
+    uint64_t max = 0;
     for (const auto &row : graph)
     {
         for (const auto &element : row)

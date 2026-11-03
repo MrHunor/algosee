@@ -68,8 +68,8 @@ void CheckMapValidness(const MapInt &mapInt, const std::pair<int, int> &start,
                        const std::pair<int, int> &goal);
 void CheckMapValidness(const MapBool &map, const std::pair<int, int> &start,
                        const std::pair<int, int> &goal);
-std::pair<int, int> CheckRange(const MapInt &map);
-std::pair<int, int> CheckRange(const GraphWeighted &graph);
+std::pair<int64_t, uint64_t> CheckRange(const MapInt &map);
+std::pair<int64_t, uint64_t> CheckRange(const GraphWeighted &graph);
 std::vector<std::vector<bool>> CastIntMapToBoolIfNeeded(const json &input);
 bool CheckMapForZero(const MapInt &map);
 bool CheckMapForZero(const GraphWeighted &graph);
