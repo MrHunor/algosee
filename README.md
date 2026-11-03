@@ -31,6 +31,7 @@ The implementation will roughly follow the order given in the table.
 | Merge     | Supported |
 | Counting  | Supported | 
 | Cycle Sort | Supported |
+| Heap Sort  | TBD |
 | Radix Sort | TBD |
 | Intro Sort | TBD |  
 
@@ -83,12 +84,14 @@ Furthermore this project also includes code from other repositorys, you can find
 We thank every author and contribtor of those repositories from :heart: , without their work this project woudn't have been possible. 
 
 # AI usage disclosure:
-I, **@MrHunor**, have used AI for explaining what do to when i didn't know anymore, as well as when i wanted to implement something but didn't know how or for scanning the codebase for bugs and possible enhancements. I've also used AI Audits, such as coderabbit on PRs.
+I, **@MrHunor**, have used AI for explaining what do to when i didn't know anymore, as well as when i wanted to implement something but didn't know how or for scanning the codebase for bugs and possible enhancements. I've also used AI Audits, such as coderabbit on PRs.  
 I, **@siryanni**, main usage of AI was during major bughunts, as the codebase has slowly gotten pretty big.
-                  other uses include: -image generation
-                                      -help with concept mapping
-                                      -help with code cleanup
----                                   -said coderabbit made Issues           
+Other uses include:  
+- image generation  
+- help with concept mapping  
+- help with code cleanup  
+- said coderabbit made Issues             
+
 For anyone looking to contribute we would ask them to follow the line we provided 
 
 # Big :heart: to the following:
