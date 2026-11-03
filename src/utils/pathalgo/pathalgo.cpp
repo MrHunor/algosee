@@ -26,14 +26,14 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-
-bool CheckMapForZero(const GraphWeighted& graph)
+bool CheckMapForZero(const GraphWeighted &graph)
 {
-    for(const auto& row : graph)
+    for (const auto &row : graph)
     {
-        for(const auto& element : row)
+        for (const auto &element : row)
         {
-            if(element.second==0) return true;
+            if (element.second == 0)
+                return true;
         }
     }
     return false;
@@ -52,25 +52,25 @@ bool CheckMapForZero(const MapInt &map)
     return false;
 }
 
-std::pair<int,int> CheckRange(const GraphWeighted& graph)
+std::pair<int, int> CheckRange(const GraphWeighted &graph)
 {
     int min = 0;
     int max = 0;
-    for(const auto& row : graph)
+    for (const auto &row : graph)
     {
-        for(const auto& element : row)
+        for (const auto &element : row)
         {
-            if(element.second>max)
+            if (element.second > max)
             {
-             max=element.second;
+                max = element.second;
             }
-            if(element.second<min)
+            if (element.second < min)
             {
-                min=element.second;
+                min = element.second;
             }
         }
     }
-    return {min,max};
+    return {min, max};
 }
 
 std::pair<int, int> CheckRange(const MapInt &map)
@@ -105,10 +105,13 @@ json SwapVisitedArray(const MapBool &visited)
 }
 
 // dijkstra uses the same thing but as int, so we can overload this
-json SwapVisitedArray(const std::vector<std::vector<uint64_t>> &visited)//cannot used mapInt here because your using thsi function with the distance array which is defined as uint64
+json SwapVisitedArray(
+    const std::vector<std::vector<uint64_t>>
+        &visited) // cannot used mapInt here because your using thsi function with the
+                  // distance array which is defined as uint64
 {
     std::vector<std::vector<uint64_t>> retval(visited[0].size(),
-                                         std::vector<uint64_t>(visited.size(), 0));
+                                              std::vector<uint64_t>(visited.size(), 0));
 
     for (int rows = 0; rows < visited.size(); rows++)
     {
@@ -120,8 +123,8 @@ json SwapVisitedArray(const std::vector<std::vector<uint64_t>> &visited)//cannot
     return json(retval);
 }
 
-void CheckMapValidness(const MapInt &map,
-                       const std::pair<int, int> &start, const std::pair<int, int> &goal)
+void CheckMapValidness(const MapInt &map, const std::pair<int, int> &start,
+                       const std::pair<int, int> &goal)
 {
     if (map.empty())
     {
@@ -155,14 +158,14 @@ void CheckMapValidness(const MapInt &map,
     {
         throw excep("Bad Map: Goal out of Map Bounds", 400);
     }
-    if(start.first ==goal.first && start.second==goal.second)
+    if (start.first == goal.first && start.second == goal.second)
     {
         throw excep("Bad Map: Start = Goal");
     }
 }
 
-void CheckMapValidness(const MapBool &map,
-                       const std::pair<int, int> &start, const std::pair<int, int> &goal)
+void CheckMapValidness(const MapBool &map, const std::pair<int, int> &start,
+                       const std::pair<int, int> &goal)
 {
     if (map.empty())
     {
@@ -196,7 +199,7 @@ void CheckMapValidness(const MapBool &map,
     {
         throw excep("Bad Map: End out of Map Bounds", 400);
     }
-     if(start.first ==goal.first && start.second==goal.second)
+    if (start.first == goal.first && start.second == goal.second)
     {
         throw excep("Bad Map: Start = Goal");
     }

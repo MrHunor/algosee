@@ -123,14 +123,14 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(const MapBool &map,
 
 //-----------------GRAPH BASED-------------------------------
 
-std::vector<int> BreadthFirstSearch(const GraphUnweighted &graph,const int start,const int goal,
-                                    json &response)
+std::vector<int> BreadthFirstSearch(const GraphUnweighted &graph, const int start,
+                                    const int goal, json &response)
 {
     unsigned int iteration = 0;
     const int rows = graph.size();
 
     std::vector<int> visited(rows, -1);
-    std::vector<int> parent(rows,-1);
+    std::vector<int> parent(rows, -1);
 
     std::vector<int> path;
 
@@ -142,7 +142,7 @@ std::vector<int> BreadthFirstSearch(const GraphUnweighted &graph,const int start
 
     while (!frontier.empty())
     {
-        int ID = frontier.front();//which Node we are currently looking at 
+        int ID = frontier.front(); // which Node we are currently looking at
         searchMap[ID] = iteration;
         frontier.pop();
 

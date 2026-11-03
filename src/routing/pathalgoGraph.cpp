@@ -18,11 +18,11 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+#include "../defs/implemented.h"
 #include "../exception/exception.h"
 #include "../logger/logger.h"
 #include "../pathalgo/algos.h"
 #include "../utils/general/utils.h"
-#include "../defs/implemented.h"
 #include "../validate/path/validate.h"
 #include <chrono>
 #include <exception>
@@ -46,7 +46,7 @@ void RunPathAlgoGraph(const httplib::Request &req, httplib::Response &res,
         state.out("Starting time measurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
 
-        if (implementedPathAlgoCatagory.at(info.algo)=='W')
+        if (implementedPathAlgoCatagory.at(info.algo) == 'W')
         {
             if (info.algo == "ASTAR")
                 path = ASTAR(info.graphWeighted, info.start, info.goal, response);
@@ -67,18 +67,19 @@ void RunPathAlgoGraph(const httplib::Request &req, httplib::Response &res,
                 path = BIBFS(info.graphUnweight, info.start, info.goal, response);
         }
         auto endTime = std::chrono::steady_clock::now();
-        auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime-startTime);
-        state.out("Ended time measurement...",0);
-        response["TIME"]=elapsed.count();
+        auto elapsed =
+            std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+        state.out("Ended time measurement...", 0);
+        response["TIME"] = elapsed.count();
 
-        if(path.empty())
+        if (path.empty())
         {
             throw excep("No valid path found...");
         }
-        res.status=200;
-        response["PATH"]=path;
-        response["ERROR"]="";
-        response["ERRORCODE"]=0;
+        res.status = 200;
+        response["PATH"] = path;
+        response["ERROR"] = "";
+        response["ERRORCODE"] = 0;
         res.set_header("Access-Control-Allow-Origin", "*");
         std::string responseString = std::move(response.dump());
         state.out("Sending response:" + responseString, 0);

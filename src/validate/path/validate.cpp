@@ -225,7 +225,7 @@ PathValidReturnGraph ValdiatePathGraph(const httplib::Request &req, StateClass &
             }
         }
     }
-    
+
     state.out("Checking element count...", 0);
     auto it = implementedPathAlgosSize.find(retval.algo);
     if (implementedPathAlgoCatagory.at(retval.algo) == 'W')

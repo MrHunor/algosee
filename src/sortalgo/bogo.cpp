@@ -26,7 +26,7 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void BogoSort(std::vector<int> &unsorted, json &response,StreamClass &stream)
+void BogoSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
 {
 
     if (unsorted.size() == 1)

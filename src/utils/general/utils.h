@@ -30,8 +30,8 @@
 int RandomInt(int lower, int upper);
 std::mt19937 getRandomGen();
 std::string ExecuteCommand(const std::string &command);
-void InvalidInputMessage(const std::string &details,
-                         const std::source_location location = std::source_location::current());
+void InvalidInputMessage(const std::string &details, const std::source_location location =
+                                                         std::source_location::current());
 void ReturnFailedAnswer(httplib::Response &res, const std::string &Details,
                         int exitCode = 400, StreamClass *stream = nullptr);
 void ReturnFailedAnswerStreamOnly(const std::string &Details, int exitCode,
@@ -41,7 +41,7 @@ void AddClient(clientListType &cList,
                                const std::string> &newEntry);
 bool CheckRateLimit(const clientListType &cList, int index);
 std::string GenerateRandomString(const int &size);
-std::string readFile(const std::string& path);
+std::string readFile(const std::string &path);
 std::mt19937 getRandomGen();
 void generateJsonRetrunArras(json &response);
 void fillWithMetaData(json &response);

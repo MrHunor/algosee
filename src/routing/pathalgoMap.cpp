@@ -30,7 +30,8 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void RunPathalgoMap(const httplib::Request &req, httplib::Response &res, StateClass &state)
+void RunPathalgoMap(const httplib::Request &req, httplib::Response &res,
+                    StateClass &state)
 {
     try
     {
@@ -47,7 +48,7 @@ void RunPathalgoMap(const httplib::Request &req, httplib::Response &res, StateCl
         state.out("Starting time mesurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
 
-        if (implementedPathAlgoCatagory.at(info.algo)=='U')
+        if (implementedPathAlgoCatagory.at(info.algo) == 'U')
         {
 
             // this could very likely throw

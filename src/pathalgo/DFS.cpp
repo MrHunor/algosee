@@ -26,8 +26,6 @@
 #include <utility>
 #include <vector>
 
-
-
 //------------------------MAP BASED------------------------------------
 
 // you can just copy the BFS and change the logic which takes the frontier
@@ -84,7 +82,7 @@ std::vector<std::pair<int, int>> DepthFirstSearch(const MapBool &map,
             if (map[yNeighbour][xNeighbour] == true)
                 continue; // current Neighboor not a valid tile, skip
 
-            if (visited[yNeighbour][xNeighbour] ==1)
+            if (visited[yNeighbour][xNeighbour] == 1)
                 continue; // been there done that, so skip
 
             // if everything thus far was negative that means we have a valid
@@ -125,18 +123,16 @@ std::vector<std::pair<int, int>> DepthFirstSearch(const MapBool &map,
     return path;
 }
 
-
-
 //-----------------------GRAPH BASED----------------------------------------
 
-std::vector<int> DepthFirstSearch(const GraphUnweighted &graph,const int start,const int goal,
-                                    json &response)
+std::vector<int> DepthFirstSearch(const GraphUnweighted &graph, const int start,
+                                  const int goal, json &response)
 {
     unsigned int iteration = 0;
     const int rows = graph.size();
 
     std::vector<int> visited(rows, -1);
-    std::vector<int> parent(rows,-1);
+    std::vector<int> parent(rows, -1);
 
     std::vector<int> path;
 
@@ -148,7 +144,7 @@ std::vector<int> DepthFirstSearch(const GraphUnweighted &graph,const int start,c
 
     while (!frontier.empty())
     {
-        int ID = frontier.top();//which Node we are currently looking at 
+        int ID = frontier.top(); // which Node we are currently looking at
         searchMap[ID] = iteration;
         frontier.pop();
 

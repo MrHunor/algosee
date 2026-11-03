@@ -28,7 +28,8 @@
 
 //---------------MAP BASED------------------------------
 
-std::vector<std::pair<int, int>> BIBFS(const MapBool &map, const std::pair<int, int> start,
+std::vector<std::pair<int, int>> BIBFS(const MapBool &map,
+                                       const std::pair<int, int> start,
                                        const std::pair<int, int> goal, json &response)
 {
     int iteration = 0;
@@ -53,7 +54,7 @@ std::vector<std::pair<int, int>> BIBFS(const MapBool &map, const std::pair<int, 
     std::queue<std::pair<int, int>> frontierFromStart;
     std::queue<std::pair<int, int>> frontierFromEnd;
 
-    std::vector<std::vector<int>> searchMap(rows,std::vector<int>(collums,-1));
+    std::vector<std::vector<int>> searchMap(rows, std::vector<int>(collums, -1));
 
     frontierFromStart.push({start.second, start.first});
     frontierFromEnd.push({goal.second, goal.first});
@@ -70,8 +71,8 @@ std::vector<std::pair<int, int>> BIBFS(const MapBool &map, const std::pair<int, 
         int yFromEnd = frontierFromEnd.front().first;
         int xFromEnd = frontierFromEnd.front().second;
 
-        searchMap[yFromStart][xFromStart]=iteration;
-        searchMap[yFromEnd][xFromEnd]=iteration;
+        searchMap[yFromStart][xFromStart] = iteration;
+        searchMap[yFromEnd][xFromEnd] = iteration;
         frontierFromStart.pop();
         frontierFromEnd.pop();
 
@@ -107,7 +108,7 @@ std::vector<std::pair<int, int>> BIBFS(const MapBool &map, const std::pair<int, 
             {
                 if (map[yNFromStart][xNFromStart] == true)
                     NFromStartValid = false;
-                if (visitedFromStart[yNFromStart][xNFromStart] ==1)
+                if (visitedFromStart[yNFromStart][xNFromStart] == 1)
                     NFromStartValid = false;
             }
 
@@ -151,7 +152,7 @@ std::vector<std::pair<int, int>> BIBFS(const MapBool &map, const std::pair<int, 
     }
     response["VISITEDFROMSTART"] = SwapVisitedArray(visitedFromStart);
     response["VISITEDFROMEND"] = SwapVisitedArray(visitedFromEnd);
-    response["SEARCHMAP"]=searchMap;
+    response["SEARCHMAP"] = searchMap;
     if (meetingPointX == -1)
         return {};
 
@@ -225,30 +226,30 @@ std::vector<int> BIBFS(const GraphUnweighted &graph, const int start, const int 
 
         // this only works if they perfectly meet, the other condition later should
         // catch that but ill leave that here because im scared
-        if (currentFromStartID==currentFromEndID)
+        if (currentFromStartID == currentFromEndID)
         {
-            meetingPoint=currentFromStartID;
+            meetingPoint = currentFromStartID;
             break; // both paths met, so a path to the goal has been found
         }
 
-
-        for(int i = 0; i<graph[currentFromStartID].size();i++)
+        for (int i = 0; i < graph[currentFromStartID].size(); i++)
         {
-            int currentNFromStartID=graph[currentFromStartID].at(i);
-            //check for already visited
+            int currentNFromStartID = graph[currentFromStartID].at(i);
+            // check for already visited
 
-            if(visitedFromStart[currentNFromStartID]!=-1)
+            if (visitedFromStart[currentNFromStartID] != -1)
             {
-             continue;
+                continue;
             }
 
-            visitedFromStart[currentNFromStartID]=iteration;
-            parentFromStart[currentNFromStartID]=currentFromStartID;
+            visitedFromStart[currentNFromStartID] = iteration;
+            parentFromStart[currentNFromStartID] = currentFromStartID;
             frontierFromStart.push(currentNFromStartID);
-            if(visitedFromEnd[currentNFromStartID]!=-1)//did we already discover this point from the other direction?
+            if (visitedFromEnd[currentNFromStartID] !=
+                -1) // did we already discover this point from the other direction?
             {
-             meetingPoint=currentNFromStartID;
-             break;
+                meetingPoint = currentNFromStartID;
+                break;
             }
         }
 
@@ -256,20 +257,19 @@ std::vector<int> BIBFS(const GraphUnweighted &graph, const int start, const int 
         {
             int currentNFromEndID = graph[currentFromEndID].at(i);
 
-            if(visitedFromEnd[currentNFromEndID]!=-1)
+            if (visitedFromEnd[currentNFromEndID] != -1)
             {
                 continue;
             }
-           
-            visitedFromEnd[currentNFromEndID]=iteration;
-            parentFromEnd[currentNFromEndID]=currentFromEndID;
+
+            visitedFromEnd[currentNFromEndID] = iteration;
+            parentFromEnd[currentNFromEndID] = currentFromEndID;
             frontierFromEnd.push(currentNFromEndID);
-            if(visitedFromStart[currentNFromEndID]!=-1)
+            if (visitedFromStart[currentNFromEndID] != -1)
             {
-                meetingPoint=currentNFromEndID;
+                meetingPoint = currentNFromEndID;
                 break;
             }
-
         }
         iteration++;
     }

@@ -56,7 +56,7 @@ void fillWithMetaData(json &response)
     response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
 }
 
-std::string readFile(const std::string& path)
+std::string readFile(const std::string &path)
 {
     std::ifstream file{path};
     if (!file)
@@ -210,7 +210,7 @@ void ReturnFailedAnswerStreamOnly(const std::string &Details, int exitCode,
     stream->finish();
 }
 
-void InvalidInputMessage(const std::string &details,const std::source_location location)
+void InvalidInputMessage(const std::string &details, const std::source_location location)
 {
 
     // yes i thought of making this state out for colour but that would require

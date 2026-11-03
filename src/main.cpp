@@ -245,7 +245,30 @@ int main(int argc, char *argv[])
 
         //---------------------------PATHALGOGRAPH----------------------------------------------------------------
         server.Post("/pathalgoGraph",
-                    [&](const httplib::Request &req, httplib::Response &res) { RunPathAlgoGraph(req, res, state);return 0; });
+                    [&](const httplib::Request &req, httplib::Response &res) {
+                        RunPathAlgoGraph(req, res, state);
+                        return 0;
+                    });
+
+        //---------------------------DEPRECATED
+        // FEATURES-----------------------------------------------------
+        server.Post("/pathalgo",
+                    [&](const httplib::Request &req, httplib::Response &res) {
+                        ReturnFailedAnswer(
+                            res,
+                            "/pathalgo Endpoint was deprecated in algosee 0.82. Please "
+                            "use /pathalgoMap for Maps and /pathalgoGraph for Graphs.",
+                            410);
+                        return 0;
+                    });
+
+        server.Get("/selftest", [&](const httplib::Request &req, httplib::Response &res) {
+            ReturnFailedAnswer(res,
+                               "/selftest was deprecated long ago. For testing algorithm "
+                               "validness please use algosee_testclient when building.");
+            return 0;
+        });
+
         try
         {
             // render port detection magic

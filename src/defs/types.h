@@ -24,10 +24,9 @@
 #include <chrono>
 #include <vector>
 
-
 typedef std::vector<std::vector<uint32_t>> GraphUnweighted;
 
-typedef std::vector<std::vector<std::pair<uint32_t,uint32_t>>> GraphWeighted;
+typedef std::vector<std::vector<std::pair<uint32_t, uint32_t>>> GraphWeighted;
 
 typedef std::vector<std::vector<int32_t>> MapInt;
 

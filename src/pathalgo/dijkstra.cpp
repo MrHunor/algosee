@@ -28,13 +28,12 @@
 #include <utility>
 #include <vector>
 
-
 using Node = std::pair<uint64_t, std::pair<int, int>>;
 struct CompareNodeDijkstra
 {
-    bool operator()(const Node& a, const Node& b)
+    bool operator()(const Node &a, const Node &b)
     {
-        return a.first>b.first;
+        return a.first > b.first;
     }
 };
 
@@ -50,9 +49,10 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
     // it uses a cost based vector<int> so this is effectivly just: "What is the
     // cheapest possible distance to this point in the map"
     std::vector<std::vector<uint64_t>> distance(
-        rows,
-        std::vector<uint64_t>(collums,
-                         std::numeric_limits<uint64_t>::max())); // i dont think i'll ever unstand this contructor
+        rows, std::vector<uint64_t>(
+                  collums,
+                  std::numeric_limits<uint64_t>::max())); // i dont think i'll ever
+                                                          // unstand this contructor
     std::vector<std::vector<std::pair<int, int>>> parent(
         rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
     std::vector<std::pair<int, int>> path;
@@ -60,7 +60,7 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
     // in contrast to BFS we need a reverse "priority" queue, this means the first
     // eleent of the queue is the one with the lowest "priority" which in Djkstras
     // case is the distance
-    
+
     std::priority_queue<Node, std::vector<Node>, CompareNodeDijkstra> frontier;
 
     distance[start.second][start.first] = 0;
@@ -103,7 +103,8 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
                 continue; // this tile is blocked, skip
 
             uint64_t newDistance = 0;
-            if (currentDistance > std::numeric_limits<uint64_t>::max() - map[yNeighbour][xNeighbour])
+            if (currentDistance >
+                std::numeric_limits<uint64_t>::max() - map[yNeighbour][xNeighbour])
             {
                 newDistance = std::numeric_limits<uint64_t>::max();
             }
@@ -158,29 +159,28 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
     return path;
 }
 
-
 //-----------------------GRAPH BASED-----------------------------------------
 
-
-
-std::vector<int> Dijkstra(const GraphWeighted& graph,
-                                          const int start,
-                                          const int goal, json &response)
+std::vector<int> Dijkstra(const GraphWeighted &graph, const int start, const int goal,
+                          json &response)
 {
     const int rows = graph.size();
 
     // dijkstra uses something similar to BFS but instead of vector<bool> visited,
     // it uses a cost based vector<int> so this is effectivly just: "What is the
     // cheapest possible distance to this point in the map"
-    std::vector<uint64_t> distance(rows,std::numeric_limits<uint64_t>::max()); // i dont think i'll ever unstand this contructor
-    std::vector<int> parent(rows,-1);
+    std::vector<uint64_t> distance(
+        rows, std::numeric_limits<uint64_t>::max()); // i dont think i'll ever unstand
+                                                     // this contructor
+    std::vector<int> parent(rows, -1);
     std::vector<int> path;
 
     // in contrast to BFS we need a reverse "priority" queue, this means the first
     // element of the queue is the one with the lowest "priority" which in Djkstras
     // case is the distance
     using Node = std::pair<int, int>;
-    std::priority_queue<Node, std::vector<Node>, std::greater<Node>> frontier;//yeah so in contrary to A* this implementation used weight,ID
+    std::priority_queue<Node, std::vector<Node>, std::greater<Node>>
+        frontier; // yeah so in contrary to A* this implementation used weight,ID
 
     distance[start] = 0;
 
@@ -207,8 +207,7 @@ std::vector<int> Dijkstra(const GraphWeighted& graph,
         // check all neighbours
         for (int i = 0; i < graph[currentID].size(); i++)
         {
-            std::pair<int,int> currentNID = graph[currentID].at(i);
-
+            std::pair<int, int> currentNID = graph[currentID].at(i);
 
             int newDistance = 0;
             if (currentDistance > INFINITY_INT - currentNID.first)
@@ -228,7 +227,7 @@ std::vector<int> Dijkstra(const GraphWeighted& graph,
                 // explored next
                 distance[currentNID.second] = newDistance;
                 parent[currentNID.second] = currentID;
-                frontier.push({newDistance,currentNID.second});
+                frontier.push({newDistance, currentNID.second});
             }
         }
     }

@@ -36,7 +36,7 @@ endif()
 
 
 
-project(algosee VERSION 0.81 LANGUAGES CXX)
+project(algosee VERSION 0.82 LANGUAGES CXX)
 
 
 

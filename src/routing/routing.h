@@ -92,7 +92,8 @@ void RunSortalgo(SortValidReturn info, StateClass &state, StreamClass &stream);
  *
  */
 
-void RunPathalgoMap(const httplib::Request &req, httplib::Response &res, StateClass &state);
+void RunPathalgoMap(const httplib::Request &req, httplib::Response &res,
+                    StateClass &state);
 /**
  * @brief Run The Image Sorting Endpoint
  *

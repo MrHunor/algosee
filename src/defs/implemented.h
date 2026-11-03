@@ -43,7 +43,8 @@ const std::unordered_map<std::string, int> implementedPathAlgosSize = {
     {"DFS", MAX_ELEMENT_COUNT_DFS},     {"BIBFS", MAX_ELEMENT_COUNT_BIBFS},
     {"ASTAR", MAX_ELEMENT_COUNT_ASTAR}, {"GBFS", MAX_ELEMENT_COUNT_GBFS}};
 
-const std::unordered_map<std::string, char> implementedPathAlgoCatagory = {//U(nweighted) or W(eighted)
+const std::unordered_map<std::string, char> implementedPathAlgoCatagory = {
+    // U(nweighted) or W(eighted)
     {"BFS", 'U'},   {"dijkstra", 'W'}, {"DFS", 'U'},
     {"BIBFS", 'U'}, {"ASTAR", 'W'},    {"GBFS", 'W'}};
 
