@@ -301,12 +301,12 @@ startBtn.addEventListener('click', async () => {
         });
 
       const responseText = await response.text();
-
-        if (!response.ok) {
-            let msg = responseText;
-            try { const parsed = JSON.parse(responseText); if (typeof parsed === 'string') msg = parsed; } catch (_) {}
-            throw new Error(msg || `Server-Fehler: ${response.status}`);
-        }
+    if (!response.ok) {
+                 let msg = responseText;
+                try { const parsed = JSON.parse(responseText); if (typeof parsed === 'string') msg = parsed; } catch (_) {}
+                throw
+            new Error(msg || `Server-Fehler: ${response.status}`);
+               }
 
         // --- NDJSON zeilenweise parsen und zusammenführen  ---
         const lines = responseText.split('\n').filter(line => line.trim() !== '');
