@@ -21,6 +21,7 @@
 #include "../../src/defs/implemented.h"
 #include "../../src/defs/types.h"
 #include "../../src/logger/logger.h"
+#include <cstdint>
 #include <cstdlib>
 #include <limits.h>
 #include <nlohmann/json.hpp>
@@ -57,6 +58,30 @@ GraphUnweighted generateGU(int size, int start, int goal)
     }
     return retval;
 }
+
+GraphWeighted generateGW(int size, int start, int goal)
+{
+    GraphWeighted retval(size);
+    for (int i = 0; i < size - 1;
+         i++) // this guarantees that there is always a path from start to goal so that
+              // Node 1: Connection to Node 2, Node 2: Connection to Node 3, Node 3:
+              // Connection to Node 4 and so on
+    {
+        retval[i].push_back({i + 1,1});
+    }
+    for (int i = 0; i < size;
+         i++) // this jsut serves as adding random data to confuse the pathfinding
+              // algorithm, sort of give it a challange
+    {
+        for (int z = 0; z < randomInt(0, 10); z++)
+        {
+            retval[i].push_back({randomInt(0, size - 1),randomInt(0,std::numeric_limits<uint8_t>::max())});
+        }
+    }
+    return retval;
+}
+
+
 
 void writeMemToImage(const rawImage &img)
 {

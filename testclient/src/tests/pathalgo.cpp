@@ -146,60 +146,122 @@ void runPathalgoTest(std::vector<run> &exitMessage, httplib::Client &client,
         currentrun.mapSize = {-1, -1};
         try
         {
-            GraphUnweighted graph;
-            state.out("Testing path validness for:" + currentrun.algoname +
-                          "\nSize:" + std::to_string(currentrun.size),
-                      0);
+            // i know a lot of this branch is copy paste but it serves for a
+            // cleaner split and better readability
             if (implementedPathAlgoCatagory.at(currentrun.algoname) == 'U')
             {
+                GraphUnweighted graph;
+                state.out("Testing path validness for:" + currentrun.algoname +
+                              "\nSize:" + std::to_string(currentrun.size),
+                          0);
+
                 graph = generateGU(currentrun.size, randomInt(0, currentrun.size - 1),
                                    randomInt(0, currentrun.size - 1));
-            }
 
-            int start = randomInt(0, currentrun.size - 1);
-            int goal = randomInt(0, currentrun.size - 1);
-            json reqBody = {{"GRAPH", graph},
-                            {
-                                "START",
-                                start,
-                            },
-                            {"GOAL", goal}};
-            auto res = client.Post("/pathalgoGraph?algo=" + currentrun.algoname,
-                                   reqBody.dump(), "application/json");
+                int start = randomInt(0, currentrun.size - 1);
+                int goal = randomInt(0, currentrun.size - 1);
+                json reqBody = {{"GRAPH", graph},
+                                {
+                                    "START",
+                                    start,
+                                },
+                                {"GOAL", goal}};
+                auto res = client.Post("/pathalgoGraph?algo=" + currentrun.algoname,
+                                       reqBody.dump(), "application/json");
 
-            if (!res)
-                throw std::runtime_error("Request failed.");
-            if (res->status != 200)
-                throw std::runtime_error(
-                    "Non 200 Code returned:\nerrorCode:" + std::to_string(res->status) +
-                    "\nserver details:" + res->body);
+                if (!res)
+                    throw std::runtime_error("Request failed.");
+                if (res->status != 200)
+                    throw std::runtime_error("Non 200 Code returned:\nerrorCode:" +
+                                             std::to_string(res->status) +
+                                             "\nserver details:" + res->body);
 
-            state.out("Recived", 0);
-            json response = json::parse(res->body);
-            state.out("Parsed.", 0);
-            checkForAllResponseTypes(response);
-            checkForCertainResponseType(
-                response, implementedAlgoExpectedResponseType.at(currentrun.algoname));
-            std::vector<int> path = response["PATH"];
+                state.out("Recived", 0);
+                json response = json::parse(res->body);
+                state.out("Parsed.", 0);
+                checkForAllResponseTypes(response);
+                checkForCertainResponseType(
+                    response,
+                    implementedAlgoExpectedResponseType.at(currentrun.algoname));
+                std::vector<int> path = response["PATH"];
 
-            if (path.empty() || path.front() != start || path.back() != goal)
-                throw std::runtime_error("Path is either empty, does not start at start "
-                                         "or does not end at end.");
-            for (int i = 0; i < path.size() - 1; i++)
-            {
-                bool foundNext = false;
-                for (const auto &element : graph[path[i]])
-                {
-                    if (element == path[i + 1])
-                        foundNext = true;
-                }
-                if (!foundNext)
+                if (path.empty() || path.front() != start || path.back() != goal)
                     throw std::runtime_error(
-                        "While investigating path element:" + std::to_string(i) +
-                        ", No connection was found thats the same as the next path "
-                        "element");
+                        "Path is either empty, does not start at start "
+                        "or does not end at end.");
+                for (int i = 0; i < path.size() - 1; i++)
+                {
+                    bool foundNext = false;
+                    for (const auto &element : graph[path[i]])
+                    {
+                        if (element == path[i + 1])
+                            foundNext = true;
+                    }
+                    if (!foundNext)
+                        throw std::runtime_error(
+                            "While investigating path element:" + std::to_string(i) +
+                            ", No connection was found thats the same as the next path "
+                            "element");
+                }
+                exitMessage.push_back(currentrun);
             }
-            exitMessage.push_back(currentrun);
+            if (implementedPathAlgoCatagory.at(currentrun.algoname) == 'W')
+            {
+                      GraphWeighted graph;
+                state.out("Testing path validness for:" + currentrun.algoname +
+                              "\nSize:" + std::to_string(currentrun.size),
+                          0);
+
+                graph = generateGW(currentrun.size, randomInt(0, currentrun.size - 1),
+                                   randomInt(0, currentrun.size - 1));
+
+                int start = randomInt(0, currentrun.size - 1);
+                int goal = randomInt(0, currentrun.size - 1);
+                json reqBody = {{"GRAPH", graph},
+                                {
+                                    "START",
+                                    start,
+                                },
+                                {"GOAL", goal}};
+                auto res = client.Post("/pathalgoGraph?algo=" + currentrun.algoname,
+                                       reqBody.dump(), "application/json");
+
+                if (!res)
+                    throw std::runtime_error("Request failed.");
+                if (res->status != 200)
+                    throw std::runtime_error("Non 200 Code returned:\nerrorCode:" +
+                                             std::to_string(res->status) +
+                                             "\nserver details:" + res->body);
+
+                state.out("Recived", 0);
+                json response = json::parse(res->body);
+                state.out("Parsed.", 0);
+                checkForAllResponseTypes(response);
+                checkForCertainResponseType(
+                    response,
+                    implementedAlgoExpectedResponseType.at(currentrun.algoname));
+                std::vector<int> path = response["PATH"];
+
+                if (path.empty() || path.front() != start || path.back() != goal)
+                    throw std::runtime_error(
+                        "Path is either empty, does not start at start "
+                        "or does not end at end.");
+                for (int i = 0; i < path.size() - 1; i++)
+                {
+                    bool foundNext = false;
+                    for (const auto &element : graph[path[i]])
+                    {
+                        if (element.first == path[i + 1])
+                            foundNext = true;
+                    }
+                    if (!foundNext)
+                        throw std::runtime_error(
+                            "While investigating path element:" + std::to_string(i) +
+                            ", No connection was found thats the same as the next path "
+                            "element");
+                }
+                exitMessage.push_back(currentrun);
+            }
         }
         catch (const std::exception &e)
         {
