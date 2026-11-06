@@ -126,6 +126,8 @@ int main(int argc, char *argv[])
         server.Options("(/status)", serverOptionHandler);
         server.Options("(/image)", serverOptionHandler);
         server.Options("(/limits)", serverOptionHandler);
+        server.Options("(/pathalgo)", serverOptionHandler);
+        server.Options("(/status)", serverOptionHandler);
 
         server.set_payload_max_length(10000000);
 
