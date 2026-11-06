@@ -47,4 +47,5 @@ void QuickSort(indexPixel &unsorted, int low, int high, json &response,
 void CountingSort(indexPixel &unsorted, json &response, StreamClass &stream);
 void CycleSort(indexPixel &unsorted, json &response, StreamClass &stream);
 void MergeSort(indexPixel &unsorted, json &response, StreamClass &stream);
+void HeapSort(indexPixel &unsorted, json &response, StreamClass &stream);
 #endif

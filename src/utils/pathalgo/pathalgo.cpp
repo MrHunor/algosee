@@ -26,6 +26,9 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
+GraphUnweighted buildReverseGraph(GraphUnweighted)
+
+
 bool CheckMapForZero(const GraphWeighted &graph)
 {
     for (const auto &row : graph)

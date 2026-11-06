@@ -66,6 +66,12 @@ const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesImage{
     {"cycle", {25, 12}},
     {"cycle", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}},
 
+    {"heap", {5, 5}},
+    {"heap", {15, 12}},
+    {"heap", {25, 25}},
+    {"heap", {25, 12}},
+    {"heap", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}},
+
     // bogo is factorial time: keep sizes tiny
     {"bogo", {1, 2}},
     {"bogo", {2, 3}},

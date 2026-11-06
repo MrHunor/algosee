@@ -18,11 +18,15 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../defs/general.h"
+#include "../defs/types.h"
 #include "../stream/stream.h"
+#include "../utils/image/image.h"
 #include <algorithm>
 #include <nlohmann/json.hpp>
 #include <utility>
 #include <vector>
+
+//-----------------------NUMBERS--------------------------------------------------
 
 /*  Tree
       0
@@ -99,6 +103,73 @@ void HeapSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
         std::vector<int> arr(unsorted.end() - i, unsorted.end());
         response["HEAP"].push_back(std::move(heap));
         response["ARRAY"].push_back(std::move(arr));
+        if (response["HEAP"].size() > 100)
+        {
+            stream.sendChunk(std::move(response));
+            response.clear();
+        }
+        std::swap(unsorted[0], unsorted[i - 1]);
+        heapify(unsorted, i - 1,
+                0); // this call is pretty smart, it generates the heap again, but leaves
+                    // the now sorted element at the end out
+    }
+}
+
+//-----------------------------------IMAGE-------------------------------------------
+void heapify(indexPixel &arr, int size, int largestIndex)
+{
+    int originalParent = largestIndex;
+    int leftChild = 2 * originalParent + 1;
+    int rightChild = 2 * originalParent + 2;
+
+    if (leftChild < size)
+    {
+        if (arr[leftChild].first > arr[largestIndex].first)
+        {
+            largestIndex = leftChild;
+        }
+    }
+    if (rightChild < size)
+    {
+        if (arr[rightChild].first > arr[largestIndex].first)
+        {
+            largestIndex = rightChild;
+        }
+    }
+    if (largestIndex != originalParent)
+    {
+        std::swap(arr[largestIndex], arr[originalParent]);
+        heapify(arr, size,
+                largestIndex); // sice we just moved the parent to one of the children we
+                               // must check that the move still satifies the heap propery
+                               // at that childrens index; (variable name might be
+                               // confusing, the "largest index" represents the index of
+                               // the childs node that was promoted to parent) (effectivly
+                               // doing a top to bottom check)
+    }
+}
+void buildHeap(indexPixel &unsorted) // adjesent matrix
+{
+    int lastNonLeafNodeIndex =
+        unsorted.size() / 2 -
+        1; // dont ask me why this works, we just treat the input as a binary tree but i
+           // dont understand why this formula works
+    for (int i = lastNonLeafNodeIndex; i >= 0; i--) // bottomUp
+    {
+        heapify(unsorted, unsorted.size(), i);
+    }
+}
+
+void HeapSort(indexPixel &unsorted, json &response, StreamClass &stream)
+{
+    size_t size = unsorted.size();
+    buildHeap(unsorted);
+    for (int i = size; i > 0; i--)
+    {
+        indexPixel heap(unsorted.begin(), unsorted.end() - i);
+        indexPixel arr(unsorted.end() - i, unsorted.end());
+        response["HEAP"].push_back(IndexPixelArrToJson(std::move(heap)));
+        response["ARRAY"].push_back(IndexPixelArrToJson(std::move(arr)));
         if (response["HEAP"].size() > 100)
         {
             stream.sendChunk(std::move(response));

@@ -45,7 +45,7 @@ struct pixel
     colour A;
 };
 
-typedef std::vector<std::pair<int, pixel>> indexPixel;
+typedef std::vector<std::pair<int, pixel>> indexPixel; // Index, Pixel
 
 struct rawImage
 {
