@@ -33,37 +33,37 @@
 #include <unordered_map>
 #include <vector>
 const std::unordered_map<std::string, int> implementedSortAlgos = {
-    {"selection", MAX_ELEMENT_COUNT_SELECTION}, {"bogo", MAX_ELEMENT_COUNT_BOGO},
-    {"bubble", MAX_ELEMENT_COUNT_BUBBLE},       {"quick", MAX_ELEMENT_COUNT_QUICK},
-    {"merge", MAX_ELEMENT_COUNT_MERGE},         {"counting", MAX_ELEMENT_COUNT_COUNTING},
-    {"cycle", MAX_ELEMENT_COUNT_CYCLE},         {"heap", MAX_ELEMENT_COUNT_HEAP}};
+    {"bogo", MAX_ELEMENT_COUNT_BOGO},         {"bubble", MAX_ELEMENT_COUNT_BUBBLE},
+    {"counting", MAX_ELEMENT_COUNT_COUNTING}, {"cycle", MAX_ELEMENT_COUNT_CYCLE},
+    {"heap", MAX_ELEMENT_COUNT_HEAP},         {"merge", MAX_ELEMENT_COUNT_MERGE},
+    {"quick", MAX_ELEMENT_COUNT_QUICK},       {"selection", MAX_ELEMENT_COUNT_SELECTION}};
 
 const std::unordered_map<std::string, int> implementedPathAlgosSize = {
-    {"BFS", MAX_ELEMENT_COUNT_BFS},     {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA},
-    {"DFS", MAX_ELEMENT_COUNT_DFS},     {"BIBFS", MAX_ELEMENT_COUNT_BIBFS},
-    {"ASTAR", MAX_ELEMENT_COUNT_ASTAR}, {"GBFS", MAX_ELEMENT_COUNT_GBFS}};
+    {"ASTAR", MAX_ELEMENT_COUNT_ASTAR},       {"BFS", MAX_ELEMENT_COUNT_BFS},
+    {"BIBFS", MAX_ELEMENT_COUNT_BIBFS},       {"DFS", MAX_ELEMENT_COUNT_DFS},
+    {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA}, {"GBFS", MAX_ELEMENT_COUNT_GBFS}};
 
 const std::unordered_map<std::string, char> implementedPathAlgoCatagory = {
     // U(nweighted) or W(eighted)
-    {"BFS", 'U'},   {"dijkstra", 'W'}, {"DFS", 'U'},
-    {"BIBFS", 'U'}, {"ASTAR", 'W'},    {"GBFS", 'W'}};
+    {"ASTAR", 'W'}, {"BFS", 'U'},      {"BIBFS", 'U'},
+    {"DFS", 'U'},   {"dijkstra", 'W'}, {"GBFS", 'W'}};
 
 const std::vector<std::string> implementedArrayReturnTypes = {
-    "MOVES",
-    "TRIES",
     "COUNT ARRAY",
-    "SWAPED",
-    "SORTED (LEFT,RIGHT)",
-    "MERGED (LEFT,RIGHT,RESULT)",
-    "SPLIT (ORIGIN,LEFT,RIGHT)",
-    "SORTED",
-    "PATH",
     "DISTANCE",
-    "VISITED",
+    "MERGED (LEFT,RIGHT,RESULT)",
+    "MOVES",
+    "PATH",
     "SEARCHMAP",
-    "VISITEDFROMSTART",
-    "VISITEDFROMEND"};
+    "SORTED",
+    "SORTED (LEFT,RIGHT)",
+    "SPLIT (ORIGIN,LEFT,RIGHT)",
+    "SWAPED",
+    "TRIES",
+    "VISITED",
+    "VISITEDFROMEND",
+    "VISITEDFROMSTART"};
 
-const std::vector<std::string> implementedNonArrayReturnTypes = {"STATUS", "VERSION",
-                                                                 "BUILDTIME", "TIME"};
+const std::vector<std::string> implementedNonArrayReturnTypes = {"BUILDTIME", "STATUS",
+                                                                 "TIME", "VERSION"};
 #endif

@@ -120,9 +120,9 @@ int main(int argc, char *argv[])
                 res.status = 200;
             };
 
-        server.Options("(/sortalgo)", serverOptionHandler);
-        server.Options("(/pathalgoMap)", serverOptionHandler);
         server.Options("(/pathalgoGraph)", serverOptionHandler);
+        server.Options("(/pathalgoMap)", serverOptionHandler);
+        server.Options("(/sortalgo)", serverOptionHandler);
         server.Options("(/status)", serverOptionHandler);
         server.Options("(/image)", serverOptionHandler);
         server.Options("(/limits)", serverOptionHandler);
@@ -130,12 +130,6 @@ int main(int argc, char *argv[])
         server.Options("(/status)", serverOptionHandler);
 
         server.set_payload_max_length(10000000);
-
-        //--------------------------LIMITS----------------------------------
-        server.Get("/limits", [&](const httplib::Request &req, httplib::Response &res) {
-            RunLimits(res, state);
-            return;
-        });
 
         //--------------------------IMAGE-----------------------------------------------------------
         server.Post("/image", [&](const httplib::Request &req, httplib::Response &res) {
@@ -180,77 +174,11 @@ int main(int argc, char *argv[])
             return;
         });
 
-        //---------------------------STATUS---------------------------------------------------------------------
-        server.Get("/status", [&](const httplib::Request &req, httplib::Response &res) {
-            RunStatus(req, res, state);
+        //--------------------------LIMITS----------------------------------
+        server.Get("/limits", [&](const httplib::Request &req, httplib::Response &res) {
+            RunLimits(res, state);
             return;
         });
-
-        //------------------------------SORTALGO---------------------------------------------------------------
-        server.Post("/sortalgo", [&](const httplib::Request &req,
-                                     httplib::Response &res) {
-            auto stream =
-                std::make_shared<StreamClass>(); // kinda complicated why this is
-                                                 // needed, the problem is that
-            // this handler /sortalgo might return and run streams
-            // destuctor if defined like: StreamClass stream and the
-            // set_chunk_content_provided might call it after that because
-            // it still has to return a chunk and because the object has
-            // been destroyed the lamda acesses invalid memory. Another
-            // specialty is that this should only be needed in this
-            // specific callback scenario as these are the two exit points
-            // of a valid destructor, so for any other usecase you can
-            // dereference the pointer and pass the object Another point
-            // you must look out for is that you have to pass stream by
-            // value and not by reference because only this way it is
-            // shared (so the lifetime is bound to either destructors)
-
-            SortValidReturn info;
-            try
-            {
-                info = ValidateSort(req, state);
-            }
-
-            catch (const excep &e)
-            {
-                state.out("Cought a excep, Details:" + std::string(e.what()) + "\n" +
-                              "Status Code:" + std::to_string(e.exitCode),
-                          1);
-                ReturnFailedAnswer(res, e.what(), e.exitCode);
-                return;
-            }
-            catch (const std::exception &e)
-            {
-                state.out("Cought an std::exception, Details:" + std::string(e.what()),
-                          1);
-                ReturnFailedAnswer(res, e.what());
-                return;
-            }
-
-            res.set_chunked_content_provider("application/x-ndjson",
-                                             MakeChunkProvider(stream));
-
-            std::thread NUMsorter(
-                [info, stream, &state] { RunSortalgo(info, state, *stream); });
-            NUMsorter.detach();
-
-            res.set_header("Access-Control-Allow-Origin", "*");
-            return;
-        });
-
-        //------------------------------PATHALGOMAP----------------------------------------------------------------
-        server.Post("/pathalgoMap",
-                    [&](const httplib::Request &req, httplib::Response &res) {
-                        RunPathalgoMap(req, res, state);
-                        return;
-                    });
-
-        //---------------------------PATHALGOGRAPH----------------------------------------------------------------
-        server.Post("/pathalgoGraph",
-                    [&](const httplib::Request &req, httplib::Response &res) {
-                        RunPathAlgoGraph(req, res, state);
-                        return 0;
-                    });
 
         //---------------------------DEPRECATED
         // FEATURES-----------------------------------------------------
@@ -273,6 +201,79 @@ int main(int argc, char *argv[])
 
         try
         {
+            //---------------------------PATHALGOGRAPH----------------------------------------------------------------
+            server.Post("/pathalgoGraph",
+                        [&](const httplib::Request &req, httplib::Response &res) {
+                            RunPathAlgoGraph(req, res, state);
+                            return 0;
+                        });
+
+            //------------------------------PATHALGOMAP----------------------------------------------------------------
+            server.Post("/pathalgoMap",
+                        [&](const httplib::Request &req, httplib::Response &res) {
+                            RunPathalgoMap(req, res, state);
+                            return;
+                        });
+
+            //------------------------------SORTALGO---------------------------------------------------------------
+            server.Post("/sortalgo", [&](const httplib::Request &req,
+                                         httplib::Response &res) {
+                auto stream =
+                    std::make_shared<StreamClass>(); // kinda complicated why this is
+                                                     // needed, the problem is that
+                // this handler /sortalgo might return and run streams
+                // destuctor if defined like: StreamClass stream and the
+                // set_chunk_content_provided might call it after that because
+                // it still has to return a chunk and because the object has
+                // been destroyed the lamda acesses invalid memory. Another
+                // specialty is that this should only be needed in this
+                // specific callback scenario as these are the two exit points
+                // of a valid destructor, so for any other usecase you can
+                // dereference the pointer and pass the object Another point
+                // you must look out for is that you have to pass stream by
+                // value and not by reference because only this way it is
+                // shared (so the lifetime is bound to either destructors)
+
+                SortValidReturn info;
+                try
+                {
+                    info = ValidateSort(req, state);
+                }
+
+                catch (const excep &e)
+                {
+                    state.out("Cought a excep, Details:" + std::string(e.what()) + "\n" +
+                                  "Status Code:" + std::to_string(e.exitCode),
+                              1);
+                    ReturnFailedAnswer(res, e.what(), e.exitCode);
+                    return;
+                }
+                catch (const std::exception &e)
+                {
+                    state.out(
+                        "Cought an std::exception, Details:" + std::string(e.what()), 1);
+                    ReturnFailedAnswer(res, e.what());
+                    return;
+                }
+
+                res.set_chunked_content_provider("application/x-ndjson",
+                                                 MakeChunkProvider(stream));
+
+                std::thread NUMsorter(
+                    [info, stream, &state] { RunSortalgo(info, state, *stream); });
+                NUMsorter.detach();
+
+                res.set_header("Access-Control-Allow-Origin", "*");
+                return;
+            });
+
+            //---------------------------STATUS---------------------------------------------------------------------
+            server.Get("/status",
+                       [&](const httplib::Request &req, httplib::Response &res) {
+                           RunStatus(req, res, state);
+                           return;
+                       });
+
             // render port detection magic
             const char *port_env = std::getenv("PORT");
             int port = port_env ? std::stoi(port_env) : 8080;
