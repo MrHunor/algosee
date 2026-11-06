@@ -1,4 +1,4 @@
-# Implemented Algorithms  
+# Implemented Algorithms
 Currently the following Algorithms are implemented:
 
 ### Sorting
@@ -10,10 +10,10 @@ Currently the following Algorithms are implemented:
 | Bubble    | Supported |
 | Quick     | Supported |
 | Merge     | Supported |
-| Counting  | Supported | 
+| Counting  | Supported |
 | Cycle Sort | Supported |
 
-### Pathfinding 
+### Pathfinding
 
 | Algorithm | Status |
 |-----------|--------|
@@ -21,7 +21,7 @@ Currently the following Algorithms are implemented:
 | Dijkstra | Supported |
 | Depth first search (DFS) | Supported |
 | Bidirectional Breadth first search (BIBFS) | Supported |
-| A* | Supported | 
+| A* | Supported |
 | Greedy Best-First-Search (GBFS) | Supported |
 
 *Tip: You can view the defintion of these algorithms in [src/defs/implemented.h](./../src/defs/implemented.h)*
