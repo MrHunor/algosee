@@ -26,8 +26,18 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-GraphUnweighted buildReverseGraph(GraphUnweighted)
-
+GraphUnweighted buildReverseGraph(const GraphUnweighted &arr)
+{
+    GraphUnweighted retval(arr.size());
+    for (int i = 0; i < retval.size(); i++)
+    {
+        for (const auto &element :
+             arr[i]) // now looking at each connection from node i to each 'element'
+        {
+            retval[element].push_back(i);
+        }
+    }
+}
 
 bool CheckMapForZero(const GraphWeighted &graph)
 {
