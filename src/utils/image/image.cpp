@@ -19,9 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef STB_IMAGE_IMPLEMENTATION
-#define STB_IMAGE_IMPLEMENTATION
-#endif
+
 #include "../../defs/general.h"
 #include "../../defs/max_sizes.h"
 #include "../../defs/types.h"

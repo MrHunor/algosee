@@ -84,6 +84,11 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     )
 endif()
 
+set_source_files_properties( # you have to execlude this because somehow stb doesnt like unity builds when one files includes the implementations def
+    src/utils/image/stb_image.cpp
+    PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON
+)
+
 string(TIMESTAMP BUILD_TIME "%Y-%m-%dT%H:%M:%S")
 
 configure_file(

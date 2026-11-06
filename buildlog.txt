@@ -1,0 +1,1648 @@
+-- Using Conan toolchain: /home/user/code/algosee/build/conan_toolchain.cmake
+-- Conan toolchain: Defining architecture flag: -m64
+-- Conan toolchain: C++ Standard 20 with extensions ON
+-- Warning: Standard CMAKE_CXX_STANDARD value defined in conan_toolchain.cmake to 20 has been modified to 23 by /home/user/code/algosee/CMakeLists.txt
+-- Conan: Target declared 'nlohmann_json::nlohmann_json'
+-- Conan: Target declared 'httplib::httplib'
+-- Conan: Target declared 'stb::stb'
+-- Conan: Target declared 'CLI11::CLI11'
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/user/code/algosee/build
+[0/2] Re-checking globbed directories...
+[1/7] Building CXX object CMakeFiles/algosee.dir/Unity/unity_3_cxx.cxx.o
+FAILED: [code=1] CMakeFiles/algosee.dir/Unity/unity_3_cxx.cxx.o 
+/usr/bin/ccache /usr/bin/c++ -DCPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO -DSTB_TEXTEDIT_KEYTYPE=unsigned -I/home/user/code/algosee/build/generated -isystem /home/user/.conan2/p/nlohmd014ef7748f4b/p/include -isystem /home/user/.conan2/p/cpp-h320a4fd5aa060/p/include -isystem /home/user/.conan2/p/cpp-h320a4fd5aa060/p/include/httplib -isystem /home/user/.conan2/p/stb19b77fb56ffd7/p/include -isystem /home/user/.conan2/p/cli11b4b4bfe193f8e/p/include -m64 -g -std=gnu++23 -Winvalid-pch -include /home/user/code/algosee/build/CMakeFiles/algosee.dir/cmake_pch.hxx -MD -MT CMakeFiles/algosee.dir/Unity/unity_3_cxx.cxx.o -MF CMakeFiles/algosee.dir/Unity/unity_3_cxx.cxx.o.d -o CMakeFiles/algosee.dir/Unity/unity_3_cxx.cxx.o -c /home/user/code/algosee/build/CMakeFiles/algosee.dir/Unity/unity_3_cxx.cxx
+In file included from /home/user/code/algosee/src/validate/image/../../utils/image/image.h:26,
+                 from /home/user/code/algosee/src/validate/image/validate.cpp:25,
+                 from /home/user/code/algosee/build/CMakeFiles/algosee.dir/Unity/unity_3_cxx.cxx:13:
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:978:37: error: macro ‘stbi__err’ requires 2 arguments, but only 1 given
+  978 | static int stbi__err(const char *str)
+      |                                     ^
+In file included from /home/user/code/algosee/src/utils/image/image.cpp:33,
+                 from /home/user/code/algosee/build/CMakeFiles/algosee.dir/Unity/unity_3_cxx.cxx:4:
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1095:12: note: macro ‘stbi__err’ defined here
+ 1095 |    #define stbi__err(x,y)  stbi__err(x)
+      |            ^~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:765:12: error: redefinition of ‘int stbi__sse2_available()’
+  765 | static int stbi__sse2_available(void)
+      |            ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:765:12: note: ‘int stbi__sse2_available()’ previously defined here
+  765 | static int stbi__sse2_available(void)
+      |            ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:820:3: error: conflicting declaration ‘typedef struct stbi__context stbi__context’
+  820 | } stbi__context;
+      |   ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:820:3: note: previous declaration as ‘typedef struct stbi__context stbi__context’
+  820 | } stbi__context;
+      |   ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:826:13: error: redefinition of ‘void stbi__start_mem(stbi__context*, const stbi_uc*, int)’
+  826 | static void stbi__start_mem(stbi__context *s, stbi_uc const *buffer, int len)
+      |             ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:826:13: note: ‘void stbi__start_mem(stbi__context*, const stbi_uc*, int)’ previously defined here
+  826 | static void stbi__start_mem(stbi__context *s, stbi_uc const *buffer, int len)
+      |             ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:836:13: error: redefinition of ‘void stbi__start_callbacks(stbi__context*, stbi_io_callbacks*, void*)’
+  836 | static void stbi__start_callbacks(stbi__context *s, stbi_io_callbacks *c, void *user)
+      |             ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:836:13: note: ‘void stbi__start_callbacks(stbi__context*, stbi_io_callbacks*, void*)’ previously defined here
+  836 | static void stbi__start_callbacks(stbi__context *s, stbi_io_callbacks *c, void *user)
+      |             ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:850:12: error: redefinition of ‘int stbi__stdio_read(void*, char*, int)’
+  850 | static int stbi__stdio_read(void *user, char *data, int size)
+      |            ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:850:12: note: ‘int stbi__stdio_read(void*, char*, int)’ previously defined here
+  850 | static int stbi__stdio_read(void *user, char *data, int size)
+      |            ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:855:13: error: redefinition of ‘void stbi__stdio_skip(void*, int)’
+  855 | static void stbi__stdio_skip(void *user, int n)
+      |             ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:855:13: note: ‘void stbi__stdio_skip(void*, int)’ previously defined here
+  855 | static void stbi__stdio_skip(void *user, int n)
+      |             ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:865:12: error: redefinition of ‘int stbi__stdio_eof(void*)’
+  865 | static int stbi__stdio_eof(void *user)
+      |            ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:865:12: note: ‘int stbi__stdio_eof(void*)’ previously defined here
+  865 | static int stbi__stdio_eof(void *user)
+      |            ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:870:26: error: redefinition of ‘stbi_io_callbacks stbi__stdio_callbacks’
+  870 | static stbi_io_callbacks stbi__stdio_callbacks =
+      |                          ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:870:26: note: ‘stbi_io_callbacks stbi__stdio_callbacks’ previously defined here
+  870 | static stbi_io_callbacks stbi__stdio_callbacks =
+      |                          ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:877:13: error: redefinition of ‘void stbi__start_file(stbi__context*, FILE*)’
+  877 | static void stbi__start_file(stbi__context *s, FILE *f)
+      |             ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:877:13: note: ‘void stbi__start_file(stbi__context*, FILE*)’ previously defined here
+  877 | static void stbi__start_file(stbi__context *s, FILE *f)
+      |             ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:886:13: error: redefinition of ‘void stbi__rewind(stbi__context*)’
+  886 | static void stbi__rewind(stbi__context *s)
+      |             ^~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:886:13: note: ‘void stbi__rewind(stbi__context*)’ previously defined here
+  886 | static void stbi__rewind(stbi__context *s)
+      |             ^~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:897:4: error: ‘STBI_ORDER_RGB’ conflicts with a previous declaration
+  897 |    STBI_ORDER_RGB,
+      |    ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:897:4: note: previous declaration ‘<unnamed enum> STBI_ORDER_RGB’
+  897 |    STBI_ORDER_RGB,
+      |    ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:898:4: error: ‘STBI_ORDER_BGR’ conflicts with a previous declaration
+  898 |    STBI_ORDER_BGR
+      |    ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:898:4: note: previous declaration ‘<unnamed enum> STBI_ORDER_BGR’
+  898 |    STBI_ORDER_BGR
+      |    ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:906:3: error: conflicting declaration ‘typedef struct stbi__result_info stbi__result_info’
+  906 | } stbi__result_info;
+      |   ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:906:3: note: previous declaration as ‘typedef struct stbi__result_info stbi__result_info’
+  906 | } stbi__result_info;
+      |   ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:970:13: error: redefinition of ‘const char* stbi__g_failure_reason’
+  970 | const char *stbi__g_failure_reason;
+      |             ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:970:13: note: ‘const char* stbi__g_failure_reason’ previously declared here
+  970 | const char *stbi__g_failure_reason;
+      |             ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:972:21: error: redefinition of ‘const char* stbi_failure_reason()’
+  972 | STBIDEF const char *stbi_failure_reason(void)
+      |                     ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:972:21: note: ‘const char* stbi_failure_reason()’ previously defined here
+  972 | STBIDEF const char *stbi_failure_reason(void)
+      |                     ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:978:12: error: ‘int stbi__err’ redeclared as different kind of entity
+  978 | static int stbi__err(const char *str)
+      |            ^~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:978:12: note: previous declaration ‘int stbi__err(const char*)’
+  978 | static int stbi__err(const char *str)
+      |            ^~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:980:29: error: ‘str’ was not declared in this scope; did you mean ‘std’?
+  980 |    stbi__g_failure_reason = str;
+      |                             ^~~
+      |                             std
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:980:32: error: expected ‘}’ before ‘;’ token
+  980 |    stbi__g_failure_reason = str;
+      |                                ^
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:979:1: note: to match this ‘{’
+  979 | {
+      | ^
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:981:4: error: expected unqualified-id before ‘return’
+  981 |    return 0;
+      |    ^~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:982:1: error: expected declaration before ‘}’ token
+  982 | }
+      | ^
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:985:14: error: redefinition of ‘void* stbi__malloc(size_t)’
+  985 | static void *stbi__malloc(size_t size)
+      |              ^~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:985:14: note: ‘void* stbi__malloc(size_t)’ previously defined here
+  985 | static void *stbi__malloc(size_t size)
+      |              ^~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1002:12: error: redefinition of ‘int stbi__addsizes_valid(int, int)’
+ 1002 | static int stbi__addsizes_valid(int a, int b)
+      |            ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1002:12: note: ‘int stbi__addsizes_valid(int, int)’ previously defined here
+ 1002 | static int stbi__addsizes_valid(int a, int b)
+      |            ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1014:12: error: redefinition of ‘int stbi__mul2sizes_valid(int, int)’
+ 1014 | static int stbi__mul2sizes_valid(int a, int b)
+      |            ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1014:12: note: ‘int stbi__mul2sizes_valid(int, int)’ previously defined here
+ 1014 | static int stbi__mul2sizes_valid(int a, int b)
+      |            ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1024:12: error: redefinition of ‘int stbi__mad2sizes_valid(int, int, int)’
+ 1024 | static int stbi__mad2sizes_valid(int a, int b, int add)
+      |            ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1024:12: note: ‘int stbi__mad2sizes_valid(int, int, int)’ previously defined here
+ 1024 | static int stbi__mad2sizes_valid(int a, int b, int add)
+      |            ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1031:12: error: redefinition of ‘int stbi__mad3sizes_valid(int, int, int, int)’
+ 1031 | static int stbi__mad3sizes_valid(int a, int b, int c, int add)
+      |            ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1031:12: note: ‘int stbi__mad3sizes_valid(int, int, int, int)’ previously defined here
+ 1031 | static int stbi__mad3sizes_valid(int a, int b, int c, int add)
+      |            ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1039:12: error: redefinition of ‘int stbi__mad4sizes_valid(int, int, int, int, int)’
+ 1039 | static int stbi__mad4sizes_valid(int a, int b, int c, int d, int add)
+      |            ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1039:12: note: ‘int stbi__mad4sizes_valid(int, int, int, int, int)’ previously defined here
+ 1039 | static int stbi__mad4sizes_valid(int a, int b, int c, int d, int add)
+      |            ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1048:14: error: redefinition of ‘void* stbi__malloc_mad2(int, int, int)’
+ 1048 | static void *stbi__malloc_mad2(int a, int b, int add)
+      |              ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1048:14: note: ‘void* stbi__malloc_mad2(int, int, int)’ previously defined here
+ 1048 | static void *stbi__malloc_mad2(int a, int b, int add)
+      |              ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1055:14: error: redefinition of ‘void* stbi__malloc_mad3(int, int, int, int)’
+ 1055 | static void *stbi__malloc_mad3(int a, int b, int c, int add)
+      |              ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1055:14: note: ‘void* stbi__malloc_mad3(int, int, int, int)’ previously defined here
+ 1055 | static void *stbi__malloc_mad3(int a, int b, int c, int add)
+      |              ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1062:14: error: redefinition of ‘void* stbi__malloc_mad4(int, int, int, int, int)’
+ 1062 | static void *stbi__malloc_mad4(int a, int b, int c, int d, int add)
+      |              ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1062:14: note: ‘void* stbi__malloc_mad4(int, int, int, int, int)’ previously defined here
+ 1062 | static void *stbi__malloc_mad4(int a, int b, int c, int d, int add)
+      |              ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1070:12: error: redefinition of ‘int stbi__addints_valid(int, int)’
+ 1070 | static int stbi__addints_valid(int a, int b)
+      |            ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1070:12: note: ‘int stbi__addints_valid(int, int)’ previously defined here
+ 1070 | static int stbi__addints_valid(int a, int b)
+      |            ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1078:12: error: redefinition of ‘int stbi__mul2shorts_valid(int, int)’
+ 1078 | static int stbi__mul2shorts_valid(int a, int b)
+      |            ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1078:12: note: ‘int stbi__mul2shorts_valid(int, int)’ previously defined here
+ 1078 | static int stbi__mul2shorts_valid(int a, int b)
+      |            ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1101:14: error: redefinition of ‘void stbi_image_free(void*)’
+ 1101 | STBIDEF void stbi_image_free(void *retval_from_stbi_load)
+      |              ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1101:14: note: ‘void stbi_image_free(void*)’ previously defined here
+ 1101 | STBIDEF void stbi_image_free(void *retval_from_stbi_load)
+      |              ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1114:12: error: redefinition of ‘int stbi__vertically_flip_on_load_global’
+ 1114 | static int stbi__vertically_flip_on_load_global = 0;
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1114:12: note: ‘int stbi__vertically_flip_on_load_global’ previously defined here
+ 1114 | static int stbi__vertically_flip_on_load_global = 0;
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1116:14: error: redefinition of ‘void stbi_set_flip_vertically_on_load(int)’
+ 1116 | STBIDEF void stbi_set_flip_vertically_on_load(int flag_true_if_should_flip)
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1116:14: note: ‘void stbi_set_flip_vertically_on_load(int)’ previously defined here
+ 1116 | STBIDEF void stbi_set_flip_vertically_on_load(int flag_true_if_should_flip)
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1124:30: error: redefinition of ‘int stbi__vertically_flip_on_load_local’
+ 1124 | static STBI_THREAD_LOCAL int stbi__vertically_flip_on_load_local, stbi__vertically_flip_on_load_set;
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1124:30: note: ‘int stbi__vertically_flip_on_load_local’ previously declared here
+ 1124 | static STBI_THREAD_LOCAL int stbi__vertically_flip_on_load_local, stbi__vertically_flip_on_load_set;
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1124:67: error: redefinition of ‘int stbi__vertically_flip_on_load_set’
+ 1124 | static STBI_THREAD_LOCAL int stbi__vertically_flip_on_load_local, stbi__vertically_flip_on_load_set;
+      |                                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1124:67: note: ‘int stbi__vertically_flip_on_load_set’ previously declared here
+ 1124 | static STBI_THREAD_LOCAL int stbi__vertically_flip_on_load_local, stbi__vertically_flip_on_load_set;
+      |                                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1126:14: error: redefinition of ‘void stbi_set_flip_vertically_on_load_thread(int)’
+ 1126 | STBIDEF void stbi_set_flip_vertically_on_load_thread(int flag_true_if_should_flip)
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1126:14: note: ‘void stbi_set_flip_vertically_on_load_thread(int)’ previously defined here
+ 1126 | STBIDEF void stbi_set_flip_vertically_on_load_thread(int flag_true_if_should_flip)
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1137:14: error: redefinition of ‘void* stbi__load_main(stbi__context*, int*, int*, int*, int, stbi__result_info*, int)’
+ 1137 | static void *stbi__load_main(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri, int bpc)
+      |              ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1137:14: note: ‘void* stbi__load_main(stbi__context*, int*, int*, int*, int, stbi__result_info*, int)’ previously defined here
+ 1137 | static void *stbi__load_main(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri, int bpc)
+      |              ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1190:17: error: redefinition of ‘stbi_uc* stbi__convert_16_to_8(stbi__uint16*, int, int, int)’
+ 1190 | static stbi_uc *stbi__convert_16_to_8(stbi__uint16 *orig, int w, int h, int channels)
+      |                 ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1190:17: note: ‘stbi_uc* stbi__convert_16_to_8(stbi__uint16*, int, int, int)’ previously defined here
+ 1190 | static stbi_uc *stbi__convert_16_to_8(stbi__uint16 *orig, int w, int h, int channels)
+      |                 ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1206:22: error: redefinition of ‘stbi__uint16* stbi__convert_8_to_16(stbi_uc*, int, int, int)’
+ 1206 | static stbi__uint16 *stbi__convert_8_to_16(stbi_uc *orig, int w, int h, int channels)
+      |                      ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1206:22: note: ‘stbi__uint16* stbi__convert_8_to_16(stbi_uc*, int, int, int)’ previously defined here
+ 1206 | static stbi__uint16 *stbi__convert_8_to_16(stbi_uc *orig, int w, int h, int channels)
+      |                      ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1222:13: error: redefinition of ‘void stbi__vertical_flip(void*, int, int, int)’
+ 1222 | static void stbi__vertical_flip(void *image, int w, int h, int bytes_per_pixel)
+      |             ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1222:13: note: ‘void stbi__vertical_flip(void*, int, int, int)’ previously defined here
+ 1222 | static void stbi__vertical_flip(void *image, int w, int h, int bytes_per_pixel)
+      |             ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1247:13: error: redefinition of ‘void stbi__vertical_flip_slices(void*, int, int, int, int)’
+ 1247 | static void stbi__vertical_flip_slices(void *image, int w, int h, int z, int bytes_per_pixel)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1247:13: note: ‘void stbi__vertical_flip_slices(void*, int, int, int, int)’ previously defined here
+ 1247 | static void stbi__vertical_flip_slices(void *image, int w, int h, int z, int bytes_per_pixel)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1260:23: error: redefinition of ‘unsigned char* stbi__load_and_postprocess_8bit(stbi__context*, int*, int*, int*, int)’
+ 1260 | static unsigned char *stbi__load_and_postprocess_8bit(stbi__context *s, int *x, int *y, int *comp, int req_comp)
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1260:23: note: ‘unsigned char* stbi__load_and_postprocess_8bit(stbi__context*, int*, int*, int*, int)’ previously defined here
+ 1260 | static unsigned char *stbi__load_and_postprocess_8bit(stbi__context *s, int *x, int *y, int *comp, int req_comp)
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1286:22: error: redefinition of ‘stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context*, int*, int*, int*, int)’
+ 1286 | static stbi__uint16 *stbi__load_and_postprocess_16bit(stbi__context *s, int *x, int *y, int *comp, int req_comp)
+      |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1286:22: note: ‘stbi__uint16* stbi__load_and_postprocess_16bit(stbi__context*, int*, int*, int*, int)’ previously defined here
+ 1286 | static stbi__uint16 *stbi__load_and_postprocess_16bit(stbi__context *s, int *x, int *y, int *comp, int req_comp)
+      |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1314:13: error: redefinition of ‘void stbi__float_postprocess(float*, int*, int*, int*, int)’
+ 1314 | static void stbi__float_postprocess(float *result, int *x, int *y, int *comp, int req_comp)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1314:13: note: ‘void stbi__float_postprocess(float*, int*, int*, int*, int)’ previously defined here
+ 1314 | static void stbi__float_postprocess(float *result, int *x, int *y, int *comp, int req_comp)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1337:14: error: redefinition of ‘FILE* stbi__fopen(const char*, const char*)’
+ 1337 | static FILE *stbi__fopen(char const *filename, char const *mode)
+      |              ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1337:14: note: ‘FILE* stbi__fopen(const char*, const char*)’ previously defined here
+ 1337 | static FILE *stbi__fopen(char const *filename, char const *mode)
+      |              ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1366:18: error: redefinition of ‘stbi_uc* stbi_load(const char*, int*, int*, int*, int)’
+ 1366 | STBIDEF stbi_uc *stbi_load(char const *filename, int *x, int *y, int *comp, int req_comp)
+      |                  ^~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1366:18: note: ‘stbi_uc* stbi_load(const char*, int*, int*, int*, int)’ previously defined here
+ 1366 | STBIDEF stbi_uc *stbi_load(char const *filename, int *x, int *y, int *comp, int req_comp)
+      |                  ^~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1376:18: error: redefinition of ‘stbi_uc* stbi_load_from_file(FILE*, int*, int*, int*, int)’
+ 1376 | STBIDEF stbi_uc *stbi_load_from_file(FILE *f, int *x, int *y, int *comp, int req_comp)
+      |                  ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1376:18: note: ‘stbi_uc* stbi_load_from_file(FILE*, int*, int*, int*, int)’ previously defined here
+ 1376 | STBIDEF stbi_uc *stbi_load_from_file(FILE *f, int *x, int *y, int *comp, int req_comp)
+      |                  ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1389:23: error: redefinition of ‘stbi__uint16* stbi_load_from_file_16(FILE*, int*, int*, int*, int)’
+ 1389 | STBIDEF stbi__uint16 *stbi_load_from_file_16(FILE *f, int *x, int *y, int *comp, int req_comp)
+      |                       ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1389:23: note: ‘stbi__uint16* stbi_load_from_file_16(FILE*, int*, int*, int*, int)’ previously defined here
+ 1389 | STBIDEF stbi__uint16 *stbi_load_from_file_16(FILE *f, int *x, int *y, int *comp, int req_comp)
+      |                       ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1402:18: error: redefinition of ‘stbi_us* stbi_load_16(const char*, int*, int*, int*, int)’
+ 1402 | STBIDEF stbi_us *stbi_load_16(char const *filename, int *x, int *y, int *comp, int req_comp)
+      |                  ^~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1402:18: note: ‘stbi_us* stbi_load_16(const char*, int*, int*, int*, int)’ previously defined here
+ 1402 | STBIDEF stbi_us *stbi_load_16(char const *filename, int *x, int *y, int *comp, int req_comp)
+      |                  ^~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1415:18: error: redefinition of ‘stbi_us* stbi_load_16_from_memory(const stbi_uc*, int, int*, int*, int*, int)’
+ 1415 | STBIDEF stbi_us *stbi_load_16_from_memory(stbi_uc const *buffer, int len, int *x, int *y, int *channels_in_file, int desired_channels)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1415:18: note: ‘stbi_us* stbi_load_16_from_memory(const stbi_uc*, int, int*, int*, int*, int)’ previously defined here
+ 1415 | STBIDEF stbi_us *stbi_load_16_from_memory(stbi_uc const *buffer, int len, int *x, int *y, int *channels_in_file, int desired_channels)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1422:18: error: redefinition of ‘stbi_us* stbi_load_16_from_callbacks(const stbi_io_callbacks*, void*, int*, int*, int*, int)’
+ 1422 | STBIDEF stbi_us *stbi_load_16_from_callbacks(stbi_io_callbacks const *clbk, void *user, int *x, int *y, int *channels_in_file, int desired_channels)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1422:18: note: ‘stbi_us* stbi_load_16_from_callbacks(const stbi_io_callbacks*, void*, int*, int*, int*, int)’ previously defined here
+ 1422 | STBIDEF stbi_us *stbi_load_16_from_callbacks(stbi_io_callbacks const *clbk, void *user, int *x, int *y, int *channels_in_file, int desired_channels)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1429:18: error: redefinition of ‘stbi_uc* stbi_load_from_memory(const stbi_uc*, int, int*, int*, int*, int)’
+ 1429 | STBIDEF stbi_uc *stbi_load_from_memory(stbi_uc const *buffer, int len, int *x, int *y, int *comp, int req_comp)
+      |                  ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1429:18: note: ‘stbi_uc* stbi_load_from_memory(const stbi_uc*, int, int*, int*, int*, int)’ previously defined here
+ 1429 | STBIDEF stbi_uc *stbi_load_from_memory(stbi_uc const *buffer, int len, int *x, int *y, int *comp, int req_comp)
+      |                  ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1436:18: error: redefinition of ‘stbi_uc* stbi_load_from_callbacks(const stbi_io_callbacks*, void*, int*, int*, int*, int)’
+ 1436 | STBIDEF stbi_uc *stbi_load_from_callbacks(stbi_io_callbacks const *clbk, void *user, int *x, int *y, int *comp, int req_comp)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1436:18: note: ‘stbi_uc* stbi_load_from_callbacks(const stbi_io_callbacks*, void*, int*, int*, int*, int)’ previously defined here
+ 1436 | STBIDEF stbi_uc *stbi_load_from_callbacks(stbi_io_callbacks const *clbk, void *user, int *x, int *y, int *comp, int req_comp)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1444:18: error: redefinition of ‘stbi_uc* stbi_load_gif_from_memory(const stbi_uc*, int, int**, int*, int*, int*, int*, int)’
+ 1444 | STBIDEF stbi_uc *stbi_load_gif_from_memory(stbi_uc const *buffer, int len, int **delays, int *x, int *y, int *z, int *comp, int req_comp)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1444:18: note: ‘stbi_uc* stbi_load_gif_from_memory(const stbi_uc*, int, int**, int*, int*, int*, int*, int)’ previously defined here
+ 1444 | STBIDEF stbi_uc *stbi_load_gif_from_memory(stbi_uc const *buffer, int len, int **delays, int *x, int *y, int *z, int *comp, int req_comp)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1460:15: error: redefinition of ‘float* stbi__loadf_main(stbi__context*, int*, int*, int*, int)’
+ 1460 | static float *stbi__loadf_main(stbi__context *s, int *x, int *y, int *comp, int req_comp)
+      |               ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1460:15: note: ‘float* stbi__loadf_main(stbi__context*, int*, int*, int*, int)’ previously defined here
+ 1460 | static float *stbi__loadf_main(stbi__context *s, int *x, int *y, int *comp, int req_comp)
+      |               ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1478:16: error: redefinition of ‘float* stbi_loadf_from_memory(const stbi_uc*, int, int*, int*, int*, int)’
+ 1478 | STBIDEF float *stbi_loadf_from_memory(stbi_uc const *buffer, int len, int *x, int *y, int *comp, int req_comp)
+      |                ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1478:16: note: ‘float* stbi_loadf_from_memory(const stbi_uc*, int, int*, int*, int*, int)’ previously defined here
+ 1478 | STBIDEF float *stbi_loadf_from_memory(stbi_uc const *buffer, int len, int *x, int *y, int *comp, int req_comp)
+      |                ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1485:16: error: redefinition of ‘float* stbi_loadf_from_callbacks(const stbi_io_callbacks*, void*, int*, int*, int*, int)’
+ 1485 | STBIDEF float *stbi_loadf_from_callbacks(stbi_io_callbacks const *clbk, void *user, int *x, int *y, int *comp, int req_comp)
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1485:16: note: ‘float* stbi_loadf_from_callbacks(const stbi_io_callbacks*, void*, int*, int*, int*, int)’ previously defined here
+ 1485 | STBIDEF float *stbi_loadf_from_callbacks(stbi_io_callbacks const *clbk, void *user, int *x, int *y, int *comp, int req_comp)
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1493:16: error: redefinition of ‘float* stbi_loadf(const char*, int*, int*, int*, int)’
+ 1493 | STBIDEF float *stbi_loadf(char const *filename, int *x, int *y, int *comp, int req_comp)
+      |                ^~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1493:16: note: ‘float* stbi_loadf(const char*, int*, int*, int*, int)’ previously defined here
+ 1493 | STBIDEF float *stbi_loadf(char const *filename, int *x, int *y, int *comp, int req_comp)
+      |                ^~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1503:16: error: redefinition of ‘float* stbi_loadf_from_file(FILE*, int*, int*, int*, int)’
+ 1503 | STBIDEF float *stbi_loadf_from_file(FILE *f, int *x, int *y, int *comp, int req_comp)
+      |                ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1503:16: note: ‘float* stbi_loadf_from_file(FILE*, int*, int*, int*, int)’ previously defined here
+ 1503 | STBIDEF float *stbi_loadf_from_file(FILE *f, int *x, int *y, int *comp, int req_comp)
+      |                ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1517:13: error: redefinition of ‘int stbi_is_hdr_from_memory(const stbi_uc*, int)’
+ 1517 | STBIDEF int stbi_is_hdr_from_memory(stbi_uc const *buffer, int len)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1517:13: note: ‘int stbi_is_hdr_from_memory(const stbi_uc*, int)’ previously defined here
+ 1517 | STBIDEF int stbi_is_hdr_from_memory(stbi_uc const *buffer, int len)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1531:18: error: redefinition of ‘int stbi_is_hdr(const char*)’
+ 1531 | STBIDEF int      stbi_is_hdr          (char const *filename)
+      |                  ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1531:18: note: ‘int stbi_is_hdr(const char*)’ previously defined here
+ 1531 | STBIDEF int      stbi_is_hdr          (char const *filename)
+      |                  ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1542:13: error: redefinition of ‘int stbi_is_hdr_from_file(FILE*)’
+ 1542 | STBIDEF int stbi_is_hdr_from_file(FILE *f)
+      |             ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1542:13: note: ‘int stbi_is_hdr_from_file(FILE*)’ previously defined here
+ 1542 | STBIDEF int stbi_is_hdr_from_file(FILE *f)
+      |             ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1559:18: error: redefinition of ‘int stbi_is_hdr_from_callbacks(const stbi_io_callbacks*, void*)’
+ 1559 | STBIDEF int      stbi_is_hdr_from_callbacks(stbi_io_callbacks const *clbk, void *user)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1559:18: note: ‘int stbi_is_hdr_from_callbacks(const stbi_io_callbacks*, void*)’ previously defined here
+ 1559 | STBIDEF int      stbi_is_hdr_from_callbacks(stbi_io_callbacks const *clbk, void *user)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1573:14: error: redefinition of ‘float stbi__l2h_gamma’
+ 1573 | static float stbi__l2h_gamma=2.2f, stbi__l2h_scale=1.0f;
+      |              ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1573:14: note: ‘float stbi__l2h_gamma’ previously defined here
+ 1573 | static float stbi__l2h_gamma=2.2f, stbi__l2h_scale=1.0f;
+      |              ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1573:36: error: redefinition of ‘float stbi__l2h_scale’
+ 1573 | static float stbi__l2h_gamma=2.2f, stbi__l2h_scale=1.0f;
+      |                                    ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1573:36: note: ‘float stbi__l2h_scale’ previously defined here
+ 1573 | static float stbi__l2h_gamma=2.2f, stbi__l2h_scale=1.0f;
+      |                                    ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1575:16: error: redefinition of ‘void stbi_ldr_to_hdr_gamma(float)’
+ 1575 | STBIDEF void   stbi_ldr_to_hdr_gamma(float gamma) { stbi__l2h_gamma = gamma; }
+      |                ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1575:16: note: ‘void stbi_ldr_to_hdr_gamma(float)’ previously defined here
+ 1575 | STBIDEF void   stbi_ldr_to_hdr_gamma(float gamma) { stbi__l2h_gamma = gamma; }
+      |                ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1576:16: error: redefinition of ‘void stbi_ldr_to_hdr_scale(float)’
+ 1576 | STBIDEF void   stbi_ldr_to_hdr_scale(float scale) { stbi__l2h_scale = scale; }
+      |                ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1576:16: note: ‘void stbi_ldr_to_hdr_scale(float)’ previously defined here
+ 1576 | STBIDEF void   stbi_ldr_to_hdr_scale(float scale) { stbi__l2h_scale = scale; }
+      |                ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1579:14: error: redefinition of ‘float stbi__h2l_gamma_i’
+ 1579 | static float stbi__h2l_gamma_i=1.0f/2.2f, stbi__h2l_scale_i=1.0f;
+      |              ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1579:14: note: ‘float stbi__h2l_gamma_i’ previously defined here
+ 1579 | static float stbi__h2l_gamma_i=1.0f/2.2f, stbi__h2l_scale_i=1.0f;
+      |              ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1579:43: error: redefinition of ‘float stbi__h2l_scale_i’
+ 1579 | static float stbi__h2l_gamma_i=1.0f/2.2f, stbi__h2l_scale_i=1.0f;
+      |                                           ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1579:43: note: ‘float stbi__h2l_scale_i’ previously defined here
+ 1579 | static float stbi__h2l_gamma_i=1.0f/2.2f, stbi__h2l_scale_i=1.0f;
+      |                                           ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1581:16: error: redefinition of ‘void stbi_hdr_to_ldr_gamma(float)’
+ 1581 | STBIDEF void   stbi_hdr_to_ldr_gamma(float gamma) { stbi__h2l_gamma_i = 1/gamma; }
+      |                ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1581:16: note: ‘void stbi_hdr_to_ldr_gamma(float)’ previously defined here
+ 1581 | STBIDEF void   stbi_hdr_to_ldr_gamma(float gamma) { stbi__h2l_gamma_i = 1/gamma; }
+      |                ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1582:16: error: redefinition of ‘void stbi_hdr_to_ldr_scale(float)’
+ 1582 | STBIDEF void   stbi_hdr_to_ldr_scale(float scale) { stbi__h2l_scale_i = 1/scale; }
+      |                ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1582:16: note: ‘void stbi_hdr_to_ldr_scale(float)’ previously defined here
+ 1582 | STBIDEF void   stbi_hdr_to_ldr_scale(float scale) { stbi__h2l_scale_i = 1/scale; }
+      |                ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1592:20: error: ‘STBI__SCAN_load’ conflicts with a previous declaration
+ 1592 |    STBI__SCAN_load=0,
+      |                    ^
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1592:4: note: previous declaration ‘<unnamed enum> STBI__SCAN_load’
+ 1592 |    STBI__SCAN_load=0,
+      |    ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1593:4: error: ‘STBI__SCAN_type’ conflicts with a previous declaration
+ 1593 |    STBI__SCAN_type,
+      |    ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1593:4: note: previous declaration ‘<unnamed enum> STBI__SCAN_type’
+ 1593 |    STBI__SCAN_type,
+      |    ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1594:4: error: ‘STBI__SCAN_header’ conflicts with a previous declaration
+ 1594 |    STBI__SCAN_header
+      |    ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1594:4: note: previous declaration ‘<unnamed enum> STBI__SCAN_header’
+ 1594 |    STBI__SCAN_header
+      |    ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1597:13: error: redefinition of ‘void stbi__refill_buffer(stbi__context*)’
+ 1597 | static void stbi__refill_buffer(stbi__context *s)
+      |             ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1597:13: note: ‘void stbi__refill_buffer(stbi__context*)’ previously defined here
+ 1597 | static void stbi__refill_buffer(stbi__context *s)
+      |             ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1614:28: error: redefinition of ‘stbi_uc stbi__get8(stbi__context*)’
+ 1614 | stbi_inline static stbi_uc stbi__get8(stbi__context *s)
+      |                            ^~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1614:28: note: ‘stbi_uc stbi__get8(stbi__context*)’ previously defined here
+ 1614 | stbi_inline static stbi_uc stbi__get8(stbi__context *s)
+      |                            ^~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1628:24: error: redefinition of ‘int stbi__at_eof(stbi__context*)’
+ 1628 | stbi_inline static int stbi__at_eof(stbi__context *s)
+      |                        ^~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1628:24: note: ‘int stbi__at_eof(stbi__context*)’ previously defined here
+ 1628 | stbi_inline static int stbi__at_eof(stbi__context *s)
+      |                        ^~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1644:13: error: redefinition of ‘void stbi__skip(stbi__context*, int)’
+ 1644 | static void stbi__skip(stbi__context *s, int n)
+      |             ^~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1644:13: note: ‘void stbi__skip(stbi__context*, int)’ previously defined here
+ 1644 | static void stbi__skip(stbi__context *s, int n)
+      |             ^~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1666:12: error: redefinition of ‘int stbi__getn(stbi__context*, stbi_uc*, int)’
+ 1666 | static int stbi__getn(stbi__context *s, stbi_uc *buffer, int n)
+      |            ^~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1666:12: note: ‘int stbi__getn(stbi__context*, stbi_uc*, int)’ previously defined here
+ 1666 | static int stbi__getn(stbi__context *s, stbi_uc *buffer, int n)
+      |            ^~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1694:12: error: redefinition of ‘int stbi__get16be(stbi__context*)’
+ 1694 | static int stbi__get16be(stbi__context *s)
+      |            ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1694:12: note: ‘int stbi__get16be(stbi__context*)’ previously defined here
+ 1694 | static int stbi__get16be(stbi__context *s)
+      |            ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1704:21: error: redefinition of ‘stbi__uint32 stbi__get32be(stbi__context*)’
+ 1704 | static stbi__uint32 stbi__get32be(stbi__context *s)
+      |                     ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1704:21: note: ‘stbi__uint32 stbi__get32be(stbi__context*)’ previously defined here
+ 1704 | static stbi__uint32 stbi__get32be(stbi__context *s)
+      |                     ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1714:12: error: redefinition of ‘int stbi__get16le(stbi__context*)’
+ 1714 | static int stbi__get16le(stbi__context *s)
+      |            ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1714:12: note: ‘int stbi__get16le(stbi__context*)’ previously defined here
+ 1714 | static int stbi__get16le(stbi__context *s)
+      |            ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1722:21: error: redefinition of ‘stbi__uint32 stbi__get32le(stbi__context*)’
+ 1722 | static stbi__uint32 stbi__get32le(stbi__context *s)
+      |                     ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1722:21: note: ‘stbi__uint32 stbi__get32le(stbi__context*)’ previously defined here
+ 1722 | static stbi__uint32 stbi__get32le(stbi__context *s)
+      |                     ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1746:16: error: redefinition of ‘stbi_uc stbi__compute_y(int, int, int)’
+ 1746 | static stbi_uc stbi__compute_y(int r, int g, int b)
+      |                ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1746:16: note: ‘stbi_uc stbi__compute_y(int, int, int)’ previously defined here
+ 1746 | static stbi_uc stbi__compute_y(int r, int g, int b)
+      |                ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1755:23: error: redefinition of ‘unsigned char* stbi__convert_format(unsigned char*, int, int, unsigned int, unsigned int)’
+ 1755 | static unsigned char *stbi__convert_format(unsigned char *data, int img_n, int req_comp, unsigned int x, unsigned int y)
+      |                       ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1755:23: note: ‘unsigned char* stbi__convert_format(unsigned char*, int, int, unsigned int, unsigned int)’ previously defined here
+ 1755 | static unsigned char *stbi__convert_format(unsigned char *data, int img_n, int req_comp, unsigned int x, unsigned int y)
+      |                       ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1803:21: error: redefinition of ‘stbi__uint16 stbi__compute_y_16(int, int, int)’
+ 1803 | static stbi__uint16 stbi__compute_y_16(int r, int g, int b)
+      |                     ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1803:21: note: ‘stbi__uint16 stbi__compute_y_16(int, int, int)’ previously defined here
+ 1803 | static stbi__uint16 stbi__compute_y_16(int r, int g, int b)
+      |                     ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1812:22: error: redefinition of ‘stbi__uint16* stbi__convert_format16(stbi__uint16*, int, int, unsigned int, unsigned int)’
+ 1812 | static stbi__uint16 *stbi__convert_format16(stbi__uint16 *data, int img_n, int req_comp, unsigned int x, unsigned int y)
+      |                      ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1812:22: note: ‘stbi__uint16* stbi__convert_format16(stbi__uint16*, int, int, unsigned int, unsigned int)’ previously defined here
+ 1812 | static stbi__uint16 *stbi__convert_format16(stbi__uint16 *data, int img_n, int req_comp, unsigned int x, unsigned int y)
+      |                      ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1858:17: error: redefinition of ‘float* stbi__ldr_to_hdr(stbi_uc*, int, int, int)’
+ 1858 | static float   *stbi__ldr_to_hdr(stbi_uc *data, int x, int y, int comp)
+      |                 ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1858:17: note: ‘float* stbi__ldr_to_hdr(stbi_uc*, int, int, int)’ previously defined here
+ 1858 | static float   *stbi__ldr_to_hdr(stbi_uc *data, int x, int y, int comp)
+      |                 ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1884:17: error: redefinition of ‘stbi_uc* stbi__hdr_to_ldr(float*, int, int, int)’
+ 1884 | static stbi_uc *stbi__hdr_to_ldr(float   *data, int x, int y, int comp)
+      |                 ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1884:17: note: ‘stbi_uc* stbi__hdr_to_ldr(float*, int, int, int)’ previously defined here
+ 1884 | static stbi_uc *stbi__hdr_to_ldr(float   *data, int x, int y, int comp)
+      |                 ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1947:3: error: conflicting declaration ‘typedef struct stbi__huffman stbi__huffman’
+ 1947 | } stbi__huffman;
+      |   ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:1947:3: note: previous declaration as ‘typedef struct stbi__huffman stbi__huffman’
+ 1947 | } stbi__huffman;
+      |   ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2001:3: error: conflicting declaration ‘typedef struct stbi__jpeg stbi__jpeg’
+ 2001 | } stbi__jpeg;
+      |   ^~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2001:3: note: previous declaration as ‘typedef struct stbi__jpeg stbi__jpeg’
+ 2001 | } stbi__jpeg;
+      |   ^~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2003:12: error: redefinition of ‘int stbi__build_huffman(stbi__huffman*, int*)’
+ 2003 | static int stbi__build_huffman(stbi__huffman *h, int *count)
+      |            ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2003:12: note: ‘int stbi__build_huffman(stbi__huffman*, int*)’ previously defined here
+ 2003 | static int stbi__build_huffman(stbi__huffman *h, int *count)
+      |            ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2050:13: error: redefinition of ‘void stbi__build_fast_ac(stbi__int16*, stbi__huffman*)’
+ 2050 | static void stbi__build_fast_ac(stbi__int16 *fast_ac, stbi__huffman *h)
+      |             ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2050:13: note: ‘void stbi__build_fast_ac(stbi__int16*, stbi__huffman*)’ previously defined here
+ 2050 | static void stbi__build_fast_ac(stbi__int16 *fast_ac, stbi__huffman *h)
+      |             ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2075:13: error: redefinition of ‘void stbi__grow_buffer_unsafe(stbi__jpeg*)’
+ 2075 | static void stbi__grow_buffer_unsafe(stbi__jpeg *j)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2075:13: note: ‘void stbi__grow_buffer_unsafe(stbi__jpeg*)’ previously defined here
+ 2075 | static void stbi__grow_buffer_unsafe(stbi__jpeg *j)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2094:27: error: redefinition of ‘const stbi__uint32 stbi__bmask [17]’
+ 2094 | static const stbi__uint32 stbi__bmask[17]={0,1,3,7,15,31,63,127,255,511,1023,2047,4095,8191,16383,32767,65535};
+      |                           ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2094:27: note: ‘const stbi__uint32 stbi__bmask [17]’ previously defined here
+ 2094 | static const stbi__uint32 stbi__bmask[17]={0,1,3,7,15,31,63,127,255,511,1023,2047,4095,8191,16383,32767,65535};
+      |                           ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2097:24: error: redefinition of ‘int stbi__jpeg_huff_decode(stbi__jpeg*, stbi__huffman*)’
+ 2097 | stbi_inline static int stbi__jpeg_huff_decode(stbi__jpeg *j, stbi__huffman *h)
+      |                        ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2097:24: note: ‘int stbi__jpeg_huff_decode(stbi__jpeg*, stbi__huffman*)’ previously defined here
+ 2097 | stbi_inline static int stbi__jpeg_huff_decode(stbi__jpeg *j, stbi__huffman *h)
+      |                        ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2149:18: error: redefinition of ‘const int stbi__jbias [16]’
+ 2149 | static const int stbi__jbias[16] = {0,-1,-3,-7,-15,-31,-63,-127,-255,-511,-1023,-2047,-4095,-8191,-16383,-32767};
+      |                  ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2149:18: note: ‘const int stbi__jbias [16]’ previously defined here
+ 2149 | static const int stbi__jbias[16] = {0,-1,-3,-7,-15,-31,-63,-127,-255,-511,-1023,-2047,-4095,-8191,-16383,-32767};
+      |                  ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2153:24: error: redefinition of ‘int stbi__extend_receive(stbi__jpeg*, int)’
+ 2153 | stbi_inline static int stbi__extend_receive(stbi__jpeg *j, int n)
+      |                        ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2153:24: note: ‘int stbi__extend_receive(stbi__jpeg*, int)’ previously defined here
+ 2153 | stbi_inline static int stbi__extend_receive(stbi__jpeg *j, int n)
+      |                        ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2169:24: error: redefinition of ‘int stbi__jpeg_get_bits(stbi__jpeg*, int)’
+ 2169 | stbi_inline static int stbi__jpeg_get_bits(stbi__jpeg *j, int n)
+      |                        ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2169:24: note: ‘int stbi__jpeg_get_bits(stbi__jpeg*, int)’ previously defined here
+ 2169 | stbi_inline static int stbi__jpeg_get_bits(stbi__jpeg *j, int n)
+      |                        ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2181:24: error: redefinition of ‘int stbi__jpeg_get_bit(stbi__jpeg*)’
+ 2181 | stbi_inline static int stbi__jpeg_get_bit(stbi__jpeg *j)
+      |                        ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2181:24: note: ‘int stbi__jpeg_get_bit(stbi__jpeg*)’ previously defined here
+ 2181 | stbi_inline static int stbi__jpeg_get_bit(stbi__jpeg *j)
+      |                        ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2194:22: error: redefinition of ‘const stbi_uc stbi__jpeg_dezigzag [79]’
+ 2194 | static const stbi_uc stbi__jpeg_dezigzag[64+15] =
+      |                      ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2194:22: note: ‘const stbi_uc stbi__jpeg_dezigzag [79]’ previously defined here
+ 2194 | static const stbi_uc stbi__jpeg_dezigzag[64+15] =
+      |                      ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2210:12: error: redefinition of ‘int stbi__jpeg_decode_block(stbi__jpeg*, short int*, stbi__huffman*, stbi__huffman*, stbi__int16*, int, stbi__uint16*)’
+ 2210 | static int stbi__jpeg_decode_block(stbi__jpeg *j, short data[64], stbi__huffman *hdc, stbi__huffman *hac, stbi__int16 *fac, int b, stbi__uint16 *dequant)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2210:12: note: ‘int stbi__jpeg_decode_block(stbi__jpeg*, short int*, stbi__huffman*, stbi__huffman*, stbi__int16*, int, stbi__uint16*)’ previously defined here
+ 2210 | static int stbi__jpeg_decode_block(stbi__jpeg *j, short data[64], stbi__huffman *hdc, stbi__huffman *hac, stbi__int16 *fac, int b, stbi__uint16 *dequant)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2265:12: error: redefinition of ‘int stbi__jpeg_decode_block_prog_dc(stbi__jpeg*, short int*, stbi__huffman*, int)’
+ 2265 | static int stbi__jpeg_decode_block_prog_dc(stbi__jpeg *j, short data[64], stbi__huffman *hdc, int b)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2265:12: note: ‘int stbi__jpeg_decode_block_prog_dc(stbi__jpeg*, short int*, stbi__huffman*, int)’ previously defined here
+ 2265 | static int stbi__jpeg_decode_block_prog_dc(stbi__jpeg *j, short data[64], stbi__huffman *hdc, int b)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2295:12: error: redefinition of ‘int stbi__jpeg_decode_block_prog_ac(stbi__jpeg*, short int*, stbi__huffman*, stbi__int16*)’
+ 2295 | static int stbi__jpeg_decode_block_prog_ac(stbi__jpeg *j, short data[64], stbi__huffman *hac, stbi__int16 *fac)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2295:12: note: ‘int stbi__jpeg_decode_block_prog_ac(stbi__jpeg*, short int*, stbi__huffman*, stbi__int16*)’ previously defined here
+ 2295 | static int stbi__jpeg_decode_block_prog_ac(stbi__jpeg *j, short data[64], stbi__huffman *hac, stbi__int16 *fac)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2416:28: error: redefinition of ‘stbi_uc stbi__clamp(int)’
+ 2416 | stbi_inline static stbi_uc stbi__clamp(int x)
+      |                            ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2416:28: note: ‘stbi_uc stbi__clamp(int)’ previously defined here
+ 2416 | stbi_inline static stbi_uc stbi__clamp(int x)
+      |                            ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2467:13: error: redefinition of ‘void stbi__idct_block(stbi_uc*, int, short int*)’
+ 2467 | static void stbi__idct_block(stbi_uc *out, int out_stride, short data[64])
+      |             ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2467:13: note: ‘void stbi__idct_block(stbi_uc*, int, short int*)’ previously defined here
+ 2467 | static void stbi__idct_block(stbi_uc *out, int out_stride, short data[64])
+      |             ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2530:13: error: redefinition of ‘void stbi__idct_simd(stbi_uc*, int, short int*)’
+ 2530 | static void stbi__idct_simd(stbi_uc *out, int out_stride, short data[64])
+      |             ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2530:13: note: ‘void stbi__idct_simd(stbi_uc*, int, short int*)’ previously defined here
+ 2530 | static void stbi__idct_simd(stbi_uc *out, int out_stride, short data[64])
+      |             ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2919:16: error: redefinition of ‘stbi_uc stbi__get_marker(stbi__jpeg*)’
+ 2919 | static stbi_uc stbi__get_marker(stbi__jpeg *j)
+      |                ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2919:16: note: ‘stbi_uc stbi__get_marker(stbi__jpeg*)’ previously defined here
+ 2919 | static stbi_uc stbi__get_marker(stbi__jpeg *j)
+      |                ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2936:13: error: redefinition of ‘void stbi__jpeg_reset(stbi__jpeg*)’
+ 2936 | static void stbi__jpeg_reset(stbi__jpeg *j)
+      |             ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2936:13: note: ‘void stbi__jpeg_reset(stbi__jpeg*)’ previously defined here
+ 2936 | static void stbi__jpeg_reset(stbi__jpeg *j)
+      |             ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2949:12: error: redefinition of ‘int stbi__parse_entropy_coded_data(stbi__jpeg*)’
+ 2949 | static int stbi__parse_entropy_coded_data(stbi__jpeg *z)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:2949:12: note: ‘int stbi__parse_entropy_coded_data(stbi__jpeg*)’ previously defined here
+ 2949 | static int stbi__parse_entropy_coded_data(stbi__jpeg *z)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3073:13: error: redefinition of ‘void stbi__jpeg_dequantize(short int*, stbi__uint16*)’
+ 3073 | static void stbi__jpeg_dequantize(short *data, stbi__uint16 *dequant)
+      |             ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3073:13: note: ‘void stbi__jpeg_dequantize(short int*, stbi__uint16*)’ previously defined here
+ 3073 | static void stbi__jpeg_dequantize(short *data, stbi__uint16 *dequant)
+      |             ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3080:13: error: redefinition of ‘void stbi__jpeg_finish(stbi__jpeg*)’
+ 3080 | static void stbi__jpeg_finish(stbi__jpeg *z)
+      |             ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3080:13: note: ‘void stbi__jpeg_finish(stbi__jpeg*)’ previously defined here
+ 3080 | static void stbi__jpeg_finish(stbi__jpeg *z)
+      |             ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3099:12: error: redefinition of ‘int stbi__process_marker(stbi__jpeg*, int)’
+ 3099 | static int stbi__process_marker(stbi__jpeg *z, int m)
+      |            ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3099:12: note: ‘int stbi__process_marker(stbi__jpeg*, int)’ previously defined here
+ 3099 | static int stbi__process_marker(stbi__jpeg *z, int m)
+      |            ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3203:12: error: redefinition of ‘int stbi__process_scan_header(stbi__jpeg*)’
+ 3203 | static int stbi__process_scan_header(stbi__jpeg *z)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3203:12: note: ‘int stbi__process_scan_header(stbi__jpeg*)’ previously defined here
+ 3203 | static int stbi__process_scan_header(stbi__jpeg *z)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3242:12: error: redefinition of ‘int stbi__free_jpeg_components(stbi__jpeg*, int, int)’
+ 3242 | static int stbi__free_jpeg_components(stbi__jpeg *z, int ncomp, int why)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3242:12: note: ‘int stbi__free_jpeg_components(stbi__jpeg*, int, int)’ previously defined here
+ 3242 | static int stbi__free_jpeg_components(stbi__jpeg *z, int ncomp, int why)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3264:12: error: redefinition of ‘int stbi__process_frame_header(stbi__jpeg*, int)’
+ 3264 | static int stbi__process_frame_header(stbi__jpeg *z, int scan)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3264:12: note: ‘int stbi__process_frame_header(stbi__jpeg*, int)’ previously defined here
+ 3264 | static int stbi__process_frame_header(stbi__jpeg *z, int scan)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3365:12: error: redefinition of ‘int stbi__decode_jpeg_header(stbi__jpeg*, int)’
+ 3365 | static int stbi__decode_jpeg_header(stbi__jpeg *z, int scan)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3365:12: note: ‘int stbi__decode_jpeg_header(stbi__jpeg*, int)’ previously defined here
+ 3365 | static int stbi__decode_jpeg_header(stbi__jpeg *z, int scan)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3389:16: error: redefinition of ‘stbi_uc stbi__skip_jpeg_junk_at_end(stbi__jpeg*)’
+ 3389 | static stbi_uc stbi__skip_jpeg_junk_at_end(stbi__jpeg *j)
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3389:16: note: ‘stbi_uc stbi__skip_jpeg_junk_at_end(stbi__jpeg*)’ previously defined here
+ 3389 | static stbi_uc stbi__skip_jpeg_junk_at_end(stbi__jpeg *j)
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3412:12: error: redefinition of ‘int stbi__decode_jpeg_image(stbi__jpeg*)’
+ 3412 | static int stbi__decode_jpeg_image(stbi__jpeg *j)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3412:12: note: ‘int stbi__decode_jpeg_image(stbi__jpeg*)’ previously defined here
+ 3412 | static int stbi__decode_jpeg_image(stbi__jpeg *j)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3456:17: error: redefinition of ‘stbi_uc* resample_row_1(stbi_uc*, stbi_uc*, stbi_uc*, int, int)’
+ 3456 | static stbi_uc *resample_row_1(stbi_uc *out, stbi_uc *in_near, stbi_uc *in_far, int w, int hs)
+      |                 ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3456:17: note: ‘stbi_uc* resample_row_1(stbi_uc*, stbi_uc*, stbi_uc*, int, int)’ previously defined here
+ 3456 | static stbi_uc *resample_row_1(stbi_uc *out, stbi_uc *in_near, stbi_uc *in_far, int w, int hs)
+      |                 ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3465:17: error: redefinition of ‘stbi_uc* stbi__resample_row_v_2(stbi_uc*, stbi_uc*, stbi_uc*, int, int)’
+ 3465 | static stbi_uc* stbi__resample_row_v_2(stbi_uc *out, stbi_uc *in_near, stbi_uc *in_far, int w, int hs)
+      |                 ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3465:17: note: ‘stbi_uc* stbi__resample_row_v_2(stbi_uc*, stbi_uc*, stbi_uc*, int, int)’ previously defined here
+ 3465 | static stbi_uc* stbi__resample_row_v_2(stbi_uc *out, stbi_uc *in_near, stbi_uc *in_far, int w, int hs)
+      |                 ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3475:18: error: redefinition of ‘stbi_uc* stbi__resample_row_h_2(stbi_uc*, stbi_uc*, stbi_uc*, int, int)’
+ 3475 | static stbi_uc*  stbi__resample_row_h_2(stbi_uc *out, stbi_uc *in_near, stbi_uc *in_far, int w, int hs)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3475:18: note: ‘stbi_uc* stbi__resample_row_h_2(stbi_uc*, stbi_uc*, stbi_uc*, int, int)’ previously defined here
+ 3475 | static stbi_uc*  stbi__resample_row_h_2(stbi_uc *out, stbi_uc *in_near, stbi_uc *in_far, int w, int hs)
+      |                  ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3505:17: error: redefinition of ‘stbi_uc* stbi__resample_row_hv_2(stbi_uc*, stbi_uc*, stbi_uc*, int, int)’
+ 3505 | static stbi_uc *stbi__resample_row_hv_2(stbi_uc *out, stbi_uc *in_near, stbi_uc *in_far, int w, int hs)
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3505:17: note: ‘stbi_uc* stbi__resample_row_hv_2(stbi_uc*, stbi_uc*, stbi_uc*, int, int)’ previously defined here
+ 3505 | static stbi_uc *stbi__resample_row_hv_2(stbi_uc *out, stbi_uc *in_near, stbi_uc *in_far, int w, int hs)
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3530:17: error: redefinition of ‘stbi_uc* stbi__resample_row_hv_2_simd(stbi_uc*, stbi_uc*, stbi_uc*, int, int)’
+ 3530 | static stbi_uc *stbi__resample_row_hv_2_simd(stbi_uc *out, stbi_uc *in_near, stbi_uc *in_far, int w, int hs)
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3530:17: note: ‘stbi_uc* stbi__resample_row_hv_2_simd(stbi_uc*, stbi_uc*, stbi_uc*, int, int)’ previously defined here
+ 3530 | static stbi_uc *stbi__resample_row_hv_2_simd(stbi_uc *out, stbi_uc *in_near, stbi_uc *in_far, int w, int hs)
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3646:17: error: redefinition of ‘stbi_uc* stbi__resample_row_generic(stbi_uc*, stbi_uc*, stbi_uc*, int, int)’
+ 3646 | static stbi_uc *stbi__resample_row_generic(stbi_uc *out, stbi_uc *in_near, stbi_uc *in_far, int w, int hs)
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3646:17: note: ‘stbi_uc* stbi__resample_row_generic(stbi_uc*, stbi_uc*, stbi_uc*, int, int)’ previously defined here
+ 3646 | static stbi_uc *stbi__resample_row_generic(stbi_uc *out, stbi_uc *in_near, stbi_uc *in_far, int w, int hs)
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3660:13: error: redefinition of ‘void stbi__YCbCr_to_RGB_row(stbi_uc*, const stbi_uc*, const stbi_uc*, const stbi_uc*, int, int)’
+ 3660 | static void stbi__YCbCr_to_RGB_row(stbi_uc *out, const stbi_uc *y, const stbi_uc *pcb, const stbi_uc *pcr, int count, int step)
+      |             ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3660:13: note: ‘void stbi__YCbCr_to_RGB_row(stbi_uc*, const stbi_uc*, const stbi_uc*, const stbi_uc*, int, int)’ previously defined here
+ 3660 | static void stbi__YCbCr_to_RGB_row(stbi_uc *out, const stbi_uc *y, const stbi_uc *pcb, const stbi_uc *pcr, int count, int step)
+      |             ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3686:13: error: redefinition of ‘void stbi__YCbCr_to_RGB_simd(stbi_uc*, const stbi_uc*, const stbi_uc*, const stbi_uc*, int, int)’
+ 3686 | static void stbi__YCbCr_to_RGB_simd(stbi_uc *out, stbi_uc const *y, stbi_uc const *pcb, stbi_uc const *pcr, int count, int step)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3686:13: note: ‘void stbi__YCbCr_to_RGB_simd(stbi_uc*, const stbi_uc*, const stbi_uc*, const stbi_uc*, int, int)’ previously defined here
+ 3686 | static void stbi__YCbCr_to_RGB_simd(stbi_uc *out, stbi_uc const *y, stbi_uc const *pcb, stbi_uc const *pcr, int count, int step)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3821:13: error: redefinition of ‘void stbi__setup_jpeg(stbi__jpeg*)’
+ 3821 | static void stbi__setup_jpeg(stbi__jpeg *j)
+      |             ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3821:13: note: ‘void stbi__setup_jpeg(stbi__jpeg*)’ previously defined here
+ 3821 | static void stbi__setup_jpeg(stbi__jpeg *j)
+      |             ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3843:13: error: redefinition of ‘void stbi__cleanup_jpeg(stbi__jpeg*)’
+ 3843 | static void stbi__cleanup_jpeg(stbi__jpeg *j)
+      |             ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3843:13: note: ‘void stbi__cleanup_jpeg(stbi__jpeg*)’ previously defined here
+ 3843 | static void stbi__cleanup_jpeg(stbi__jpeg *j)
+      |             ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3856:3: error: conflicting declaration ‘typedef struct stbi__resample stbi__resample’
+ 3856 | } stbi__resample;
+      |   ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3856:3: note: previous declaration as ‘typedef struct stbi__resample stbi__resample’
+ 3856 | } stbi__resample;
+      |   ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3859:16: error: redefinition of ‘stbi_uc stbi__blinn_8x8(stbi_uc, stbi_uc)’
+ 3859 | static stbi_uc stbi__blinn_8x8(stbi_uc x, stbi_uc y)
+      |                ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3859:16: note: ‘stbi_uc stbi__blinn_8x8(stbi_uc, stbi_uc)’ previously defined here
+ 3859 | static stbi_uc stbi__blinn_8x8(stbi_uc x, stbi_uc y)
+      |                ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3865:17: error: redefinition of ‘stbi_uc* load_jpeg_image(stbi__jpeg*, int*, int*, int*, int)’
+ 3865 | static stbi_uc *load_jpeg_image(stbi__jpeg *z, int *out_x, int *out_y, int *comp, int req_comp)
+      |                 ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:3865:17: note: ‘stbi_uc* load_jpeg_image(stbi__jpeg*, int*, int*, int*, int)’ previously defined here
+ 3865 | static stbi_uc *load_jpeg_image(stbi__jpeg *z, int *out_x, int *out_y, int *comp, int req_comp)
+      |                 ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4028:14: error: redefinition of ‘void* stbi__jpeg_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’
+ 4028 | static void *stbi__jpeg_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4028:14: note: ‘void* stbi__jpeg_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’ previously defined here
+ 4028 | static void *stbi__jpeg_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4042:12: error: redefinition of ‘int stbi__jpeg_test(stbi__context*)’
+ 4042 | static int stbi__jpeg_test(stbi__context *s)
+      |            ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4042:12: note: ‘int stbi__jpeg_test(stbi__context*)’ previously defined here
+ 4042 | static int stbi__jpeg_test(stbi__context *s)
+      |            ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4056:12: error: redefinition of ‘int stbi__jpeg_info_raw(stbi__jpeg*, int*, int*, int*)’
+ 4056 | static int stbi__jpeg_info_raw(stbi__jpeg *j, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4056:12: note: ‘int stbi__jpeg_info_raw(stbi__jpeg*, int*, int*, int*)’ previously defined here
+ 4056 | static int stbi__jpeg_info_raw(stbi__jpeg *j, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4068:12: error: redefinition of ‘int stbi__jpeg_info(stbi__context*, int*, int*, int*)’
+ 4068 | static int stbi__jpeg_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4068:12: note: ‘int stbi__jpeg_info(stbi__context*, int*, int*, int*)’ previously defined here
+ 4068 | static int stbi__jpeg_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4105:3: error: conflicting declaration ‘typedef struct stbi__zhuffman stbi__zhuffman’
+ 4105 | } stbi__zhuffman;
+      |   ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4105:3: note: previous declaration as ‘typedef struct stbi__zhuffman stbi__zhuffman’
+ 4105 | } stbi__zhuffman;
+      |   ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4107:24: error: redefinition of ‘int stbi__bitreverse16(int)’
+ 4107 | stbi_inline static int stbi__bitreverse16(int n)
+      |                        ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4107:24: note: ‘int stbi__bitreverse16(int)’ previously defined here
+ 4107 | stbi_inline static int stbi__bitreverse16(int n)
+      |                        ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4116:24: error: redefinition of ‘int stbi__bit_reverse(int, int)’
+ 4116 | stbi_inline static int stbi__bit_reverse(int v, int bits)
+      |                        ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4116:24: note: ‘int stbi__bit_reverse(int, int)’ previously defined here
+ 4116 | stbi_inline static int stbi__bit_reverse(int v, int bits)
+      |                        ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4124:12: error: redefinition of ‘int stbi__zbuild_huffman(stbi__zhuffman*, const stbi_uc*, int)’
+ 4124 | static int stbi__zbuild_huffman(stbi__zhuffman *z, const stbi_uc *sizelist, int num)
+      |            ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4124:12: note: ‘int stbi__zbuild_huffman(stbi__zhuffman*, const stbi_uc*, int)’ previously defined here
+ 4124 | static int stbi__zbuild_huffman(stbi__zhuffman *z, const stbi_uc *sizelist, int num)
+      |            ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4190:3: error: conflicting declaration ‘typedef struct stbi__zbuf stbi__zbuf’
+ 4190 | } stbi__zbuf;
+      |   ^~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4190:3: note: previous declaration as ‘typedef struct stbi__zbuf stbi__zbuf’
+ 4190 | } stbi__zbuf;
+      |   ^~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4192:24: error: redefinition of ‘int stbi__zeof(stbi__zbuf*)’
+ 4192 | stbi_inline static int stbi__zeof(stbi__zbuf *z)
+      |                        ^~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4192:24: note: ‘int stbi__zeof(stbi__zbuf*)’ previously defined here
+ 4192 | stbi_inline static int stbi__zeof(stbi__zbuf *z)
+      |                        ^~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4197:28: error: redefinition of ‘stbi_uc stbi__zget8(stbi__zbuf*)’
+ 4197 | stbi_inline static stbi_uc stbi__zget8(stbi__zbuf *z)
+      |                            ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4197:28: note: ‘stbi_uc stbi__zget8(stbi__zbuf*)’ previously defined here
+ 4197 | stbi_inline static stbi_uc stbi__zget8(stbi__zbuf *z)
+      |                            ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4202:13: error: redefinition of ‘void stbi__fill_bits(stbi__zbuf*)’
+ 4202 | static void stbi__fill_bits(stbi__zbuf *z)
+      |             ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4202:13: note: ‘void stbi__fill_bits(stbi__zbuf*)’ previously defined here
+ 4202 | static void stbi__fill_bits(stbi__zbuf *z)
+      |             ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4214:33: error: redefinition of ‘unsigned int stbi__zreceive(stbi__zbuf*, int)’
+ 4214 | stbi_inline static unsigned int stbi__zreceive(stbi__zbuf *z, int n)
+      |                                 ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4214:33: note: ‘unsigned int stbi__zreceive(stbi__zbuf*, int)’ previously defined here
+ 4214 | stbi_inline static unsigned int stbi__zreceive(stbi__zbuf *z, int n)
+      |                                 ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4224:12: error: redefinition of ‘int stbi__zhuffman_decode_slowpath(stbi__zbuf*, stbi__zhuffman*)’
+ 4224 | static int stbi__zhuffman_decode_slowpath(stbi__zbuf *a, stbi__zhuffman *z)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4224:12: note: ‘int stbi__zhuffman_decode_slowpath(stbi__zbuf*, stbi__zhuffman*)’ previously defined here
+ 4224 | static int stbi__zhuffman_decode_slowpath(stbi__zbuf *a, stbi__zhuffman *z)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4243:24: error: redefinition of ‘int stbi__zhuffman_decode(stbi__zbuf*, stbi__zhuffman*)’
+ 4243 | stbi_inline static int stbi__zhuffman_decode(stbi__zbuf *a, stbi__zhuffman *z)
+      |                        ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4243:24: note: ‘int stbi__zhuffman_decode(stbi__zbuf*, stbi__zhuffman*)’ previously defined here
+ 4243 | stbi_inline static int stbi__zhuffman_decode(stbi__zbuf *a, stbi__zhuffman *z)
+      |                        ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4273:12: error: redefinition of ‘int stbi__zexpand(stbi__zbuf*, char*, int)’
+ 4273 | static int stbi__zexpand(stbi__zbuf *z, char *zout, int n)  // need to make room for n bytes
+      |            ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4273:12: note: ‘int stbi__zexpand(stbi__zbuf*, char*, int)’ previously defined here
+ 4273 | static int stbi__zexpand(stbi__zbuf *z, char *zout, int n)  // need to make room for n bytes
+      |            ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4295:18: error: redefinition of ‘const int stbi__zlength_base [31]’
+ 4295 | static const int stbi__zlength_base[31] = {
+      |                  ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4295:18: note: ‘const int stbi__zlength_base [31]’ previously defined here
+ 4295 | static const int stbi__zlength_base[31] = {
+      |                  ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4300:18: error: redefinition of ‘const int stbi__zlength_extra [31]’
+ 4300 | static const int stbi__zlength_extra[31]=
+      |                  ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4300:18: note: ‘const int stbi__zlength_extra [31]’ previously defined here
+ 4300 | static const int stbi__zlength_extra[31]=
+      |                  ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4303:18: error: redefinition of ‘const int stbi__zdist_base [32]’
+ 4303 | static const int stbi__zdist_base[32] = { 1,2,3,4,5,7,9,13,17,25,33,49,65,97,129,193,
+      |                  ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4303:18: note: ‘const int stbi__zdist_base [32]’ previously defined here
+ 4303 | static const int stbi__zdist_base[32] = { 1,2,3,4,5,7,9,13,17,25,33,49,65,97,129,193,
+      |                  ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4306:18: error: redefinition of ‘const int stbi__zdist_extra [32]’
+ 4306 | static const int stbi__zdist_extra[32] =
+      |                  ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4306:18: note: ‘const int stbi__zdist_extra [32]’ previously defined here
+ 4306 | static const int stbi__zdist_extra[32] =
+      |                  ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4309:12: error: redefinition of ‘int stbi__parse_huffman_block(stbi__zbuf*)’
+ 4309 | static int stbi__parse_huffman_block(stbi__zbuf *a)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4309:12: note: ‘int stbi__parse_huffman_block(stbi__zbuf*)’ previously defined here
+ 4309 | static int stbi__parse_huffman_block(stbi__zbuf *a)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4359:12: error: redefinition of ‘int stbi__compute_huffman_codes(stbi__zbuf*)’
+ 4359 | static int stbi__compute_huffman_codes(stbi__zbuf *a)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4359:12: note: ‘int stbi__compute_huffman_codes(stbi__zbuf*)’ previously defined here
+ 4359 | static int stbi__compute_huffman_codes(stbi__zbuf *a)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4409:12: error: redefinition of ‘int stbi__parse_uncompressed_block(stbi__zbuf*)’
+ 4409 | static int stbi__parse_uncompressed_block(stbi__zbuf *a)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4409:12: note: ‘int stbi__parse_uncompressed_block(stbi__zbuf*)’ previously defined here
+ 4409 | static int stbi__parse_uncompressed_block(stbi__zbuf *a)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4438:12: error: redefinition of ‘int stbi__parse_zlib_header(stbi__zbuf*)’
+ 4438 | static int stbi__parse_zlib_header(stbi__zbuf *a)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4438:12: note: ‘int stbi__parse_zlib_header(stbi__zbuf*)’ previously defined here
+ 4438 | static int stbi__parse_zlib_header(stbi__zbuf *a)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4452:22: error: redefinition of ‘const stbi_uc stbi__zdefault_length [288]’
+ 4452 | static const stbi_uc stbi__zdefault_length[STBI__ZNSYMS] =
+      |                      ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4452:22: note: ‘const stbi_uc stbi__zdefault_length [288]’ previously defined here
+ 4452 | static const stbi_uc stbi__zdefault_length[STBI__ZNSYMS] =
+      |                      ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4464:22: error: redefinition of ‘const stbi_uc stbi__zdefault_distance [32]’
+ 4464 | static const stbi_uc stbi__zdefault_distance[32] =
+      |                      ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4464:22: note: ‘const stbi_uc stbi__zdefault_distance [32]’ previously defined here
+ 4464 | static const stbi_uc stbi__zdefault_distance[32] =
+      |                      ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4481:12: error: redefinition of ‘int stbi__parse_zlib(stbi__zbuf*, int)’
+ 4481 | static int stbi__parse_zlib(stbi__zbuf *a, int parse_header)
+      |            ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4481:12: note: ‘int stbi__parse_zlib(stbi__zbuf*, int)’ previously defined here
+ 4481 | static int stbi__parse_zlib(stbi__zbuf *a, int parse_header)
+      |            ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4510:12: error: redefinition of ‘int stbi__do_zlib(stbi__zbuf*, char*, int, int, int)’
+ 4510 | static int stbi__do_zlib(stbi__zbuf *a, char *obuf, int olen, int exp, int parse_header)
+      |            ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4510:12: note: ‘int stbi__do_zlib(stbi__zbuf*, char*, int, int, int)’ previously defined here
+ 4510 | static int stbi__do_zlib(stbi__zbuf *a, char *obuf, int olen, int exp, int parse_header)
+      |            ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4520:15: error: redefinition of ‘char* stbi_zlib_decode_malloc_guesssize(const char*, int, int, int*)’
+ 4520 | STBIDEF char *stbi_zlib_decode_malloc_guesssize(const char *buffer, int len, int initial_size, int *outlen)
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4520:15: note: ‘char* stbi_zlib_decode_malloc_guesssize(const char*, int, int, int*)’ previously defined here
+ 4520 | STBIDEF char *stbi_zlib_decode_malloc_guesssize(const char *buffer, int len, int initial_size, int *outlen)
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4536:15: error: redefinition of ‘char* stbi_zlib_decode_malloc(const char*, int, int*)’
+ 4536 | STBIDEF char *stbi_zlib_decode_malloc(char const *buffer, int len, int *outlen)
+      |               ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4536:15: note: ‘char* stbi_zlib_decode_malloc(const char*, int, int*)’ previously defined here
+ 4536 | STBIDEF char *stbi_zlib_decode_malloc(char const *buffer, int len, int *outlen)
+      |               ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4541:15: error: redefinition of ‘char* stbi_zlib_decode_malloc_guesssize_headerflag(const char*, int, int, int*, int)’
+ 4541 | STBIDEF char *stbi_zlib_decode_malloc_guesssize_headerflag(const char *buffer, int len, int initial_size, int *outlen, int parse_header)
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4541:15: note: ‘char* stbi_zlib_decode_malloc_guesssize_headerflag(const char*, int, int, int*, int)’ previously defined here
+ 4541 | STBIDEF char *stbi_zlib_decode_malloc_guesssize_headerflag(const char *buffer, int len, int initial_size, int *outlen, int parse_header)
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4557:13: error: redefinition of ‘int stbi_zlib_decode_buffer(char*, int, const char*, int)’
+ 4557 | STBIDEF int stbi_zlib_decode_buffer(char *obuffer, int olen, char const *ibuffer, int ilen)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4557:13: note: ‘int stbi_zlib_decode_buffer(char*, int, const char*, int)’ previously defined here
+ 4557 | STBIDEF int stbi_zlib_decode_buffer(char *obuffer, int olen, char const *ibuffer, int ilen)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4568:15: error: redefinition of ‘char* stbi_zlib_decode_noheader_malloc(const char*, int, int*)’
+ 4568 | STBIDEF char *stbi_zlib_decode_noheader_malloc(char const *buffer, int len, int *outlen)
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4568:15: note: ‘char* stbi_zlib_decode_noheader_malloc(const char*, int, int*)’ previously defined here
+ 4568 | STBIDEF char *stbi_zlib_decode_noheader_malloc(char const *buffer, int len, int *outlen)
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4584:13: error: redefinition of ‘int stbi_zlib_decode_noheader_buffer(char*, int, const char*, int)’
+ 4584 | STBIDEF int stbi_zlib_decode_noheader_buffer(char *obuffer, int olen, const char *ibuffer, int ilen)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4584:13: note: ‘int stbi_zlib_decode_noheader_buffer(char*, int, const char*, int)’ previously defined here
+ 4584 | STBIDEF int stbi_zlib_decode_noheader_buffer(char *obuffer, int olen, const char *ibuffer, int ilen)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4611:3: error: conflicting declaration ‘typedef struct stbi__pngchunk stbi__pngchunk’
+ 4611 | } stbi__pngchunk;
+      |   ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4611:3: note: previous declaration as ‘typedef struct stbi__pngchunk stbi__pngchunk’
+ 4611 | } stbi__pngchunk;
+      |   ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4613:23: error: redefinition of ‘stbi__pngchunk stbi__get_chunk_header(stbi__context*)’
+ 4613 | static stbi__pngchunk stbi__get_chunk_header(stbi__context *s)
+      |                       ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4613:23: note: ‘stbi__pngchunk stbi__get_chunk_header(stbi__context*)’ previously defined here
+ 4613 | static stbi__pngchunk stbi__get_chunk_header(stbi__context *s)
+      |                       ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4621:12: error: redefinition of ‘int stbi__check_png_header(stbi__context*)’
+ 4621 | static int stbi__check_png_header(stbi__context *s)
+      |            ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4621:12: note: ‘int stbi__check_png_header(stbi__context*)’ previously defined here
+ 4621 | static int stbi__check_png_header(stbi__context *s)
+      |            ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4635:3: error: conflicting declaration ‘typedef struct stbi__png stbi__png’
+ 4635 | } stbi__png;
+      |   ^~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4635:3: note: previous declaration as ‘typedef struct stbi__png stbi__png’
+ 4635 | } stbi__png;
+      |   ^~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4639:17: error: ‘STBI__F_none’ conflicts with a previous declaration
+ 4639 |    STBI__F_none=0,
+      |                 ^
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4639:4: note: previous declaration ‘<unnamed enum> STBI__F_none’
+ 4639 |    STBI__F_none=0,
+      |    ^~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4640:16: error: ‘STBI__F_sub’ conflicts with a previous declaration
+ 4640 |    STBI__F_sub=1,
+      |                ^
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4640:4: note: previous declaration ‘<unnamed enum> STBI__F_sub’
+ 4640 |    STBI__F_sub=1,
+      |    ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4641:15: error: ‘STBI__F_up’ conflicts with a previous declaration
+ 4641 |    STBI__F_up=2,
+      |               ^
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4641:4: note: previous declaration ‘<unnamed enum> STBI__F_up’
+ 4641 |    STBI__F_up=2,
+      |    ^~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4642:16: error: ‘STBI__F_avg’ conflicts with a previous declaration
+ 4642 |    STBI__F_avg=3,
+      |                ^
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4642:4: note: previous declaration ‘<unnamed enum> STBI__F_avg’
+ 4642 |    STBI__F_avg=3,
+      |    ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4643:18: error: ‘STBI__F_paeth’ conflicts with a previous declaration
+ 4643 |    STBI__F_paeth=4,
+      |                  ^
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4643:4: note: previous declaration ‘<unnamed enum> STBI__F_paeth’
+ 4643 |    STBI__F_paeth=4,
+      |    ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4645:4: error: ‘STBI__F_avg_first’ conflicts with a previous declaration
+ 4645 |    STBI__F_avg_first
+      |    ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4645:4: note: previous declaration ‘<unnamed enum> STBI__F_avg_first’
+ 4645 |    STBI__F_avg_first
+      |    ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4648:16: error: redefinition of ‘stbi_uc first_row_filter [5]’
+ 4648 | static stbi_uc first_row_filter[5] =
+      |                ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4648:16: note: ‘stbi_uc first_row_filter [5]’ previously defined here
+ 4648 | static stbi_uc first_row_filter[5] =
+      |                ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4657:12: error: redefinition of ‘int stbi__paeth(int, int, int)’
+ 4657 | static int stbi__paeth(int a, int b, int c)
+      |            ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4657:12: note: ‘int stbi__paeth(int, int, int)’ previously defined here
+ 4657 | static int stbi__paeth(int a, int b, int c)
+      |            ^~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4670:22: error: redefinition of ‘const stbi_uc stbi__depth_scale_table [9]’
+ 4670 | static const stbi_uc stbi__depth_scale_table[9] = { 0, 0xff, 0x55, 0, 0x11, 0,0,0, 0x01 };
+      |                      ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4670:22: note: ‘const stbi_uc stbi__depth_scale_table [9]’ previously defined here
+ 4670 | static const stbi_uc stbi__depth_scale_table[9] = { 0, 0xff, 0x55, 0, 0x11, 0,0,0, 0x01 };
+      |                      ^~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4675:13: error: redefinition of ‘void stbi__create_png_alpha_expand8(stbi_uc*, stbi_uc*, stbi__uint32, int)’
+ 4675 | static void stbi__create_png_alpha_expand8(stbi_uc *dest, stbi_uc *src, stbi__uint32 x, int img_n)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4675:13: note: ‘void stbi__create_png_alpha_expand8(stbi_uc*, stbi_uc*, stbi__uint32, int)’ previously defined here
+ 4675 | static void stbi__create_png_alpha_expand8(stbi_uc *dest, stbi_uc *src, stbi__uint32 x, int img_n)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4696:12: error: redefinition of ‘int stbi__create_png_image_raw(stbi__png*, stbi_uc*, stbi__uint32, int, stbi__uint32, stbi__uint32, int, int)’
+ 4696 | static int stbi__create_png_image_raw(stbi__png *a, stbi_uc *raw, stbi__uint32 raw_len, int out_n, stbi__uint32 x, stbi__uint32 y, int depth, int color)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4696:12: note: ‘int stbi__create_png_image_raw(stbi__png*, stbi_uc*, stbi__uint32, int, stbi__uint32, stbi__uint32, int, int)’ previously defined here
+ 4696 | static int stbi__create_png_image_raw(stbi__png *a, stbi_uc *raw, stbi__uint32 raw_len, int out_n, stbi__uint32 x, stbi__uint32 y, int depth, int color)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4861:12: error: redefinition of ‘int stbi__create_png_image(stbi__png*, stbi_uc*, stbi__uint32, int, int, int, int)’
+ 4861 | static int stbi__create_png_image(stbi__png *a, stbi_uc *image_data, stbi__uint32 image_data_len, int out_n, int depth, int color, int interlaced)
+      |            ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4861:12: note: ‘int stbi__create_png_image(stbi__png*, stbi_uc*, stbi__uint32, int, int, int, int)’ previously defined here
+ 4861 | static int stbi__create_png_image(stbi__png *a, stbi_uc *image_data, stbi__uint32 image_data_len, int out_n, int depth, int color, int interlaced)
+      |            ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4906:12: error: redefinition of ‘int stbi__compute_transparency(stbi__png*, stbi_uc*, int)’
+ 4906 | static int stbi__compute_transparency(stbi__png *z, stbi_uc tc[3], int out_n)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4906:12: note: ‘int stbi__compute_transparency(stbi__png*, stbi_uc*, int)’ previously defined here
+ 4906 | static int stbi__compute_transparency(stbi__png *z, stbi_uc tc[3], int out_n)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4931:12: error: redefinition of ‘int stbi__compute_transparency16(stbi__png*, stbi__uint16*, int)’
+ 4931 | static int stbi__compute_transparency16(stbi__png *z, stbi__uint16 tc[3], int out_n)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4931:12: note: ‘int stbi__compute_transparency16(stbi__png*, stbi__uint16*, int)’ previously defined here
+ 4931 | static int stbi__compute_transparency16(stbi__png *z, stbi__uint16 tc[3], int out_n)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4956:12: error: redefinition of ‘int stbi__expand_png_palette(stbi__png*, stbi_uc*, int, int)’
+ 4956 | static int stbi__expand_png_palette(stbi__png *a, stbi_uc *palette, int len, int pal_img_n)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4956:12: note: ‘int stbi__expand_png_palette(stbi__png*, stbi_uc*, int, int)’ previously defined here
+ 4956 | static int stbi__expand_png_palette(stbi__png *a, stbi_uc *palette, int len, int pal_img_n)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4993:12: error: redefinition of ‘int stbi__unpremultiply_on_load_global’
+ 4993 | static int stbi__unpremultiply_on_load_global = 0;
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4993:12: note: ‘int stbi__unpremultiply_on_load_global’ previously defined here
+ 4993 | static int stbi__unpremultiply_on_load_global = 0;
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4994:12: error: redefinition of ‘int stbi__de_iphone_flag_global’
+ 4994 | static int stbi__de_iphone_flag_global = 0;
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4994:12: note: ‘int stbi__de_iphone_flag_global’ previously defined here
+ 4994 | static int stbi__de_iphone_flag_global = 0;
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4996:14: error: redefinition of ‘void stbi_set_unpremultiply_on_load(int)’
+ 4996 | STBIDEF void stbi_set_unpremultiply_on_load(int flag_true_if_should_unpremultiply)
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:4996:14: note: ‘void stbi_set_unpremultiply_on_load(int)’ previously defined here
+ 4996 | STBIDEF void stbi_set_unpremultiply_on_load(int flag_true_if_should_unpremultiply)
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5001:14: error: redefinition of ‘void stbi_convert_iphone_png_to_rgb(int)’
+ 5001 | STBIDEF void stbi_convert_iphone_png_to_rgb(int flag_true_if_should_convert)
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5001:14: note: ‘void stbi_convert_iphone_png_to_rgb(int)’ previously defined here
+ 5001 | STBIDEF void stbi_convert_iphone_png_to_rgb(int flag_true_if_should_convert)
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5010:30: error: redefinition of ‘int stbi__unpremultiply_on_load_local’
+ 5010 | static STBI_THREAD_LOCAL int stbi__unpremultiply_on_load_local, stbi__unpremultiply_on_load_set;
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5010:30: note: ‘int stbi__unpremultiply_on_load_local’ previously declared here
+ 5010 | static STBI_THREAD_LOCAL int stbi__unpremultiply_on_load_local, stbi__unpremultiply_on_load_set;
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5010:65: error: redefinition of ‘int stbi__unpremultiply_on_load_set’
+ 5010 | static STBI_THREAD_LOCAL int stbi__unpremultiply_on_load_local, stbi__unpremultiply_on_load_set;
+      |                                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5010:65: note: ‘int stbi__unpremultiply_on_load_set’ previously declared here
+ 5010 | static STBI_THREAD_LOCAL int stbi__unpremultiply_on_load_local, stbi__unpremultiply_on_load_set;
+      |                                                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5011:30: error: redefinition of ‘int stbi__de_iphone_flag_local’
+ 5011 | static STBI_THREAD_LOCAL int stbi__de_iphone_flag_local, stbi__de_iphone_flag_set;
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5011:30: note: ‘int stbi__de_iphone_flag_local’ previously declared here
+ 5011 | static STBI_THREAD_LOCAL int stbi__de_iphone_flag_local, stbi__de_iphone_flag_set;
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5011:58: error: redefinition of ‘int stbi__de_iphone_flag_set’
+ 5011 | static STBI_THREAD_LOCAL int stbi__de_iphone_flag_local, stbi__de_iphone_flag_set;
+      |                                                          ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5011:58: note: ‘int stbi__de_iphone_flag_set’ previously declared here
+ 5011 | static STBI_THREAD_LOCAL int stbi__de_iphone_flag_local, stbi__de_iphone_flag_set;
+      |                                                          ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5013:14: error: redefinition of ‘void stbi_set_unpremultiply_on_load_thread(int)’
+ 5013 | STBIDEF void stbi_set_unpremultiply_on_load_thread(int flag_true_if_should_unpremultiply)
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5013:14: note: ‘void stbi_set_unpremultiply_on_load_thread(int)’ previously defined here
+ 5013 | STBIDEF void stbi_set_unpremultiply_on_load_thread(int flag_true_if_should_unpremultiply)
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5019:14: error: redefinition of ‘void stbi_convert_iphone_png_to_rgb_thread(int)’
+ 5019 | STBIDEF void stbi_convert_iphone_png_to_rgb_thread(int flag_true_if_should_convert)
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5019:14: note: ‘void stbi_convert_iphone_png_to_rgb_thread(int)’ previously defined here
+ 5019 | STBIDEF void stbi_convert_iphone_png_to_rgb_thread(int flag_true_if_should_convert)
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5033:13: error: redefinition of ‘void stbi__de_iphone(stbi__png*)’
+ 5033 | static void stbi__de_iphone(stbi__png *z)
+      |             ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5033:13: note: ‘void stbi__de_iphone(stbi__png*)’ previously defined here
+ 5033 | static void stbi__de_iphone(stbi__png *z)
+      |             ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5078:12: error: redefinition of ‘int stbi__parse_png_file(stbi__png*, int, int)’
+ 5078 | static int stbi__parse_png_file(stbi__png *z, int scan, int req_comp)
+      |            ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5078:12: note: ‘int stbi__parse_png_file(stbi__png*, int, int)’ previously defined here
+ 5078 | static int stbi__parse_png_file(stbi__png *z, int scan, int req_comp)
+      |            ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5263:14: error: redefinition of ‘void* stbi__do_png(stbi__png*, int*, int*, int*, int, stbi__result_info*)’
+ 5263 | static void *stbi__do_png(stbi__png *p, int *x, int *y, int *n, int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5263:14: note: ‘void* stbi__do_png(stbi__png*, int*, int*, int*, int, stbi__result_info*)’ previously defined here
+ 5263 | static void *stbi__do_png(stbi__png *p, int *x, int *y, int *n, int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5295:14: error: redefinition of ‘void* stbi__png_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’
+ 5295 | static void *stbi__png_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5295:14: note: ‘void* stbi__png_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’ previously defined here
+ 5295 | static void *stbi__png_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5302:12: error: redefinition of ‘int stbi__png_test(stbi__context*)’
+ 5302 | static int stbi__png_test(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5302:12: note: ‘int stbi__png_test(stbi__context*)’ previously defined here
+ 5302 | static int stbi__png_test(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5310:12: error: redefinition of ‘int stbi__png_info_raw(stbi__png*, int*, int*, int*)’
+ 5310 | static int stbi__png_info_raw(stbi__png *p, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5310:12: note: ‘int stbi__png_info_raw(stbi__png*, int*, int*, int*)’ previously defined here
+ 5310 | static int stbi__png_info_raw(stbi__png *p, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5322:12: error: redefinition of ‘int stbi__png_info(stbi__context*, int*, int*, int*)’
+ 5322 | static int stbi__png_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5322:12: note: ‘int stbi__png_info(stbi__context*, int*, int*, int*)’ previously defined here
+ 5322 | static int stbi__png_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5329:12: error: redefinition of ‘int stbi__png_is16(stbi__context*)’
+ 5329 | static int stbi__png_is16(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5329:12: note: ‘int stbi__png_is16(stbi__context*)’ previously defined here
+ 5329 | static int stbi__png_is16(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5346:12: error: redefinition of ‘int stbi__bmp_test_raw(stbi__context*)’
+ 5346 | static int stbi__bmp_test_raw(stbi__context *s)
+      |            ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5346:12: note: ‘int stbi__bmp_test_raw(stbi__context*)’ previously defined here
+ 5346 | static int stbi__bmp_test_raw(stbi__context *s)
+      |            ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5361:12: error: redefinition of ‘int stbi__bmp_test(stbi__context*)’
+ 5361 | static int stbi__bmp_test(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5361:12: note: ‘int stbi__bmp_test(stbi__context*)’ previously defined here
+ 5361 | static int stbi__bmp_test(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5370:12: error: redefinition of ‘int stbi__high_bit(unsigned int)’
+ 5370 | static int stbi__high_bit(unsigned int z)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5370:12: note: ‘int stbi__high_bit(unsigned int)’ previously defined here
+ 5370 | static int stbi__high_bit(unsigned int z)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5382:12: error: redefinition of ‘int stbi__bitcount(unsigned int)’
+ 5382 | static int stbi__bitcount(unsigned int a)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5382:12: note: ‘int stbi__bitcount(unsigned int)’ previously defined here
+ 5382 | static int stbi__bitcount(unsigned int a)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5395:12: error: redefinition of ‘int stbi__shiftsigned(unsigned int, int, int)’
+ 5395 | static int stbi__shiftsigned(unsigned int v, int shift, int bits)
+      |            ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5395:12: note: ‘int stbi__shiftsigned(unsigned int, int, int)’ previously defined here
+ 5395 | static int stbi__shiftsigned(unsigned int v, int shift, int bits)
+      |            ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5420:3: error: conflicting declaration ‘typedef struct stbi__bmp_data stbi__bmp_data’
+ 5420 | } stbi__bmp_data;
+      |   ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5420:3: note: previous declaration as ‘typedef struct stbi__bmp_data stbi__bmp_data’
+ 5420 | } stbi__bmp_data;
+      |   ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5422:12: error: redefinition of ‘int stbi__bmp_set_mask_defaults(stbi__bmp_data*, int)’
+ 5422 | static int stbi__bmp_set_mask_defaults(stbi__bmp_data *info, int compress)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5422:12: note: ‘int stbi__bmp_set_mask_defaults(stbi__bmp_data*, int)’ previously defined here
+ 5422 | static int stbi__bmp_set_mask_defaults(stbi__bmp_data *info, int compress)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5448:14: error: redefinition of ‘void* stbi__bmp_parse_header(stbi__context*, stbi__bmp_data*)’
+ 5448 | static void *stbi__bmp_parse_header(stbi__context *s, stbi__bmp_data *info)
+      |              ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5448:14: note: ‘void* stbi__bmp_parse_header(stbi__context*, stbi__bmp_data*)’ previously defined here
+ 5448 | static void *stbi__bmp_parse_header(stbi__context *s, stbi__bmp_data *info)
+      |              ^~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5531:14: error: redefinition of ‘void* stbi__bmp_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’
+ 5531 | static void *stbi__bmp_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5531:14: note: ‘void* stbi__bmp_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’ previously defined here
+ 5531 | static void *stbi__bmp_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5739:12: error: redefinition of ‘int stbi__tga_get_comp(int, int, int*)’
+ 5739 | static int stbi__tga_get_comp(int bits_per_pixel, int is_grey, int* is_rgb16)
+      |            ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5739:12: note: ‘int stbi__tga_get_comp(int, int, int*)’ previously defined here
+ 5739 | static int stbi__tga_get_comp(int bits_per_pixel, int is_grey, int* is_rgb16)
+      |            ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5755:12: error: redefinition of ‘int stbi__tga_info(stbi__context*, int*, int*, int*)’
+ 5755 | static int stbi__tga_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5755:12: note: ‘int stbi__tga_info(stbi__context*, int*, int*, int*)’ previously defined here
+ 5755 | static int stbi__tga_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5820:12: error: redefinition of ‘int stbi__tga_test(stbi__context*)’
+ 5820 | static int stbi__tga_test(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5820:12: note: ‘int stbi__tga_test(stbi__context*)’ previously defined here
+ 5820 | static int stbi__tga_test(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5852:13: error: redefinition of ‘void stbi__tga_read_rgb16(stbi__context*, stbi_uc*)’
+ 5852 | static void stbi__tga_read_rgb16(stbi__context *s, stbi_uc* out)
+      |             ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5852:13: note: ‘void stbi__tga_read_rgb16(stbi__context*, stbi_uc*)’ previously defined here
+ 5852 | static void stbi__tga_read_rgb16(stbi__context *s, stbi_uc* out)
+      |             ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5871:14: error: redefinition of ‘void* stbi__tga_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’
+ 5871 | static void *stbi__tga_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:5871:14: note: ‘void* stbi__tga_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’ previously defined here
+ 5871 | static void *stbi__tga_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6081:12: error: redefinition of ‘int stbi__psd_test(stbi__context*)’
+ 6081 | static int stbi__psd_test(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6081:12: note: ‘int stbi__psd_test(stbi__context*)’ previously defined here
+ 6081 | static int stbi__psd_test(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6088:12: error: redefinition of ‘int stbi__psd_decode_rle(stbi__context*, stbi_uc*, int)’
+ 6088 | static int stbi__psd_decode_rle(stbi__context *s, stbi_uc *p, int pixelCount)
+      |            ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6088:12: note: ‘int stbi__psd_decode_rle(stbi__context*, stbi_uc*, int)’ previously defined here
+ 6088 | static int stbi__psd_decode_rle(stbi__context *s, stbi_uc *p, int pixelCount)
+      |            ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6126:14: error: redefinition of ‘void* stbi__psd_load(stbi__context*, int*, int*, int*, int, stbi__result_info*, int)’
+ 6126 | static void *stbi__psd_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri, int bpc)
+      |              ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6126:14: note: ‘void* stbi__psd_load(stbi__context*, int*, int*, int*, int, stbi__result_info*, int)’ previously defined here
+ 6126 | static void *stbi__psd_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri, int bpc)
+      |              ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6336:12: error: redefinition of ‘int stbi__pic_is4(stbi__context*, const char*)’
+ 6336 | static int stbi__pic_is4(stbi__context *s,const char *str)
+      |            ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6336:12: note: ‘int stbi__pic_is4(stbi__context*, const char*)’ previously defined here
+ 6336 | static int stbi__pic_is4(stbi__context *s,const char *str)
+      |            ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6346:12: error: redefinition of ‘int stbi__pic_test_core(stbi__context*)’
+ 6346 | static int stbi__pic_test_core(stbi__context *s)
+      |            ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6346:12: note: ‘int stbi__pic_test_core(stbi__context*)’ previously defined here
+ 6346 | static int stbi__pic_test_core(stbi__context *s)
+      |            ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6365:3: error: conflicting declaration ‘typedef struct stbi__pic_packet stbi__pic_packet’
+ 6365 | } stbi__pic_packet;
+      |   ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6365:3: note: previous declaration as ‘typedef struct stbi__pic_packet stbi__pic_packet’
+ 6365 | } stbi__pic_packet;
+      |   ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6367:17: error: redefinition of ‘stbi_uc* stbi__readval(stbi__context*, int, stbi_uc*)’
+ 6367 | static stbi_uc *stbi__readval(stbi__context *s, int channel, stbi_uc *dest)
+      |                 ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6367:17: note: ‘stbi_uc* stbi__readval(stbi__context*, int, stbi_uc*)’ previously defined here
+ 6367 | static stbi_uc *stbi__readval(stbi__context *s, int channel, stbi_uc *dest)
+      |                 ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6381:13: error: redefinition of ‘void stbi__copyval(int, stbi_uc*, const stbi_uc*)’
+ 6381 | static void stbi__copyval(int channel,stbi_uc *dest,const stbi_uc *src)
+      |             ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6381:13: note: ‘void stbi__copyval(int, stbi_uc*, const stbi_uc*)’ previously defined here
+ 6381 | static void stbi__copyval(int channel,stbi_uc *dest,const stbi_uc *src)
+      |             ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6390:17: error: redefinition of ‘stbi_uc* stbi__pic_load_core(stbi__context*, int, int, int*, stbi_uc*)’
+ 6390 | static stbi_uc *stbi__pic_load_core(stbi__context *s,int width,int height,int *comp, stbi_uc *result)
+      |                 ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6390:17: note: ‘stbi_uc* stbi__pic_load_core(stbi__context*, int, int, int*, stbi_uc*)’ previously defined here
+ 6390 | static stbi_uc *stbi__pic_load_core(stbi__context *s,int width,int height,int *comp, stbi_uc *result)
+      |                 ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6500:14: error: redefinition of ‘void* stbi__pic_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’
+ 6500 | static void *stbi__pic_load(stbi__context *s,int *px,int *py,int *comp,int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6500:14: note: ‘void* stbi__pic_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’ previously defined here
+ 6500 | static void *stbi__pic_load(stbi__context *s,int *px,int *py,int *comp,int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6541:12: error: redefinition of ‘int stbi__pic_test(stbi__context*)’
+ 6541 | static int stbi__pic_test(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6541:12: note: ‘int stbi__pic_test(stbi__context*)’ previously defined here
+ 6541 | static int stbi__pic_test(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6558:3: error: conflicting declaration ‘typedef struct stbi__gif_lzw stbi__gif_lzw’
+ 6558 | } stbi__gif_lzw;
+      |   ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6558:3: note: previous declaration as ‘typedef struct stbi__gif_lzw stbi__gif_lzw’
+ 6558 | } stbi__gif_lzw;
+      |   ^~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6578:3: error: conflicting declaration ‘typedef struct stbi__gif stbi__gif’
+ 6578 | } stbi__gif;
+      |   ^~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6578:3: note: previous declaration as ‘typedef struct stbi__gif stbi__gif’
+ 6578 | } stbi__gif;
+      |   ^~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6580:12: error: redefinition of ‘int stbi__gif_test_raw(stbi__context*)’
+ 6580 | static int stbi__gif_test_raw(stbi__context *s)
+      |            ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6580:12: note: ‘int stbi__gif_test_raw(stbi__context*)’ previously defined here
+ 6580 | static int stbi__gif_test_raw(stbi__context *s)
+      |            ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6590:12: error: redefinition of ‘int stbi__gif_test(stbi__context*)’
+ 6590 | static int stbi__gif_test(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6590:12: note: ‘int stbi__gif_test(stbi__context*)’ previously defined here
+ 6590 | static int stbi__gif_test(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6597:13: error: redefinition of ‘void stbi__gif_parse_colortable(stbi__context*, stbi_uc (*)[4], int, int)’
+ 6597 | static void stbi__gif_parse_colortable(stbi__context *s, stbi_uc pal[256][4], int num_entries, int transp)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6597:13: note: ‘void stbi__gif_parse_colortable(stbi__context*, stbi_uc (*)[4], int, int)’ previously defined here
+ 6597 | static void stbi__gif_parse_colortable(stbi__context *s, stbi_uc pal[256][4], int num_entries, int transp)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6608:12: error: redefinition of ‘int stbi__gif_header(stbi__context*, stbi__gif*, int*, int)’
+ 6608 | static int stbi__gif_header(stbi__context *s, stbi__gif *g, int *comp, int is_info)
+      |            ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6608:12: note: ‘int stbi__gif_header(stbi__context*, stbi__gif*, int*, int)’ previously defined here
+ 6608 | static int stbi__gif_header(stbi__context *s, stbi__gif *g, int *comp, int is_info)
+      |            ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6639:12: error: redefinition of ‘int stbi__gif_info_raw(stbi__context*, int*, int*, int*)’
+ 6639 | static int stbi__gif_info_raw(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6639:12: note: ‘int stbi__gif_info_raw(stbi__context*, int*, int*, int*)’ previously defined here
+ 6639 | static int stbi__gif_info_raw(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6654:13: error: redefinition of ‘void stbi__out_gif_code(stbi__gif*, stbi__uint16)’
+ 6654 | static void stbi__out_gif_code(stbi__gif *g, stbi__uint16 code)
+      |             ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6654:13: note: ‘void stbi__out_gif_code(stbi__gif*, stbi__uint16)’ previously defined here
+ 6654 | static void stbi__out_gif_code(stbi__gif *g, stbi__uint16 code)
+      |             ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6691:17: error: redefinition of ‘stbi_uc* stbi__process_gif_raster(stbi__context*, stbi__gif*)’
+ 6691 | static stbi_uc *stbi__process_gif_raster(stbi__context *s, stbi__gif *g)
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6691:17: note: ‘stbi_uc* stbi__process_gif_raster(stbi__context*, stbi__gif*)’ previously defined here
+ 6691 | static stbi_uc *stbi__process_gif_raster(stbi__context *s, stbi__gif *g)
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6778:17: error: redefinition of ‘stbi_uc* stbi__gif_load_next(stbi__context*, stbi__gif*, int*, int, stbi_uc*)’
+ 6778 | static stbi_uc *stbi__gif_load_next(stbi__context *s, stbi__gif *g, int *comp, int req_comp, stbi_uc *two_back)
+      |                 ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6778:17: note: ‘stbi_uc* stbi__gif_load_next(stbi__context*, stbi__gif*, int*, int, stbi_uc*)’ previously defined here
+ 6778 | static stbi_uc *stbi__gif_load_next(stbi__context *s, stbi__gif *g, int *comp, int req_comp, stbi_uc *two_back)
+      |                 ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6952:14: error: redefinition of ‘void* stbi__load_gif_main_outofmem(stbi__gif*, stbi_uc*, int**)’
+ 6952 | static void *stbi__load_gif_main_outofmem(stbi__gif *g, stbi_uc *out, int **delays)
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6952:14: note: ‘void* stbi__load_gif_main_outofmem(stbi__gif*, stbi_uc*, int**)’ previously defined here
+ 6952 | static void *stbi__load_gif_main_outofmem(stbi__gif *g, stbi_uc *out, int **delays)
+      |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6963:14: error: redefinition of ‘void* stbi__load_gif_main(stbi__context*, int**, int*, int*, int*, int*, int)’
+ 6963 | static void *stbi__load_gif_main(stbi__context *s, int **delays, int *x, int *y, int *z, int *comp, int req_comp)
+      |              ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:6963:14: note: ‘void* stbi__load_gif_main(stbi__context*, int**, int*, int*, int*, int*, int)’ previously defined here
+ 6963 | static void *stbi__load_gif_main(stbi__context *s, int **delays, int *x, int *y, int *z, int *comp, int req_comp)
+      |              ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7048:14: error: redefinition of ‘void* stbi__gif_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’
+ 7048 | static void *stbi__gif_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7048:14: note: ‘void* stbi__gif_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’ previously defined here
+ 7048 | static void *stbi__gif_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7077:12: error: redefinition of ‘int stbi__gif_info(stbi__context*, int*, int*, int*)’
+ 7077 | static int stbi__gif_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7077:12: note: ‘int stbi__gif_info(stbi__context*, int*, int*, int*)’ previously defined here
+ 7077 | static int stbi__gif_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7087:12: error: redefinition of ‘int stbi__hdr_test_core(stbi__context*, const char*)’
+ 7087 | static int stbi__hdr_test_core(stbi__context *s, const char *signature)
+      |            ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7087:12: note: ‘int stbi__hdr_test_core(stbi__context*, const char*)’ previously defined here
+ 7087 | static int stbi__hdr_test_core(stbi__context *s, const char *signature)
+      |            ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7097:12: error: redefinition of ‘int stbi__hdr_test(stbi__context*)’
+ 7097 | static int stbi__hdr_test(stbi__context* s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7097:12: note: ‘int stbi__hdr_test(stbi__context*)’ previously defined here
+ 7097 | static int stbi__hdr_test(stbi__context* s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7109:14: error: redefinition of ‘char* stbi__hdr_gettoken(stbi__context*, char*)’
+ 7109 | static char *stbi__hdr_gettoken(stbi__context *z, char *buffer)
+      |              ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7109:14: note: ‘char* stbi__hdr_gettoken(stbi__context*, char*)’ previously defined here
+ 7109 | static char *stbi__hdr_gettoken(stbi__context *z, char *buffer)
+      |              ^~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7131:13: error: redefinition of ‘void stbi__hdr_convert(float*, stbi_uc*, int)’
+ 7131 | static void stbi__hdr_convert(float *output, stbi_uc *input, int req_comp)
+      |             ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7131:13: note: ‘void stbi__hdr_convert(float*, stbi_uc*, int)’ previously defined here
+ 7131 | static void stbi__hdr_convert(float *output, stbi_uc *input, int req_comp)
+      |             ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7158:15: error: redefinition of ‘float* stbi__hdr_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’
+ 7158 | static float *stbi__hdr_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
+      |               ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7158:15: note: ‘float* stbi__hdr_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’ previously defined here
+ 7158 | static float *stbi__hdr_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
+      |               ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7289:12: error: redefinition of ‘int stbi__hdr_info(stbi__context*, int*, int*, int*)’
+ 7289 | static int stbi__hdr_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7289:12: note: ‘int stbi__hdr_info(stbi__context*, int*, int*, int*)’ previously defined here
+ 7289 | static int stbi__hdr_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7335:12: error: redefinition of ‘int stbi__bmp_info(stbi__context*, int*, int*, int*)’
+ 7335 | static int stbi__bmp_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7335:12: note: ‘int stbi__bmp_info(stbi__context*, int*, int*, int*)’ previously defined here
+ 7335 | static int stbi__bmp_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7359:12: error: redefinition of ‘int stbi__psd_info(stbi__context*, int*, int*, int*)’
+ 7359 | static int stbi__psd_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7359:12: note: ‘int stbi__psd_info(stbi__context*, int*, int*, int*)’ previously defined here
+ 7359 | static int stbi__psd_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7394:12: error: redefinition of ‘int stbi__psd_is16(stbi__context*)’
+ 7394 | static int stbi__psd_is16(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7394:12: note: ‘int stbi__psd_is16(stbi__context*)’ previously defined here
+ 7394 | static int stbi__psd_is16(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7423:12: error: redefinition of ‘int stbi__pic_info(stbi__context*, int*, int*, int*)’
+ 7423 | static int stbi__pic_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7423:12: note: ‘int stbi__pic_info(stbi__context*, int*, int*, int*)’ previously defined here
+ 7423 | static int stbi__pic_info(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7494:17: error: redefinition of ‘int stbi__pnm_test(stbi__context*)’
+ 7494 | static int      stbi__pnm_test(stbi__context *s)
+      |                 ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7494:17: note: ‘int stbi__pnm_test(stbi__context*)’ previously defined here
+ 7494 | static int      stbi__pnm_test(stbi__context *s)
+      |                 ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7506:14: error: redefinition of ‘void* stbi__pnm_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’
+ 7506 | static void *stbi__pnm_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7506:14: note: ‘void* stbi__pnm_load(stbi__context*, int*, int*, int*, int, stbi__result_info*)’ previously defined here
+ 7506 | static void *stbi__pnm_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
+      |              ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7543:17: error: redefinition of ‘int stbi__pnm_isspace(char)’
+ 7543 | static int      stbi__pnm_isspace(char c)
+      |                 ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7543:17: note: ‘int stbi__pnm_isspace(char)’ previously defined here
+ 7543 | static int      stbi__pnm_isspace(char c)
+      |                 ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7548:17: error: redefinition of ‘void stbi__pnm_skip_whitespace(stbi__context*, char*)’
+ 7548 | static void     stbi__pnm_skip_whitespace(stbi__context *s, char *c)
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7548:17: note: ‘void stbi__pnm_skip_whitespace(stbi__context*, char*)’ previously defined here
+ 7548 | static void     stbi__pnm_skip_whitespace(stbi__context *s, char *c)
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7562:17: error: redefinition of ‘int stbi__pnm_isdigit(char)’
+ 7562 | static int      stbi__pnm_isdigit(char c)
+      |                 ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7562:17: note: ‘int stbi__pnm_isdigit(char)’ previously defined here
+ 7562 | static int      stbi__pnm_isdigit(char c)
+      |                 ^~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7567:17: error: redefinition of ‘int stbi__pnm_getinteger(stbi__context*, char*)’
+ 7567 | static int      stbi__pnm_getinteger(stbi__context *s, char *c)
+      |                 ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7567:17: note: ‘int stbi__pnm_getinteger(stbi__context*, char*)’ previously defined here
+ 7567 | static int      stbi__pnm_getinteger(stbi__context *s, char *c)
+      |                 ^~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7581:17: error: redefinition of ‘int stbi__pnm_info(stbi__context*, int*, int*, int*)’
+ 7581 | static int      stbi__pnm_info(stbi__context *s, int *x, int *y, int *comp)
+      |                 ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7581:17: note: ‘int stbi__pnm_info(stbi__context*, int*, int*, int*)’ previously defined here
+ 7581 | static int      stbi__pnm_info(stbi__context *s, int *x, int *y, int *comp)
+      |                 ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7624:12: error: redefinition of ‘int stbi__pnm_is16(stbi__context*)’
+ 7624 | static int stbi__pnm_is16(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7624:12: note: ‘int stbi__pnm_is16(stbi__context*)’ previously defined here
+ 7624 | static int stbi__pnm_is16(stbi__context *s)
+      |            ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7632:12: error: redefinition of ‘int stbi__info_main(stbi__context*, int*, int*, int*)’
+ 7632 | static int stbi__info_main(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7632:12: note: ‘int stbi__info_main(stbi__context*, int*, int*, int*)’ previously defined here
+ 7632 | static int stbi__info_main(stbi__context *s, int *x, int *y, int *comp)
+      |            ^~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7674:12: error: redefinition of ‘int stbi__is_16_main(stbi__context*)’
+ 7674 | static int stbi__is_16_main(stbi__context *s)
+      |            ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7674:12: note: ‘int stbi__is_16_main(stbi__context*)’ previously defined here
+ 7674 | static int stbi__is_16_main(stbi__context *s)
+      |            ^~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7691:13: error: redefinition of ‘int stbi_info(const char*, int*, int*, int*)’
+ 7691 | STBIDEF int stbi_info(char const *filename, int *x, int *y, int *comp)
+      |             ^~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7691:13: note: ‘int stbi_info(const char*, int*, int*, int*)’ previously defined here
+ 7691 | STBIDEF int stbi_info(char const *filename, int *x, int *y, int *comp)
+      |             ^~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7701:13: error: redefinition of ‘int stbi_info_from_file(FILE*, int*, int*, int*)’
+ 7701 | STBIDEF int stbi_info_from_file(FILE *f, int *x, int *y, int *comp)
+      |             ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7701:13: note: ‘int stbi_info_from_file(FILE*, int*, int*, int*)’ previously defined here
+ 7701 | STBIDEF int stbi_info_from_file(FILE *f, int *x, int *y, int *comp)
+      |             ^~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7712:13: error: redefinition of ‘int stbi_is_16_bit(const char*)’
+ 7712 | STBIDEF int stbi_is_16_bit(char const *filename)
+      |             ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7712:13: note: ‘int stbi_is_16_bit(const char*)’ previously defined here
+ 7712 | STBIDEF int stbi_is_16_bit(char const *filename)
+      |             ^~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7722:13: error: redefinition of ‘int stbi_is_16_bit_from_file(FILE*)’
+ 7722 | STBIDEF int stbi_is_16_bit_from_file(FILE *f)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7722:13: note: ‘int stbi_is_16_bit_from_file(FILE*)’ previously defined here
+ 7722 | STBIDEF int stbi_is_16_bit_from_file(FILE *f)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7734:13: error: redefinition of ‘int stbi_info_from_memory(const stbi_uc*, int, int*, int*, int*)’
+ 7734 | STBIDEF int stbi_info_from_memory(stbi_uc const *buffer, int len, int *x, int *y, int *comp)
+      |             ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7734:13: note: ‘int stbi_info_from_memory(const stbi_uc*, int, int*, int*, int*)’ previously defined here
+ 7734 | STBIDEF int stbi_info_from_memory(stbi_uc const *buffer, int len, int *x, int *y, int *comp)
+      |             ^~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7741:13: error: redefinition of ‘int stbi_info_from_callbacks(const stbi_io_callbacks*, void*, int*, int*, int*)’
+ 7741 | STBIDEF int stbi_info_from_callbacks(stbi_io_callbacks const *c, void *user, int *x, int *y, int *comp)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7741:13: note: ‘int stbi_info_from_callbacks(const stbi_io_callbacks*, void*, int*, int*, int*)’ previously defined here
+ 7741 | STBIDEF int stbi_info_from_callbacks(stbi_io_callbacks const *c, void *user, int *x, int *y, int *comp)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7748:13: error: redefinition of ‘int stbi_is_16_bit_from_memory(const stbi_uc*, int)’
+ 7748 | STBIDEF int stbi_is_16_bit_from_memory(stbi_uc const *buffer, int len)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7748:13: note: ‘int stbi_is_16_bit_from_memory(const stbi_uc*, int)’ previously defined here
+ 7748 | STBIDEF int stbi_is_16_bit_from_memory(stbi_uc const *buffer, int len)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7755:13: error: redefinition of ‘int stbi_is_16_bit_from_callbacks(const stbi_io_callbacks*, void*)’
+ 7755 | STBIDEF int stbi_is_16_bit_from_callbacks(stbi_io_callbacks const *c, void *user)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/user/.conan2/p/stb19b77fb56ffd7/p/include/stb_image.h:7755:13: note: ‘int stbi_is_16_bit_from_callbacks(const stbi_io_callbacks*, void*)’ previously defined here
+ 7755 | STBIDEF int stbi_is_16_bit_from_callbacks(stbi_io_callbacks const *c, void *user)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2/7] Building CXX object CMakeFiles/algosee.dir/Unity/unity_2_cxx.cxx.o
+[3/7] Building CXX object CMakeFiles/algosee_testclient.dir/Unity/unity_0_cxx.cxx.o
+[4/7] Building CXX object CMakeFiles/algosee.dir/Unity/unity_0_cxx.cxx.o
+ninja: build stopped: subcommand failed.
