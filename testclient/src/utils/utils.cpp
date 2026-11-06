@@ -35,22 +35,25 @@
 #include <unistd.h>
 
 using json = nlohmann::json;
- 
-GraphUnweighted generateGU(int size,int start,int goal)
+
+GraphUnweighted generateGU(int size, int start, int goal)
 {
     GraphUnweighted retval(size);
-while(true)
-{
-for(auto& row: retval)
-{
-    for(int i = 0; i<randomInt(0,10);i++)
+    for (int i = 0; i < size - 1;
+         i++) // this guarantees that there is always a path from start to goal so that
+              // Node 1: Connection to Node 2, Node 2: Connection to Node 3, Node 3:
+              // Connection to Node 4 and so on
     {
-        row.push_back(randomInt(0,size-1));
+        retval[i].push_back(i + 1);
     }
-}
-
-}
-return retval;
+    for(int i = 0; i<size;i++)//this jsut serves as adding random data to confuse the pathfinding algorithm, sort of give it a challange 
+    {
+        for(int z = 0; z<randomInt(0,10);z++)
+        {
+            retval[i].push_back(randomInt(0,size-1));
+        }
+    }
+    return retval;
 }
 
 void writeMemToImage(const rawImage &img)
@@ -69,21 +72,21 @@ rawImage RawImageFromJson(const json &j)
     retval.height = -1;
 
     retval.size = j["SORTED"].size() * retval.channels;
-        retval.data = new unsigned char[retval.size];
-        int retvalI = 0;
-        int JI = 0;
-        while (JI < j["SORTED"].size())
-        {
-            const auto entry = j["SORTED"].at(JI);
-            retval.data[retvalI] = entry.at(
-                1); // ignore the first value, its a index because SORTED is a indexPixel
-            retval.data[retvalI + 1] = entry.at(2);
-            retval.data[retvalI + 2] = entry.at(3);
-            retval.data[retvalI + 3] = entry.at(4);
+    retval.data = new unsigned char[retval.size];
+    int retvalI = 0;
+    int JI = 0;
+    while (JI < j["SORTED"].size())
+    {
+        const auto entry = j["SORTED"].at(JI);
+        retval.data[retvalI] = entry.at(
+            1); // ignore the first value, its a index because SORTED is a indexPixel
+        retval.data[retvalI + 1] = entry.at(2);
+        retval.data[retvalI + 2] = entry.at(3);
+        retval.data[retvalI + 3] = entry.at(4);
 
-            retvalI = retvalI + 4;
-            JI++;
-        }
+        retvalI = retvalI + 4;
+        JI++;
+    }
     return retval;
 }
 
@@ -125,7 +128,8 @@ void printReport(const std::vector<run> &exitMessage, StateClass &state)
             state.out("Algorithm:" + element.algoname +
                           ", Size:" + std::to_string(element.size) +
                           "Map Size:" + std::to_string(element.mapSize.first) + "," +
-                          std::to_string(element.mapSize.second)+"\nReason:"+element.failureReason,
+                          std::to_string(element.mapSize.second) +
+                          "\nReason:" + element.failureReason,
                       0);
     }
 }
@@ -245,4 +249,3 @@ std::string executeCommand(const std::string &command)
         throw std::runtime_error("Shell Command:'" + command + "' has failed.");
     return result;
 }
-
