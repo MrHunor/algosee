@@ -20,6 +20,8 @@ Any sucessfull (and most unsucessful) requests will return a json object contain
 - 'SEARCHMAP'
 - 'VISITEDFROMSTART'
 - 'VISITEDFROMEND'
+- 'ARRAY'
+- 'HEAP' 
 
 ***Non-Array types:***
 - 'STATUS' -> typically filled with "ONLINE"
@@ -49,6 +51,7 @@ It returns all keys documented in 0. and:
 - 'MAX_ELEMENT_COUNT_MERGE'
 - 'MAX_ELEMENT_COUNT_COUNTING'
 - 'MAX_ELEMENT_COUNT_CYCLE'
+- 'MAX_ELEMENT_COUNT_HEAP'
 - 'HIGHEST_ELEMENT_COUNTING'  
 ***Pathfinding:***
 - 'MAX_ELEMENT_COUNT_BFS'
@@ -67,22 +70,25 @@ The sortalgo endpoint can be used to sort an array of integer elements.
 It expects the URL argument algo being equal to one of the implemented sorting algorithms. (see [docs/Implemented_Algorithms.md](./Implemented_Algorithms.md))  
 Furthermore it requires the body to have a array of 'values'.  
 It will return the default keys defined in 0. and some other keys depending on the chosen alorithm:
-- ***Selection***:
-  - 'MOVES' containing a array of integer pairs representing the indexes of the values array to swap  
+- ***Bogo***:
+  - 'TRIES' contains an array of arrays, the inner part being some random variation of the original values array  
+- ***Bubble***:
+  - 'MOVES' containing a array of integer pairs representing the indexes of the values array to swap    
+- ***Counting***:
+  - 'COUNT ARRAY' contains an array which represents the values array in the format of countarr[n]=number of occurences of the number n in the values array  
 - ***Cycle***:
   - 'SWAPED' contains an array of inegers paris represeting the number thats being swaped INTO the array and the index of the element in the values array thats being swaped OUT (and being used as the next element to sort)  
-- ***Bubble***:
-  - 'MOVES' [*see selection*](#L72)  
-- ***Quick***:
-  - 'MOVES' [*see selection*](#L72)  
+- **Heap**
+  - 'ARRAY' contains an array of arrays of integers representing the at each iteration sorted part of the array
+  - 'HEAP' contains an array of array of integers representing the binary tree (called heap in this sorting algorithm)
 - ***Merge***:
   - 'SPLIT (ORIGIN,LEFT,RIGHT)' contains an array of three elements, first being the original array, then the left area of the split array, and finally the right area  
   - 'SORTED (LEFT,RIGHT)' contains an array of two elements, first being the sorted left part of the array, and secondly the sorted right part of the array  
   - 'MERGED (LEFT,RIGHT,RESULT)' contains an array of three elements, first being the left area of the soon to be merged array, secondly the right area and finally the result of the merge  
-- ***Counting***:
-  - 'COUNT ARRAY' contains an array which represents the values array in the format of countarr[n]=number of occurences of the number n in the values array  
-- ***Bogo***:
-  - 'TRIES' contains an array of arrays, the inner part being some random variation of the original values array  
+- ***Quick***:
+  - 'MOVES' [*see bubble*](#L76)  
+- ***Selection***:
+  - 'MOVES' [*see bubble*](#L76)
 
 
 ### 4. /pathalgoMap
