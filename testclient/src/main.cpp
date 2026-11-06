@@ -19,10 +19,23 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../../src/logger/logger.h"
+#include <httplib.h>
 #include "tests/tests.h"
 #include "utils/utils.h"
 #include <string>
 
+/**
+ * @brief Main entry point
+ *
+ * @param argc Integer of arguments passed, usually at least one, which is the name of the executable
+ *
+ * @param argv Pointer to a array of char containing the arguments which are passed
+ *
+ * @throws When bad input from the user is passed, but is handled internally. (Unless ofc something goes very wrong)
+ *
+ * @returns Exitcode
+ *
+ */
 int main(int argc, char *argv[])
 {
     remove("testClientLog.txt");
@@ -30,9 +43,10 @@ int main(int argc, char *argv[])
     state.out("Testing sorting algorithms", 0);
 
     std::vector<run> exitMessage;
+    httplib::Client client("0.0.0.0",8080);
 
-    runSortalgoTest(exitMessage, state);
-    runPathalgoTest(exitMessage, state);
+    runSortalgoTest(exitMessage, client,state);
+    runPathalgoTest(exitMessage,client, state);
     runImageTest(exitMessage,state);
 
     state.out("Finished", 0);

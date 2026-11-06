@@ -18,6 +18,7 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
 #include "utils.h"
 #include "../../defs/general.h"
 #include "../../defs/implemented.h"
@@ -55,7 +56,7 @@ void fillWithMetaData(json &response)
     response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
 }
 
-std::string readFile(std::string path)
+std::string readFile(const std::string &path)
 {
     std::ifstream file{path};
     if (!file)
@@ -101,7 +102,7 @@ std::string GenerateRandomString(const int &size)
     return retval;
 }
 
-bool CheckRateLimit(const clientListType &cList, const int &index)
+bool CheckRateLimit(const clientListType &cList, int index)
 {
     std::string targetIP = cList[index].second;
     int matchingEntrysCount = 0;
@@ -123,7 +124,7 @@ bool CheckRateLimit(const clientListType &cList, const int &index)
 
 void AddClient(clientListType &cList,
                const std::pair<std::chrono::time_point<std::chrono::system_clock>,
-                               std::string> &newEntry)
+                               const std::string> &newEntry)
 {
     int index = 0;
     auto now = std::chrono::system_clock::now();
@@ -209,7 +210,7 @@ void ReturnFailedAnswerStreamOnly(const std::string &Details, int exitCode,
     stream->finish();
 }
 
-void InvalidInputMessage(const std::string &details, std::source_location location)
+void InvalidInputMessage(const std::string &details, const std::source_location location)
 {
 
     // yes i thought of making this state out for colour but that would require

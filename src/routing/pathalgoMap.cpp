@@ -18,7 +18,7 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#include "../utils/pathalgo/pathalgo.h"
+#include "../defs/implemented.h"
 #include "../exception/exception.h"
 #include "../logger/logger.h"
 #include "../pathalgo/algos.h"
@@ -30,7 +30,8 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void RunPathalgo(const httplib::Request &req, httplib::Response &res, StateClass &state)
+void RunPathalgoMap(const httplib::Request &req, httplib::Response &res,
+                    StateClass &state)
 {
     try
     {
@@ -39,18 +40,15 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, StateClass
         json response;
         generateJsonRetrunArras(response);
         fillWithMetaData(response);
-        bool sameRowLength = true;
-        int collums;
-        // log ip
 
         // parsing
         state.out("Processing values....", 0);
-        PathValidReturn info = ValidatePath(req, state);
+        PathValidReturnMap info = ValidatePathMap(req, state);
 
         state.out("Starting time mesurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
 
-        if (info.algo == "BFS" || info.algo == "DFS" || info.algo == "BIBFS")
+        if (implementedPathAlgoCatagory.at(info.algo) == 'U')
         {
 
             // this could very likely throw

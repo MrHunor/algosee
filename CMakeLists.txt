@@ -35,9 +35,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 
-
-project(algosee VERSION 0.8 LANGUAGES CXX)
-
+project(algosee VERSION 0.82 LANGUAGES CXX)
 
 
 set(CMAKE_CXX_STANDARD 23)
@@ -75,6 +73,10 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     )
     target_include_directories(algosee_testclient PRIVATE
         "${CMAKE_CURRENT_BINARY_DIR}/generated"
+  
+    )
+    target_sources(algosee_testclient PRIVATE #this is needed for some shared functions
+          "${CMAKE_CURRENT_SOURCE_DIR}/src/utils/general/utils.cpp"
     )
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     target_compile_options(algosee PRIVATE
@@ -105,15 +107,17 @@ target_precompile_headers(algosee PRIVATE
 
 find_package(nlohmann_json REQUIRED)
 
-
 find_package(httplib REQUIRED)
 
 find_package(stb REQUIRED)
+
+find_package(CLI11 REQUIRED)
 
 target_link_libraries(algosee
     nlohmann_json::nlohmann_json
     httplib::httplib
     stb::stb
+    CLI11::CLI11
     stdc++exp
 )
 
@@ -121,7 +125,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_link_libraries(algosee_testclient
         nlohmann_json::nlohmann_json
         stdc++exp
-        httplib::httplib #Not required by the project but they share a logger.h which does indeed require it
+        httplib::httplib 
         stb::stb
     )
 endif()

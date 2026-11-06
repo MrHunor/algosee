@@ -25,9 +25,9 @@
 #include "../../utils/pathalgo/pathalgo.h"
 #include <httplib/httplib.h>
 
-PathValidReturn ValidatePath(const httplib::Request &req, StateClass &state)
+PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &state)
 {
-    PathValidReturn retval;
+    PathValidReturnMap retval;
     state.out("Checking algo URL parameter...", 0);
     if (!req.has_param("algo"))
     {
@@ -38,7 +38,7 @@ PathValidReturn ValidatePath(const httplib::Request &req, StateClass &state)
     {
         throw excep("URL contains a algo parameter but no algo is set.", 400);
     }
-    if (!implementedPathAlgos.contains(retval.algo))
+    if (!implementedPathAlgosSize.contains(retval.algo))
     {
         throw excep("Provided algo does not exist or is not implemented.", 501);
     }
@@ -61,7 +61,7 @@ PathValidReturn ValidatePath(const httplib::Request &req, StateClass &state)
     }
 
     state.out("Casting Map (if needed)...", 0);
-    if (retval.algo == "dijkstra" || retval.algo == "ASTAR" || retval.algo == "GBFS")
+    if (implementedPathAlgoCatagory.at(retval.algo) == 'W')
     {
         retval.mapInt = parsed["MAP"];
         if (retval.mapInt.empty())
@@ -83,8 +83,8 @@ PathValidReturn ValidatePath(const httplib::Request &req, StateClass &state)
     retval.goal = parsed["GOAL"];
 
     state.out("Checking element count...", 0);
-    auto it = implementedPathAlgos.find(retval.algo);
-    if (retval.algo == "dijkstra" || retval.algo == "ASTAR" || retval.algo == "GBFS")
+    auto it = implementedPathAlgosSize.find(retval.algo);
+    if (implementedPathAlgoCatagory.at(retval.algo) == 'W')
     {
         if (retval.mapInt.size() * retval.mapInt[0].size() > it->second)
             throw excep("Too many element specified. " + it->first +
@@ -92,15 +92,14 @@ PathValidReturn ValidatePath(const httplib::Request &req, StateClass &state)
                             " elements.",
                         413);
     }
-    else if (retval.algo != "dijkstra" &&
-             retval.mapBool.size() * retval.mapBool[0].size() > it->second)
+    else if (retval.mapBool.size() * retval.mapBool[0].size() > it->second)
         throw excep("Too many element specified. " + it->first +
                         " only accepts less then " + std::to_string(it->second) +
                         " elements.",
                     413);
 
     state.out("Checking Maps internal validness...", 0);
-    if (retval.algo != "dijkstra" && retval.algo != "ASTAR" && retval.algo != "GBFS")
+    if (implementedPathAlgoCatagory.at(retval.algo) == 'U')
         CheckMapValidness(retval.mapBool, retval.start, retval.goal);
     else
     {
@@ -108,17 +107,159 @@ PathValidReturn ValidatePath(const httplib::Request &req, StateClass &state)
         auto range = CheckRange(retval.mapInt);
         if (range.first < -1)
             throw excep("An element in the map is below -1, which is the min "
-                        "required for Djkstra/ASTAR.",
+                        "required for Djkstra/ASTAR/GBFS.",
                         400);
         if (range.second > HIGHEST_ELEMENT_PATH)
             throw excep("An element in the map is higher then:" +
                             std::to_string(HIGHEST_ELEMENT_PATH) +
-                            " which is the max for Dijkstra/ASTAR",
+                            " which is the max for Dijkstra/ASTAR/GBFS",
                         400);
     }
     if (retval.algo == "ASTAR")
     {
         if (CheckMapForZero(retval.mapInt))
+            throw excep("Map may not contain zero values for this algorithm.", 400);
+    }
+
+    return retval;
+}
+
+PathValidReturnGraph ValdiatePathGraph(const httplib::Request &req, StateClass &state)
+{
+    PathValidReturnGraph retval;
+    state.out("Checking algo URL parameter...", 0);
+    if (!req.has_param("algo"))
+    {
+        throw excep("URL does not contain a url parameter.", 400);
+    }
+    retval.algo = req.get_param_value("algo");
+    if (retval.algo.empty())
+    {
+        throw excep("URL contains a algo parameter but no algo is set.", 400);
+    }
+    if (!implementedPathAlgosSize.contains(retval.algo))
+    {
+        throw excep("Provided algo does not exist or is not implemented.", 501);
+    }
+
+    state.out("Parsing body...", 0);
+    json parsed = json::parse(req.body);
+
+    state.out("Checking GRAPH, START and GOAL parameter existence", 0);
+
+    if (!parsed.contains("GRAPH"))
+    {
+        throw excep("Body does not contain a MAP parameter.", 400);
+    }
+    if (!parsed.contains("START"))
+    {
+        throw excep("Body does not contain a START parameter.", 400);
+    }
+    if (!parsed.contains("GOAL"))
+    {
+        throw excep("Body does not contain a GOAL parameter.", 400);
+    }
+
+    if (implementedPathAlgoCatagory.at(retval.algo) == 'W')
+    {
+        retval.graphWeighted = parsed["GRAPH"];
+        if (retval.graphWeighted.empty())
+            throw excep("Failed to convert graph from json to valid variable; This "
+                        "likely occured because GRAPH was in the wrong format");
+    }
+    else
+    {
+        retval.graphUnweight = parsed["GRAPH"];
+        if (retval.graphUnweight.empty())
+            throw excep("Failed to convert graph from json to valid variable; This "
+                        "likely occured because GRAPH was in the wrong format");
+    }
+
+    retval.start = parsed["START"];
+    retval.goal = parsed["GOAL"];
+
+    state.out("Checking start and goal bounds", 1);
+    if (retval.start < 0 || retval.goal < 0)
+        throw excep("Start or goal out of bounds (smaller then 0)");
+
+    if (implementedPathAlgoCatagory.at(retval.algo) == 'W')
+    {
+        if (retval.start >= retval.graphWeighted.size() ||
+            retval.goal >= retval.graphWeighted.size())
+            throw excep(
+                "Start or Goal out of bounds (bigger then total number of Nodes)");
+    }
+    else
+    {
+        if (retval.start >= retval.graphUnweight.size() ||
+            retval.goal >= retval.graphUnweight.size())
+            throw excep(
+                "Start or Goal out of bounds (bigger then total number of Nodes)");
+    }
+
+    state.out("Checking connected nodes existance", 0);
+
+    if (implementedPathAlgoCatagory.at(retval.algo) == 'W')
+    {
+        const uint64_t rows = retval.graphWeighted.size();
+        for (const auto &row : retval.graphWeighted)
+        {
+            for (const auto &connection : row)
+            {
+                if (connection.first >= rows)
+                    throw excep(
+                        "A connection in the graph is bigger then the total Node count");
+            }
+        }
+    }
+    else
+    {
+        const uint64_t rows = retval.graphUnweight.size();
+        for (const auto &row : retval.graphUnweight)
+        {
+            for (const auto &connection : row)
+            {
+                if (connection >= rows)
+                    throw excep(
+                        "A connection in the graph is bigger then the total Node count");
+            }
+        }
+    }
+
+    state.out("Checking element count...", 0);
+    auto it = implementedPathAlgosSize.find(retval.algo);
+    if (implementedPathAlgoCatagory.at(retval.algo) == 'W')
+    {
+        if (retval.graphWeighted.size() > it->second)
+            throw excep("Too many element specified. " + it->first +
+                            " only accepts less then " + std::to_string(it->second) +
+                            " elements.",
+                        413);
+    }
+    else if (retval.graphUnweight.size() > it->second)
+        throw excep("Too many element specified. " + it->first +
+                        " only accepts less then " + std::to_string(it->second) +
+                        " elements.",
+                    413);
+
+    if (retval.algo == "dijkstra" || retval.algo == "ASTAR" || retval.algo == "GBFS")
+    {
+        state.out("Checking value range...", 0);
+        auto range = CheckRange(retval.graphWeighted);
+        if (range.first < -1)
+            throw excep("An element in the map is below -1, which is the min "
+                        "required for Djkstra/ASTAR/GBFS.",
+                        400);
+        if (range.second > HIGHEST_ELEMENT_PATH)
+            throw excep("An element in the map is higher then:" +
+                            std::to_string(HIGHEST_ELEMENT_PATH) +
+                            " which is the max for Dijkstra/ASTAR/GBFS",
+                        400);
+    }
+
+    if (retval.algo == "ASTAR")
+    {
+        if (CheckMapForZero(retval.graphWeighted))
             throw excep("Map may not contain zero values for this algorithm.", 400);
     }
 

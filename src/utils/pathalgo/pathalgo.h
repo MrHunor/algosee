@@ -18,21 +18,59 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+/**
+ * @file pathalgo.h
+ *
+ * @brief Contains function defintions for utilitiy functions for pathfinding algorithms
+ *
+ */
 
 #ifndef PATHALGO_UTILS_H
 #define PATHALGO_UTILS_H
 #include "../../defs/general.h"
+#include "../../defs/types.h"
+#include <cstdint>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 
-json SwapVisitedArray(const std::vector<std::vector<bool>> &visited);
-json SwapVisitedArray(const std::vector<std::vector<int>> &visited);
-void CheckMapValidness(const std::vector<std::vector<int>> &mapInt,
-                       const std::pair<int, int> &start, const std::pair<int, int> &goal);
-void CheckMapValidness(const std::vector<std::vector<bool>> &map,
-                       const std::pair<int, int> &start, const std::pair<int, int> &goal);
-std::pair<int, int> CheckRange(const std::vector<std::vector<int>> &map);
+/**
+ * @brief Swap the 2 Dimensions in a 2D MapBool Array
+ *
+ * @param visited The MapBool array to swap
+ *
+ * @throws Never
+ *
+ * @returns The swapped input array as a json object
+ * */
+json SwapVisitedArray(const MapBool &visited);
+
+json SwapVisitedArray(const std::vector<std::vector<uint64_t>> &visited);
+
+/**
+ * @brief Check maps internal validness
+ *
+ * @details Checks if the Map is empty, if all rows are the same length and if the start
+ * or goal is out of bounds
+ *
+ * @param mapInt A Map Int to analyse
+ *
+ * @param start A std::pair of int desciribing the start
+ *
+ * @param goal A std::pair of int descirbing the goal
+ *
+ * @throws If a map is invalid
+ *
+ * @returns Nothig
+ *
+ * */
+void CheckMapValidness(const MapInt &mapInt, const std::pair<int, int> &start,
+                       const std::pair<int, int> &goal);
+void CheckMapValidness(const MapBool &map, const std::pair<int, int> &start,
+                       const std::pair<int, int> &goal);
+std::pair<int64_t, uint64_t> CheckRange(const MapInt &map);
+std::pair<int64_t, uint64_t> CheckRange(const GraphWeighted &graph);
 std::vector<std::vector<bool>> CastIntMapToBoolIfNeeded(const json &input);
-bool CheckMapForZero(const std::vector<std::vector<int>> &map);
+bool CheckMapForZero(const MapInt &map);
+bool CheckMapForZero(const GraphWeighted &graph);
 #endif

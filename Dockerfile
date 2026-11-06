@@ -41,4 +41,4 @@ RUN conan profile detect --force && \
 
 EXPOSE 10000
 
-CMD ["./build/algosee"]
+CMD ["./build/algosee","-vvvv"]

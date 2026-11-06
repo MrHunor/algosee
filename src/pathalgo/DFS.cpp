@@ -18,20 +18,22 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../defs/general.h"
+#include "../defs/types.h"
 #include "../utils/pathalgo/pathalgo.h"
 #include <algorithm>
 #include <nlohmann/json.hpp>
 #include <stack>
-#include <unordered_map>
 #include <utility>
 #include <vector>
+
+//------------------------MAP BASED------------------------------------
 
 // you can just copy the BFS and change the logic which takes the frontier
 // element from "first of queue" to "last added" and boom you have DFS (and
 // replace queue with stack)
-std::vector<std::pair<int, int>> DepthFirstSearch(std::vector<std::vector<bool>> &map,
-                                                  std::pair<int, int> start,
-                                                  std::pair<int, int> goal,
+std::vector<std::pair<int, int>> DepthFirstSearch(const MapBool &map,
+                                                  const std::pair<int, int> start,
+                                                  const std::pair<int, int> goal,
                                                   json &response)
 {
     // Frontier means what is it going to explore next, hence it being a queue
@@ -40,8 +42,8 @@ std::vector<std::pair<int, int>> DepthFirstSearch(std::vector<std::vector<bool>>
     const int rows = map.size();
     const int collums = map[0].size();
 
-    std::vector<std::vector<int>> visited(
-        rows, std::vector<int>(collums, -1)); // weird ass constructor
+    std::vector<std::vector<bool>> visited(
+        rows, std::vector<bool>(collums, 0)); // weird ass constructor
     std::vector<std::vector<std::pair<int, int>>> parent(
         rows, std::vector<std::pair<int, int>>(collums, {-1, -1}));
     std::vector<std::pair<int, int>> path;
@@ -80,7 +82,7 @@ std::vector<std::pair<int, int>> DepthFirstSearch(std::vector<std::vector<bool>>
             if (map[yNeighbour][xNeighbour] == true)
                 continue; // current Neighboor not a valid tile, skip
 
-            if (visited[yNeighbour][xNeighbour] != -1)
+            if (visited[yNeighbour][xNeighbour] == 1)
                 continue; // been there done that, so skip
 
             // if everything thus far was negative that means we have a valid
@@ -95,7 +97,7 @@ std::vector<std::pair<int, int>> DepthFirstSearch(std::vector<std::vector<bool>>
 
     response["VISITED"] = SwapVisitedArray(visited);
     response["SEARCHMAP"] = searchMap;
-    if (visited[goal.second][goal.first] == -1)
+    if (visited[goal.second][goal.first] == 0)
         return {}; // never once reached the goal means there was no path found to
                    // the goal
 
@@ -118,5 +120,65 @@ std::vector<std::pair<int, int>> DepthFirstSearch(std::vector<std::vector<bool>>
     {
         std::swap(path[i].first, path[i].second);
     }
+    return path;
+}
+
+//-----------------------GRAPH BASED----------------------------------------
+
+std::vector<int> DepthFirstSearch(const GraphUnweighted &graph, const int start,
+                                  const int goal, json &response)
+{
+    unsigned int iteration = 0;
+    const int rows = graph.size();
+
+    std::vector<int> visited(rows, -1);
+    std::vector<int> parent(rows, -1);
+
+    std::vector<int> path;
+
+    std::vector<int> searchMap(rows, -1);
+
+    std::stack<int> frontier;
+    frontier.push(start);
+    visited[start] = 0;
+
+    while (!frontier.empty())
+    {
+        int ID = frontier.top(); // which Node we are currently looking at
+        searchMap[ID] = iteration;
+        frontier.pop();
+
+        if (ID == goal)
+            break; // reached goal
+
+        for (int i = 0; i < graph[ID].size(); i++)
+        {
+            int NeighboorID = graph[ID].at(i);
+
+            if (visited[NeighboorID] != -1)
+                continue;
+
+            visited[NeighboorID] = 1;
+            parent[NeighboorID] = ID;
+            frontier.push(NeighboorID);
+        }
+        iteration++;
+    }
+
+    response["VISITED"] = visited;
+    response["SEARCHMAP"] = searchMap;
+    if (visited[goal] == -1)
+        return {};
+
+    int current = goal;
+    while (current != start)
+    {
+        path.push_back(current);
+        current = parent[current];
+    }
+    path.push_back(start);
+
+    std::reverse(path.begin(), path.end());
+
     return path;
 }

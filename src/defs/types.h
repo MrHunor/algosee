@@ -24,6 +24,14 @@
 #include <chrono>
 #include <vector>
 
+typedef std::vector<std::vector<uint32_t>> GraphUnweighted;
+
+typedef std::vector<std::vector<std::pair<uint32_t, uint32_t>>> GraphWeighted;
+
+typedef std::vector<std::vector<int32_t>> MapInt;
+
+typedef std::vector<std::vector<bool>> MapBool;
+
 typedef std::vector<
     std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string>>
     clientListType; // time and IP

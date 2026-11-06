@@ -21,16 +21,11 @@
 #include "../../src/defs/implemented.h"
 #include "../../src/defs/types.h"
 #include "../../src/logger/logger.h"
-#include <chrono>
 #include <cstdlib>
-#include <iostream>
 #include <limits.h>
 #include <nlohmann/json.hpp>
-#include <ostream>
 #include <random>
-#include <source_location>
 #include <sstream>
-#include <stacktrace>
 #include <stb_image.h>
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb_image_write.h>
@@ -40,6 +35,23 @@
 #include <unistd.h>
 
 using json = nlohmann::json;
+ 
+GraphUnweighted generateGU(int size,int start,int goal)
+{
+    GraphUnweighted retval(size);
+while(true)
+{
+for(auto& row: retval)
+{
+    for(int i = 0; i<randomInt(0,10);i++)
+    {
+        row.push_back(randomInt(0,size-1));
+    }
+}
+
+}
+return retval;
+}
 
 void writeMemToImage(const rawImage &img)
 {
@@ -57,8 +69,6 @@ rawImage RawImageFromJson(const json &j)
     retval.height = -1;
 
     retval.size = j["SORTED"].size() * retval.channels;
-    try
-    {
         retval.data = new unsigned char[retval.size];
         int retvalI = 0;
         int JI = 0;
@@ -74,15 +84,6 @@ rawImage RawImageFromJson(const json &j)
             retvalI = retvalI + 4;
             JI++;
         }
-    }
-    catch (const std::exception &e)
-    {
-        InvalidInputMessage(
-            "An exception occureed, a bad one. Details:" +
-            std::string(
-                e.what())); // you might think of freeing memory, but this function call
-                            // terminates the testclient so the OS does that anyway
-    }
     return retval;
 }
 
@@ -220,7 +221,7 @@ std::string executeCommand(const std::string &command)
     int exitCode;
     FILE *pipe = popen(command.c_str(), "r");
     if (!pipe)
-        InvalidInputMessage("Failed to open Pipe for executing command:" + command);
+        throw std::runtime_error("Failed to open Pipe for executing command:" + command);
 
     char buffer[256];
     std::string result;
@@ -241,25 +242,7 @@ std::string executeCommand(const std::string &command)
         exitCode = WEXITSTATUS(status);
     }
     if (exitCode != 0)
-        InvalidInputMessage("Shell Command:'" + command + "' has failed.");
+        throw std::runtime_error("Shell Command:'" + command + "' has failed.");
     return result;
 }
 
-void InvalidInputMessage(const std::string &details, std::source_location location)
-{
-    // yes i thought of making this state out for colour but that would require
-    // passing state (which is not always present), or make state global which is
-    // not pretty
-    auto now = std::chrono::system_clock::now();
-    std::cout << "TIME:" << now << std::endl;
-    std::cout << std::stacktrace::current() << std::endl;
-    std::cout << "Filename:" << location.file_name() << std::endl;
-    std::cout << "Function:" << location.function_name() << std::endl;
-    std::cout << "Line:" << location.line() << std::endl;
-    std::cout << "Column:" << location.column() << std::endl;
-    if (!details.empty())
-    {
-        std::cout << "Details provided:" << details << std::endl;
-    }
-    exit(1);
-}

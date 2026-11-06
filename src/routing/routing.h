@@ -32,10 +32,8 @@
 #include "../stream/stream.h"
 #include "../validate/image/validate.h"
 #include "../validate/sort/validate.h"
-#include <chrono>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
-#include <vector>
 
 /**
  * @brief Run the Status endpoint
@@ -94,7 +92,8 @@ void RunSortalgo(SortValidReturn info, StateClass &state, StreamClass &stream);
  *
  */
 
-void RunPathalgo(const httplib::Request &req, httplib::Response &res, StateClass &state);
+void RunPathalgoMap(const httplib::Request &req, httplib::Response &res,
+                    StateClass &state);
 /**
  * @brief Run The Image Sorting Endpoint
  *
@@ -114,6 +113,8 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, StateClass
  *
  * @returns Nothing, will throw on error
  */
+void RunPathAlgoGraph(const httplib::Request &req, httplib::Response &res,
+                      StateClass &state);
 
 void RunImageSort(ImageValidReturn info, StateClass &state, StreamClass &stream);
 /**

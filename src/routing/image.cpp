@@ -24,8 +24,6 @@
 #include "../sortalgo/algos.h"
 #include "../utils/general/utils.h"
 #include "../validate/image/validate.h"
-#include "build_info.h"
-#include <algorithm>
 #include <chrono>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
