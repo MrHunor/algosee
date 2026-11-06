@@ -38,11 +38,14 @@
 struct run
 {
     std::string algoname = "";
+    std::string algotype="";
     int size = -1;
     std::pair<int, int> mapSize = {-1, -1};
     bool failure = false;
     std::string failureReason="";
 };
+
+GraphUnweighted generateGU(int size, int start, int goal);
 
 /**
  * @brief Create a Image with random colours in memory with 4 channels

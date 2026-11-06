@@ -39,6 +39,7 @@ void runSortalgoTest(std::vector<run> &exitMessage, httplib::Client &client,
 
         run currentrun;
         currentrun.failure = false;
+        currentrun.algotype="Sorting";
         currentrun.algoname = testcase.first;
         currentrun.size = testcase.second;
         currentrun.mapSize = {-1, -1};

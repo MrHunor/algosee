@@ -33,6 +33,7 @@ void runImageTest(std::vector<run> &exitMessage, StateClass &state)
     {
         run currentrun;
         currentrun.algoname = element.first;
+        currentrun.algotype="ImageSorting";
         currentrun.mapSize = {element.second.first, element.second.second};
         state.out("Testing image sorting validness with algo" + currentrun.algoname +
                       " and dimesions:" + std::to_string(element.second.first) + "x" +

@@ -254,7 +254,8 @@ std::vector<int> BIBFS(const GraphUnweighted &graph, const int start, const int 
             }
         }
 
-        for (int i = 0; i < reverseGraph[currentFromEndID].size(); i++) // check all neighbours
+        for (int i = 0; i < reverseGraph[currentFromEndID].size();
+             i++) // check all neighbours
         {
             int currentNFromEndID = reverseGraph[currentFromEndID].at(i);
 

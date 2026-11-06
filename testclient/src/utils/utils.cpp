@@ -46,11 +46,13 @@ GraphUnweighted generateGU(int size, int start, int goal)
     {
         retval[i].push_back(i + 1);
     }
-    for(int i = 0; i<size;i++)//this jsut serves as adding random data to confuse the pathfinding algorithm, sort of give it a challange 
+    for (int i = 0; i < size;
+         i++) // this jsut serves as adding random data to confuse the pathfinding
+              // algorithm, sort of give it a challange
     {
-        for(int z = 0; z<randomInt(0,10);z++)
+        for (int z = 0; z < randomInt(0, 10); z++)
         {
-            retval[i].push_back(randomInt(0,size-1));
+            retval[i].push_back(randomInt(0, size - 1));
         }
     }
     return retval;
@@ -114,9 +116,9 @@ void printReport(const std::vector<run> &exitMessage, StateClass &state)
     for (const auto &element : exitMessage)
     {
         if (element.failure == false)
-            state.out("Algorithm:" + element.algoname +
-                          ", Size:" + std::to_string(element.size) +
-                          "Map Size:" + std::to_string(element.mapSize.first) + "," +
+            state.out("Algorithm:" + element.algoname + "\nAlgoType:" + element.algotype +
+                          "\nSize:" + std::to_string(element.size) +
+                          "\nMap Size:" + std::to_string(element.mapSize.first) + "," +
                           std::to_string(element.mapSize.second),
                       0);
     }
@@ -125,9 +127,9 @@ void printReport(const std::vector<run> &exitMessage, StateClass &state)
     for (const auto &element : exitMessage)
     {
         if (element.failure == true)
-            state.out("Algorithm:" + element.algoname +
-                          ", Size:" + std::to_string(element.size) +
-                          "Map Size:" + std::to_string(element.mapSize.first) + "," +
+            state.out("Algorithm:" + element.algoname + "\nAlgoType:" + element.algotype +
+                          "\nSize:" + std::to_string(element.size) +
+                          "\nMap Size:" + std::to_string(element.mapSize.first) + "," +
                           std::to_string(element.mapSize.second) +
                           "\nReason:" + element.failureReason,
                       0);
