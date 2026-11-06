@@ -107,7 +107,7 @@ startBtn.addEventListener('click', async () => {
         if (!response.ok) {
         let msg = responseText;
         try { const parsed = JSON.parse(responseText); if (typeof parsed === 'string') msg = parsed; } catch (_) {}
-        throw new Error(msg || `Server-Fehler: ${response.status}`);
+        throw new Error(msg || `server-error: ${response.status}`);
         }
 
         const data = JSON.parse(responseText);
@@ -147,7 +147,7 @@ async function visualizeImageSteps(steps, width, height) {
     for (let k = 0; k < steps.length; k++) {
         if (isCancelled) break;
         renderPixels(steps[k], width, height);
-        await new Promise(resolve => setTimeout(resolve, 15)); // Geschwindigkeit pro Frame
+        await new Promise(resolve => setTimeout(resolve, 15)); // speed per frame
     }
 }
 

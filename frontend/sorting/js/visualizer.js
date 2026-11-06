@@ -300,15 +300,19 @@ startBtn.addEventListener('click', async () => {
             body: JSON.stringify({ values: array })
         });
 
-      const responseText = await response.text();
-    if (!response.ok) {
-                 let msg = responseText;
-                try { const parsed = JSON.parse(responseText); if (typeof parsed === 'string') msg = parsed; } catch (_) {}
-                throw
-            new Error(msg || `Server-Fehler: ${response.status}`);
-               }
+              const responseText = await response.text();
+        if (!response.ok) {
+            let msg = responseText;
+            try {
+                const parsed = JSON.parse(responseText);
+                if (typeof parsed === 'string') msg = parsed;
+            } catch (_) {}
+            throw new Error(msg || `server-error: ${response.status}`);
+        }
 
-        // --- NDJSON zeilenweise parsen und zusammenführen  ---
+
+
+        // --- parse NDJSON line by line and put together ---
         const lines = responseText.split('\n').filter(line => line.trim() !== '');
         let aggregatedData = {
             TRIES: [],
@@ -331,7 +335,7 @@ startBtn.addEventListener('click', async () => {
             if (record.SWAPED) aggregatedData.SWAPED.push(...record.SWAPED);
         }
 
-        // Prüfen, ob der letzte Datensatz einen Fehlercode enthält
+        // check if last dataset contains error code
         if (lastRecord && lastRecord.ERRORCODE) {
             throw new Error(`Worker-Fehler: ${lastRecord.ERRORCODE}`);
         }
@@ -603,4 +607,4 @@ async function visualizeCycle(moves, speed) {
     if (!isCancelled) await playSuccessWave();
 }
 
-//400ll lol XD
+//610ll lol XD
