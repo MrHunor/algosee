@@ -62,7 +62,9 @@ const std::vector<std::string> implementedArrayReturnTypes = {
     "TRIES",
     "VISITED",
     "VISITEDFROMEND",
-    "VISITEDFROMSTART"};
+    "VISITEDFROMSTART",
+    "ARRAY",
+    "HEAP"};
 
 const std::vector<std::string> implementedNonArrayReturnTypes = {"BUILDTIME", "STATUS",
                                                                  "TIME", "VERSION"};
