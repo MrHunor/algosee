@@ -108,6 +108,7 @@ target_precompile_headers(algosee PRIVATE
 <vector>
 <string>
 <algorithm>
+<stb_image.h>
 )
 
 find_package(nlohmann_json REQUIRED)

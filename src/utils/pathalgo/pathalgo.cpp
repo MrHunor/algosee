@@ -37,6 +37,7 @@ GraphUnweighted buildReverseGraph(const GraphUnweighted &arr)
             retval[element].push_back(i);
         }
     }
+    return retval;
 }
 
 bool CheckMapForZero(const GraphWeighted &graph)
