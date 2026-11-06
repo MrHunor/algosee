@@ -23,7 +23,7 @@
 #include "../stream/stream.h"
 #include "../utils/image/image.h"
 #include <nlohmann/json.hpp>
-#include <strings.h>
+#include <string>
 #include <vector>
 
 // NEVER EVER CALL THIS FUNCTION DIRECTLY IF YOU DIDNT CHECK FOR arr1.size() &
