@@ -2,7 +2,7 @@
 
 **A 0815 Algorithm Visulizer**
 
-*© 2026 MrHunor, siryanni (as equals) · GPLv3*
+*© 2026 MrHunor, siryanni, Vilmos45 (as equals) · GPLv3*
 
 ![Hackatime Badge](https://hackatime-badge.hackclub.com/U0BAT7EGEQ7/algosee)
 ![Hackatime Badge](https://hackatime-badge.hackclub.com/U0A2D73JM9R/algosee)

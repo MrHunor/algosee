@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
                      "the most detailed. (Stack as -vvvv)");
 
     algosee.callback([&]() {
-        state.out("algosee Copyright (C) 2026  MrHunor, siryanni (as equals)\n"
+        state.out("algosee Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)\n"
                   "This program comes with ABSOLUTELY NO WARRANTY; for details "
                   "visit:'https://www.gnu.org/licenses/gpl-3.0.en.html'.\n"
                   "This is free software, and you are welcome to redistribute it\n"
