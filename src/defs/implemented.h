@@ -36,7 +36,7 @@ const std::unordered_map<std::string, int> implementedSortAlgos = {
     {"selection", MAX_ELEMENT_COUNT_SELECTION}, {"bogo", MAX_ELEMENT_COUNT_BOGO},
     {"bubble", MAX_ELEMENT_COUNT_BUBBLE},       {"quick", MAX_ELEMENT_COUNT_QUICK},
     {"merge", MAX_ELEMENT_COUNT_MERGE},         {"counting", MAX_ELEMENT_COUNT_COUNTING},
-    {"cycle", MAX_ELEMENT_COUNT_CYCLE}};
+    {"cycle", MAX_ELEMENT_COUNT_CYCLE},         {"heap", MAX_ELEMENT_COUNT_HEAP}};
 
 const std::unordered_map<std::string, int> implementedPathAlgosSize = {
     {"BFS", MAX_ELEMENT_COUNT_BFS},     {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA},

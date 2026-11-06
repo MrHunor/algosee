@@ -134,37 +134,43 @@ const std::vector<std::pair<std::string, int>> testCasesSorting{
     {"selection", 25},
     {"selection", 100},
     {"selection", 1000},
-    {"selection", MAX_ELEMENT_COUNT_SORT - 1},
+    {"selection", MAX_ELEMENT_COUNT_SELECTION - 1},
 
     {"bubble", 5},
     {"bubble", 25},
     {"bubble", 100},
     {"bubble", 1000},
-    {"bubble", MAX_ELEMENT_COUNT_SORT - 1},
+    {"bubble", MAX_ELEMENT_COUNT_BUBBLE - 1},
 
     {"quick", 5},
     {"quick", 25},
     {"quick", 100},
     {"quick", 1000},
-    {"quick", MAX_ELEMENT_COUNT_SORT - 1},
+    {"quick", MAX_ELEMENT_COUNT_QUICK - 1},
 
     {"merge", 5},
     {"merge", 25},
     {"merge", 100},
     {"merge", 1000},
-    {"merge", MAX_ELEMENT_COUNT_SORT - 1},
+    {"merge", MAX_ELEMENT_COUNT_MERGE - 1},
 
     {"counting", 5},
     {"counting", 25},
     {"counting", 100},
     {"counting", 1000},
-    {"counting", MAX_ELEMENT_COUNT_SORT - 1},
+    {"counting", MAX_ELEMENT_COUNT_COUNTING - 1},
 
     {"cycle", 5},
     {"cycle", 25},
     {"cycle", 100},
     {"cycle", 1000},
-    {"cycle", MAX_ELEMENT_COUNT_SORT - 1},
+    {"cycle", MAX_ELEMENT_COUNT_CYCLE - 1},
+
+    {"heap", 5},
+    {"heap", 25},
+    {"heap", 100},
+    {"heap", 1000},
+    {"heap", MAX_ELEMENT_COUNT_HEAP - 1},
 
     // bogo is factorial time: keep sizes tiny
     {"bogo", 3},
@@ -182,6 +188,7 @@ const std::unordered_map<std::string, std::vector<std::string>>
         {"counting", {"COUNT ARRAY", "SORTED"}},
         {"cycle", {"SWAPED", "SORTED"}},
         {"bogo", {"TRIES", "SORTED"}},
+        {"heap", {"HEAP", "ARRAY"}},
 
         {"BFS", {"VISITED", "SEARCHMAP", "PATH"}},
         {"dijkstra", {"DISTANCE", "PATH"}},

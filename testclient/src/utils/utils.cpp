@@ -125,7 +125,7 @@ void printReport(const std::vector<run> &exitMessage, StateClass &state)
             state.out("Algorithm:" + element.algoname +
                           ", Size:" + std::to_string(element.size) +
                           "Map Size:" + std::to_string(element.mapSize.first) + "," +
-                          std::to_string(element.mapSize.second),
+                          std::to_string(element.mapSize.second)+"\nReason:"+element.failureReason,
                       0);
     }
 }

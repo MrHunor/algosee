@@ -194,14 +194,13 @@ std::vector<int> Dijkstra(const GraphWeighted &graph, const int start, const int
 
     // push the start into the frontier, because its the lowest distance and also
     // the only element it will be the first element
-    frontier.push({start,0});
+    frontier.push({start, 0});
 
     while (!frontier.empty())
     {
         // extract info from the first frontier element
         int currentID = frontier.top().first;
         int currentDistance = frontier.top().second;
-        
 
         // because the info fron the first frontier element is now stored in the
         // above declared variables, we can delete the first element from frontier
@@ -236,7 +235,7 @@ std::vector<int> Dijkstra(const GraphWeighted &graph, const int start, const int
                 // explored next
                 distance[currentNID.first] = newDistance;
                 parent[currentNID.first] = currentID;
-                frontier.push({currentNID.first,newDistance});
+                frontier.push({currentNID.first, newDistance});
             }
         }
     }

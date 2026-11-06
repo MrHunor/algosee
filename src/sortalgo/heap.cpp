@@ -18,7 +18,6 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../defs/general.h"
-#include "../defs/types.h"
 #include "../stream/stream.h"
 #include <algorithm>
 #include <nlohmann/json.hpp>
@@ -90,22 +89,24 @@ void buildHeap(std::vector<int> &unsorted) // adjesent matrix
     }
 }
 
-void heapSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
+void HeapSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
 {
     size_t size = unsorted.size();
     buildHeap(unsorted);
     for (int i = size; i > 0; i--)
     {
-        std::vector<int> heap(unsorted.begin(),unsorted.end()-i);
-        std::vector<int> arr(unsorted.end()-i,unsorted.end());
+        std::vector<int> heap(unsorted.begin(), unsorted.end() - i);
+        std::vector<int> arr(unsorted.end() - i, unsorted.end());
         response["HEAP"].push_back(std::move(heap));
         response["ARRAY"].push_back(std::move(arr));
-        if(response["HEAP"].size()>100)
+        if (response["HEAP"].size() > 100)
         {
             stream.sendChunk(std::move(response));
             response.clear();
         }
         std::swap(unsorted[0], unsorted[i - 1]);
-        heapify(unsorted,i-1,0);//this call is pretty smart, it generates the heap again, but leaves the now sorted element at the end out 
+        heapify(unsorted, i - 1,
+                0); // this call is pretty smart, it generates the heap again, but leaves
+                    // the now sorted element at the end out
     }
 }

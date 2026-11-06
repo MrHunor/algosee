@@ -19,7 +19,6 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-
 #include "../../defs/general.h"
 #include "../../defs/max_sizes.h"
 #include "../../defs/types.h"
