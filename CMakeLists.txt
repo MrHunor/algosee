@@ -132,6 +132,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_link_libraries(algosee_testclient PRIVATE
         nlohmann_json::nlohmann_json
         httplib::httplib
+        CLI11::CLI11
         stb::stb
     )
     if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
