@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -21,6 +21,7 @@
 #include "../../src/logger/logger.h"
 #include <httplib.h>
 #include "tests/tests.h"
+#include "CLI/CLI.hpp"
 #include "utils/utils.h"
 #include <string>
 
@@ -40,7 +41,9 @@ int main(int argc, char *argv[])
 {
     remove("testClientLog.txt");
     StateClass state("testClientLog.txt");
-    state.out("Testing sorting algorithms", 0);
+    CLI::App algosee_testclient{"Algosee_testclient: Runs tests on all implemented algorithms of all types on the algosee server"};
+
+
 
     std::vector<run> exitMessage;
     httplib::Client client("0.0.0.0",8080);

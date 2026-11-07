@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -57,14 +57,14 @@ int main(int argc, char *argv[])
 {
     remove("log.txt");
     StateClass state("algoseeLog.txt");
-    CLI::App algosee{"Algosee: A 0815 Algorithm Visulizer\n© 2026 MrHunor, siryanni (as "
+    CLI::App algosee{"Algosee: A 0815 Algorithm Visulizer\n© 2026 MrHunor, siryanni, vilmos45 (as "
                      "equals) · GPLv3"};
     algosee.add_flag("-v,--verbose", state.verbose,
                      "Se the verbosity of the server output, 0 being nothing and 4 being "
                      "the most detailed. (Stack as -vvvv)");
 
     algosee.callback([&]() {
-        state.out("algosee Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)\n"
+        state.out("algosee Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)\n"
                   "This program comes with ABSOLUTELY NO WARRANTY; for details "
                   "visit:'https://www.gnu.org/licenses/gpl-3.0.en.html'.\n"
                   "This is free software, and you are welcome to redistribute it\n"
