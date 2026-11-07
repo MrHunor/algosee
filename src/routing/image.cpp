@@ -34,13 +34,15 @@ void RunImageSort(ImageValidReturn info, StateClass &state, StreamClass &stream)
     try
     {
         json response;
+        state.out("Generating json response keys...",4);
         generateJsonRetrunArras(response);
         fillWithMetaData(response);
+        state.out("Shuffuling image...",3);
         ShuffleImage(info.img);
         response["SHUFFLED (INDEXES)"] = IndexPixelArrToJson(info.img.data);
         stream.sendChunk(std::move(response));
         response.clear();
-        state.out("Starting time mesurement...", 0);
+        state.out("Starting time mesurement...", 2);
         auto startTime = std::chrono::steady_clock::now();
 
         if (info.algo == "selection")
@@ -69,7 +71,8 @@ void RunImageSort(ImageValidReturn info, StateClass &state, StreamClass &stream)
         auto endTime = std::chrono::steady_clock::now();
         auto elapsed =
             std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
-        state.out("Ended Time mesurement.", 0);
+        state.out("Ended Time mesurement.", 2);
+        state.out("Filling remaining json response keys",4);
         response["TIME"] = elapsed.count();
         response["SORTED"] = IndexPixelArrToJson(info.img.data);
         response["ERROR"] = "";
