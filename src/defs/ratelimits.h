@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -21,6 +21,6 @@
 #ifndef DEF_RATELIMITS_H
 #define DEF_RATELIMITS_H
 #define RATE_LIMIT_INTERVALL_MIN 1
-#define RATE_LIMIT_COUNT 120
+#define RATE_LIMIT_COUNT 180
 
 #endif

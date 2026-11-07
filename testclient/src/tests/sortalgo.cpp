@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -39,6 +39,7 @@ void runSortalgoTest(std::vector<run> &exitMessage, httplib::Client &client,
 
         run currentrun;
         currentrun.failure = false;
+        currentrun.algotype="Sorting";
         currentrun.algoname = testcase.first;
         currentrun.size = testcase.second;
         currentrun.mapSize = {-1, -1};

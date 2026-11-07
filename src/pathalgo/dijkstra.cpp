@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -28,10 +28,10 @@
 #include <utility>
 #include <vector>
 
-using Node = std::pair<std::pair<uint64_t,uint64_t>,uint64_t>;//Cords, weight
-struct CompareNodeDijkstra
+using NodeM = std::pair<std::pair<uint64_t, uint64_t>, uint64_t>; // Cords, weight
+struct CompareNodeDijkstraM
 {
-    bool operator()(const Node &a, const Node &b)
+    bool operator()(const NodeM &a, const NodeM &b)
     {
         return a.second > b.second;
     }
@@ -61,13 +61,13 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
     // eleent of the queue is the one with the lowest "priority" which in Djkstras
     // case is the distance
 
-    std::priority_queue<Node, std::vector<Node>, CompareNodeDijkstra> frontier;
+    std::priority_queue<NodeM, std::vector<NodeM>, CompareNodeDijkstraM> frontier;
 
     distance[start.second][start.first] = 0;
 
     // push the start into the frontier, because its the lowest distance and also
     // the only element it will be the first element
-    frontier.push({{start.second, start.first},0});
+    frontier.push({{start.second, start.first}, 0});
 
     std::vector<int> directionsRows = {-1, 1, 0, 0};
     std::vector<int> directionsCollums = {0, 0, 1, -1};
@@ -121,7 +121,7 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
                 // explored next
                 distance[yNeighbour][xNeighbour] = newDistance;
                 parent[yNeighbour][xNeighbour] = {y, x};
-                frontier.push({ {yNeighbour, xNeighbour},newDistance});
+                frontier.push({{yNeighbour, xNeighbour}, newDistance});
             }
         }
     }
@@ -161,6 +161,15 @@ std::vector<std::pair<int, int>> Dijkstra(const MapInt &map,
 
 //-----------------------GRAPH BASED-----------------------------------------
 
+using NodeG = std::pair<uint32_t, uint32_t>;
+struct CompareNodeDijkstraG // basically the same as previous but just made a custom one
+                            // again for nicer pattern
+{
+    bool operator()(const NodeG &a, const NodeG &b)
+    {
+        return a.second > b.second;
+    }
+};
 std::vector<int> Dijkstra(const GraphWeighted &graph, const int start, const int goal,
                           json &response)
 {
@@ -178,21 +187,20 @@ std::vector<int> Dijkstra(const GraphWeighted &graph, const int start, const int
     // in contrast to BFS we need a reverse "priority" queue, this means the first
     // element of the queue is the one with the lowest "priority" which in Djkstras
     // case is the distance
-    using Node = std::pair<int, int>;
-    std::priority_queue<Node, std::vector<Node>, std::greater<Node>>
+    std::priority_queue<NodeG, std::vector<NodeG>, CompareNodeDijkstraG>
         frontier; // yeah so in contrary to A* this implementation used weight,ID
 
     distance[start] = 0;
 
     // push the start into the frontier, because its the lowest distance and also
     // the only element it will be the first element
-    frontier.push({0, start});
+    frontier.push({start, 0});
 
     while (!frontier.empty())
     {
         // extract info from the first frontier element
-        int currentDistance = frontier.top().first;
-        int currentID = frontier.top().second;
+        int currentID = frontier.top().first;
+        int currentDistance = frontier.top().second;
 
         // because the info fron the first frontier element is now stored in the
         // above declared variables, we can delete the first element from frontier
@@ -210,24 +218,24 @@ std::vector<int> Dijkstra(const GraphWeighted &graph, const int start, const int
             std::pair<int, int> currentNID = graph[currentID].at(i);
 
             int newDistance = 0;
-            if (currentDistance > INFINITY_INT - currentNID.first)
+            if (currentDistance > INFINITY_INT - currentNID.second)
             {
                 newDistance = INFINITY_INT;
             }
             else
             {
-                newDistance = currentDistance + currentNID.first;
+                newDistance = currentDistance + currentNID.second;
             }
 
             // is the current path to this tile cheaper then the already known path
             // from start to goal?
-            if (newDistance < distance[currentNID.second])
+            if (newDistance < distance[currentNID.first])
             {
                 // yes, save all info about the new tile and add it to frontier to be
                 // explored next
-                distance[currentNID.second] = newDistance;
-                parent[currentNID.second] = currentID;
-                frontier.push({newDistance, currentNID.second});
+                distance[currentNID.first] = newDistance;
+                parent[currentNID.first] = currentID;
+                frontier.push({currentNID.first, newDistance});
             }
         }
     }

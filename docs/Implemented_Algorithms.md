@@ -12,6 +12,7 @@ Currently the following Algorithms are implemented:
 | Merge     | Supported |
 | Counting  | Supported |
 | Cycle Sort | Supported |
+| Heap Sort | Supported |
 
 ### Pathfinding
 

@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -45,7 +45,7 @@ struct pixel
     colour A;
 };
 
-typedef std::vector<std::pair<int, pixel>> indexPixel;
+typedef std::vector<std::pair<int, pixel>> indexPixel; // Index, Pixel
 
 struct rawImage
 {

@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -58,6 +58,11 @@ void RunSortalgo(SortValidReturn info, StateClass &state, StreamClass &stream)
             BogoSort(info.values, response, stream);
         else if (info.algo == "radix")
             RadixSort(info.values, response, stream);
+        }
+        else if (info.algo == "heap")
+        {
+            HeapSort(info.values, response, stream);
+        }
 
         // Default for all algorithms exit
         auto endTime = std::chrono::steady_clock::now();

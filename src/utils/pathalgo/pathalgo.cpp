@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -25,6 +25,20 @@
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
+
+GraphUnweighted buildReverseGraph(const GraphUnweighted &arr)
+{
+    GraphUnweighted retval(arr.size());
+    for (int i = 0; i < retval.size(); i++)
+    {
+        for (const auto &element :
+             arr[i]) // now looking at each connection from node i to each 'element'
+        {
+            retval[element].push_back(i);
+        }
+    }
+    return retval;
+}
 
 bool CheckMapForZero(const GraphWeighted &graph)
 {
@@ -52,7 +66,7 @@ bool CheckMapForZero(const MapInt &map)
     return false;
 }
 
-std::pair<int64_t,uint64_t> CheckRange(const GraphWeighted &graph)
+std::pair<int64_t, uint64_t> CheckRange(const GraphWeighted &graph)
 {
     int64_t min = 0;
     uint64_t max = 0;

@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -60,6 +60,11 @@ void RunImageSort(ImageValidReturn info, StateClass &state, StreamClass &stream)
         else if (info.algo == "radix")
             RadixSort(info.img.data, response, stream);
 
+        }
+        else if (info.algo == "heap")
+        {
+            HeapSort(info.img.data, response, stream);
+        }
         auto endTime = std::chrono::steady_clock::now();
         auto elapsed =
             std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);

@@ -1,5 +1,5 @@
 #   algosee; A algorithm visulizer
-#   Copyright (C) 2026  MrHunor, siryanni (as equals)
+#   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
 #   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
 #   
 #   This program is free software: you can redistribute it and/or modify
@@ -84,6 +84,11 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     )
 endif()
 
+set_source_files_properties( # you have to execlude this because somehow stb doesnt like unity builds when one files includes the implementations def
+    src/utils/image/stb_image.cpp
+    PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON
+)
+
 string(TIMESTAMP BUILD_TIME "%Y-%m-%dT%H:%M:%S")
 
 configure_file(
@@ -98,11 +103,12 @@ target_include_directories(algosee PRIVATE
 )
 
 target_precompile_headers(algosee PRIVATE 
-    <nlohmann/json.hpp>
-    <httplib.h>
-    <vector>
-    <string>
-    <algorithm>
+<nlohmann/json.hpp>
+<httplib.h>
+<vector>
+<string>
+<algorithm>
+<stb_image.h>
 )
 
 find_package(nlohmann_json CONFIG REQUIRED)

@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -37,6 +37,7 @@ void MergeSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
 void CountingSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
 void CycleSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
 void RadixSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
+void HeapSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
 
 //-------------------IMAGES------------------------------------
 void SelectionSort(indexPixel &unsorted, json &response, StreamClass &stream);
@@ -48,4 +49,5 @@ void CountingSort(indexPixel &unsorted, json &response, StreamClass &stream);
 void CycleSort(indexPixel &unsorted, json &response, StreamClass &stream);
 void MergeSort(indexPixel &unsorted, json &response, StreamClass &stream);
 void RadixSort(indexPixel &unsorted, json &response, StreamClass &stream);
+void HeapSort(indexPixel &unsorted, json &response, StreamClass &stream);
 #endif

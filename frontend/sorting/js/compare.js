@@ -251,8 +251,27 @@ async function visualizeAlgo(containerElement, data, key) {
             if (result.length > 0) {
                 playTone(150 + (result[0] * 6));
             }
-        } else if (key === 'bogo' || key === 'counting') {
-        
+        } else if (key === 'bogo') {
+            const currentArr = moves[k];
+            if (Array.isArray(currentArr)) {
+                for (let i = 0; i < currentArr.length; i++) {
+                    if (!bars[i]) continue;
+                    bars[i].style.height = `${currentArr[i] * 3}px`;
+                    if (bars.length <= 20) bars[i].innerText = currentArr[i];
+                    bars[i].style.backgroundColor = '#3b82f6';
+                }
+                if (currentArr.length > 0) {
+                    playTone(150 + (currentArr[0] * 6));
+                }
+            }
+        } else if (key === 'counting') {
+            const val = moves[k];
+            if (bars[k]) {
+                bars[k].style.height = `${val * 3}px`;
+                if (bars.length <= 20) bars[k].innerText = val;
+                bars[k].style.backgroundColor = '#22c55e';
+                playTone(150 + (val * 6));
+            }
         } else if (key === 'cycle') {
             // CycleSort: {value, position} writes
             const [value, position] = moves[k];

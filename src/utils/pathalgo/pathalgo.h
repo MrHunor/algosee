@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -68,6 +68,7 @@ void CheckMapValidness(const MapInt &mapInt, const std::pair<int, int> &start,
                        const std::pair<int, int> &goal);
 void CheckMapValidness(const MapBool &map, const std::pair<int, int> &start,
                        const std::pair<int, int> &goal);
+GraphUnweighted buildReverseGraph(const GraphUnweighted &arr);
 std::pair<int64_t, uint64_t> CheckRange(const MapInt &map);
 std::pair<int64_t, uint64_t> CheckRange(const GraphWeighted &graph);
 std::vector<std::vector<bool>> CastIntMapToBoolIfNeeded(const json &input);

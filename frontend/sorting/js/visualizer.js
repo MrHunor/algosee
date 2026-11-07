@@ -2,14 +2,14 @@
  * Copyright (C) 2026 MrHunor, siryanni
  * LICENSE:GNU General Public License v3 (GPLv3)
  */
-
+//note to self: CycleSort still not working 
 // read URL-parameters (choose backend function+information displayed)
 const urlParams = new URLSearchParams(window.location.search);
 const algoKey = urlParams.get('algo') || 'selection';
 
 const backendBase = getBackendBase();
 
-// adjust title
+// adjust title 
 const algoNames = {
     bogo: "BogoSort",
     miracle: "MiracleSort",
@@ -242,7 +242,7 @@ async function visualizeMergeBatch(mergeBatch, speed) {
     const bars = container.children;
     for (const mergeStep of mergeBatch) {
         if (isCancelled) { generateArray(); return; }
-        const result = mergeStep[2];
+        const result = mergeStep[2];//
         for (let i = 0; i < result.length; i++) {
             if (!bars[i]) continue;
             const val = result[i];
@@ -300,16 +300,48 @@ startBtn.addEventListener('click', async () => {
             body: JSON.stringify({ values: array })
         });
 
-        const responseText = await response.text();
-
+              const responseText = await response.text();
         if (!response.ok) {
             let msg = responseText;
-            try { const parsed = JSON.parse(responseText); if (typeof parsed === 'string') msg = parsed; } catch (_) {}
-            throw new Error(msg || `Server-Fehler: ${response.status}`);
+            try {
+                const parsed = JSON.parse(responseText);
+                if (typeof parsed === 'string') msg = parsed;
+            } catch (_) {}
+            throw new Error(msg || `server-error: ${response.status}`);
         }
 
-        const data = JSON.parse(responseText);
 
+
+        // --- parse NDJSON line by line and put together ---
+        const lines = responseText.split('\n').filter(line => line.trim() !== '');
+        let aggregatedData = {
+            TRIES: [],
+            "MERGED (LEFT,RIGHT,RESULT)": [],
+            SORTED: [],
+            MOVES: [],
+            SWAPED: []
+        };
+        let lastRecord = null;
+
+        for (const line of lines) {
+            const record = JSON.parse(line);
+            lastRecord = record;
+
+            if (record.TIME !== undefined) aggregatedData.TIME = record.TIME;
+            if (record.TRIES) aggregatedData.TRIES.push(...record.TRIES);
+            if (record["MERGED (LEFT,RIGHT,RESULT)"]) aggregatedData["MERGED (LEFT,RIGHT,RESULT)"].push(...record["MERGED (LEFT,RIGHT,RESULT)"]);
+            if (record.SORTED) aggregatedData.SORTED.push(...record.SORTED);
+            if (record.MOVES) aggregatedData.MOVES.push(...record.MOVES);
+            if (record.SWAPED) aggregatedData.SWAPED.push(...record.SWAPED);
+        }
+
+        // check if last dataset contains error code
+        if (lastRecord && lastRecord.ERRORCODE) {
+            throw new Error(`Worker-Fehler: ${lastRecord.ERRORCODE}`);
+        }
+
+        const data = aggregatedData;
+        // ---------------------------------------------------
         if (data.TIME !== undefined) {
             const timeMs = (data.TIME / 1_000_000).toFixed(2);
             document.getElementById('time-val').innerText = timeMs;
@@ -335,6 +367,11 @@ startBtn.addEventListener('click', async () => {
             dynamicSpeed = Math.max(5, Math.floor((animationSpeed * 10) / steps));
             generator = countingGenerator(data.SORTED);
             processBatchFn = visualizeCountingBatch;
+        } else if (algoKey === 'cycle') {
+            const steps = data.SWAPED.length;
+            dynamicSpeed = steps > 0 ? Math.max(5, Math.floor((animationSpeed * 20) / steps)) : animationSpeed;
+            await visualizeCycle(data.SWAPED, dynamicSpeed);
+            return;
         } else {
             const steps = data.MOVES.length;
             dynamicSpeed = steps > 0 ? Math.max(5, Math.floor((animationSpeed * 20) / steps)) : animationSpeed;
@@ -570,4 +607,4 @@ async function visualizeCycle(moves, speed) {
     if (!isCancelled) await playSuccessWave();
 }
 
-//400ll lol XD
+//610ll lol XD

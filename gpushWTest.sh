@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
  #   algosee; A algorithm visulizer
- #   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ #   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
  #   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  #
  #   This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@ cd ..
 echo "Testing backend using testclient"
 ./rebuildLinuxDebug.sh
 cd build 
-./algosee & 
+./algosee -vvvv & 
 algosee_pid=$! # set PID so you can kill later
 trap 'kill "$algosee_pid" 2>/dev/null || true' EXIT #im gonna be honest i dont know how this trap logic syntax works this is from copilot
 sleep 1s
@@ -42,4 +42,3 @@ trap - EXIT
 cd ..
 echo "Creating commit named "$1" and pushing to github"
 git add . && git commit -m "$1" && git pull origin development --rebase && git push origin development
-# this whole file is to be changed, so pretty much unusable right now

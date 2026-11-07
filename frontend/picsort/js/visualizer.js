@@ -9,19 +9,7 @@ const algoKey = urlParams.get('algo') || 'bubble';
 
 const backendBase = getBackendBase();
 
-// adj title
-const algoNames = {
-    bogo: "BogoSort (Image)",
-    miracle: "MiracleSort (Image)",
-    selection: "SelectionSort (Image)",
-    merge: "MergeSort (Image)",
-    bubble: "BubbleSort (Image)",
-    counting: "CountingSort (Image)",
-    quick: "QuickSort (Image)",
-    cycle: "CycleSort (Image)",
-    radix: "RadixSort (Image)",
-    intro: "IntroSort (Image)"
-};
+
 document.getElementById('algo-title').innerText = algoNames[algoKey] || "Image Visualization";
 
 const imageUpload = document.getElementById('image-upload');
@@ -34,8 +22,7 @@ const sourceCtx = sourceCanvas.getContext('2d');
 const targetCanvas = document.getElementById('target-canvas');
 const targetCtx = targetCanvas.getContext('2d');
 
-let isCancelled = false;
-let uploadedImage = null;
+
 
 // draw init placeholder
 function drawPlaceholder() {
@@ -57,32 +44,7 @@ function drawPlaceholder() {
 drawPlaceholder();
 
 // read picture and scale to canvas (100x100)
-imageUpload.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        const img = new Image();
-        img.onload = function() {
-            uploadedImage = img;
-            renderImageToCanvas(img);
-        }
-        img.src = event.target.result;
-    }
-    reader.readAsDataURL(file);
-});
-
-function renderImageToCanvas(img) {
-    const size = 50;
-    sourceCanvas.width = size;
-    sourceCanvas.height = size;
-    targetCanvas.width = size;
-    targetCanvas.height = size;
-
-    sourceCtx.drawImage(img, 0, 0, size, size);
-    targetCtx.drawImage(img, 0, 0, size, size);
-}
+//FUNCTIONS DELETED, picsort is currently being rebuild, so please bare with me! 
 
 // reset
 resetBtn.addEventListener('click', () => {
@@ -145,7 +107,7 @@ startBtn.addEventListener('click', async () => {
         if (!response.ok) {
         let msg = responseText;
         try { const parsed = JSON.parse(responseText); if (typeof parsed === 'string') msg = parsed; } catch (_) {}
-        throw new Error(msg || `Server-Fehler: ${response.status}`);
+        throw new Error(msg || `server-error: ${response.status}`);
         }
 
         const data = JSON.parse(responseText);
@@ -185,7 +147,7 @@ async function visualizeImageSteps(steps, width, height) {
     for (let k = 0; k < steps.length; k++) {
         if (isCancelled) break;
         renderPixels(steps[k], width, height);
-        await new Promise(resolve => setTimeout(resolve, 15)); // Geschwindigkeit pro Frame
+        await new Promise(resolve => setTimeout(resolve, 15)); // speed per frame
     }
 }
 

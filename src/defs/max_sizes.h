@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -34,6 +34,7 @@
 #define MAX_ELEMENT_COUNT_COUNTING MAX_ELEMENT_COUNT_SORT
 #define MAX_ELEMENT_COUNT_CYCLE MAX_ELEMENT_COUNT_SORT
 #define MAX_ELEMENT_COUNT_RADIX MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_HEAP MAX_ELEMENT_COUNT_SORT
 #define HIGHEST_ELEMENT_COUNTING 1000000
 
 #define MAX_ELEMENT_COUNT_PATH 62500

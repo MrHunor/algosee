@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -198,6 +198,7 @@ std::vector<int> BIBFS(const GraphUnweighted &graph, const int start, const int 
 {
     int iteration = 0;
     const int rows = graph.size();
+    const GraphUnweighted reverseGraph = buildReverseGraph(graph);
 
     int meetingPoint = -1;
     std::vector<int> visitedFromStart(rows, -1); // weird ass constructor once again
@@ -253,9 +254,10 @@ std::vector<int> BIBFS(const GraphUnweighted &graph, const int start, const int 
             }
         }
 
-        for (int i = 0; i < graph[currentFromEndID].size(); i++) // check all neighbours
+        for (int i = 0; i < reverseGraph[currentFromEndID].size();
+             i++) // check all neighbours
         {
-            int currentNFromEndID = graph[currentFromEndID].at(i);
+            int currentNFromEndID = reverseGraph[currentFromEndID].at(i);
 
             if (visitedFromEnd[currentNFromEndID] != -1)
             {
