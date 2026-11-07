@@ -28,6 +28,7 @@
 #include "../../src/defs/general.h"
 #include "../../src/defs/types.h"
 #include "../../src/logger/logger.h"
+#include <bits/utility.h>
 #include <string>
 #include <vector>
 
@@ -134,4 +135,5 @@ void checkForAllResponseTypes(const json &response);
 json parseNDJSON(const std::string &output);
 void writeMemToImage(const rawImage &img);
 void printReport(const std::vector<run> &exitMessage, StateClass &state);
+void InvalidInputMessage(const std::string &details, const std::source_location location=std::source_location::current());
 #endif

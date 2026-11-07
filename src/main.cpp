@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     CLI::App algosee{"Algosee: A 0815 Algorithm Visulizer\n© 2026 MrHunor, siryanni, vilmos45 (as "
                      "equals) · GPLv3"};
     algosee.add_flag("-v,--verbose", state.verbose,
-                     "Se the verbosity of the server output, 0 being nothing and 4 being "
+                     "Set the verbosity of the server output, 0 being nothing and 4 being "
                      "the most detailed. (Stack as -vvvv)");
 
     algosee.callback([&]() {
