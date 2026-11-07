@@ -58,11 +58,10 @@ void RunSortalgo(SortValidReturn info, StateClass &state, StreamClass &stream)
             BogoSort(info.values, response, stream);
         else if (info.algo == "radix")
             RadixSort(info.values, response, stream);
-        }
         else if (info.algo == "heap")
-        {
             HeapSort(info.values, response, stream);
-        }
+        else if (info.algo == "intro")
+            IntroSort(info.values, response, stream);
 
         // Default for all algorithms exit
         auto endTime = std::chrono::steady_clock::now();

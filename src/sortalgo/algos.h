@@ -38,7 +38,7 @@ void CountingSort(std::vector<int> &unsorted, json &response, StreamClass &strea
 void CycleSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
 void RadixSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
 void HeapSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
-
+void IntroSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
 //-------------------IMAGES------------------------------------
 void SelectionSort(indexPixel &unsorted, json &response, StreamClass &stream);
 void BogoSort(indexPixel &unsorted, json &response, StreamClass &stream);
@@ -50,4 +50,5 @@ void CycleSort(indexPixel &unsorted, json &response, StreamClass &stream);
 void MergeSort(indexPixel &unsorted, json &response, StreamClass &stream);
 void RadixSort(indexPixel &unsorted, json &response, StreamClass &stream);
 void HeapSort(indexPixel &unsorted, json &response, StreamClass &stream);
+void IntroSort(indexPixel &unsorted, json &response, StreamClass &stream);
 #endif

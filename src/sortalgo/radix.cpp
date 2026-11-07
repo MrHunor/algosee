@@ -36,32 +36,40 @@ int getMax(std::vector<int> &unsorted, int n)
     return max;
 }
 
-void countingSort(std::vector<int> &unsorted, int n, int place, json &response){
-    int outp[n];
-    int count[10] = {0};
-    for (int i = 0; i < 10; i++) count[i] = 0;
-    for (int i = 0; i < n; i++)  count[(unsorted[i] / place) % 10]++; //count
-    for (int i = 1; i < 10; i++) count[i] += count[i - 1];//cumulative count
-    for (int i = n - 1; i >= 0; i--)//sort
-    {
-        outp[count[(unsorted[i] / place) % 10] - 1] = unsorted[i];
-        count[(unsorted[i] / place) % 10]--;
+void countingSort(std::vector<int>& unsorted, int place, json& response, int step)
+{
+    std::vector<int> output(unsorted.size());
+    int count[10] = {};
+
+    for (int value : unsorted) count[(std::abs(value) / place) % 10]++;
+    for (int i = 1; i < 10; i++) count[i] += count[i - 1];
+    for (int i = static_cast<int>(unsorted.size()) - 1; i >= 0; i--) {
+        int digit = (std::abs(unsorted[i]) / place) % 10;
+        output[--count[digit]] = unsorted[i];
     }
-    for (int i = 0; i < n; i++) unsorted[i] = outp[i];
+
+    unsorted = std::move(output);
+
+    response["MOVES"].push_back({step, unsorted});
 }
 
 void RadixSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
 {
+    if (unsorted.size() <= 1)
+        return;
+
     const int max = getMax(unsorted, unsorted.size());
     int i = 0;
-    for (int place = 1; max / place > 0; place *= 10){
-        countingSort(unsorted, unsorted.size(), place, response);
-        response["MOVES"].push_back({i, unsorted});
-        i++;
+    for (int place = 1; max / place > 0;) {
+        countingSort(unsorted, place, response, 0);
+
+        if (place > max / 10) break;
+        place *= 10;
     }
     stream.sendChunk(std::move(response));
     response.clear();
 }
+
 
 //--------------IMAGE-----------------------------
 int getMax(indexPixel &unsorted, int n)
@@ -75,18 +83,19 @@ int getMax(indexPixel &unsorted, int n)
     return max;
 }
 
-void countingSort(indexPixel &unsorted, int n, int place, json &response){
-    int outp[n];
-    int count[10];
-    for (int i = 0; i < 10; i++) count[i] = 0;
-    for (int i = 0; i < n; i++)  count[(unsorted[i].first / place) % 10]++; //count
-    for (int i = 1; i < 10; i++) count[i] += count[i - 1];//cumulative count
-    for (int i = n - 1; i >= 0; i--)//sort
-    {
-        outp[count[(unsorted[i].first / place) % 10] - 1] = unsorted[i].first;
-        count[(unsorted[i].first / place) % 10]--;
+void countingSort(indexPixel& unsorted, int place, int step)
+{
+    if (unsorted.size() <= 1)
+        return;
+
+    const int max = getMax(unsorted, unsorted.size());
+    int i = 0;
+    for (int place = 1; max / place > 0;) {
+        countingSort(unsorted, place, 0);
+
+        if (place > max / 10) break;
+        place *= 10;
     }
-    for (int i = 0; i < n; i++) unsorted[i].first = outp[i];
 }
 
 void RadixSort(indexPixel &unsorted, json &response, StreamClass &stream)
@@ -94,10 +103,10 @@ void RadixSort(indexPixel &unsorted, json &response, StreamClass &stream)
     const int max = getMax(unsorted, unsorted.size());
     int i = 0;
     for (int place = 1; max / place > 0; place *= 10){
-        countingSort(unsorted, unsorted.size(), place, response);
+        countingSort(unsorted, unsorted.size(), place);
+        response["MOVES"].push_back({i, place});
         i++;
     }
-    response["MOVES"].push_back({i});
     stream.sendChunk(std::move(response));
     response.clear();
 }

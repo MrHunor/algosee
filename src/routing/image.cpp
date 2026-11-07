@@ -59,12 +59,10 @@ void RunImageSort(ImageValidReturn info, StateClass &state, StreamClass &stream)
             BogoSort(info.img.data, response, stream);
         else if (info.algo == "radix")
             RadixSort(info.img.data, response, stream);
-
-        }
         else if (info.algo == "heap")
-        {
             HeapSort(info.img.data, response, stream);
-        }
+        else if (info.algo == "intro")
+            IntroSort(info.img.data, response, stream);
         auto endTime = std::chrono::steady_clock::now();
         auto elapsed =
             std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
