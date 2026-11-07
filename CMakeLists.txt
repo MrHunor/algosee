@@ -98,11 +98,11 @@ target_include_directories(algosee PRIVATE
 )
 
 target_precompile_headers(algosee PRIVATE 
-<nlohmann/json.hpp>
-<httplib.h>
-<vector>
-<string>
-<algorithm>
+    <nlohmann/json.hpp>
+    <httplib.h>
+    <vector>
+    <string>
+    <algorithm>
 )
 
 find_package(nlohmann_json REQUIRED)
@@ -118,14 +118,13 @@ target_link_libraries(algosee
     httplib::httplib
     stb::stb
     CLI11::CLI11
-    stdc++exp
-)
+)# stdc++exp was it even used?
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_link_libraries(algosee_testclient
         nlohmann_json::nlohmann_json
-        stdc++exp
-        httplib::httplib 
+        tdc++exp
+        httplib::httplib
         stb::stb
-    )
+    ) # stdc++exp does not exist on win MSVC
 endif()
