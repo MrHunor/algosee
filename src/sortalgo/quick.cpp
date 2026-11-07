@@ -30,7 +30,6 @@
 // is being modified
 int FindQuickSortPivot(std::vector<int> &unsorted, int low, int high, json &response)
 {
-    int index;
     int pivot = unsorted[high];
     int lowerPivotIndexBoundry = low - 1;
     for (int i = low; i < high; i++)
