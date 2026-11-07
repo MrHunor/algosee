@@ -21,6 +21,7 @@
 #define PATHVALIDATE_H
 #include "../../defs/types.h"
 #include "../../logger/logger.h"
+
 #include <httplib/httplib.h>
 /**
  * @file validate.h

@@ -19,11 +19,13 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../utils/image/image.h"
+
 #include "../exception/exception.h"
 #include "../logger/logger.h"
 #include "../sortalgo/algos.h"
 #include "../utils/general/utils.h"
 #include "../validate/image/validate.h"
+
 #include <chrono>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
@@ -34,10 +36,10 @@ void RunImageSort(ImageValidReturn info, StateClass &state, StreamClass &stream)
     try
     {
         json response;
-        state.out("Generating json response keys...",4);
+        state.out("Generating json response keys...", 4);
         generateJsonRetrunArras(response);
         fillWithMetaData(response);
-        state.out("Shuffuling image...",3);
+        state.out("Shuffuling image...", 3);
         ShuffleImage(info.img);
         response["SHUFFLED (INDEXES)"] = IndexPixelArrToJson(info.img.data);
         stream.sendChunk(std::move(response));
@@ -69,7 +71,7 @@ void RunImageSort(ImageValidReturn info, StateClass &state, StreamClass &stream)
         auto elapsed =
             std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
         state.out("Ended Time mesurement.", 2);
-        state.out("Filling remaining json response keys",4);
+        state.out("Filling remaining json response keys", 4);
         response["TIME"] = elapsed.count();
         response["SORTED"] = IndexPixelArrToJson(info.img.data);
         response["ERROR"] = "";

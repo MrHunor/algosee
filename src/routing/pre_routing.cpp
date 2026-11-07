@@ -20,6 +20,7 @@
  */
 #include "../logger/logger.h"
 #include "../utils/general/utils.h"
+
 #include <chrono>
 #include <httplib/httplib.h>
 #include <mutex>
@@ -52,7 +53,6 @@ httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req
     // prevent a data race
     std::lock_guard<std::mutex> lock(clientListMutex);
     AddClient(clientList, {std::chrono::system_clock::now(), ip});
-
 
     if (CheckRateLimit(clientList, clientList.size() - 1))
     {

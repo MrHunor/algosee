@@ -21,6 +21,7 @@
 #include "../../defs/general.h"
 #include "../../defs/types.h"
 #include "../../exception/exception.h"
+
 #include <cstdint>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>

@@ -24,6 +24,7 @@
 #include "../pathalgo/algos.h"
 #include "../utils/general/utils.h"
 #include "../validate/path/validate.h"
+
 #include <chrono>
 #include <exception>
 #include <httplib/httplib.h>
@@ -68,6 +69,8 @@ void RunPathalgoMap(const httplib::Request &req, httplib::Response &res,
                 path = ASTAR(info.mapInt, info.start, info.goal, response);
             else if (info.algo == "GBFS")
                 path = GBFS(info.mapInt, info.start, info.goal, response);
+            else if (info.algo == "bellman-ford")
+                path = Bellman_Ford(info.mapInt, info.start, info.goal, response);
         }
         auto endTime = std::chrono::steady_clock::now();
         auto elapsed =

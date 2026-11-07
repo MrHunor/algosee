@@ -20,9 +20,10 @@
 
 #include "../defs/general.h"
 #include "../defs/types.h"
+#include "../stream/stream.h"
 #include "../utils/image/image.h"
 #include "../utils/sortalgo/sortalgo.h"
-#include "../stream/stream.h"
+
 #include <algorithm>
 #include <nlohmann/json.hpp>
 #include <vector>

@@ -20,18 +20,20 @@
  */
 
 #include "utils.h"
+
 #include "../../defs/general.h"
 #include "../../defs/implemented.h"
 #include "../../defs/ratelimits.h"
 #include "../../defs/types.h"
 #include "../../stream/stream.h"
 #include "build_info.h"
+
 #include <chrono>
 #include <cstdlib>
 #include <fstream>
 #include <httplib.h>
 #include <iostream>
-//#include <limits.h> //not used
+// #include <limits.h> //not used
 #include <nlohmann/json.hpp>
 #include <ostream>
 #include <random>
@@ -42,8 +44,8 @@
 #include <vector>
 
 #ifndef _WIN32
-    #include <unistd.h>
-    #include <sys/wait.h>
+#include <sys/wait.h>
+#include <unistd.h>
 #endif
 
 std::vector<char> randomStringDataset{
@@ -150,34 +152,34 @@ void AddClient(clientListType &cList,
 std::string ExecuteCommand(const std::string &command)
 {
     std::string result;
-    #ifdef _WIN32
-        result = "Execute Xommand not implemented on windows!";
-    #else
-        int exitCode;
-        FILE *pipe = popen(command.c_str(), "r");
-        if (!pipe)
-            InvalidInputMessage("Failed to open Pipe for executing command:" + command);
+#ifdef _WIN32
+    result = "Execute Xommand not implemented on windows!";
+#else
+    int exitCode;
+    FILE *pipe = popen(command.c_str(), "r");
+    if (!pipe)
+        InvalidInputMessage("Failed to open Pipe for executing command:" + command);
 
-        char buffer[256];
+    char buffer[256];
 
-        while (fgets(buffer, sizeof(buffer),
-                    pipe)) // this works because fgets returns a pointer to the data,
-                            // and if no data is available it return nullptr
-        {
-            result += buffer;
-        }
+    while (fgets(buffer, sizeof(buffer),
+                 pipe)) // this works because fgets returns a pointer to the data,
+                        // and if no data is available it return nullptr
+    {
+        result += buffer;
+    }
 
-        // i know the reference exit code is kinda ugly but the other option would be
-        // to return an pair or struct which would require a lot of work and im lazy
-        int status = pclose(pipe);
-        exitCode = -1;
-        if (WIFEXITED(status))
-        {
-            exitCode = WEXITSTATUS(status);
-        }
-        if (exitCode != 0)
-            InvalidInputMessage("Shell Command:'" + command + "' has failed.");
-    #endif
+    // i know the reference exit code is kinda ugly but the other option would be
+    // to return an pair or struct which would require a lot of work and im lazy
+    int status = pclose(pipe);
+    exitCode = -1;
+    if (WIFEXITED(status))
+    {
+        exitCode = WEXITSTATUS(status);
+    }
+    if (exitCode != 0)
+        InvalidInputMessage("Shell Command:'" + command + "' has failed.");
+#endif
     return result;
 }
 

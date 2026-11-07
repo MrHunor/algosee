@@ -19,10 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "validate.h"
+
 #include "../../defs/implemented.h"
 #include "../../exception/exception.h"
 #include "../../logger/logger.h"
 #include "../../utils/pathalgo/pathalgo.h"
+
 #include <httplib/httplib.h>
 
 PathValidReturnMap ValidatePathMap(const httplib::Request &req, StateClass &state)

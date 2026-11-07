@@ -29,6 +29,7 @@
 #define PALGOS_H
 #include "../defs/general.h"
 #include "../defs/types.h"
+
 #include <nlohmann/json.hpp>
 #include <vector>
 
@@ -75,7 +76,6 @@ std::vector<std::pair<int, int>> Bellman_Ford(const MapInt &map,
                                               std::pair<int, int> start,
                                               std::pair<int, int> goal, json &response);
 
-
 /**
  * @brief Run a BreadthFirst search on A Map
  *
@@ -117,6 +117,9 @@ std::vector<std::pair<int, int>> DepthFirstSearch(const MapBool &map,
                                                   const std::pair<int, int> start,
                                                   const std::pair<int, int> goal,
                                                   json &response);
+
+std::vector<int> Bellman_Ford(const GraphWeighted &graph, int start, int goal,
+                              json &response);
 
 /**
  * @brief Run the Djikstra algorithm on a Map

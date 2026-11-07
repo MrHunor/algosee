@@ -23,6 +23,7 @@
 #include "../sortalgo/algos.h"
 #include "../utils/general/utils.h"
 #include "../validate/sort/validate.h"
+
 #include <chrono>
 #include <exception>
 #include <httplib/httplib.h>
@@ -42,7 +43,7 @@ void RunSortalgo(SortValidReturn info, StateClass &state, StreamClass &stream)
         state.out("Starting time mesurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
 
-        if (info.algo == "selection")//switch cases don't work here
+        if (info.algo == "selection") // switch cases don't work here
             SelectionSort(info.values, response, stream);
         else if (info.algo == "cycle")
             CycleSort(info.values, response, stream);

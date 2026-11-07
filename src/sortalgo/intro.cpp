@@ -20,13 +20,14 @@
 #include "../defs/general.h"
 #include "../defs/types.h"
 #include "../stream/stream.h"
+
 #include <algorithm>
+#include <cmath>
 #include <nlohmann/json.hpp>
 #include <utility>
 #include <vector>
-#include <cmath>
 
-void InsertionSort(std::vector<int> &unsorted, json &response, int* begin, int* end)
+void InsertionSort(std::vector<int> &unsorted, json &response, int *begin, int *end)
 {
     int left = begin - &unsorted[0];
     int right = end - &unsorted[0];
@@ -44,7 +45,8 @@ void InsertionSort(std::vector<int> &unsorted, json &response, int* begin, int* 
     }
 }
 
-int FindQuickSortPivot2(std::vector<int> &unsorted, int low, int high, json &response)//the first one in quick.cpp (for compiler)
+int FindQuickSortPivot2(std::vector<int> &unsorted, int low, int high,
+                        json &response) // the first one in quick.cpp (for compiler)
 {
     int pivot = unsorted[high];
     int lowerPivotIndexBoundry = low - 1;
@@ -62,7 +64,8 @@ int FindQuickSortPivot2(std::vector<int> &unsorted, int low, int high, json &res
     return lowerPivotIndexBoundry + 1;
 }
 
-void QuickSort2(std::vector<int> &unsorted, int low, int high, json &response, StreamClass &stream)//same naming as previously
+void QuickSort2(std::vector<int> &unsorted, int low, int high, json &response,
+                StreamClass &stream) // same naming as previously
 {
     if (response["MOVES"].size() > 1000)
     {
@@ -73,30 +76,34 @@ void QuickSort2(std::vector<int> &unsorted, int low, int high, json &response, S
     {
         int pivot = FindQuickSortPivot2(unsorted, low, high, response);
         QuickSort2(unsorted, low, pivot - 1, response,
-                  stream); // sort left side recursivly
+                   stream); // sort left side recursivly
         QuickSort2(unsorted, pivot + 1, high, response,
-                  stream); // sort right side recursivly
+                   stream); // sort right side recursivly
     }
 }
 
-int* MedianOfThree(int* a, int* b, int* c)
+int *MedianOfThree(int *a, int *b, int *c)
 {
     if (a < b)
     {
-        if (b < c) return b;
-        if (a < c) return c;
+        if (b < c)
+            return b;
+        if (a < c)
+            return c;
         return a;
     }
-    if (a < c) return a;
-    if (b < c) return c;
+    if (a < c)
+        return a;
+    if (b < c)
+        return c;
     return b;
 }
 
-int* Partition(int* begin, int* end)
+int *Partition(int *begin, int *end)
 {
-    int* pivot = end;
-    int* store = begin;
-    for (int* current = begin; current < end; ++current)
+    int *pivot = end;
+    int *store = begin;
+    for (int *current = begin; current < end; ++current)
     {
         if (*current < *pivot)
         {
@@ -108,10 +115,12 @@ int* Partition(int* begin, int* end)
     return store;
 }
 
-void IntroSortUtil(std::vector<int>& unsorted, json& response, int* begin, int* end, int depthLimit)
+void IntroSortUtil(std::vector<int> &unsorted, json &response, int *begin, int *end,
+                   int depthLimit)
 {
     int size = end - begin + 1;
-    if (size <= 1) return;
+    if (size <= 1)
+        return;
     if (size < 16)
     {
         InsertionSort(unsorted, response, begin, end);
@@ -124,27 +133,28 @@ void IntroSortUtil(std::vector<int>& unsorted, json& response, int* begin, int* 
         return;
     }
 
-    int* pivot = MedianOfThree(begin, begin + (size - 1) / 2, end);
+    int *pivot = MedianOfThree(begin, begin + (size - 1) / 2, end);
     std::swap(*pivot, *end);
-    int* partitionPoint = Partition(begin, end);
+    int *partitionPoint = Partition(begin, end);
     if (partitionPoint > begin)
         IntroSortUtil(unsorted, response, begin, partitionPoint - 1, depthLimit - 1);
     if (partitionPoint < end)
         IntroSortUtil(unsorted, response, partitionPoint + 1, end, depthLimit - 1);
 }
 
-void IntroSort(std::vector<int>& unsorted, json& response, StreamClass& stream)
+void IntroSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
 {
     if (unsorted.size() <= 1)
         return;
     int depthLimit = 2 * (int)(std::log2(unsorted.size()));
-    IntroSortUtil(unsorted, response, unsorted.data(), unsorted.data() + unsorted.size() - 1, depthLimit);
+    IntroSortUtil(unsorted, response, unsorted.data(),
+                  unsorted.data() + unsorted.size() - 1, depthLimit);
 }
-
 
 //-------------- IMAGE -----------------------------
 
-void InsertionSort(indexPixel& unsorted, indexPixel::value_type* begin, indexPixel::value_type* end)
+void InsertionSort(indexPixel &unsorted, indexPixel::value_type *begin,
+                   indexPixel::value_type *end)
 {
     int left = begin - unsorted.data();
     int right = end - unsorted.data();
@@ -162,24 +172,31 @@ void InsertionSort(indexPixel& unsorted, indexPixel::value_type* begin, indexPix
     }
 }
 
-indexPixel::value_type* MedianOfThree(indexPixel::value_type* a, indexPixel::value_type* b, indexPixel::value_type* c)
+indexPixel::value_type *MedianOfThree(indexPixel::value_type *a,
+                                      indexPixel::value_type *b,
+                                      indexPixel::value_type *c)
 {
     if (a->first < b->first)
     {
-        if (b->first < c->first) return b;
-        if (a->first < c->first) return c;
+        if (b->first < c->first)
+            return b;
+        if (a->first < c->first)
+            return c;
         return a;
     }
-    if (a->first < c->first) return a;
-    if (b->first < c->first) return c;
+    if (a->first < c->first)
+        return a;
+    if (b->first < c->first)
+        return c;
     return b;
 }
 
-indexPixel::value_type* Partition(indexPixel::value_type* begin, indexPixel::value_type* end)
+indexPixel::value_type *Partition(indexPixel::value_type *begin,
+                                  indexPixel::value_type *end)
 {
-    indexPixel::value_type* pivot = end;
-    indexPixel::value_type* store = begin;
-    for (indexPixel::value_type* current = begin; current < end; ++current)
+    indexPixel::value_type *pivot = end;
+    indexPixel::value_type *store = begin;
+    for (indexPixel::value_type *current = begin; current < end; ++current)
     {
         if (current->first < pivot->first)
         {
@@ -191,10 +208,12 @@ indexPixel::value_type* Partition(indexPixel::value_type* begin, indexPixel::val
     return store;
 }
 
-void IntroSortUtil(indexPixel& unsorted, indexPixel::value_type* begin, indexPixel::value_type* end, int depthLimit)
+void IntroSortUtil(indexPixel &unsorted, indexPixel::value_type *begin,
+                   indexPixel::value_type *end, int depthLimit)
 {
     int size = end - begin + 1;
-    if (size <= 1)return;
+    if (size <= 1)
+        return;
     if (size < 16)
     {
         InsertionSort(unsorted, begin, end);
@@ -202,25 +221,29 @@ void IntroSortUtil(indexPixel& unsorted, indexPixel::value_type* begin, indexPix
     }
     if (depthLimit == 0)
     {
-        auto comp = [](const indexPixel::value_type& a, const indexPixel::value_type& b) { return a.first < b.first; };
+        auto comp = [](const indexPixel::value_type &a, const indexPixel::value_type &b) {
+            return a.first < b.first;
+        };
 
         std::make_heap(begin, end + 1, comp);
         std::sort_heap(begin, end + 1, comp);
         return;
     }
 
-    indexPixel::value_type* pivot = MedianOfThree(begin, begin + (size - 1) / 2, end);
+    indexPixel::value_type *pivot = MedianOfThree(begin, begin + (size - 1) / 2, end);
     std::swap(*pivot, *end);
-    indexPixel::value_type* partitionPoint = Partition(begin, end);
+    indexPixel::value_type *partitionPoint = Partition(begin, end);
     if (partitionPoint > begin)
         IntroSortUtil(unsorted, begin, partitionPoint - 1, depthLimit - 1);
     if (partitionPoint < end)
         IntroSortUtil(unsorted, partitionPoint + 1, end, depthLimit - 1);
 }
 
-void IntroSort(indexPixel& unsorted, json& response, StreamClass& stream)
+void IntroSort(indexPixel &unsorted, json &response, StreamClass &stream)
 {
-    if (unsorted.size() <= 1) return;
+    if (unsorted.size() <= 1)
+        return;
     int depthLimit = 2 * (int)(std::log2(unsorted.size()));
-    IntroSortUtil(unsorted, unsorted.data(), unsorted.data() + unsorted.size() - 1, depthLimit);
+    IntroSortUtil(unsorted, unsorted.data(), unsorted.data() + unsorted.size() - 1,
+                  depthLimit);
 }

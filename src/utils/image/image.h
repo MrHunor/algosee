@@ -21,6 +21,7 @@
 #define UTILS_IMAGE_H
 #include "../../defs/types.h"
 #include "../../logger/logger.h"
+
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <stb_image.h>

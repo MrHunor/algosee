@@ -18,7 +18,9 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "stream.h"
+
 #include "../defs/general.h"
+
 #include <httplib.h>
 #include <mutex>
 #include <nlohmann/json.hpp>

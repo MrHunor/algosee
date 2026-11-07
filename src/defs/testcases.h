@@ -21,6 +21,7 @@
 #ifndef DEF_TESTCASES_H
 #define DEF_TESTCASES_H
 #include "max_sizes.h"
+
 #include <cstdint>
 #include <string>
 #include <unordered_map>

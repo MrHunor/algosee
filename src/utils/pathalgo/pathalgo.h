@@ -29,6 +29,7 @@
 #define PATHALGO_UTILS_H
 #include "../../defs/general.h"
 #include "../../defs/types.h"
+
 #include <cstdint>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>

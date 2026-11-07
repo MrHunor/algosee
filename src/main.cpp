@@ -26,11 +26,11 @@
 #include "exception/exception.h"
 #include "logger/logger.h"
 #include "routing/routing.h"
-
 #include "stream/stream.h"
 #include "utils/general/utils.h"
 #include "validate/image/validate.h"
 #include "validate/sort/validate.h"
+
 #include <CLI/CLI.hpp>
 #include <exception>
 #include <httplib.h>
@@ -57,11 +57,13 @@ int main(int argc, char *argv[])
 {
     remove("log.txt");
     StateClass state("algoseeLog.txt");
-    CLI::App algosee{"Algosee: A 0815 Algorithm Visulizer\n© 2026 MrHunor, siryanni, vilmos45 (as "
-                     "equals) · GPLv3"};
-    algosee.add_flag("-v,--verbose", state.verbose,
-                     "Set the verbosity of the server output, 0 being nothing and 4 being "
-                     "the most detailed. (Stack as -vvvv)");
+    CLI::App algosee{
+        "Algosee: A 0815 Algorithm Visulizer\n© 2026 MrHunor, siryanni, vilmos45 (as "
+        "equals) · GPLv3"};
+    algosee.add_flag(
+        "-v,--verbose", state.verbose,
+        "Set the verbosity of the server output, 0 being nothing and 4 being "
+        "the most detailed. (Stack as -vvvv)");
 
     algosee.callback([&]() {
         state.out("algosee Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)\n"

@@ -28,6 +28,7 @@
 #define LOGGER_H
 #include "../defs/general.h"
 #include "colours.h"
+
 #include <chrono>
 #include <format>
 #include <fstream>

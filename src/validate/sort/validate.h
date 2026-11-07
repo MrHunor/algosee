@@ -26,6 +26,7 @@
 #ifndef SORTVALIDATE_H
 #define SORTVALIDATE_H
 #include "../../logger/logger.h"
+
 #include <httplib/httplib.h>
 #include <vector>
 struct SortValidReturn

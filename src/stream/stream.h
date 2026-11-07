@@ -20,6 +20,7 @@
 #ifndef STREAM_H
 #define STREAM_H
 #include "../defs/general.h"
+
 #include <httplib.h>
 #include <mutex>
 #include <queue>

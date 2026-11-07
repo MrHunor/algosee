@@ -20,6 +20,7 @@
 #include "../defs/general.h"
 #include "../defs/types.h"
 #include "../utils/pathalgo/pathalgo.h"
+
 #include <algorithm>
 #include <cstdint>
 #include <limits>
@@ -68,7 +69,7 @@ std::vector<std::pair<int, int>> Bellman_Ford(const MapInt &map,
                     // also somehow you only have to search tiles-1 because the shortest
                     // path in a map of n tiles can only take tiles-1
     {
-updated=false;
+        updated = false;
         for (int searchX = 0; searchX < cols; searchX++)
         {
             for (int searchY = 0; searchY < rows; searchY++)
@@ -171,7 +172,7 @@ std::vector<int> Bellman_Ford(const GraphWeighted &graph, int start, int goal,
 
     for (int outerI = 0; outerI < rows - 1; outerI++)
     {
-        updated=false;
+        updated = false;
         for (int innerI = 0; innerI < rows; innerI++)
         {
 

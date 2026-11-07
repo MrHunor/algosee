@@ -21,6 +21,7 @@
 #define IMGVALIDATE_H
 #include "../../defs/types.h"
 #include "../../logger/logger.h"
+
 #include <httplib/httplib.h>
 
 struct ImageValidReturn
