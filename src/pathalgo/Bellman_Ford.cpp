@@ -98,6 +98,7 @@ std::vector<std::pair<int, int>> Bellman_Ford(const MapInt &map,
                       // every tile must have its shortest distance assigned
             break;
     }
+    
     std::vector<std::pair<int, int>> path;
     if (d[goal.second][goal.first] ==
         std::numeric_limits<int64_t>::max()) // check if goal was ever really reached

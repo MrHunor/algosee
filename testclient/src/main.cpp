@@ -20,6 +20,7 @@
  */
 #include "../../src/logger/logger.h"
 #include "CLI/CLI.hpp"
+#include "../../src/utils/general/utils.h"
 #include "tests/tests.h"
 #include "utils/utils.h"
 #include <httplib.h>
