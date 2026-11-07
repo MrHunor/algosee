@@ -65,5 +65,5 @@ jobs:
      - name: Run testserver
        shell: bash 
        run: | 
-          ./build/algosee_testclient
+          ./build/algosee_testclient -vvvv -s -p -i
 
