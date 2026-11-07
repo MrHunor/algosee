@@ -41,6 +41,11 @@
 #include <string>
 #include <vector>
 
+#ifndef _WIN32
+    #include <unistd.h>
+    #include <sys/wait.h>
+#endif
+
 std::vector<char> randomStringDataset{
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
     'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
@@ -148,8 +153,6 @@ std::string ExecuteCommand(const std::string &command)
     #ifdef _WIN32
         result = "Execute Xommand not implemented on windows!";
     #else
-        #include <unistd.h>
-        #include <sys/wait.h>
         int exitCode;
         FILE *pipe = popen(command.c_str(), "r");
         if (!pipe)

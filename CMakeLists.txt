@@ -24,7 +24,7 @@ endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     #utiltiy build for bundling builds together
-    option(CMAKE_UNITY_BUILD "Set CMake unity builds to on" ON)
+    option(CMAKE_UNITY_BUILD "Set CMake unity builds to on" OFF)#this caused an error
     #Build time optimisations 
     ##ccache for caching builds 
     find_program(CCACHE_LOCATION ccache)
@@ -105,26 +105,30 @@ target_precompile_headers(algosee PRIVATE
     <algorithm>
 )
 
-find_package(nlohmann_json REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
+find_package(httplib CONFIG REQUIRED)
+find_package(stb CONFIG REQUIRED)
+find_package(CLI11 CONFIG REQUIRED)
 
-find_package(httplib REQUIRED)
-
-find_package(stb REQUIRED)
-
-find_package(CLI11 REQUIRED)
-
-target_link_libraries(algosee
+target_link_libraries(algosee PRIVATE
     nlohmann_json::nlohmann_json
     httplib::httplib
     stb::stb
     CLI11::CLI11
-)# stdc++exp was it even used?
+)
+
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_link_libraries(algosee PRIVATE stdc++exp)
+endif()
+
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    target_link_libraries(algosee_testclient
+    target_link_libraries(algosee_testclient PRIVATE
         nlohmann_json::nlohmann_json
-        tdc++exp
         httplib::httplib
         stb::stb
-    ) # stdc++exp does not exist on win MSVC
+    )
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        target_link_libraries(algosee_testclient PRIVATE stdc++exp)
+    endif()
 endif()

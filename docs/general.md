@@ -26,7 +26,7 @@
 
 
 ## To build the Project:
-**DISCLAIMER: Technically, this project could build on windows but it has not been tested. The compilation has been verified on Linux Mint and CachyOS.**
+**DISCLAIMER: Technically, this project could build on any platform but it has not been tested (obviously). The compilation has been verified on Linux Mint, CachyOS, Fedora and Windows 11.**
 0. `cmake --version` >= **4.4.3**
    `gcc --version` >= **16.2.1 20260810**
    `conan --version` >= **2.32.0**
