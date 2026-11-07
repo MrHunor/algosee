@@ -46,6 +46,7 @@
 json SwapVisitedArray(const MapBool &visited);
 
 json SwapVisitedArray(const std::vector<std::vector<uint64_t>> &visited);
+json SwapVisitedArray(const std::vector<std::vector<int64_t>> &visited);
 
 /**
  * @brief Check maps internal validness

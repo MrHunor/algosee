@@ -136,6 +136,21 @@ json SwapVisitedArray(
     }
     return json(retval);
 }
+// bellman-ford can have negative weight so you have to use a  int64 instead of uint64
+json SwapVisitedArray(const std::vector<std::vector<int64_t>> &visited)
+{
+    std::vector<std::vector<int64_t>> retval(visited[0].size(),
+                                             std::vector<int64_t>(visited.size(), 0));
+
+    for (int rows = 0; rows < visited.size(); rows++)
+    {
+        for (int cols = 0; cols < visited[rows].size(); cols++)
+        {
+            retval[cols][rows] = visited[rows][cols];
+        }
+    }
+    return json(retval);
+}
 
 void CheckMapValidness(const MapInt &map, const std::pair<int, int> &start,
                        const std::pair<int, int> &goal)
