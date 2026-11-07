@@ -22,22 +22,27 @@
 #ifndef DEF_MAX_SIZES_H
 #define DEF_MAX_SIZES_H
 
+// Following limits are only estimates (made by AI), which calculate with 512MB of
+// availabe ram, of which 75% may be used -32MB for the execuatble (so very safe
+// assumtions), ill run the numbers with a systemd-run and see if they hold up to that,
+// you'll be able to see this in docs/tests
+
 #define MAX_ELEMENT_COUNT_SORT                                                           \
     2500 // you could customise this for every algo, but thats a future issue
          // (Issue #38)
 
-#define MAX_ELEMENT_COUNT_SELECTION MAX_ELEMENT_COUNT_SORT
-#define MAX_ELEMENT_COUNT_BOGO 9
-#define MAX_ELEMENT_COUNT_BUBBLE MAX_ELEMENT_COUNT_SORT
-#define MAX_ELEMENT_COUNT_QUICK MAX_ELEMENT_COUNT_SORT
-#define MAX_ELEMENT_COUNT_MERGE MAX_ELEMENT_COUNT_SORT
-#define MAX_ELEMENT_COUNT_COUNTING MAX_ELEMENT_COUNT_SORT
-#define MAX_ELEMENT_COUNT_CYCLE MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_SELECTION 3600000
+#define MAX_ELEMENT_COUNT_BOGO 8
+#define MAX_ELEMENT_COUNT_BUBBLE 2703
+#define MAX_ELEMENT_COUNT_QUICK 2703
+#define MAX_ELEMENT_COUNT_MERGE 163000
+#define MAX_ELEMENT_COUNT_COUNTING 12300000
+#define MAX_ELEMENT_COUNT_CYCLE 1800000
 #define MAX_ELEMENT_COUNT_RADIX MAX_ELEMENT_COUNT_SORT
-#define MAX_ELEMENT_COUNT_HEAP MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_HEAP 4802
 #define HIGHEST_ELEMENT_COUNTING 1000000
 
-#define MAX_ELEMENT_COUNT_PATH 62500
+#define MAX_ELEMENT_COUNT_PATH 1480000
 #define MAX_ELEMENT_COUNT_BFS MAX_ELEMENT_COUNT_PATH
 #define MAX_ELEMENT_COUNT_DIJKSTRA MAX_ELEMENT_COUNT_PATH
 #define MAX_ELEMENT_COUNT_DFS MAX_ELEMENT_COUNT_PATH
@@ -47,6 +52,9 @@
 #define MAX_ELEMENT_COUNT_BELLMAN_FORD MAX_ELEMENT_COUNT_PATH
 #define HIGHEST_ELEMENT_PATH std::numeric_limits<int>::max() - 1
 
-#define MAX_PIXEL_COUNT_IMAGE 2500
+#define MAX_PIXEL_COUNT_IMAGE 1000000
+
+#define MAX_NODE_COUNT_PATH_WEIGHTED 2700000
+#define MAX_NODE_COUNT_PATH_UNWEIGHTED 10900000 
 
 #endif

@@ -180,6 +180,22 @@ PathValidReturnGraph ValdiatePathGraph(const httplib::Request &req, StateClass &
     retval.start = parsed["START"];
     retval.goal = parsed["GOAL"];
 
+    state.out("Checking limit",0);
+        if (implementedPathAlgoCatagory.at(retval.algo) == 'W')
+        {
+            if(retval.graphWeighted.size()>MAX_NODE_COUNT_PATH_WEIGHTED)
+            {
+                throw excep("Too many Nodes specified");
+            }
+        }
+        else {
+        if(retval.graphUnweight.size()>MAX_NODE_COUNT_PATH_UNWEIGHTED)
+        {
+            throw excep("Too many Nodes specified");
+        }
+        }
+
+
     state.out("Checking start and goal bounds", 1);
     if (retval.start < 0 || retval.goal < 0)
         throw excep("Start or goal out of bounds (smaller then 0)");

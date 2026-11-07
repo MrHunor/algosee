@@ -132,43 +132,43 @@ const std::vector<std::pair<std::string, uint16_t>> testCasesPathfindingGraph{
     {"BFS", 100},
     {"BFS", 4500},
     {"BFS", 37500},
-    {"BFS", MAX_ELEMENT_COUNT_BFS - 1},
+    {"BFS", MAX_NODE_COUNT_PATH_UNWEIGHTED - 1},
 
     {"dijkstra", 50},
     {"dijkstra", 100},
     {"dijkstra", 4500},
     {"dijkstra", 37500},
-    {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA - 1},
+    {"dijkstra", MAX_NODE_COUNT_PATH_WEIGHTED - 1},
 
     {"DFS", 50},
     {"DFS", 100},
     {"DFS", 4500},
     {"DFS", 37500},
-    {"DFS", MAX_ELEMENT_COUNT_DFS - 1},
+    {"DFS", MAX_NODE_COUNT_PATH_UNWEIGHTED-1},
 
     {"BIBFS", 50},
     {"BIBFS", 100},
     {"BIBFS", 4500},
     {"BIBFS", 37500},
-    {"BIBFS", MAX_ELEMENT_COUNT_BIBFS - 1},
+    {"BIBFS", MAX_NODE_COUNT_PATH_UNWEIGHTED - 1},
 
     {"ASTAR", 50},
     {"ASTAR", 100},
     {"ASTAR", 4500},
     {"ASTAR", 37500},
-    {"ASTAR", MAX_ELEMENT_COUNT_ASTAR - 1},
+    {"ASTAR", MAX_NODE_COUNT_PATH_WEIGHTED - 1},
 
     {"GBFS", 50},
     {"GBFS", 100},
     {"GBFS", 4500},
     {"GBFS", 50},
-    {"GBFS", MAX_ELEMENT_COUNT_GBFS - 1},
+    {"GBFS", MAX_NODE_COUNT_PATH_WEIGHTED - 1},
 
     {"bellman-ford", 50},
     {"bellman-ford", 100},
     {"bellman-ford", 4500},
     {"bellman-ford", 50},
-    {"bellman-ford", MAX_ELEMENT_COUNT_BELLMAN_FORD - 1}};
+    {"bellman-ford", MAX_NODE_COUNT_PATH_WEIGHTED - 1}};
 
 const std::vector<std::pair<std::string, int>> testCasesSorting{
 

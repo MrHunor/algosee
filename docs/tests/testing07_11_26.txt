@@ -1,0 +1,79 @@
+This test is used to see if changing the limits to ai given suggestions will actually stay under the amount allowed by render
+1. Testing on db9f54047bce292bcfa0f32e0754d5161661f7ca
+Relevant section:"#define MAX_ELEMENT_COUNT_SORT                                                           \
+    2500 // you could customise this for every algo, but thats a future issue
+         // (Issue #38)
+
+#define MAX_ELEMENT_COUNT_SELECTION MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_BOGO 9
+#define MAX_ELEMENT_COUNT_BUBBLE MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_QUICK MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_MERGE MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_COUNTING MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_CYCLE MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_RADIX MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_HEAP MAX_ELEMENT_COUNT_SORT
+#define HIGHEST_ELEMENT_COUNTING 1000000
+
+#define MAX_ELEMENT_COUNT_PATH 62500
+#define MAX_ELEMENT_COUNT_BFS MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_DIJKSTRA MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_DFS MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_BIBFS MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_ASTAR MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_GBFS MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_BELLMAN_FORD MAX_ELEMENT_COUNT_PATH
+#define HIGHEST_ELEMENT_PATH std::numeric_limits<int>::max() - 1
+
+#define MAX_PIXEL_COUNT_IMAGE 2500"
+
+Running same command as in other tests:"
+sudo systemd-run \
+        --wait \
+        --pipe \
+        --collect \
+        --working-directory="$PWD" \
+        --unit="benchmark-$(date +%s)" \
+        -p MemoryAccounting=yes \
+        -p IOAccounting=yes \
+        -p TasksAccounting=yes \
+        -p MemoryMax=512M \
+        -p RuntimeMaxSec=600 \
+        /usr/bin/time -v -- "$PWD/algosee""
+
+Testing summary: (radix excluded as it is not functional right now)
+          Finished with result: success                    
+Main processes terminated with: code=killed, status=15/TERM
+               Service runtime: 1min 43.597s
+             CPU time consumed: 27.136s
+                   Memory peak: 512M (swap: 146.6M)
+                      IO Bytes: read 3.8M, written 140.4M
+
+See? This is too much. Ill run the same thing again while also limiting swap.
+command:
+"sudo systemd-run \
+        --wait \
+        --pipe \
+        --collect \
+        --working-directory="$PWD" \
+        --unit="benchmark-$(date +%s)" \
+        -p MemoryAccounting=yes \
+        -p IOAccounting=yes \
+        -p TasksAccounting=yes \
+        -p MemoryMax=512M \
+        -p MemorySwapMax=0 \
+        -p RuntimeMaxSec=600 \
+        /usr/bin/time -v -- "$PWD/algosee"""
+
+Testing summary:
+          Finished with result: oom-kill                   
+Main processes terminated with: code=killed, status=15/TERM
+               Service runtime: 56.301s
+             CPU time consumed: 22.569s
+                   Memory peak: 512M (swap: 0B)
+                      IO Bytes: read 24K
+Seems to have occured around heap sort image 
+
+Now testing with AI suggested limits
+
+
