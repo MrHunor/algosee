@@ -71,6 +71,10 @@ std::vector<std::pair<int, int>> ASTAR(const MapInt &map, const std::pair<int, i
 std::vector<std::pair<int, int>> BIBFS(const MapBool &map,
                                        const std::pair<int, int> start,
                                        const std::pair<int, int> goal, json &response);
+std::vector<std::pair<int, int>> Bellman_Ford(const MapInt &map,
+                                              std::pair<int, int> start,
+                                              std::pair<int, int> goal, json &response);
+
 
 /**
  * @brief Run a BreadthFirst search on A Map

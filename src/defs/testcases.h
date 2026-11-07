@@ -81,28 +81,50 @@ const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesImage{
     {"radix", {15, 12}},
     {"radix", {25, 25}},
     {"radix", {25, 12}},
-    {"radix", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}}
-};
+    {"radix", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}}};
 
 const std::vector<std::pair<std::string, std::pair<uint8_t, uint8_t>>>
-    testCasesPathfindingMap{
-        {"BFS", {10, 5}},         {"BFS", {20, 5}},         {"BFS", {100, 45}},
-        {"BFS", {250, 150}},      {"BFS", {249, 249}},
+    testCasesPathfindingMap{{"BFS", {10, 5}},
+                            {"BFS", {20, 5}},
+                            {"BFS", {100, 45}},
+                            {"BFS", {250, 150}},
+                            {"BFS", {249, 249}},
 
-        {"dijkstra", {10, 5}},    {"dijkstra", {20, 5}},    {"dijkstra", {100, 45}},
-        {"dijkstra", {250, 150}}, {"dijkstra", {249, 249}},
+                            {"dijkstra", {10, 5}},
+                            {"dijkstra", {20, 5}},
+                            {"dijkstra", {100, 45}},
+                            {"dijkstra", {250, 150}},
+                            {"dijkstra", {249, 249}},
 
-        {"DFS", {10, 5}},         {"DFS", {20, 5}},         {"DFS", {100, 45}},
-        {"DFS", {250, 150}},      {"DFS", {249, 249}},
+                            {"DFS", {10, 5}},
+                            {"DFS", {20, 5}},
+                            {"DFS", {100, 45}},
+                            {"DFS", {250, 150}},
+                            {"DFS", {249, 249}},
 
-        {"BIBFS", {10, 5}},       {"BIBFS", {20, 5}},       {"BIBFS", {100, 45}},
-        {"BIBFS", {250, 150}},    {"BIBFS", {249, 249}},
+                            {"BIBFS", {10, 5}},
+                            {"BIBFS", {20, 5}},
+                            {"BIBFS", {100, 45}},
+                            {"BIBFS", {250, 150}},
+                            {"BIBFS", {249, 249}},
 
-        {"ASTAR", {10, 5}},       {"ASTAR", {20, 5}},       {"ASTAR", {100, 45}},
-        {"ASTAR", {250, 150}},    {"ASTAR", {249, 249}},
+                            {"ASTAR", {10, 5}},
+                            {"ASTAR", {20, 5}},
+                            {"ASTAR", {100, 45}},
+                            {"ASTAR", {250, 150}},
+                            {"ASTAR", {249, 249}},
 
-        {"GBFS", {10, 5}},        {"GBFS", {20, 5}},        {"GBFS", {100, 45}},
-        {"GBFS", {250, 150}},     {"GBFS", {249, 249}}};
+                            {"GBFS", {10, 5}},
+                            {"GBFS", {20, 5}},
+                            {"GBFS", {100, 45}},
+                            {"GBFS", {250, 150}},
+                            {"GBFS", {249, 249}},
+
+                            {"bellman-ford", {10, 5}},
+                            {"bellman-ford", {20, 5}},
+                            {"bellman-ford", {100, 45}},
+                            {"bellman-ford", {250, 150}},
+                            {"bellman-ford", {249, 249}}};
 
 const std::vector<std::pair<std::string, uint16_t>> testCasesPathfindingGraph{
     {"BFS", 50},
@@ -139,7 +161,13 @@ const std::vector<std::pair<std::string, uint16_t>> testCasesPathfindingGraph{
     {"GBFS", 100},
     {"GBFS", 4500},
     {"GBFS", 50},
-    {"GBFS", MAX_ELEMENT_COUNT_GBFS - 1}};
+    {"GBFS", MAX_ELEMENT_COUNT_GBFS - 1},
+
+    {"bellman-ford", 50},
+    {"bellman-ford", 100},
+    {"bellman-ford", 4500},
+    {"bellman-ford", 50},
+    {"bellman-ford", MAX_ELEMENT_COUNT_BELLMAN_FORD - 1}};
 
 const std::vector<std::pair<std::string, int>> testCasesSorting{
 
@@ -194,8 +222,7 @@ const std::vector<std::pair<std::string, int>> testCasesSorting{
     {"radix", 25},
     {"radix", 100},
     {"radix", 1000},
-    {"radix", MAX_ELEMENT_COUNT_SORT - 1}
-};
+    {"radix", MAX_ELEMENT_COUNT_SORT - 1}};
 
 const std::unordered_map<std::string, std::vector<std::string>>
     implementedAlgoExpectedResponseType{

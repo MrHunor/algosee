@@ -39,14 +39,18 @@ const std::unordered_map<std::string, int> implementedSortAlgos = {
     {"quick", MAX_ELEMENT_COUNT_QUICK},       {"selection", MAX_ELEMENT_COUNT_SELECTION}};
 
 const std::unordered_map<std::string, int> implementedPathAlgosSize = {
-    {"ASTAR", MAX_ELEMENT_COUNT_ASTAR},       {"BFS", MAX_ELEMENT_COUNT_BFS},
-    {"BIBFS", MAX_ELEMENT_COUNT_BIBFS},       {"DFS", MAX_ELEMENT_COUNT_DFS},
-    {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA}, {"GBFS", MAX_ELEMENT_COUNT_GBFS}};
+    {"ASTAR", MAX_ELEMENT_COUNT_ASTAR},
+    {"BFS", MAX_ELEMENT_COUNT_BFS},
+    {"BIBFS", MAX_ELEMENT_COUNT_BIBFS},
+    {"DFS", MAX_ELEMENT_COUNT_DFS},
+    {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA},
+    {"GBFS", MAX_ELEMENT_COUNT_GBFS},
+    {"bellman-ford", MAX_ELEMENT_COUNT_BELLMAN_FORD}};
 
 const std::unordered_map<std::string, char> implementedPathAlgoCatagory = {
     // U(nweighted) or W(eighted)
-    {"ASTAR", 'W'}, {"BFS", 'U'},      {"BIBFS", 'U'},
-    {"DFS", 'U'},   {"dijkstra", 'W'}, {"GBFS", 'W'}};
+    {"ASTAR", 'W'},    {"BFS", 'U'},  {"BIBFS", 'U'},       {"DFS", 'U'},
+    {"dijkstra", 'W'}, {"GBFS", 'W'}, {"bellman-ford", 'W'}};
 
 const std::vector<std::string> implementedArrayReturnTypes = {
     "COUNT ARRAY",
