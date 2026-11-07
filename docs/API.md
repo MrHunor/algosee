@@ -1,11 +1,11 @@
-# API Documentation 
+# API Documentation
 
-## Interface 
+## Interface
 Currently there are six diffrent API endpoints:
 
-### 0. Default Response Keys  
-Any sucessfull (and most unsucessful) requests will return a json object containing all of these **uninitilised** keys, only those keys that are actually used by the response will be filled, the rest will be empty:  
-***Array types:*** 
+### 0. Default Response Keys
+Any sucessfull (and most unsucessful) requests will return a json object containing all of these **uninitilised** keys, only those keys that are actually used by the response will be filled, the rest will be empty:
+***Array types:***
 - 'MOVES'
 - 'TRIES'
 - 'COUNT ARRAY'
@@ -16,7 +16,7 @@ Any sucessfull (and most unsucessful) requests will return a json object contain
 - 'SORTED'
 - 'PATH'
 - 'DISTANCE'
-- 'VISITED' 
+- 'VISITED'
 - 'SEARCHMAP'
 - 'VISITEDFROMSTART'
 - 'VISITEDFROMEND'
@@ -28,21 +28,21 @@ Any sucessfull (and most unsucessful) requests will return a json object contain
 - 'VERSION' -> typically filled with the current server version
 - 'BUILDTIME' -> " " " the time of compilation
 - 'TIME' -> " " " the time it took for the algorithm to execute (and some json parsing overhead)
-- 'ERROR' -> " " " an errormessage if the server threw one and is streaming its response, if not it will return its errormessage with an non 200 status code  
-- 'ERRORCODE' -> " " " an errorcode if the server threw one, only when streaming its response (born because after you accept the request you must set the response status), **ALWAYS** check if this is 0 when gettig a streamed response, if it isn't an error occured  
+- 'ERROR' -> " " " an errormessage if the server threw one and is streaming its response, if not it will return its errormessage with an non 200 status code
+- 'ERRORCODE' -> " " " an errorcode if the server threw one, only when streaming its response (born because after you accept the request you must set the response status), **ALWAYS** check if this is 0 when gettig a streamed response, if it isn't an error occured
 
 *Tip: You can view the defintion of these keys in [src/defs/implemented.h](./../src/defs/implemented.h)*
 
-### 1. /status 
-The status endpoint can be used to check if the server is online.  
-It takes no URL arguments or Body, it is a GET request.  
-It will return a json object along the lines of 0.  
+### 1. /status
+The status endpoint can be used to check if the server is online.
+It takes no URL arguments or Body, it is a GET request.
+It will return a json object along the lines of 0.
 
-### 2. /limits  
-The limits endpoint can be used to get the maximum Size of elements that a algorithm will accept.   
-It takes not URL arguments or Body, as it is also a GET request.  
-It returns all keys documented in 0. and:  
-***Sorting:***  
+### 2. /limits
+The limits endpoint can be used to get the maximum Size of elements that a algorithm will accept.
+It takes not URL arguments or Body, as it is also a GET request.
+It returns all keys documented in 0. and:
+***Sorting:***
 - 'MAX_ELEMENT_COUNT_SORT'
 - 'MAX_ELEMENT_COUNT_SELECTION'
 - 'MAX_ELEMENT_COUNT_BOGO'
@@ -59,16 +59,16 @@ It returns all keys documented in 0. and:
 - 'MAX_ELEMENT_COUNT_DFS'
 - 'MAX_ELEMENT_COUNT_BIBFS'
 - 'MAX_ELEMENT_COUNT_ASTAR'
-- 'MAX_ELEMENT_COUNT_GBFS'  
+- 'MAX_ELEMENT_COUNT_GBFS'
 ***Image:***
-- 'MAX_PIXEL_COUNT_IMAGE'  
+- 'MAX_PIXEL_COUNT_IMAGE'
 
 *Tip: You can view the defintion of these keys in [src/routing/limits.cpp](../src/routing/limits.cpp)*
 
 ### 3. /sortalgo
-The sortalgo endpoint can be used to sort an array of integer elements.  
-It expects the URL argument algo being equal to one of the implemented sorting algorithms. (see [docs/Implemented_Algorithms.md](./Implemented_Algorithms.md))  
-Furthermore it requires the body to have a array of 'values'.  
+The sortalgo endpoint can be used to sort an array of integer elements.
+It expects the URL argument algo being equal to one of the implemented sorting algorithms. (see [docs/Implemented_Algorithms.md](./Implemented_Algorithms.md))
+Furthermore it requires the body to have a array of 'values'.
 It will return the default keys defined in 0. and some other keys depending on the chosen alorithm:
 - ***Bogo***:
   - 'TRIES' contains an array of arrays, the inner part being some random variation of the original values array  
@@ -92,14 +92,14 @@ It will return the default keys defined in 0. and some other keys depending on t
 
 
 ### 4. /pathalgoMap
-The pathfinding endpoint for maps can be used to find a path throught a (un-)weighted "Map" or more precisely a 2 dimensional array.  
-Similiar to the [sorting endpoint](#3-sortalgo) it requires a URL arugment named algo being equal to one of the implemented Pathfinding algorithms (see [docs/Implemented_Algorithms.md](./Implemented_Algorithms.md)).  
+The pathfinding endpoint for maps can be used to find a path throught a (un-)weighted "Map" or more precisely a 2 dimensional array.
+Similiar to the [sorting endpoint](#3-sortalgo) it requires a URL arugment named algo being equal to one of the implemented Pathfinding algorithms (see [docs/Implemented_Algorithms.md](./Implemented_Algorithms.md)).
 It also requires the following body values:
   - 'MAP' containing either an 2D array of positive integers (except 0 for A*) and -1 (being blocked), which would be a weighted map or a 2D array of boolean with 0 being traversable and 1 being blocked, which would be a unweighted map, the map MUST have equal row lengths
   - 'START' A pair of integers containing the start in the format of x,y (so inner, outer)
-  - 'GOAL' See above  
+  - 'GOAL' See above
 
 It will returns a json object containing the keys defined in 0. and some other (non algorithm specific like [sorting](#3-sortalgo)):
-  - 'VISITED' A 2D array of positive integers showcasing which tile was explored (1) or not (-1)  
-  - 'SEARCHMAP' A 2D array of positive integers showcasing which tile was explored at which iteration or not at all (-1)  
+  - 'VISITED' A 2D array of positive integers showcasing which tile was explored (1) or not (-1)
+  - 'SEARCHMAP' A 2D array of positive integers showcasing which tile was explored at which iteration or not at all (-1)
   - 'PATH' A array of pairs in the format x,y representing the path step by step, from start to goal

@@ -54,12 +54,12 @@ void RunImageSort(ImageValidReturn info, StateClass &state, StreamClass &stream)
         else if (info.algo == "merge")
             MergeSort(info.img.data, response, stream);
         else if (info.algo == "counting")
-        {
             CountingSort(info.img.data, response, stream);
-        }
         else if (info.algo == "bogo")
-        {
             BogoSort(info.img.data, response, stream);
+        else if (info.algo == "radix")
+            RadixSort(info.img.data, response, stream);
+
         }
         else if (info.algo == "heap")
         {

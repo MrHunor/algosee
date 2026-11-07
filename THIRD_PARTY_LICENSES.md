@@ -1,11 +1,11 @@
-# Third-Party Component Notices and Licenses  
-Furthermore, this software contains third-party components licensed under 
+# Third-Party Component Notices and Licenses
+Furthermore, this software contains third-party components licensed under
 permissive open-source licenses:
 
-## json (commonly known as nlohmann_json) @ https://github.com/nlohmann/json    
+## json (commonly known as nlohmann_json) @ https://github.com/nlohmann/json
 ### Main Project License: MIT LICENSE
 
-MIT License 
+MIT License
 
 Copyright (c) 2013-2026 Niels Lohmann
 
@@ -29,7 +29,7 @@ SOFTWARE.
 
 
 
-## cpp-httplib @ https://github.com/yhirose/cpp-httplib  
+## cpp-httplib @ https://github.com/yhirose/cpp-httplib
 ### Main Project License: MIT LICENSE
 
 The MIT License (MIT)
@@ -55,8 +55,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-## stb @ https://github.com/nothings/stb  
-### Main Project License: MIT LICENSE or Public Domain  
+## stb @ https://github.com/nothings/stb
+### Main Project License: MIT LICENSE or Public Domain
 
 
 ALTERNATIVE A - MIT License

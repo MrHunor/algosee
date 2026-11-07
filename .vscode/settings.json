@@ -1,4 +1,5 @@
 {
     "repodeck.defaultProject": "PVT_kwHOBjce884BmkQQ",
-    "repodeck.boardField": ""
+    "repodeck.boardField": "",
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
 }

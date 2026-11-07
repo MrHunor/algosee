@@ -9,7 +9,7 @@
 **Vilmos45:**![Hackatime Badge](https://hackatime-badge.hackclub.com/U0B9Z81761H/algosee)
 
 ## Demo:
-![Demo](./assets/demoVideo/sorting.gif)    
+![Demo](./assets/demoVideo/sorting.gif)
 ![Demo](./assets/demoVideo/pathfinding.gif)
 
 ## Features:
@@ -19,7 +19,7 @@
 - **Make curl requests to the server yourself**
 
 ## Algorithms
-The implementation will roughly follow the order given in the table.  
+The implementation will roughly follow the order given in the table.
 
 ### Sorting
 
@@ -30,15 +30,18 @@ The implementation will roughly follow the order given in the table.
 | Bubble    | Supported |
 | Quick     | Supported |
 | Merge     | Supported |
-| Counting  | Supported | 
+| Counting  | Supported |
 | Cycle Sort | Supported |
+| Heap Sort  | TBD |
+| Radix Sort | Supported |
+| Intro Sort | TBD |
 | Heap Sort  | Supported |
 | Radix Sort | TBD |
 | Intro Sort | TBD |  
 
 -> More ideas? Suggest them [here](https://github.com/MrHunor/algosee/issues)
 
-### Pathfinding 
+### Pathfinding
 
 | Algorithm | Status |
 |-----------|--------|
@@ -46,12 +49,12 @@ The implementation will roughly follow the order given in the table.
 | Dijkstra | Supported |
 | Depth first search (DFS) | Supported |
 | Bidirectional Breadth first search (BIBFS) | Supported |
-| A* | Supported | 
+| A* | Supported |
 | Greedy Best-First-Search (GBFS) | Supported |
 | Jump point search (JPS) | TBD |
 | D* | TBD |
 | Bellman-Ford | TBD |
-| Floyd-Warshall | TBD |  
+| Floyd-Warshall | TBD |
 
 -> More ideas? Suggest them [here](https://github.com/MrHunor/algosee/issues)
 
@@ -63,9 +66,9 @@ Click [here](https://mrhunor.github.io/algosee) to test if out yourself!
 - **Backend:** C++
 - **Building:** CMAKE, Ninja
 - **Package Managment:** conan
-- **Hosting:** Github Pages (Frontend), Render (Backend) 
+- **Hosting:** Github Pages (Frontend), Render (Backend)
 
-## Plans: 
+## Plans:
 Current plans invlove Streaming and more, have a look [here](https://github.com/MrHunor/algosee/milestones).
 
 ## Workflow:
@@ -74,26 +77,26 @@ Current plans invlove Streaming and more, have a look [here](https://github.com/
 3. By pressing the "start" button on the viszulizer.html they are sending a html POST request [like this](#To-test-the-backend-sorting-online-(linux)) to the backend.
 4. The backend extracts the algorithm Name from the URL and performs the sorting.
 5. The backend return the sorted array, a set of instructions on how to visulise the sorting and metadata like backend version and time in nanoseconds.
-6. The frontend visulises the instructions returned by the backend.   
+6. The frontend visulises the instructions returned by the backend.
 
 ## Documentation:
 You can view the documentation about the API, Branches and building the project in [./docs](./docs/)
 
 # License(s)
-This Project is published under the GPL3 License which you can find [here](./LICENSE.md).  
-Furthermore this project also includes code from other repositorys, you can find their licenses [here](./THIRD_PARTY_LICENSES.md).  
-We thank every author and contribtor of those repositories from :heart: , without their work this project woudn't have been possible. 
+This Project is published under the GPL3 License which you can find [here](./LICENSE.md).
+Furthermore this project also includes code from other repositorys, you can find their licenses [here](./THIRD_PARTY_LICENSES.md).
+We thank every author and contribtor of those repositories from :heart: , without their work this project woudn't have been possible.
 
 # AI usage disclosure:
-I, **@MrHunor**, have used AI for explaining what do to when i didn't know anymore, as well as when i wanted to implement something but didn't know how or for scanning the codebase for bugs and possible enhancements. I've also used AI Audits, such as coderabbit on PRs.  
+I, **@MrHunor**, have used AI for explaining what do to when i didn't know anymore, as well as when i wanted to implement something but didn't know how or for scanning the codebase for bugs and possible enhancements. I've also used AI Audits, such as coderabbit on PRs.
 I, **@siryanni**, main usage of AI was during major bughunts, as the codebase has slowly gotten pretty big.
-Other uses include:  
-- image generation  
-- help with concept mapping  
-- help with code cleanup  
-- said coderabbit made Issues             
+Other uses include:
+- image generation
+- help with concept mapping
+- help with code cleanup
+- said coderabbit made Issues
 
-For anyone looking to contribute we would ask them to follow the line we provided 
+For anyone looking to contribute we would ask them to follow the line we provided
 
 # Big :heart: to the following:
 - [Render](https://render.com/), for their free tier hosting which the online Backend relies on.

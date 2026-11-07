@@ -75,7 +75,14 @@ const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesImage{
     // bogo is factorial time: keep sizes tiny
     {"bogo", {1, 2}},
     {"bogo", {2, 3}},
-    {"bogo", {sqrt(MAX_ELEMENT_COUNT_BOGO) - 1, sqrt(MAX_ELEMENT_COUNT_BOGO) - 1}}};
+    {"bogo", {sqrt(MAX_ELEMENT_COUNT_BOGO) - 1, sqrt(MAX_ELEMENT_COUNT_BOGO) - 1}},
+
+    {"radix", {5, 5}},
+    {"radix", {15, 12}},
+    {"radix", {25, 25}},
+    {"radix", {25, 12}},
+    {"radix", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}}
+};
 
 const std::vector<std::pair<std::string, std::pair<uint8_t, uint8_t>>>
     testCasesPathfindingMap{
@@ -181,7 +188,14 @@ const std::vector<std::pair<std::string, int>> testCasesSorting{
     // bogo is factorial time: keep sizes tiny
     {"bogo", 3},
     {"bogo", 5},
-    {"bogo", MAX_ELEMENT_COUNT_BOGO - 1}};
+    {"bogo", MAX_ELEMENT_COUNT_BOGO - 1},
+
+    {"radix", 5},
+    {"radix", 25},
+    {"radix", 100},
+    {"radix", 1000},
+    {"radix", MAX_ELEMENT_COUNT_SORT - 1}
+};
 
 const std::unordered_map<std::string, std::vector<std::string>>
     implementedAlgoExpectedResponseType{
