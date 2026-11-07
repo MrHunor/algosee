@@ -84,4 +84,5 @@ int main(int argc, char *argv[])
 
     return 0;
     });
+    CLI11_PARSE(algosee_testclient,argc,argv);
 }
