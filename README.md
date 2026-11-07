@@ -32,7 +32,7 @@ The implementation will roughly follow the order given in the table.
 | Counting  | Supported |
 | Cycle Sort | Supported |
 | Heap Sort  | TBD |
-| Radix Sort | TBD |
+| Radix Sort | Supported |
 | Intro Sort | TBD |
 
 -> More ideas? Suggest them [here](https://github.com/MrHunor/algosee/issues)

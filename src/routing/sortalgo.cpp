@@ -42,7 +42,7 @@ void RunSortalgo(SortValidReturn info, StateClass &state, StreamClass &stream)
         state.out("Starting time mesurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
 
-        if (info.algo == "selection")
+        if (info.algo == "selection")//switch cases don't work here
             SelectionSort(info.values, response, stream);
         else if (info.algo == "cycle")
             CycleSort(info.values, response, stream);
@@ -53,13 +53,11 @@ void RunSortalgo(SortValidReturn info, StateClass &state, StreamClass &stream)
         else if (info.algo == "merge")
             MergeSort(info.values, response, stream);
         else if (info.algo == "counting")
-        {
             CountingSort(info.values, response, stream);
-        }
         else if (info.algo == "bogo")
-        {
             BogoSort(info.values, response, stream);
-        }
+        else if (info.algo == "radix")
+            RadixSort(info.values, response, stream);
 
         // Default for all algorithms exit
         auto endTime = std::chrono::steady_clock::now();
