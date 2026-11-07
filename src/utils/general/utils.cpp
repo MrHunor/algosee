@@ -109,6 +109,11 @@ std::string GenerateRandomString(const int &size)
 
 bool CheckRateLimit(const clientListType &cList, int index)
 {
+    // req made by localhost, likely testclient (if ever made to run in LAN, might wanna
+    // change this)
+    if (cList[index].second == "127.0.0.1")
+        return false;
+
     std::string targetIP = cList[index].second;
     int matchingEntrysCount = 0;
     for (const auto &element : cList)

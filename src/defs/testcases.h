@@ -245,6 +245,7 @@ const std::unordered_map<std::string, std::vector<std::string>>
         {"ASTAR", {"DISTANCE", "PATH"}},
         {"IMAGE", {"SHUFFLED (INDEXES)"}}, // image is a special case because its returns
                                            // this array as well
-        {"GBFS", {"DISTANCE", "PATH"}}};
+        {"GBFS", {"DISTANCE", "PATH"}},
+        {"bellman-ford", {"DISTANCE", "SEARCHMAP"}}};
 
 #endif
