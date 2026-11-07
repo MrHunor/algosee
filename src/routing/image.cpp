@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -34,13 +34,15 @@ void RunImageSort(ImageValidReturn info, StateClass &state, StreamClass &stream)
     try
     {
         json response;
+        state.out("Generating json response keys...",4);
         generateJsonRetrunArras(response);
         fillWithMetaData(response);
+        state.out("Shuffuling image...",3);
         ShuffleImage(info.img);
         response["SHUFFLED (INDEXES)"] = IndexPixelArrToJson(info.img.data);
         stream.sendChunk(std::move(response));
         response.clear();
-        state.out("Starting time mesurement...", 0);
+        state.out("Starting time mesurement...", 2);
         auto startTime = std::chrono::steady_clock::now();
 
         if (info.algo == "selection")
@@ -58,6 +60,7 @@ void RunImageSort(ImageValidReturn info, StateClass &state, StreamClass &stream)
         else if (info.algo == "bogo")
             BogoSort(info.img.data, response, stream);
         else if (info.algo == "radix")
+        {
             RadixSort(info.img.data, response, stream);
         else if (info.algo == "heap")
             HeapSort(info.img.data, response, stream);
@@ -66,7 +69,8 @@ void RunImageSort(ImageValidReturn info, StateClass &state, StreamClass &stream)
         auto endTime = std::chrono::steady_clock::now();
         auto elapsed =
             std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
-        state.out("Ended Time mesurement.", 0);
+        state.out("Ended Time mesurement.", 2);
+        state.out("Filling remaining json response keys",4);
         response["TIME"] = elapsed.count();
         response["SORTED"] = IndexPixelArrToJson(info.img.data);
         response["ERROR"] = "";

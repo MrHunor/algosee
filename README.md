@@ -2,11 +2,11 @@
 
 **A 0815 Algorithm Visulizer**
 
-*© 2026 MrHunor, siryanni, Vilmos45 (as equals) · GPLv3*
+*© 2026 MrHunor, siryanni, vilmos45 (as equals) · GPLv3*
 
 **MrHunor:**![Hackatime Badge](https://hackatime-badge.hackclub.com/U0BAT7EGEQ7/algosee)  
 **siryanni:**![Hackatime Badge](https://hackatime-badge.hackclub.com/U0A2D73JM9R/algosee)  
-**Vilmos45:**![Hackatime Badge](https://hackatime-badge.hackclub.com/U0B9Z81761H/algosee)
+**vilmos45:**![Hackatime Badge](https://hackatime-badge.hackclub.com/U0B9Z81761H/algosee)
 
 ## Demo:
 ![Demo](./assets/demoVideo/sorting.gif)
@@ -32,12 +32,9 @@ The implementation will roughly follow the order given in the table.
 | Merge     | Supported |
 | Counting  | Supported |
 | Cycle Sort | Supported |
-| Heap Sort  | TBD |
+| Heap Sort  | Supported |
 | Radix Sort | Supported |
 | Intro Sort | TBD |
-| Heap Sort  | Supported |
-| Radix Sort | TBD |
-| Intro Sort | TBD |  
 
 -> More ideas? Suggest them [here](https://github.com/MrHunor/algosee/issues)
 

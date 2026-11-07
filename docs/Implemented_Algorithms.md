@@ -13,6 +13,7 @@ Currently the following Algorithms are implemented:
 | Counting  | Supported |
 | Cycle Sort | Supported |
 | Heap Sort | Supported |
+| Radix Sort | Supported |
 
 ### Pathfinding
 

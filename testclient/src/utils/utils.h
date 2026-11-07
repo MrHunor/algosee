@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -28,6 +28,7 @@
 #include "../../src/defs/general.h"
 #include "../../src/defs/types.h"
 #include "../../src/logger/logger.h"
+#include <bits/utility.h>
 #include <string>
 #include <vector>
 
@@ -46,7 +47,7 @@ struct run
 };
 
 GraphUnweighted generateGU(int size, int start, int goal);
-GraphWeighted generateGW(int size, int start, int goal);
+GraphWeighted generateGW(int size, int start, int goal, int weightLowerBound);
 
 /**
  * @brief Create a Image with random colours in memory with 4 channels

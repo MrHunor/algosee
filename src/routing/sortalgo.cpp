@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -57,6 +57,7 @@ void RunSortalgo(SortValidReturn info, StateClass &state, StreamClass &stream)
         else if (info.algo == "bogo")
             BogoSort(info.values, response, stream);
         else if (info.algo == "radix")
+        {
             RadixSort(info.values, response, stream);
         else if (info.algo == "heap")
             HeapSort(info.values, response, stream);

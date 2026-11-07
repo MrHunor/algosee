@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
  #   algosee; A algorithm visulizer
- #   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
+ #   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  #   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  #
  #   This program is free software: you can redistribute it and/or modify
@@ -36,7 +36,7 @@ cd build
 algosee_pid=$! # set PID so you can kill later
 trap 'kill "$algosee_pid" 2>/dev/null || true' EXIT #im gonna be honest i dont know how this trap logic syntax works this is from copilot
 sleep 1s
-./algosee_testclient
+./algosee_testclient -vvvv -s -p -i
 kill "$algosee_pid"
 trap - EXIT
 cd ..

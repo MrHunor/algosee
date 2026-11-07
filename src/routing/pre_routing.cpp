@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -52,15 +52,7 @@ httplib::Server::HandlerResponse RunPreflightHandler(const httplib::Request &req
     // prevent a data race
     std::lock_guard<std::mutex> lock(clientListMutex);
     AddClient(clientList, {std::chrono::system_clock::now(), ip});
-    state.out("Added to Clientlist:", 0);
-    std::string output;
-    for (const auto &element : clientList)
-    {
-        output = "";
-        output = std::format("Clientlist Element: Time:{}; IP:{}", element.first,
-                             element.second);
-        state.out(output, 0);
-    }
+
 
     if (CheckRateLimit(clientList, clientList.size() - 1))
     {

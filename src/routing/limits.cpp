@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -27,8 +27,10 @@
 void RunLimits(httplib::Response &res, StateClass &state)
 {
     json response;
+    state.out("Generating json response keys...",4);
     generateJsonRetrunArras(response);
     fillWithMetaData(response);
+    state.out("Filling the json response keys with limits...",4);
     // sort
     response["MAX_ELEMENT_COUNT_SORT"] = MAX_ELEMENT_COUNT_SORT;
     response["MAX_ELEMENT_COUNT_SELECTION"] = MAX_ELEMENT_COUNT_SELECTION;

@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni, Vilmos45 (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -20,8 +20,10 @@
 #include "utils.h"
 #include "../../src/defs/implemented.h"
 #include "../../src/defs/types.h"
+#include "../../src/utils/general/utils.h"
 #include "../../src/logger/logger.h"
 #include <cstdint>
+#include <stacktrace>
 #include <cstdlib>
 #include <limits.h>
 #include <nlohmann/json.hpp>
@@ -59,7 +61,7 @@ GraphUnweighted generateGU(int size, int start, int goal)
     return retval;
 }
 
-GraphWeighted generateGW(int size, int start, int goal)
+GraphWeighted generateGW(int size, int start, int goal, int weightLowerBound)
 {
     GraphWeighted retval(size);
     for (int i = 0; i < size - 1;
@@ -75,7 +77,7 @@ GraphWeighted generateGW(int size, int start, int goal)
     {
         for (int z = 0; z < randomInt(0, 10); z++)
         {
-            retval[i].push_back({randomInt(0, size - 1),randomInt(1,std::numeric_limits<uint8_t>::max())});//1 becuase astar rejects 0 
+            retval[i].push_back({randomInt(0, size - 1),randomInt(weightLowerBound,std::numeric_limits<uint8_t>::max())});//1 becuase astar rejects 0 
         }
     }
     return retval;
@@ -134,6 +136,7 @@ unsigned char *makeRandomImage(size_t w, size_t h)
     }
     return retval;
 }
+
 
 void printReport(const std::vector<run> &exitMessage, StateClass &state)
 {
