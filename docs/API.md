@@ -68,7 +68,7 @@ It expects the URL argument algo being equal to one of the implemented sorting a
 Furthermore it requires the body to have a array of 'values'.
 It will return the default keys defined in 0. and some other keys depending on the chosen alorithm:
 - ***Selection***:
-  - 'MOVES' containing a array of integer pairs representing the indexes of the values array to swap
+  - 'MOVES' containing an array of integer pairs representing the indexes of the values array to swap
 - ***Cycle***:
   - 'SWAPED' contains an array of inegers paris represeting the number thats being swaped INTO the array and the index of the element in the values array thats being swaped OUT (and being used as the next element to sort)
 - ***Bubble***:
