@@ -211,9 +211,10 @@ void runPathalgoTest(std::vector<run> &exitMessage, httplib::Client &client,
                 state.out("Testing path validness for:" + currentrun.algoname +
                               "\nSize:" + std::to_string(currentrun.size),
                           0);
-
+                int weightLowerBound=0;
+                if(currentrun.algoname == "ASTAR")weightLowerBound=1;
                 graph = generateGW(currentrun.size, randomInt(0, currentrun.size - 1),
-                                   randomInt(0, currentrun.size - 1));
+                                   randomInt(0, currentrun.size - 1),weightLowerBound);
 
                 int start = randomInt(0, currentrun.size - 1);
                 int goal = randomInt(0, currentrun.size - 1);

@@ -46,7 +46,7 @@ struct run
 };
 
 GraphUnweighted generateGU(int size, int start, int goal);
-GraphWeighted generateGW(int size, int start, int goal);
+GraphWeighted generateGW(int size, int start, int goal, int weightLowerBound);
 
 /**
  * @brief Create a Image with random colours in memory with 4 channels

@@ -59,7 +59,7 @@ GraphUnweighted generateGU(int size, int start, int goal)
     return retval;
 }
 
-GraphWeighted generateGW(int size, int start, int goal)
+GraphWeighted generateGW(int size, int start, int goal, int weightLowerBound)
 {
     GraphWeighted retval(size);
     for (int i = 0; i < size - 1;
@@ -75,7 +75,7 @@ GraphWeighted generateGW(int size, int start, int goal)
     {
         for (int z = 0; z < randomInt(0, 10); z++)
         {
-            retval[i].push_back({randomInt(0, size - 1),randomInt(1,std::numeric_limits<uint8_t>::max())});//1 becuase astar rejects 0 
+            retval[i].push_back({randomInt(0, size - 1),randomInt(weightLowerBound,std::numeric_limits<uint8_t>::max())});//1 becuase astar rejects 0 
         }
     }
     return retval;
