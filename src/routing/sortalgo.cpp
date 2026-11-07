@@ -57,6 +57,7 @@ void RunSortalgo(SortValidReturn info, StateClass &state, StreamClass &stream)
         else if (info.algo == "bogo")
             BogoSort(info.values, response, stream);
         else if (info.algo == "radix")
+        {
             RadixSort(info.values, response, stream);
         }
         else if (info.algo == "heap")
