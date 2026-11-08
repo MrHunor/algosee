@@ -63,4 +63,6 @@ Other uses include:
 - help with code cleanup
 - said coderabbit made Issues
 
+I, **@vilmos45**, have used AI to check for unexpected bugs, and test my code.
+
 For anyone looking to contribute we would ask them to use AI rougly along the line we used it, please dont throw purely AI generated PRs at us. Thanks :heart: .

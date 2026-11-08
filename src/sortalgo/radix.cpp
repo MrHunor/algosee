@@ -84,7 +84,7 @@ void RadixSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
     response.clear();
 }
 
-//--------------IMAGE-----------------------------
+//--------------IMAGE----------------------------- (is this even working?)
 /// @brief Returns the maximum value in the vector.
 /// @param unsorted the vector to find the maximum value in
 /// @param n the max index to saearch in (usually the size of the vector)

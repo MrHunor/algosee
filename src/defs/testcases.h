@@ -27,7 +27,6 @@
 #include <unordered_map>
 #include <vector>
 const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesImage{
-
     {"selection", {5, 5}},
     {"selection", {15, 12}},
     {"selection", {25, 25}},
@@ -82,7 +81,13 @@ const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesImage{
     {"radix", {15, 12}},
     {"radix", {25, 25}},
     {"radix", {25, 12}},
-    {"radix", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}}};
+    {"radix", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}},
+
+    {"intro", {5, 5}},
+    {"intro", {15, 12}},
+    {"intro", {25, 25}},
+    {"intro", {25, 12}},
+    {"intro", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}}};
 
 const std::vector<std::pair<std::string, std::pair<uint8_t, uint8_t>>>
     testCasesPathfindingMap{{"BFS", {10, 5}},
@@ -223,7 +228,13 @@ const std::vector<std::pair<std::string, int>> testCasesSorting{
     {"radix", 25},
     {"radix", 100},
     {"radix", 1000},
-    {"radix", MAX_ELEMENT_COUNT_SORT - 1}};
+    {"radix", MAX_ELEMENT_COUNT_SORT - 1},
+
+    {"intro", 5},
+    {"intro", 25},
+    {"intro", 100},
+    {"intro", 1000},
+    {"intro", MAX_ELEMENT_COUNT_SORT - 1}};
 
 const std::unordered_map<std::string, std::vector<std::string>>
     implementedAlgoExpectedResponseType{
@@ -237,6 +248,8 @@ const std::unordered_map<std::string, std::vector<std::string>>
         {"cycle", {"SWAPED", "SORTED"}},
         {"bogo", {"TRIES", "SORTED"}},
         {"heap", {"HEAP", "ARRAY"}},
+        {"radix", {"COUNT ARRAY", "MOVES", "SORTED"}},
+        {"intro", {"MOVES", "SORTED"}},
 
         {"BFS", {"VISITED", "SEARCHMAP", "PATH"}},
         {"dijkstra", {"DISTANCE", "PATH"}},
