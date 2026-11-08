@@ -18,13 +18,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 /**
- * @file 
+ * @file
  *
- * @brief 
+ * @brief Delares StreamClass and streaming related functions
  *
- *
- *
- * */
+ */
 #ifndef STREAM_H
 #define STREAM_H
 #include "../defs/general.h"
@@ -33,12 +31,23 @@
 #include <mutex>
 #include <queue>
 
+/**
+ * @brief Class that handles streaming to a client
+ *
+ * @param None, no constructor here
+ *
+ * @throws Never
+ *
+ * @returns Nothing, no constructor
+ *
+ * */
 class StreamClass
 {
   public:
-    std::mutex writeMutex;             // locks the thread to prevent data race
-    std::condition_variable cv_notify; // notifys a thread waiting for new chunks to be
-                                       // written (so the stream callback in httplib)
+    std::mutex writeMutex; // locks the thread to prevent data race
+    std::condition_variable
+        cv_notify; // notifys a thread waiting for new chunks to be
+                   // written (so the stream callback in httplib, see MakeChunkProvider )
     std::queue<json> chunks;
     bool finished = false;
 
@@ -51,7 +60,7 @@ class StreamClass
         cv_notify.notify_one(); // notify a thread that new data is avialable
     }
 
-    void finish()
+    void finish() // finish the stream
     {
         std::unique_lock<std::mutex> lock(writeMutex);
         finished = true;
@@ -59,6 +68,13 @@ class StreamClass
     }
 };
 
+/**
+ *
+ *
+ *
+ *
+ *
+ * */
 httplib::ContentProviderWithoutLength MakeChunkProvider(
     std::shared_ptr<StreamClass> stream);
 #endif

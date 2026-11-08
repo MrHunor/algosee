@@ -18,7 +18,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
- #include "stream.h"
+#include "stream.h"
 
 #include "../defs/general.h"
 
@@ -28,17 +28,15 @@
 #include <queue>
 #include <string>
 
-
-
-
-
 httplib::ContentProviderWithoutLength MakeChunkProvider(
     std::shared_ptr<StreamClass>
         stream) // this returns a lamda, you cant have auto here because you want to use
                 // the lamda somewhere else so you have to explicitly state that this is a
                 // contentprovider
 {
-    return [stream](size_t, httplib::DataSink &sink) {//return a lamda (a std::function effectivly)
+    return [stream](
+               size_t,
+               httplib::DataSink &sink) { // return a lamda (a std::function effectivly)
         while (true)
         {
             json chunk;
@@ -52,6 +50,9 @@ httplib::ContentProviderWithoutLength MakeChunkProvider(
                        stream->finished; // if either evaluate to true then the wait is
                                          // finished, so if chunks is not empty or if the
                                          // stream is finished
+                                         // - The callback is kind of like a if statement
+                                         // here, it will only continue (so break the
+                                         // wait) if the return evaluates to true
             });
 
             if (stream->chunks.empty() && stream->finished)
