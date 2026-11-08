@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
         startBtn.addEventListener('click', async () => {
               const apiAlgo = apiAlgoNames[algoKey] || algoKey.toUpperCase();
 
-            const backendUrl = `${backendBase}/pathalgo?algo=${apiAlgo}`;
+            const backendUrl = `${backendBase}/pathalgoMap?algo=${apiAlgo}`;
 
             startBtn.disabled = true;
             if (resetBtn) resetBtn.disabled = true;

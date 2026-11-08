@@ -33,7 +33,7 @@ main,
 
 /* footer to the bottom  */
 main, 
-.algo-detail-container, 
+.algo-detail-container,
 .visualizer-container {
     flex: 1 0 auto;
 }
