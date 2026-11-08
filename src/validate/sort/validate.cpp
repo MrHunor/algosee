@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -19,9 +19,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "validate.h"
+
 #include "../../defs/implemented.h"
 #include "../../exception/exception.h"
 #include "../../logger/logger.h"
+
 #include <httplib/httplib.h>
 #include <vector>
 

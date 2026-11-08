@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -19,12 +19,42 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../../defs/general.h"
+#include "../../defs/types.h"
 #include "../../exception/exception.h"
+
+#include <cstdint>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 
-bool CheckMapForZero(const std::vector<std::vector<int>> &map)
+GraphUnweighted buildReverseGraph(const GraphUnweighted &arr)
+{
+    GraphUnweighted retval(arr.size());
+    for (int i = 0; i < retval.size(); i++)
+    {
+        for (const auto &element :
+             arr[i]) // now looking at each connection from node i to each 'element'
+        {
+            retval[element].push_back(i);
+        }
+    }
+    return retval;
+}
+
+bool CheckMapForZero(const GraphWeighted &graph)
+{
+    for (const auto &row : graph)
+    {
+        for (const auto &element : row)
+        {
+            if (element.second == 0)
+                return true;
+        }
+    }
+    return false;
+}
+
+bool CheckMapForZero(const MapInt &map)
 {
     for (const auto &row : map)
     {
@@ -37,10 +67,31 @@ bool CheckMapForZero(const std::vector<std::vector<int>> &map)
     return false;
 }
 
-std::pair<int, int> CheckRange(const std::vector<std::vector<int>> &map)
+std::pair<int64_t, int64_t> CheckRange(const GraphWeighted &graph)
 {
-    int min = 0;
-    int max = 0;
+    int64_t min = 0;
+    int64_t max = 0;
+    for (const auto &row : graph)
+    {
+        for (const auto &element : row)
+        {
+            if (element.second > max)
+            {
+                max = element.second;
+            }
+            if (element.second < min)
+            {
+                min = element.second;
+            }
+        }
+    }
+    return {min, max};
+}
+
+std::pair<int64_t, int64_t> CheckRange(const MapInt &map)
+{
+    int64_t max = 0;
+    int64_t min = 0;
     for (const auto &row : map)
     {
         for (const auto &element : row)
@@ -54,7 +105,7 @@ std::pair<int, int> CheckRange(const std::vector<std::vector<int>> &map)
     return std::make_pair(min, max);
 }
 
-json SwapVisitedArray(const std::vector<std::vector<bool>> &visited)
+json SwapVisitedArray(const MapBool &visited)
 {
     std::vector<std::vector<bool>> retval(visited[0].size(),
                                           std::vector<bool>(visited.size(), false));
@@ -69,10 +120,28 @@ json SwapVisitedArray(const std::vector<std::vector<bool>> &visited)
 }
 
 // dijkstra uses the same thing but as int, so we can overload this
-json SwapVisitedArray(const std::vector<std::vector<int>> &visited)
+json SwapVisitedArray(
+    const std::vector<std::vector<uint64_t>>
+        &visited) // cannot used mapInt here because your using thsi function with the
+                  // distance array which is defined as uint64
 {
-    std::vector<std::vector<int>> retval(visited[0].size(),
-                                         std::vector<int>(visited.size(), 0));
+    std::vector<std::vector<uint64_t>> retval(visited[0].size(),
+                                              std::vector<uint64_t>(visited.size(), 0));
+
+    for (int rows = 0; rows < visited.size(); rows++)
+    {
+        for (int cols = 0; cols < visited[rows].size(); cols++)
+        {
+            retval[cols][rows] = visited[rows][cols];
+        }
+    }
+    return json(retval);
+}
+// bellman-ford can have negative weight so you have to use a  int64 instead of uint64
+json SwapVisitedArray(const std::vector<std::vector<int64_t>> &visited)
+{
+    std::vector<std::vector<int64_t>> retval(visited[0].size(),
+                                             std::vector<int64_t>(visited.size(), 0));
 
     for (int rows = 0; rows < visited.size(); rows++)
     {
@@ -84,8 +153,8 @@ json SwapVisitedArray(const std::vector<std::vector<int>> &visited)
     return json(retval);
 }
 
-void CheckMapValidness(const std::vector<std::vector<int>> &map,
-                       const std::pair<int, int> &start, const std::pair<int, int> &goal)
+void CheckMapValidness(const MapInt &map, const std::pair<int, int> &start,
+                       const std::pair<int, int> &goal)
 {
     if (map.empty())
     {
@@ -117,12 +186,16 @@ void CheckMapValidness(const std::vector<std::vector<int>> &map,
     if (goal.first < 0 || goal.first > cols - 1 || goal.second < 0 ||
         goal.second > rows - 1)
     {
-        throw excep("Bad Map: End out of Map Bounds", 400);
+        throw excep("Bad Map: Goal out of Map Bounds", 400);
+    }
+    if (start.first == goal.first && start.second == goal.second)
+    {
+        throw excep("Bad Map: Start = Goal");
     }
 }
 
-void CheckMapValidness(const std::vector<std::vector<bool>> &map,
-                       const std::pair<int, int> &start, const std::pair<int, int> &goal)
+void CheckMapValidness(const MapBool &map, const std::pair<int, int> &start,
+                       const std::pair<int, int> &goal)
 {
     if (map.empty())
     {
@@ -155,6 +228,10 @@ void CheckMapValidness(const std::vector<std::vector<bool>> &map,
         goal.second > rows - 1)
     {
         throw excep("Bad Map: End out of Map Bounds", 400);
+    }
+    if (start.first == goal.first && start.second == goal.second)
+    {
+        throw excep("Bad Map: Start = Goal");
     }
 }
 

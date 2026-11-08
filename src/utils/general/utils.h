@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -18,29 +18,31 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef ALGOSEE_UTILS_H
+#define ALGOSEE_UTILS_H
 #include "../../defs/general.h"
 #include "../../defs/types.h"
 #include "../../stream/stream.h"
+
 #include <httplib.h>
 #include <random>
 #include <source_location>
 #include <string>
 int RandomInt(int lower, int upper);
+std::mt19937 getRandomGen();
 std::string ExecuteCommand(const std::string &command);
-void InvalidInputMessage(const std::string &details,
-                         std::source_location location = std::source_location::current());
+void InvalidInputMessage(const std::string &details, const std::source_location location =
+                                                         std::source_location::current());
 void ReturnFailedAnswer(httplib::Response &res, const std::string &Details,
                         int exitCode = 400, StreamClass *stream = nullptr);
 void ReturnFailedAnswerStreamOnly(const std::string &Details, int exitCode,
                                   StreamClass *stream);
 void AddClient(clientListType &cList,
                const std::pair<std::chrono::time_point<std::chrono::system_clock>,
-                               std::string> &newEntry);
-bool CheckRateLimit(const clientListType &cList, const int &index);
+                               const std::string> &newEntry);
+bool CheckRateLimit(const clientListType &cList, int index);
 std::string GenerateRandomString(const int &size);
-std::string readFile(std::string path);
+std::string readFile(const std::string &path);
 std::mt19937 getRandomGen();
 void generateJsonRetrunArras(json &response);
 void fillWithMetaData(json &response);

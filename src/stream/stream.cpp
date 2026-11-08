@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -17,15 +17,16 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
 #include "stream.h"
+
 #include "../defs/general.h"
+
 #include <httplib.h>
 #include <mutex>
 #include <nlohmann/json.hpp>
 #include <queue>
 #include <string>
-#include <thread>
-#include <vector>
 
 httplib::ContentProviderWithoutLength MakeChunkProvider(
     std::shared_ptr<StreamClass>
@@ -33,7 +34,9 @@ httplib::ContentProviderWithoutLength MakeChunkProvider(
                 // the lamda somewhere else so you have to explicitly state that this is a
                 // contentprovider
 {
-    return [stream](size_t, httplib::DataSink &sink) {
+    return [stream](
+               size_t,
+               httplib::DataSink &sink) { // return a lamda (a std::function effectivly)
         while (true)
         {
             json chunk;
@@ -47,6 +50,9 @@ httplib::ContentProviderWithoutLength MakeChunkProvider(
                        stream->finished; // if either evaluate to true then the wait is
                                          // finished, so if chunks is not empty or if the
                                          // stream is finished
+                                         // - The callback is kind of like a if statement
+                                         // here, it will only continue (so break the
+                                         // wait) if the return evaluates to true
             });
 
             if (stream->chunks.empty() && stream->finished)

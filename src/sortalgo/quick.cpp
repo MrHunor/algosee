@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 #include "../defs/general.h"
 #include "../defs/types.h"
 #include "../stream/stream.h"
+
 #include <algorithm>
 #include <nlohmann/json.hpp>
 #include <utility>
@@ -30,7 +31,6 @@
 // is being modified
 int FindQuickSortPivot(std::vector<int> &unsorted, int low, int high, json &response)
 {
-    int index;
     int pivot = unsorted[high];
     int lowerPivotIndexBoundry = low - 1;
     for (int i = low; i < high; i++)
@@ -73,7 +73,6 @@ void QuickSort(std::vector<int> &unsorted, int low, int high, json &response,
 // is being modified
 int FindQuickSortPivot(indexPixel &unsorted, int low, int high, json &response)
 {
-    int index;
     int pivot = unsorted[high].first;
     int lowerPivotIndexBoundry = low - 1;
     for (int i = low; i < high; i++)

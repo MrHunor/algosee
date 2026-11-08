@@ -2,14 +2,15 @@
 
 **A 0815 Algorithm Visulizer**
 
-*© 2026 MrHunor, siryanni (as equals) · GPLv3*
+*© 2026 MrHunor, siryanni, vilmos45 (as equals) · GPLv3*
 
-![Hackatime Badge](https://hackatime-badge.hackclub.com/U0BAT7EGEQ7/algosee)
-![Hackatime Badge](https://hackatime-badge.hackclub.com/U0A2D73JM9R/algosee)
+**MrHunor:**![Hackatime Badge](https://hackatime-badge.hackclub.com/U0BAT7EGEQ7/algosee)  
+**siryanni:**![Hackatime Badge](https://hackatime-badge.hackclub.com/U0A2D73JM9R/algosee)  
+**vilmos45:**![Hackatime Badge](https://hackatime-badge.hackclub.com/U0B9Z81761H/algosee)
 
 ## Demo:
-![Demo](./assets/Screenshot_Overview.png)    
-![Demo](./assets/Screenshot_Bubble_140.png)
+![Demo](./assets/demoVideo/picsort.gif)
+![Demo](./assets/demoVideo/pathfinding.gif)
 
 ## Features:
 - **Choose between 6 sorting algorithms**
@@ -18,7 +19,7 @@
 - **Make curl requests to the server yourself**
 
 ## Algorithms
-The implementation will roughly follow the order given in the table.  
+The implementation will roughly follow the order given in the table.
 
 ### Sorting
 
@@ -29,14 +30,15 @@ The implementation will roughly follow the order given in the table.
 | Bubble    | Supported |
 | Quick     | Supported |
 | Merge     | Supported |
-| Counting  | Supported | 
+| Counting  | Supported |
 | Cycle Sort | Supported |
-| Radix Sort | TBD |
-| Intro Sort | TBD |  
+| Heap Sort  | Supported |
+| Radix Sort | Supported |
+| Intro Sort | TBD |
 
 -> More ideas? Suggest them [here](https://github.com/MrHunor/algosee/issues)
 
-### Pathfinding 
+### Pathfinding
 
 | Algorithm | Status |
 |-----------|--------|
@@ -44,111 +46,55 @@ The implementation will roughly follow the order given in the table.
 | Dijkstra | Supported |
 | Depth first search (DFS) | Supported |
 | Bidirectional Breadth first search (BIBFS) | Supported |
-| A* | Supported | 
+| A* | Supported |
 | Greedy Best-First-Search (GBFS) | Supported |
 | Jump point search (JPS) | TBD |
 | D* | TBD |
 | Bellman-Ford | TBD |
-| Floyd-Warshall | TBD |  
+| Floyd-Warshall | TBD |
 
 -> More ideas? Suggest them [here](https://github.com/MrHunor/algosee/issues)
 
 ## Test it out yourself!
 Click [here](https://mrhunor.github.io/algosee) to test if out yourself!
-To test the backend via a curl command [go here](#to-test-the-backend-online-linux).
 
 ## Tech Stack:
 - **Frontend:** HTML,CSS,JS
 - **Backend:** C++
 - **Building:** CMAKE, Ninja
 - **Package Managment:** conan
-- **Hosting:** Github Pages (Frontend), Render (Backend) 
+- **Hosting:** Github Pages (Frontend), Render (Backend)
 
-## Plans: 
+## Plans:
 Current plans invlove Streaming and more, have a look [here](https://github.com/MrHunor/algosee/milestones).
 
 ## Workflow:
 1. Currently a visitor on https://mrhunor.github.io/algosee is shown the newest version of the fronend (./frontend).
 2. Via clicking on any algorithm they are sending a status request to the backend server (algosee.onrender.com), depending on its outcome the frontend displays a loading screen in the time of the server waking up.
-3. By pressing the "start" button on the viszulizer.html they are sending a html POST request [like this](#To-test-the-backend-sorting-online-(linux)) to the backend.
+3. By pressing the "start" button on the viszulizer.html they are sending a html POST request to the backend.
 4. The backend extracts the algorithm Name from the URL and performs the sorting.
 5. The backend return the sorted array, a set of instructions on how to visulise the sorting and metadata like backend version and time in nanoseconds.
-6. The frontend visulises the instructions returned by the backend.   
+6. The frontend visulises the instructions returned by the backend.
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>  
-
-# ----------------For Contributers-------------------------- 
-***This is not up to date***
-## Project structure:
-- `./assets` Contains images for this ReadME
-- `./benchmarks` Contains the benchmark script and results
-- `./frontend` Root folder of the Frontend side  
-   -> `/assets/` Contains global images for `/frontend/` 
-   -> `/css/` contains global css file  
-   -> Global HTML files (loading;index/landing)
-   -> `/path/`
-      ->`/js` contains visualizer.js
-      ->html files
-   ->`/picsort/`
-      ->`/js/` "
-      -> html
-   ->`/sorting/`
-      ->`/js/`
-         -> compare.js main.js visualizer.js 
-      ->html files
-     
-- `./src` Root folder of the Backend side  
-   -> `pathalgo` Contains pathfinding algorithms  
-   -> `/server/` Contains server logic  
-   -> `/sortalgo/` Contains sorting algorithms   
-   -> `/utils/` Contains usefull tools  
-   -> `/` Contains main.cpp
-- `/` Contains all files needed for building the executable as well as this readME and the LICENSE file
-
-
-
-## To build the Project:  
-**DISCLAIMER: Technically, this project could build on windows but it has not been tested. The compilation has been verified on Linux Mint and CachyOS.**  
-0. `cmake --version` >= **4.4.3**  
-   `gcc --version` >= **16.2.1 20260810**  
-   `conan --version` >= **2.32.0**
-1. `conan install . --output-folder=build --build=missing` to install dependencies  
-2. `cmake --preset conan-release` to automaticall configure the build with conan dependencies (-> **if this fails** and you have to rerun the command you HAVE to delete the build Folder and restart from scratch because cmakeCache has already been written)  
-3. `cmake --build build` to build 
-
-## Syntax  
-`[SERVERIP]/status` **->** Responds with a json with STATUS and VERSION paramter, of which the status parameter should return 'ONLINE' if the server is online and reachable.    
-`[SERVERIP]/sortalgo?algo=X` (where x is a search algorithm name, for valid names look in `src/utils/defs.h`) **->** Run a sorting algorithm of your choice on the values provided in the body of the request under the name 'values' (formatted in json).  
-`[SERVERIP]/pathalgo?algo=X` (where x is a search algorithm name, for valid names look in `src/utils/defs.h`) **->** Run a pathfinding algorithm of your choice, you have to provide the MAP (in boolean or integer depending on algorithm) in a array(rows) format, a START in pair format, and a GOAL in the same format (view the examples under this section).  
-
-## To test the backend sorting locally (linux):
-Use curl to make a request while the server is running, e.g.: `curl -v -X POST "http://127.0.0.1:8080/sortalgo?algo=selection" -H "Content-Type: application/json" -d "{\"values\":[$(seq 1 n | shuf | paste -sd, -)]}" ` where n = number of values (be careful of the actual port when running through docker)  
-
-## To test the backend sorting online (linux):
-Use curl to make a request to the render server, e.g.: `curl -v -X POST "https://algosee.onrender.com/sortalgo?algo=quick" -H "Content-Type: application/json" -d "{\"values\":[$(seq 1 n | shuf | paste -sd, -)]}"` where n = number of values (be careful of the actual port when running through docker)
-
-## To test the beckend pathfinding locally (linux):
-Use curl to make a request while the server is runningm e.g.:`curl -X POST "http://127.0.0.1:8080/pathalgo?algo=BFS" -H "Content-Type: application/json" -d '{"MAP": [[false, false, true,  false],[true,  false, true,  false],[false, false, false, false],[false, true,  true,  false]],"START": [0, 0],"GOAL":   [3, 3]}'`
-
-## To test the backend pathfinding online (linux):
-Use curl to make request to the render server, e.g.: `curl -X POST "https://algosee.onrender.com/pathalgo?algo=BFS" -H "Content-Type: application/json" -d '{"MAP": [[false, false, true,  false],[true,  false, true,  false],[false, false, false, false],[false, true,  true,  false]],"START": [0, 0],"GOAL":   [3, 3]}'`
-
+## Documentation:
+You can view the documentation about the API, Branches and building the project in [./docs](./docs/)
 
 # License(s)
-This Project is published under the GPL3 License which you can find [here](./LICENSE.md).  
-Furthermore this project also includes code from other repositorys, you can find their licenses [here](./THIRD_PARTY_LICENSES.md).  
-We thank every author and contribtor of those repositories from :heart: , without their work this project woudn't have been possible. 
+This Project is published under the GPL3 License which you can find [here](./LICENSE.md).
+Furthermore this project also includes code from other repositorys, you can find their licenses [here](./THIRD_PARTY_LICENSES.md).
+We thank every author and contribtor of those repositories from :heart: , without their work this project woudn't have been possible.
 
 # AI usage disclosure:
 I, **@MrHunor**, have used AI for explaining what do to when i didn't know anymore, as well as when i wanted to implement something but didn't know how or for scanning the codebase for bugs and possible enhancements. I've also used AI Audits, such as coderabbit on PRs.
-I, **@siryanni**, (TBD [#126](https://github.com/MrHunor/algosee/issues/126))  
-For anyone looking to contribute we would ask them to follow the line we provided.
+I, **@siryanni**, main usage of AI was during major bughunts, as the codebase has slowly gotten pretty big.
+Other uses include:
+- image generation
+- help with concept mapping
+- help with code cleanup
+- said coderabbit made Issues
+I, **@vilmos45**, have used AI to check for unexpected bugs, and test my code.
+
+For anyone looking to contribute we would ask them to follow the line we provided
 
 # Big :heart: to the following:
 - [Render](https://render.com/), for their free tier hosting which the online Backend relies on.

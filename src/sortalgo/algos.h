@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -24,26 +24,33 @@
 #include "../defs/general.h"
 #include "../defs/types.h"
 #include "../stream/stream.h"
+
 #include <nlohmann/json.hpp>
 #include <vector>
 
 //--------------------NUMBERS------------------------------
-void SelectionSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
 void BogoSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
 void BubbleSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
-void QuickSort(std::vector<int> &unsorted, int low, int high, json &response,
-               StreamClass &stream);
-void MergeSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
 void CountingSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
 void CycleSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
+void HeapSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
+void IntroSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
+void MergeSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
+void QuickSort(std::vector<int> &unsorted, int low, int high, json &response,
+               StreamClass &stream);
+void RadixSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
+void SelectionSort(std::vector<int> &unsorted, json &response, StreamClass &stream);
 
 //-------------------IMAGES------------------------------------
-void SelectionSort(indexPixel &unsorted, json &response, StreamClass &stream);
 void BogoSort(indexPixel &unsorted, json &response, StreamClass &stream);
 void BubbleSort(indexPixel &unsorted, json &response, StreamClass &stream);
-void QuickSort(indexPixel &unsorted, int low, int high, json &response,
-               StreamClass &stream);
 void CountingSort(indexPixel &unsorted, json &response, StreamClass &stream);
 void CycleSort(indexPixel &unsorted, json &response, StreamClass &stream);
+void HeapSort(indexPixel &unsorted, json &response, StreamClass &stream);
+void IntroSort(indexPixel &unsorted, json &response, StreamClass &stream);
 void MergeSort(indexPixel &unsorted, json &response, StreamClass &stream);
+void QuickSort(indexPixel &unsorted, int low, int high, json &response,
+               StreamClass &stream);
+void RadixSort(indexPixel &unsorted, json &response, StreamClass &stream);
+void SelectionSort(indexPixel &unsorted, json &response, StreamClass &stream);
 #endif

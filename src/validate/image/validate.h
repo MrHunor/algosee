@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 #define IMGVALIDATE_H
 #include "../../defs/types.h"
 #include "../../logger/logger.h"
+
 #include <httplib/httplib.h>
 
 struct ImageValidReturn

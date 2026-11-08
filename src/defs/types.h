@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -24,6 +24,14 @@
 #include <chrono>
 #include <vector>
 
+typedef std::vector<std::vector<uint32_t>> GraphUnweighted;
+
+typedef std::vector<std::vector<std::pair<uint32_t, uint32_t>>> GraphWeighted;
+
+typedef std::vector<std::vector<int32_t>> MapInt;
+
+typedef std::vector<std::vector<bool>> MapBool;
+
 typedef std::vector<
     std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string>>
     clientListType; // time and IP
@@ -37,7 +45,7 @@ struct pixel
     colour A;
 };
 
-typedef std::vector<std::pair<int, pixel>> indexPixel;
+typedef std::vector<std::pair<int, pixel>> indexPixel; // Index, Pixel
 
 struct rawImage
 {

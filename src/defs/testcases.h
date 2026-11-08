@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -21,11 +21,12 @@
 #ifndef DEF_TESTCASES_H
 #define DEF_TESTCASES_H
 #include "max_sizes.h"
+
+#include <cstdint>
 #include <string>
 #include <unordered_map>
 #include <vector>
 const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesImage{
-
     {"selection", {5, 5}},
     {"selection", {15, 12}},
     {"selection", {25, 25}},
@@ -65,29 +66,114 @@ const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesImage{
     {"cycle", {25, 12}},
     {"cycle", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}},
 
+    {"heap", {5, 5}},
+    {"heap", {15, 12}},
+    {"heap", {25, 25}},
+    {"heap", {25, 12}},
+    {"heap", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}},
+
     // bogo is factorial time: keep sizes tiny
     {"bogo", {1, 2}},
     {"bogo", {2, 3}},
-    {"bogo", {sqrt(MAX_ELEMENT_COUNT_BOGO) - 1, sqrt(MAX_ELEMENT_COUNT_BOGO) - 1}}};
+    {"bogo", {sqrt(MAX_ELEMENT_COUNT_BOGO) - 1, sqrt(MAX_ELEMENT_COUNT_BOGO) - 1}},
 
-const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesPathfinding{
-    {"BFS", {10, 5}},         {"BFS", {20, 5}},         {"BFS", {100, 45}},
-    {"BFS", {250, 150}},      {"BFS", {249, 249}},
+    {"radix", {5, 5}},
+    {"radix", {15, 12}},
+    {"radix", {25, 25}},
+    {"radix", {25, 12}},
+    {"radix", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}},
 
-    {"dijkstra", {10, 5}},    {"dijkstra", {20, 5}},    {"dijkstra", {100, 45}},
-    {"dijkstra", {250, 150}}, {"dijkstra", {249, 249}},
+    {"intro", {5, 5}},
+    {"intro", {15, 12}},
+    {"intro", {25, 25}},
+    {"intro", {25, 12}},
+    {"intro", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}}};
 
-    {"DFS", {10, 5}},         {"DFS", {20, 5}},         {"DFS", {100, 45}},
-    {"DFS", {250, 150}},      {"DFS", {249, 249}},
+const std::vector<std::pair<std::string, std::pair<uint8_t, uint8_t>>>
+    testCasesPathfindingMap{{"BFS", {10, 5}},
+                            {"BFS", {20, 5}},
+                            {"BFS", {100, 45}},
+                            {"BFS", {250, 150}},
+                            {"BFS", {249, 249}},
 
-    {"BIBFS", {10, 5}},       {"BIBFS", {20, 5}},       {"BIBFS", {100, 45}},
-    {"BIBFS", {250, 150}},    {"BIBFS", {249, 249}},
+                            {"dijkstra", {10, 5}},
+                            {"dijkstra", {20, 5}},
+                            {"dijkstra", {100, 45}},
+                            {"dijkstra", {250, 150}},
+                            {"dijkstra", {249, 249}},
 
-    {"ASTAR", {10, 5}},       {"ASTAR", {20, 5}},       {"ASTAR", {100, 45}},
-    {"ASTAR", {250, 150}},    {"ASTAR", {249, 249}},
+                            {"DFS", {10, 5}},
+                            {"DFS", {20, 5}},
+                            {"DFS", {100, 45}},
+                            {"DFS", {250, 150}},
+                            {"DFS", {249, 249}},
 
-    {"GBFS", {10, 5}},        {"GBFS", {20, 5}},        {"GBFS", {100, 45}},
-    {"GBFS", {250, 150}},     {"GBFS", {249, 249}}};
+                            {"BIBFS", {10, 5}},
+                            {"BIBFS", {20, 5}},
+                            {"BIBFS", {100, 45}},
+                            {"BIBFS", {250, 150}},
+                            {"BIBFS", {249, 249}},
+
+                            {"ASTAR", {10, 5}},
+                            {"ASTAR", {20, 5}},
+                            {"ASTAR", {100, 45}},
+                            {"ASTAR", {250, 150}},
+                            {"ASTAR", {249, 249}},
+
+                            {"GBFS", {10, 5}},
+                            {"GBFS", {20, 5}},
+                            {"GBFS", {100, 45}},
+                            {"GBFS", {250, 150}},
+                            {"GBFS", {249, 249}},
+
+                            {"bellman-ford", {10, 5}},
+                            {"bellman-ford", {20, 5}},
+                            {"bellman-ford", {100, 45}},
+                            {"bellman-ford", {250, 150}},
+                            {"bellman-ford", {249, 249}}};
+
+const std::vector<std::pair<std::string, uint16_t>> testCasesPathfindingGraph{
+    {"BFS", 50},
+    {"BFS", 100},
+    {"BFS", 200},
+    {"BFS", 500},
+    {"BFS", MAX_ELEMENT_COUNT_BFS - 1},
+
+    {"dijkstra", 50},
+    {"dijkstra", 100},
+    {"dijkstra", 200},
+    {"dijkstra", 500},
+    {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA - 1},
+
+    {"DFS", 50},
+    {"DFS", 100},
+    {"DFS", 200},
+    {"DFS", 500},
+    {"DFS", MAX_ELEMENT_COUNT_DFS - 1},
+
+    {"BIBFS", 50},
+    {"BIBFS", 100},
+    {"BIBFS", 200},
+    {"BIBFS", 500},
+    {"BIBFS", MAX_ELEMENT_COUNT_BIBFS - 1},
+
+    {"ASTAR", 50},
+    {"ASTAR", 100},
+    {"ASTAR", 200},
+    {"ASTAR", 500},
+    {"ASTAR", MAX_ELEMENT_COUNT_ASTAR - 1},
+
+    {"GBFS", 50},
+    {"GBFS", 100},
+    {"GBFS", 200},
+    {"GBFS", 500},
+    {"GBFS", MAX_ELEMENT_COUNT_GBFS - 1},
+
+    {"bellman-ford", 50},
+    {"bellman-ford", 100},
+    {"bellman-ford", 200},
+    {"bellman-ford", 500},
+    {"bellman-ford", MAX_ELEMENT_COUNT_GBFS - 1}};
 
 const std::vector<std::pair<std::string, int>> testCasesSorting{
 
@@ -95,42 +181,60 @@ const std::vector<std::pair<std::string, int>> testCasesSorting{
     {"selection", 25},
     {"selection", 100},
     {"selection", 1000},
-    {"selection", MAX_ELEMENT_COUNT_SORT - 1},
+    {"selection", MAX_ELEMENT_COUNT_SELECTION - 1},
 
     {"bubble", 5},
     {"bubble", 25},
     {"bubble", 100},
     {"bubble", 1000},
-    {"bubble", MAX_ELEMENT_COUNT_SORT - 1},
+    {"bubble", MAX_ELEMENT_COUNT_BUBBLE - 1},
 
     {"quick", 5},
     {"quick", 25},
     {"quick", 100},
     {"quick", 1000},
-    {"quick", MAX_ELEMENT_COUNT_SORT - 1},
+    {"quick", MAX_ELEMENT_COUNT_QUICK - 1},
 
     {"merge", 5},
     {"merge", 25},
     {"merge", 100},
     {"merge", 1000},
-    {"merge", MAX_ELEMENT_COUNT_SORT - 1},
+    {"merge", MAX_ELEMENT_COUNT_MERGE - 1},
 
     {"counting", 5},
     {"counting", 25},
     {"counting", 100},
     {"counting", 1000},
-    {"counting", MAX_ELEMENT_COUNT_SORT - 1},
+    {"counting", MAX_ELEMENT_COUNT_COUNTING - 1},
 
     {"cycle", 5},
     {"cycle", 25},
     {"cycle", 100},
     {"cycle", 1000},
-    {"cycle", MAX_ELEMENT_COUNT_SORT - 1},
+    {"cycle", MAX_ELEMENT_COUNT_CYCLE - 1},
+
+    {"heap", 5},
+    {"heap", 25},
+    {"heap", 100},
+    {"heap", 1000},
+    {"heap", MAX_ELEMENT_COUNT_HEAP - 1},
 
     // bogo is factorial time: keep sizes tiny
     {"bogo", 3},
     {"bogo", 5},
-    {"bogo", MAX_ELEMENT_COUNT_BOGO - 1}};
+    {"bogo", MAX_ELEMENT_COUNT_BOGO - 1},
+
+    {"radix", 5},
+    {"radix", 25},
+    {"radix", 100},
+    {"radix", 1000},
+    {"radix", MAX_ELEMENT_COUNT_SORT - 1},
+
+    {"intro", 5},
+    {"intro", 25},
+    {"intro", 100},
+    {"intro", 1000},
+    {"intro", MAX_ELEMENT_COUNT_SORT - 1}};
 
 const std::unordered_map<std::string, std::vector<std::string>>
     implementedAlgoExpectedResponseType{
@@ -143,6 +247,9 @@ const std::unordered_map<std::string, std::vector<std::string>>
         {"counting", {"COUNT ARRAY", "SORTED"}},
         {"cycle", {"SWAPED", "SORTED"}},
         {"bogo", {"TRIES", "SORTED"}},
+        {"heap", {"HEAP", "ARRAY"}},
+        {"radix", {"COUNT ARRAY", "MOVES", "SORTED"}},
+        {"intro", {"MOVES", "SORTED"}},
 
         {"BFS", {"VISITED", "SEARCHMAP", "PATH"}},
         {"dijkstra", {"DISTANCE", "PATH"}},
@@ -151,6 +258,7 @@ const std::unordered_map<std::string, std::vector<std::string>>
         {"ASTAR", {"DISTANCE", "PATH"}},
         {"IMAGE", {"SHUFFLED (INDEXES)"}}, // image is a special case because its returns
                                            // this array as well
-        {"GBFS", {"DISTANCE", "PATH"}}};
+        {"GBFS", {"DISTANCE", "PATH"}},
+        {"bellman-ford", {"DISTANCE", "SEARCHMAP"}}};
 
 #endif

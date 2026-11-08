@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -27,8 +27,7 @@
  */
 #ifndef DEF_GENERAL_H
 #define DEF_GENERAL_H
-#include "nlohmann/json.hpp"
-#include <limits>
+#include <nlohmann/json.hpp> //dont let clang tell you this is a unused header, a lot of files depend on this
 
 #define QUOTE                                                                            \
     "\"Es mejor morir de pie que vivir toda una vida arrodillado\" ~ Emiliano "          \

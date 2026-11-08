@@ -1,5 +1,5 @@
  #   algosee; A algorithm visulizer
- #   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ #   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  #   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  #
  #   This program is free software: you can redistribute it and/or modify
@@ -41,4 +41,4 @@ RUN conan profile detect --force && \
 
 EXPOSE 10000
 
-CMD ["./build/algosee"]
+CMD ["./build/algosee","-vvvv"]

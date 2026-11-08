@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -21,20 +21,25 @@
 #include "../../src/defs/general.h"
 #include "../../src/defs/testcases.h"
 #include "../../src/logger/logger.h"
+#include "../../src/utils/general/utils.h"
 #include "../utils/utils.h"
+#include <algorithm>
+#include <httplib.h>
+#include <numeric>
+#include <stdexcept>
 #include <string>
 #include <utility>
-#include <numeric>
-#include <algorithm>
 #include <vector>
 
-void runSortalgoTest(std::vector<run> &exitMessage, StateClass &state)
+void runSortalgoTest(std::vector<run> &exitMessage, httplib::Client &client,
+                     StateClass &state)
 {
     for (const auto &testcase : testCasesSorting)
     {
 
         run currentrun;
         currentrun.failure = false;
+        currentrun.algotype="Sorting";
         currentrun.algoname = testcase.first;
         currentrun.size = testcase.second;
         currentrun.mapSize = {-1, -1};
@@ -49,16 +54,20 @@ void runSortalgoTest(std::vector<run> &exitMessage, StateClass &state)
             std::iota(testValues.begin(), testValues.end(), 1);
             std::sort(testValues.begin(), testValues.end());
             std::vector<int> sorted = testValues;
-            std::string command =
-                "curl -v -X POST \"http://127.0.0.1:8080/sortalgo?algo=" +
-                currentrun.algoname +
-                "\" "
-                "-H \"Content-Type: application/json\" "
-                R"(-d "{\"values\":[$(seq 1 )" +
-                std::to_string(currentrun.size) + R"( | shuf | paste -sd, -)]}")";
-            std::string output = executeCommand(command);
+            std::vector<int> sendValues = testValues;
+            std::shuffle(sendValues.begin(), sendValues.end(), getRandomGen());
+
+            json body = {
+                {"values",sendValues}
+            };
+
+            auto res = client.Post("/sortalgo?algo="+currentrun.algoname,body.dump(),"application/json");
+            if(!res)throw std::runtime_error("Request failed");
+            if(res->status!=200)throw std::runtime_error("Server returned non 200 exit code;\nExitCode:"+std::to_string(res->status)+"\nErrorMessage:"+res->body);
+            
+
             state.out("Recived.", 0);
-            json response = parseNDJSON(output);
+            json response = parseNDJSON(res->body);
             state.out("Parsed", 0);
             checkForAllResponseTypes(response);
             checkForCertainResponseType(
@@ -80,6 +89,7 @@ void runSortalgoTest(std::vector<run> &exitMessage, StateClass &state)
         {
             state.out("Failed. Details:" + std::string(e.what()), 0);
             currentrun.failure = true;
+            currentrun.failureReason=e.what();
             exitMessage.push_back(currentrun);
         }
     }

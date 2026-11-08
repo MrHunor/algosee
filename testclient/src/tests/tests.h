@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -22,9 +22,10 @@
 #define TESTS_H
 #include "../../src/logger/logger.h"
 #include "../utils/utils.h"
+#include <httplib.h>
 
-void runPathalgoTest(std::vector<run> &exitMessage, StateClass &state);
-void runSortalgoTest(std::vector<run> &exitMessage, StateClass &state);
+void runPathalgoTest(std::vector<run> &exitMessage,httplib::Client& client, StateClass &state);
+void runSortalgoTest(std::vector<run> &exitMessage,httplib::Client& client, StateClass &state);
 void runImageTest(std::vector<run> &exitMessage, StateClass &state);
 
 #endif

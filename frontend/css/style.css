@@ -33,7 +33,7 @@ main,
 
 /* footer to the bottom  */
 main, 
-.algo-detail-container, 
+.algo-detail-container,
 .visualizer-container {
     flex: 1 0 auto;
 }
@@ -388,6 +388,7 @@ footer {
     text-align: center;
     padding: 20px;
     margin-top: auto; 
+    border-radius: 15px
 }
 
 footer ul {
@@ -446,7 +447,7 @@ footer a:hover {
 
 .grid-cell.wall {
     background-color: #64748b;
-    border-color: #475569;
+    border-color: #6287ba;
 }
 
 .grid-cell.visited {
@@ -519,6 +520,22 @@ footer a:hover {
     background-color: #3b82f6;
     color: #ffffff;
     border-color: #3b82f6;
+}
+
+.grid-cell.start,
+.grid-cell.goal {
+    cursor: grab;
+}
+
+.path-message {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    background-color: rgba(239, 68, 68, 0.12);
+    border: 1px solid #ef4444;
+    color: #fca5a5;
+    font-size: 0.95rem;
+    text-align: center;
 }
 
 .grid-cell.cost-5 {
@@ -595,6 +612,59 @@ footer a:hover {
     font-size: 0.9rem;
 }
 
+/* --- Mobile optimization (for screens under 768px) --- */
+@media (max-width: 768px) {
+    /* 1. reduce whole padding */
+    body {
+        padding: 1rem;
+    }
+
+    /* 2. inner-padding  */
+    .navbar, 
+    main, 
+    .algo-detail-container, 
+    .visualizer-container {
+        padding: 1.25rem;
+    }
+
+    /* 3.navbar n logo */
+    .navbar {
+        margin-bottom: 2rem;
+    }
+    .logo {
+        font-size: 2rem;
+    }
+
+    /* 4. Visualizer-Header below eachother */
+    .visualizer-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .header-controls-group {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .controls {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .control-btn {
+        flex: 1;
+        text-align: center;
+    }
+
+    /* 5. pathfinding grid  */
+    .path-grid {
+        padding: 0.5rem;
+        gap: 1px;
+    }
+}
 /*Ok, I am sorry to the reviewer who had (or didn't have to) go through this. 
 So to whoever's down here reading this,
 I hope your life is filled with joy and luck all throughout 

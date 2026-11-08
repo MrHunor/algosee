@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
  #   algosee; A algorithm visulizer
- #   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ #   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  #   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  #
  #   This program is free software: you can redistribute it and/or modify
@@ -20,10 +20,10 @@ set -euxo pipefail
 
 cd assets
 
-inkscape Wide.png --export-text-to-path --export-filename=Wide.svg
+inkscape Wide.png --export-text-to-path --export-overwrite --export-filename=Wide.svg
 chafa --symbols ascii --format symbols -s 100x Wide.png > WideASCII100.txt
 
-inkscape 1_1.png --export-text-to-path --export-filename=1_1.svg
+inkscape 1_1.png --export-text-to-path --export-overwrite --export-filename=1_1.svg
 chafa --symbols ascii --format symbols -s 50x 1_1.png > 1_1ASCII50.txt 
 
 cd ..

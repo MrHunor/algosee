@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -18,19 +18,22 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
 #include "utils.h"
+
 #include "../../defs/general.h"
 #include "../../defs/implemented.h"
 #include "../../defs/ratelimits.h"
 #include "../../defs/types.h"
 #include "../../stream/stream.h"
 #include "build_info.h"
+
 #include <chrono>
 #include <cstdlib>
 #include <fstream>
 #include <httplib.h>
 #include <iostream>
-#include <limits.h>
+// #include <limits.h> //not used
 #include <nlohmann/json.hpp>
 #include <ostream>
 #include <random>
@@ -38,9 +41,12 @@
 #include <stacktrace>
 #include <stdexcept>
 #include <string>
+#include <vector>
+
+#ifndef _WIN32
 #include <sys/wait.h>
 #include <unistd.h>
-#include <vector>
+#endif
 
 std::vector<char> randomStringDataset{
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -55,7 +61,7 @@ void fillWithMetaData(json &response)
     response["BUILDTIME"] = ALGOSEE_BUILD_TIME;
 }
 
-std::string readFile(std::string path)
+std::string readFile(const std::string &path)
 {
     std::ifstream file{path};
     if (!file)
@@ -101,8 +107,13 @@ std::string GenerateRandomString(const int &size)
     return retval;
 }
 
-bool CheckRateLimit(const clientListType &cList, const int &index)
+bool CheckRateLimit(const clientListType &cList, int index)
 {
+    // req made by localhost, likely testclient (if ever made to run in LAN, might wanna
+    // change this)
+    if (cList[index].second == "127.0.0.1")
+        return false;
+
     std::string targetIP = cList[index].second;
     int matchingEntrysCount = 0;
     for (const auto &element : cList)
@@ -123,7 +134,7 @@ bool CheckRateLimit(const clientListType &cList, const int &index)
 
 void AddClient(clientListType &cList,
                const std::pair<std::chrono::time_point<std::chrono::system_clock>,
-                               std::string> &newEntry)
+                               const std::string> &newEntry)
 {
     int index = 0;
     auto now = std::chrono::system_clock::now();
@@ -145,13 +156,16 @@ void AddClient(clientListType &cList,
 
 std::string ExecuteCommand(const std::string &command)
 {
+    std::string result;
+#ifdef _WIN32
+    result = "Execute Xommand not implemented on windows!";
+#else
     int exitCode;
     FILE *pipe = popen(command.c_str(), "r");
     if (!pipe)
         InvalidInputMessage("Failed to open Pipe for executing command:" + command);
 
     char buffer[256];
-    std::string result;
 
     while (fgets(buffer, sizeof(buffer),
                  pipe)) // this works because fgets returns a pointer to the data,
@@ -170,6 +184,7 @@ std::string ExecuteCommand(const std::string &command)
     }
     if (exitCode != 0)
         InvalidInputMessage("Shell Command:'" + command + "' has failed.");
+#endif
     return result;
 }
 
@@ -209,7 +224,7 @@ void ReturnFailedAnswerStreamOnly(const std::string &Details, int exitCode,
     stream->finish();
 }
 
-void InvalidInputMessage(const std::string &details, std::source_location location)
+void InvalidInputMessage(const std::string &details, const std::source_location location)
 {
 
     // yes i thought of making this state out for colour but that would require

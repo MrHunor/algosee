@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Always use the newest version. 
+Always use the newest version.
 
 
 ## Reporting a Vulnerability

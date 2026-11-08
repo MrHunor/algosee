@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,9 @@
 #include "../defs/types.h"
 #include "../stream/stream.h"
 #include "../utils/image/image.h"
+
 #include <nlohmann/json.hpp>
-#include <strings.h>
+#include <string>
 #include <vector>
 
 // NEVER EVER CALL THIS FUNCTION DIRECTLY IF YOU DIDNT CHECK FOR arr1.size() &

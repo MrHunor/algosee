@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -19,30 +19,79 @@
  * <https://www.gnu.org/licenses/>.
  */
 #include "../../src/logger/logger.h"
+#include "../../src/utils/general/utils.h"
+#include "CLI/CLI.hpp"
 #include "tests/tests.h"
 #include "utils/utils.h"
+
+#include <httplib.h>
 #include <string>
 
+/**
+ * @brief Main entry point
+ *
+ * @param argc Integer of arguments passed, usually at least one, which is the name of the
+ * executable
+ *
+ * @param argv Pointer to a array of char containing the arguments which are passed
+ *
+ * @throws When bad input from the user is passed, but is handled internally. (Unless ofc
+ * something goes very wrong)
+ *
+ * @returns Exitcode
+ *
+ */
 int main(int argc, char *argv[])
 {
     remove("testClientLog.txt");
     StateClass state("testClientLog.txt");
-    state.out("Testing sorting algorithms", 0);
+    bool sortalgo = false;
+    bool pathalgo = false;
+    bool image = false;
+    CLI::App algosee_testclient{
+        "Algosee_testclient: Runs tests on all implemented algorithms of all types on "
+        "the algosee server\n© 2026 MrHunor, siryanni, vilmos45 (as "
+        "equals) · GPLv3"};
+    algosee_testclient.add_flag(
+        "-v,--verbose", state.verbose,
+        "Set the verbosity of the server output, 0 being nothing and 4 being "
+        "the most detailed. (Stack as -vvvv)");
 
-    std::vector<run> exitMessage;
+    algosee_testclient.add_flag("-s, --sortalgo", sortalgo,
+                                "Run tests on all sorting algorithms.");
+    algosee_testclient.add_flag("-p,--pathalgo", pathalgo,
+                                "Run tests on all pathfinding algorithms.");
+    algosee_testclient.add_flag("-i,--image", image,
+                                "Run tests on all image sorting algorithms.");
 
-    runSortalgoTest(exitMessage, state);
-    runPathalgoTest(exitMessage, state);
-    runImageTest(exitMessage,state);
+    algosee_testclient.callback([&]() {
+        if (!sortalgo && !pathalgo && !image)
+        {
+            InvalidInputMessage("No tests specified.");
+        }
+        std::vector<run> exitMessage;
+        httplib::Client client("0.0.0.0", 8080);
 
-    state.out("Finished", 0);
+        if (sortalgo)
+            runSortalgoTest(exitMessage, client, state);
+        if (pathalgo)
+            runPathalgoTest(exitMessage, client, state);
+        if (image)
+            runImageTest(exitMessage, state);
 
-    printReport(exitMessage, state);
-    for (const auto &element : exitMessage)
-    {
-        if (element.failure == true)
-            return -1;
-    }
+        state.out("Finished", 0);
 
-    return 0;
+        printReport(exitMessage, state);
+        for (const auto &element : exitMessage)
+        {
+            if (element.failure == true)
+                std::exit(
+                    -1); // important, we are inside a callback so returning whatever
+                         // doesnt matter because for some reason CLI11 doesnt exit with
+                         // that code, so we have to explicitly exit
+        }
+
+        std::exit(0);
+    });
+    CLI11_PARSE(algosee_testclient, argc, argv);
 }

@@ -1,5 +1,5 @@
 #   algosee; A algorithm visulizer
-#   Copyright (C) 2026  MrHunor, siryanni (as equals)
+#   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
 #   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
 #   
 #   This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     #utiltiy build for bundling builds together
-    option(CMAKE_UNITY_BUILD "Set CMake unity builds to on" ON)
+    option(CMAKE_UNITY_BUILD "Set CMake unity builds to on" OFF)#this caused an error
     #Build time optimisations 
     ##ccache for caching builds 
     find_program(CCACHE_LOCATION ccache)
@@ -35,9 +35,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 
-
-project(algosee VERSION 0.8 LANGUAGES CXX)
-
+project(algosee VERSION 1.0 LANGUAGES CXX)
 
 
 set(CMAKE_CXX_STANDARD 23)
@@ -75,12 +73,21 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     )
     target_include_directories(algosee_testclient PRIVATE
         "${CMAKE_CURRENT_BINARY_DIR}/generated"
+  
+    )
+    target_sources(algosee_testclient PRIVATE #this is needed for some shared functions
+          "${CMAKE_CURRENT_SOURCE_DIR}/src/utils/general/utils.cpp"
     )
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     target_compile_options(algosee PRIVATE
         $<$<CONFIG:Release>:-O3>
     )
 endif()
+
+set_source_files_properties( # you have to execlude this because somehow stb doesnt like unity builds when one files includes the implementations def
+    src/utils/image/stb_image.cpp
+    PROPERTIES SKIP_UNITY_BUILD_INCLUSION ON
+)
 
 string(TIMESTAMP BUILD_TIME "%Y-%m-%dT%H:%M:%S")
 
@@ -101,27 +108,34 @@ target_precompile_headers(algosee PRIVATE
 <vector>
 <string>
 <algorithm>
+<stb_image.h>
 )
 
-find_package(nlohmann_json REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
+find_package(httplib CONFIG REQUIRED)
+find_package(stb CONFIG REQUIRED)
+find_package(CLI11 CONFIG REQUIRED)
 
-
-find_package(httplib REQUIRED)
-
-find_package(stb REQUIRED)
-
-target_link_libraries(algosee
+target_link_libraries(algosee PRIVATE
     nlohmann_json::nlohmann_json
     httplib::httplib
     stb::stb
-    stdc++exp
+    CLI11::CLI11
 )
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_link_libraries(algosee PRIVATE stdc++exp)
+endif()
+
+
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    target_link_libraries(algosee_testclient
+    target_link_libraries(algosee_testclient PRIVATE
         nlohmann_json::nlohmann_json
-        stdc++exp
-        httplib::httplib #Not required by the project but they share a logger.h which does indeed require it
+        httplib::httplib
+        CLI11::CLI11
         stb::stb
     )
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        target_link_libraries(algosee_testclient PRIVATE stdc++exp)
+    endif()
 endif()

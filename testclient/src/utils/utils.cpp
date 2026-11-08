@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -20,17 +20,15 @@
 #include "utils.h"
 #include "../../src/defs/implemented.h"
 #include "../../src/defs/types.h"
+#include "../../src/utils/general/utils.h"
 #include "../../src/logger/logger.h"
-#include <chrono>
+#include <cstdint>
+#include <stacktrace>
 #include <cstdlib>
-#include <iostream>
 #include <limits.h>
 #include <nlohmann/json.hpp>
-#include <ostream>
 #include <random>
-#include <source_location>
 #include <sstream>
-#include <stacktrace>
 #include <stb_image.h>
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb_image_write.h>
@@ -40,6 +38,52 @@
 #include <unistd.h>
 
 using json = nlohmann::json;
+
+GraphUnweighted generateGU(int size, int start, int goal)
+{
+    GraphUnweighted retval(size);
+    for (int i = 0; i < size - 1;
+         i++) // this guarantees that there is always a path from start to goal so that
+              // Node 1: Connection to Node 2, Node 2: Connection to Node 3, Node 3:
+              // Connection to Node 4 and so on
+    {
+        retval[i].push_back(i + 1);
+    }
+    for (int i = 0; i < size;
+         i++) // this jsut serves as adding random data to confuse the pathfinding
+              // algorithm, sort of give it a challange
+    {
+        for (int z = 0; z < randomInt(0, 10); z++)
+        {
+            retval[i].push_back(randomInt(0, size - 1));
+        }
+    }
+    return retval;
+}
+
+GraphWeighted generateGW(int size, int start, int goal, int weightLowerBound)
+{
+    GraphWeighted retval(size);
+    for (int i = 0; i < size - 1;
+         i++) // this guarantees that there is always a path from start to goal so that
+              // Node 1: Connection to Node 2, Node 2: Connection to Node 3, Node 3:
+              // Connection to Node 4 and so on
+    {
+        retval[i].push_back({i + 1,1});
+    }
+    for (int i = 0; i < size;
+         i++) // this jsut serves as adding random data to confuse the pathfinding
+              // algorithm, sort of give it a challange
+    {
+        for (int z = 0; z < randomInt(0, 10); z++)
+        {
+            retval[i].push_back({randomInt(0, size - 1),randomInt(weightLowerBound,std::numeric_limits<uint8_t>::max())});//1 becuase astar rejects 0 
+        }
+    }
+    return retval;
+}
+
+
 
 void writeMemToImage(const rawImage &img)
 {
@@ -57,31 +101,20 @@ rawImage RawImageFromJson(const json &j)
     retval.height = -1;
 
     retval.size = j["SORTED"].size() * retval.channels;
-    try
+    retval.data = new unsigned char[retval.size];
+    int retvalI = 0;
+    int JI = 0;
+    while (JI < j["SORTED"].size())
     {
-        retval.data = new unsigned char[retval.size];
-        int retvalI = 0;
-        int JI = 0;
-        while (JI < j["SORTED"].size())
-        {
-            const auto entry = j["SORTED"].at(JI);
-            retval.data[retvalI] = entry.at(
-                1); // ignore the first value, its a index because SORTED is a indexPixel
-            retval.data[retvalI + 1] = entry.at(2);
-            retval.data[retvalI + 2] = entry.at(3);
-            retval.data[retvalI + 3] = entry.at(4);
+        const auto entry = j["SORTED"].at(JI);
+        retval.data[retvalI] = entry.at(
+            1); // ignore the first value, its a index because SORTED is a indexPixel
+        retval.data[retvalI + 1] = entry.at(2);
+        retval.data[retvalI + 2] = entry.at(3);
+        retval.data[retvalI + 3] = entry.at(4);
 
-            retvalI = retvalI + 4;
-            JI++;
-        }
-    }
-    catch (const std::exception &e)
-    {
-        InvalidInputMessage(
-            "An exception occureed, a bad one. Details:" +
-            std::string(
-                e.what())); // you might think of freeing memory, but this function call
-                            // terminates the testclient so the OS does that anyway
+        retvalI = retvalI + 4;
+        JI++;
     }
     return retval;
 }
@@ -104,15 +137,16 @@ unsigned char *makeRandomImage(size_t w, size_t h)
     return retval;
 }
 
+
 void printReport(const std::vector<run> &exitMessage, StateClass &state)
 {
     state.out("Succededed for:", 0);
     for (const auto &element : exitMessage)
     {
         if (element.failure == false)
-            state.out("Algorithm:" + element.algoname +
-                          ", Size:" + std::to_string(element.size) +
-                          "Map Size:" + std::to_string(element.mapSize.first) + "," +
+            state.out("Algorithm:" + element.algoname + "\nAlgoType:" + element.algotype +
+                          "\nSize:" + std::to_string(element.size) +
+                          "\nMap Size:" + std::to_string(element.mapSize.first) + "," +
                           std::to_string(element.mapSize.second),
                       0);
     }
@@ -121,10 +155,11 @@ void printReport(const std::vector<run> &exitMessage, StateClass &state)
     for (const auto &element : exitMessage)
     {
         if (element.failure == true)
-            state.out("Algorithm:" + element.algoname +
-                          ", Size:" + std::to_string(element.size) +
-                          "Map Size:" + std::to_string(element.mapSize.first) + "," +
-                          std::to_string(element.mapSize.second),
+            state.out("Algorithm:" + element.algoname + "\nAlgoType:" + element.algotype +
+                          "\nSize:" + std::to_string(element.size) +
+                          "\nMap Size:" + std::to_string(element.mapSize.first) + "," +
+                          std::to_string(element.mapSize.second) +
+                          "\nReason:" + element.failureReason,
                       0);
     }
 }
@@ -220,7 +255,7 @@ std::string executeCommand(const std::string &command)
     int exitCode;
     FILE *pipe = popen(command.c_str(), "r");
     if (!pipe)
-        InvalidInputMessage("Failed to open Pipe for executing command:" + command);
+        throw std::runtime_error("Failed to open Pipe for executing command:" + command);
 
     char buffer[256];
     std::string result;
@@ -241,25 +276,6 @@ std::string executeCommand(const std::string &command)
         exitCode = WEXITSTATUS(status);
     }
     if (exitCode != 0)
-        InvalidInputMessage("Shell Command:'" + command + "' has failed.");
+        throw std::runtime_error("Shell Command:'" + command + "' has failed.");
     return result;
-}
-
-void InvalidInputMessage(const std::string &details, std::source_location location)
-{
-    // yes i thought of making this state out for colour but that would require
-    // passing state (which is not always present), or make state global which is
-    // not pretty
-    auto now = std::chrono::system_clock::now();
-    std::cout << "TIME:" << now << std::endl;
-    std::cout << std::stacktrace::current() << std::endl;
-    std::cout << "Filename:" << location.file_name() << std::endl;
-    std::cout << "Function:" << location.function_name() << std::endl;
-    std::cout << "Line:" << location.line() << std::endl;
-    std::cout << "Column:" << location.column() << std::endl;
-    if (!details.empty())
-    {
-        std::cout << "Details provided:" << details << std::endl;
-    }
-    exit(1);
 }

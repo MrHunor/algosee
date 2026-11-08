@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -29,36 +29,49 @@
 #ifndef DEF_IMPLEMENTED_H
 #define DEF_IMPLEMENTED_H
 #include "max_sizes.h"
+
 #include <string>
 #include <unordered_map>
 #include <vector>
 const std::unordered_map<std::string, int> implementedSortAlgos = {
-    {"selection", MAX_ELEMENT_COUNT_SELECTION}, {"bogo", MAX_ELEMENT_COUNT_BOGO},
-    {"bubble", MAX_ELEMENT_COUNT_BUBBLE},       {"quick", MAX_ELEMENT_COUNT_QUICK},
-    {"merge", MAX_ELEMENT_COUNT_MERGE},         {"counting", MAX_ELEMENT_COUNT_COUNTING},
-    {"cycle", MAX_ELEMENT_COUNT_CYCLE}};
+    {"bogo", MAX_ELEMENT_COUNT_BOGO},         {"bubble", MAX_ELEMENT_COUNT_BUBBLE},
+    {"counting", MAX_ELEMENT_COUNT_COUNTING}, {"cycle", MAX_ELEMENT_COUNT_CYCLE},
+    {"heap", MAX_ELEMENT_COUNT_HEAP},         {"merge", MAX_ELEMENT_COUNT_MERGE},
+    {"quick", MAX_ELEMENT_COUNT_QUICK},       {"selection", MAX_ELEMENT_COUNT_SELECTION},
+    {"radix", MAX_ELEMENT_COUNT_RADIX},       {"intro", MAX_ELEMENT_COUNT_INTRO}};
 
-const std::unordered_map<std::string, int> implementedPathAlgos = {
-    {"BFS", MAX_ELEMENT_COUNT_BFS},     {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA},
-    {"DFS", MAX_ELEMENT_COUNT_DFS},     {"BIBFS", MAX_ELEMENT_COUNT_BIBFS},
-    {"ASTAR", MAX_ELEMENT_COUNT_ASTAR}, {"GBFS", MAX_ELEMENT_COUNT_GBFS}};
+const std::unordered_map<std::string, int> implementedPathAlgosSize = {
+    {"ASTAR", MAX_ELEMENT_COUNT_ASTAR},
+    {"BFS", MAX_ELEMENT_COUNT_BFS},
+    {"BIBFS", MAX_ELEMENT_COUNT_BIBFS},
+    {"DFS", MAX_ELEMENT_COUNT_DFS},
+    {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA},
+    {"GBFS", MAX_ELEMENT_COUNT_GBFS},
+    {"bellman-ford", MAX_ELEMENT_COUNT_BELLMAN_FORD}};
+
+const std::unordered_map<std::string, char> implementedPathAlgoCatagory = {
+    // U(nweighted) or W(eighted)
+    {"ASTAR", 'W'},    {"BFS", 'U'},  {"BIBFS", 'U'},       {"DFS", 'U'},
+    {"dijkstra", 'W'}, {"GBFS", 'W'}, {"bellman-ford", 'W'}};
 
 const std::vector<std::string> implementedArrayReturnTypes = {
-    "MOVES",
-    "TRIES",
     "COUNT ARRAY",
-    "SWAPED",
-    "SORTED (LEFT,RIGHT)",
-    "MERGED (LEFT,RIGHT,RESULT)",
-    "SPLIT (ORIGIN,LEFT,RIGHT)",
-    "SORTED",
-    "PATH",
     "DISTANCE",
-    "VISITED",
+    "MERGED (LEFT,RIGHT,RESULT)",
+    "MOVES",
+    "PATH",
     "SEARCHMAP",
+    "SORTED",
+    "SORTED (LEFT,RIGHT)",
+    "SPLIT (ORIGIN,LEFT,RIGHT)",
+    "SWAPED",
+    "TRIES",
+    "VISITED",
+    "VISITEDFROMEND",
     "VISITEDFROMSTART",
-    "VISITEDFROMEND"};
+    "ARRAY",
+    "HEAP"};
 
-const std::vector<std::string> implementedNonArrayReturnTypes = {"STATUS", "VERSION",
-                                                                 "BUILDTIME", "TIME"};
+const std::vector<std::string> implementedNonArrayReturnTypes = {"BUILDTIME", "STATUS",
+                                                                 "TIME", "VERSION"};
 #endif

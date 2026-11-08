@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -23,7 +23,6 @@
 #include "../../src/defs/types.h"
 #include "../../src/logger/logger.h"
 #include "../utils/utils.h"
-#include <cmath>
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -34,6 +33,7 @@ void runImageTest(std::vector<run> &exitMessage, StateClass &state)
     {
         run currentrun;
         currentrun.algoname = element.first;
+        currentrun.algotype="ImageSorting";
         currentrun.mapSize = {element.second.first, element.second.second};
         state.out("Testing image sorting validness with algo" + currentrun.algoname +
                       " and dimesions:" + std::to_string(element.second.first) + "x" +
@@ -86,6 +86,7 @@ void runImageTest(std::vector<run> &exitMessage, StateClass &state)
             delete[] returnImg.data;
             state.out("Failed. Details:" + std::string(e.what()), 0);
             currentrun.failure = true;
+            currentrun.failureReason=e.what();
             exitMessage.push_back(currentrun);
         }
     }

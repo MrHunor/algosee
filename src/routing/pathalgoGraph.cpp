@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -18,71 +18,69 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
-#include "../utils/pathalgo/pathalgo.h"
+#include "../defs/implemented.h"
 #include "../exception/exception.h"
 #include "../logger/logger.h"
 #include "../pathalgo/algos.h"
 #include "../utils/general/utils.h"
 #include "../validate/path/validate.h"
+
 #include <chrono>
 #include <exception>
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 
-void RunPathalgo(const httplib::Request &req, httplib::Response &res, StateClass &state)
+void RunPathAlgoGraph(const httplib::Request &req, httplib::Response &res,
+                      StateClass &state)
 {
     try
     {
-        // variables
-        std::vector<std::pair<int, int>> path;
+        std::vector<int> path;
         json response;
         generateJsonRetrunArras(response);
         fillWithMetaData(response);
-        bool sameRowLength = true;
-        int collums;
-        // log ip
 
-        // parsing
-        state.out("Processing values....", 0);
-        PathValidReturn info = ValidatePath(req, state);
+        state.out("Processing values.....", 0);
+        PathValidReturnGraph info = ValdiatePathGraph(req, state);
 
-        state.out("Starting time mesurement...", 0);
+        state.out("Starting time measurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
 
-        if (info.algo == "BFS" || info.algo == "DFS" || info.algo == "BIBFS")
+        if (implementedPathAlgoCatagory.at(info.algo) == 'W')
         {
-
-            // this could very likely throw
-            if (info.algo == "BFS")
-                path = BreadthFirstSearch(info.mapBool, info.start, info.goal, response);
-            else if (info.algo == "DFS")
-                path = DepthFirstSearch(info.mapBool, info.start, info.goal, response);
-            else if (info.algo == "BIBFS")
-                path = BIBFS(info.mapBool, info.start, info.goal, response);
+            if (info.algo == "ASTAR")
+                path = ASTAR(info.graphWeighted, info.start, info.goal, response);
+            else if (info.algo == "GBFS")
+                path = GBFS(info.graphWeighted, info.start, info.goal, response);
+            else if (info.algo == "dijkstra")
+                path = Dijkstra(info.graphWeighted, info.start, info.goal, response);
+            else if (info.algo == "bellman-ford")
+                path = Bellman_Ford(info.graphWeighted, info.start, info.goal, response);
         }
         else
         {
-
-            if (info.algo == "dijkstra")
-                path = Dijkstra(info.mapInt, info.start, info.goal, response);
-            else if (info.algo == "ASTAR")
-                path = ASTAR(info.mapInt, info.start, info.goal, response);
-            else if (info.algo == "GBFS")
-                path = GBFS(info.mapInt, info.start, info.goal, response);
+            if (info.algo == "BFS")
+                path = BreadthFirstSearch(info.graphUnweight, info.start, info.goal,
+                                          response);
+            else if (info.algo == "DFS")
+                path =
+                    DepthFirstSearch(info.graphUnweight, info.start, info.goal, response);
+            else if (info.algo == "BIBFS")
+                path = BIBFS(info.graphUnweight, info.start, info.goal, response);
         }
         auto endTime = std::chrono::steady_clock::now();
         auto elapsed =
             std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
-        state.out("Ended time measurement.", 0);
-        response["TIME"] = elapsed.count();
+        state.out("Ended time measurement...", 0);
 
         if (path.empty())
         {
-            throw excep("No valid path found from start to goal.", 422);
+            throw excep("No valid path found...");
         }
         res.status = 200;
-        response["PATH"] = path;
+        response["TIME"] = elapsed.count();
+        response["PATH"] = std::move(path);
         response["ERROR"] = "";
         response["ERRORCODE"] = 0;
         res.set_header("Access-Control-Allow-Origin", "*");
@@ -102,5 +100,4 @@ void RunPathalgo(const httplib::Request &req, httplib::Response &res, StateClass
         state.out("Cought an exception:" + std::string(e.what()), 0);
         ReturnFailedAnswer(res, std::string(e.what()));
     }
-    return;
 }

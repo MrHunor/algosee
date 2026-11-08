@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -19,23 +19,17 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef STB_IMAGE_IMPLEMENTATION
-#define STB_IMAGE_IMPLEMENTATION
-#include <cstdio>
-#endif
 #include "../../defs/general.h"
 #include "../../defs/max_sizes.h"
 #include "../../defs/types.h"
 #include "../../exception/exception.h"
 #include "../../logger/logger.h"
-#include "../../utils/general/utils.h"
-#include <httplib/httplib.h>
-#include <nlohmann/json.hpp>
 
 #include <algorithm>
+#include <httplib/httplib.h>
+#include <nlohmann/json.hpp>
 #include <random>
 #include <stb_image.h>
-#include <stdexcept>
 #include <vector>
 
 json IndexPixelArrToJson(const indexPixel &arr)
@@ -64,7 +58,8 @@ image LoadImage(const httplib::Request &req, const StateClass &state)
     int channels = 0;
 
     if (stbi_info_from_memory(reinterpret_cast<const stbi_uc *>(image.content.data()),
-                              image.content.size(), &width, &height, nullptr) != true)
+                              image.content.size(), &width, &height,
+                              nullptr) != (int)1) // 1 = true
         throw excep("Failed to read Metadata from image.", 500);
     if (width < 1 || height < 1)
         throw excep("The provided image has invalid dimensions.", 415);

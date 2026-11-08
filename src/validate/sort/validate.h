@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano Zapata.
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,16 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+/**
+ * @file validate.h
+ *
+ * @brief Defines Sorting validation function and its custom retrun type
+ *
+ */
 #ifndef SORTVALIDATE_H
 #define SORTVALIDATE_H
 #include "../../logger/logger.h"
+
 #include <httplib/httplib.h>
 #include <vector>
 struct SortValidReturn
@@ -28,5 +35,24 @@ struct SortValidReturn
     std::string algo;
 };
 
+/**
+ * @brief Check a request fits the requirements
+ *
+ * @details Checks for: algo parameter being present, algo parameter being equal to an
+ *          implemented sorting algorithm, body containing a values array, values array
+ *          not being
+ *          empty, values not containing too many elements and values not containing too
+ *          high or too
+ *          low numbers for algo counting
+ *
+ * @param req A httplib::Request
+ *
+ * @param state The global StateClass variable
+ *
+ * @throws When encountering a case of the request not fitting the requirements
+ *
+ * @returns A custom struct with the needed variables for executing the algorithm
+ *
+ */
 SortValidReturn ValidateSort(const httplib::Request &req, StateClass &state);
 #endif

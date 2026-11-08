@@ -1,4 +1,4 @@
-# Pull Request *Number*  
+# Pull Request *Number*
 
 ## Type of Change
 
@@ -9,12 +9,12 @@
 * [ ] Tests
 
 
-## Description  
+## Description
 *Description*
 
-## What changed?  
-*Short summary of changes using bullet points*  
+## What changed?
+*Short summary of changes using bullet points*
 
 ## Testing
-In addition to the github actions worklow which will automatically test the executable this PR has been:  
+In addition to the github actions worklow which will automatically test the executable this PR has been:
 * [ ] Manually tested

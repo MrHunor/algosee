@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -21,14 +21,17 @@
 #include "../defs/max_sizes.h"
 #include "../logger/logger.h"
 #include "../utils/general/utils.h"
+
 #include <httplib/httplib.h>
 #include <nlohmann/json.hpp>
 
 void RunLimits(httplib::Response &res, StateClass &state)
 {
     json response;
+    state.out("Generating json response keys...", 4);
     generateJsonRetrunArras(response);
     fillWithMetaData(response);
+    state.out("Filling the json response keys with limits...", 4);
     // sort
     response["MAX_ELEMENT_COUNT_SORT"] = MAX_ELEMENT_COUNT_SORT;
     response["MAX_ELEMENT_COUNT_SELECTION"] = MAX_ELEMENT_COUNT_SELECTION;
@@ -38,17 +41,26 @@ void RunLimits(httplib::Response &res, StateClass &state)
     response["MAX_ELEMENT_COUNT_MERGE"] = MAX_ELEMENT_COUNT_MERGE;
     response["MAX_ELEMENT_COUNT_COUNTING"] = MAX_ELEMENT_COUNT_COUNTING;
     response["MAX_ELEMENT_COUNT_CYCLE"] = MAX_ELEMENT_COUNT_CYCLE;
+    response["MAX_ELEMENT_COUNT_RADIX"] = MAX_ELEMENT_COUNT_RADIX;
+    response["MAX_ELEMENT_COUNT_INTRO"] = MAX_ELEMENT_COUNT_INTRO;
     response["HIGHEST_ELEMENT_COUNTING"] = HIGHEST_ELEMENT_COUNTING;
 
-    // path
+    // path general
     response["MAX_ELEMENT_COUNT_BFS"] = MAX_ELEMENT_COUNT_BFS;
     response["MAX_ELEMENT_COUNT_DIJKSTRA"] = MAX_ELEMENT_COUNT_DIJKSTRA;
     response["MAX_ELEMENT_COUNT_DFS"] = MAX_ELEMENT_COUNT_DFS;
     response["MAX_ELEMENT_COUNT_BIBFS"] = MAX_ELEMENT_COUNT_BIBFS;
     response["MAX_ELEMENT_COUNT_ASTAR"] = MAX_ELEMENT_COUNT_ASTAR;
+    response["MAX_ELEMENT_COUNT_GBFS"] = MAX_ELEMENT_COUNT_GBFS;
+    response["MAX_ELEMENT_COUNT_BELLMAN_FORD"] = MAX_ELEMENT_COUNT_BELLMAN_FORD;
+
+    // path graph
+    response["MAX_NODE_COUNT_PATH_WEIGHTED"] = MAX_NODE_COUNT_PATH_WEIGHTED;
+    response["MAX_NODE_COUNT_PATH_UNWEIGHTED"] = MAX_NODE_COUNT_PATH_UNWEIGHTED;
 
     // image
     response["MAX_PIXEL_COUNT_IMAGE"] = MAX_PIXEL_COUNT_IMAGE;
+
     response["ERROR"] = "";
     response["ERRORCODE"] = 0;
     res.status = 200;

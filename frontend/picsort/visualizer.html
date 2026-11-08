@@ -10,6 +10,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="page-title">AlgoSee - Image Visualization</title>
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* two canvases side by side */
+        .canvas-wrapper-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+        .canvas-box-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        /* The canvas keeps its internal resolution (width/height attributes =
+           number of pixels sorted by the backend); only the display is scaled. */
+        .canvas-element {
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            image-rendering: pixelated; /* crisp pixels instead of blur */
+            background: #161616;
+            border-radius: 8px;
+        }
+        @media (max-width: 700px) {
+            .canvas-wrapper-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
     <header class="navbar">
@@ -20,11 +48,17 @@
         <div class="visualizer-header">
             <h2 id="algo-title">loading...</h2>
             
-            <!-- controls (picture upload) -->
+            <!-- controls (picture upload & speed) -->
             <div class="speed-control-box">
                 <div class="speed-control-inner">
                     <label for="image-upload">Image:</label>
                     <input type="file" id="image-upload" accept="image/*" class="file-input-custom cursor-pointer">
+                </div>
+
+                <!-- slider for speed -->
+                <div class="size-control speed-control-inner">
+                    <label for="speed-slider">spd: <span id="speed-val">200</span>ms</label>
+                    <input type="range" id="speed-slider" min="1" max="500" step="10" value="200" class="cursor-pointer">
                 </div>
             </div>
 

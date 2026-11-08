@@ -1,6 +1,6 @@
 /*
  *   algosee; a algorithm visulizer
- *   Copyright (C) 2026  MrHunor, siryanni (as equals)
+ *   Copyright (C) 2026  MrHunor, siryanni, vilmos45 (as equals)
  *   "Es mejor morir de pie que vivir toda una vida arrodillado" ~ Emiliano
  * Zapata.
  *
@@ -23,6 +23,7 @@
 #include "../sortalgo/algos.h"
 #include "../utils/general/utils.h"
 #include "../validate/sort/validate.h"
+
 #include <chrono>
 #include <exception>
 #include <httplib/httplib.h>
@@ -42,7 +43,7 @@ void RunSortalgo(SortValidReturn info, StateClass &state, StreamClass &stream)
         state.out("Starting time mesurement...", 0);
         auto startTime = std::chrono::steady_clock::now();
 
-        if (info.algo == "selection")
+        if (info.algo == "selection") // switch cases don't work here
             SelectionSort(info.values, response, stream);
         else if (info.algo == "cycle")
             CycleSort(info.values, response, stream);
@@ -53,13 +54,15 @@ void RunSortalgo(SortValidReturn info, StateClass &state, StreamClass &stream)
         else if (info.algo == "merge")
             MergeSort(info.values, response, stream);
         else if (info.algo == "counting")
-        {
             CountingSort(info.values, response, stream);
-        }
         else if (info.algo == "bogo")
-        {
             BogoSort(info.values, response, stream);
-        }
+        else if (info.algo == "radix")
+            RadixSort(info.values, response, stream);
+        else if (info.algo == "heap")
+            HeapSort(info.values, response, stream);
+        else if (info.algo == "intro")
+            IntroSort(info.values, response, stream);
 
         // Default for all algorithms exit
         auto endTime = std::chrono::steady_clock::now();
