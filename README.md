@@ -9,7 +9,7 @@
 **vilmos45:**![Hackatime Badge](https://hackatime-badge.hackclub.com/U0B9Z81761H/algosee)
 
 ## Demo:
-![Demo](./assets/demoVideo/sorting.gif)
+![Demo](./assets/demoVideo/picsort.gif)
 ![Demo](./assets/demoVideo/pathfinding.gif)
 
 ## Features:
