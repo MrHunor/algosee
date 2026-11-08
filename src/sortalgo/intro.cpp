@@ -17,10 +17,14 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+ /**
+ * @file intro.cpp
+ * @brief Contains the intro sort algorithms
+ */
 #include "../defs/general.h"
 #include "../defs/types.h"
 #include "../stream/stream.h"
-
 #include <algorithm>
 #include <cmath>
 #include <nlohmann/json.hpp>

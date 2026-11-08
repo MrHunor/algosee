@@ -77,17 +77,19 @@ const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesImage{
     {"bogo", {2, 3}},
     {"bogo", {sqrt(MAX_ELEMENT_COUNT_BOGO) - 1, sqrt(MAX_ELEMENT_COUNT_BOGO) - 1}},
 
-    {"radix", {5, 5}},
-    {"radix", {15, 12}},
-    {"radix", {25, 25}},
-    {"radix", {25, 12}},
-    {"radix", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}},
 
     {"intro", {5, 5}},
     {"intro", {15, 12}},
     {"intro", {25, 25}},
     {"intro", {25, 12}},
-    {"intro", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}}};
+    {"intro", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}},
+
+    {"radix", {5, 5}},
+    {"radix", {15, 12}},
+    {"radix", {25, 25}},
+    {"radix", {25, 12}},
+    {"radix", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}}
+};
 
 const std::vector<std::pair<std::string, std::pair<uint8_t, uint8_t>>>
     testCasesPathfindingMap{{"BFS", {10, 5}},

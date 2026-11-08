@@ -17,6 +17,12 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+
+/**
+ * @file radix.cpp
+ * @brief Contains the radix sort algorithms
+ */
+
 #include "../defs/general.h"
 #include "../defs/types.h"
 #include "../stream/stream.h"
@@ -56,14 +62,13 @@ void countingSort(std::vector<int> &unsorted, int place, json &response, int ste
         count[(std::abs(value) / place) % 10]++;
     for (int i = 1; i < 10; i++)
         count[i] += count[i - 1];
-    response["COUNT ARRAY"] = count;
+    response["COUNT ARRAY"] = std::vector<int>(count, count + 10);
     for (int i = static_cast<int>(unsorted.size()) - 1; i >= 0; i--)
     {
         int digit = (std::abs(unsorted[i]) / place) % 10;
         output[--count[digit]] = unsorted[i];
     }
     unsorted = std::move(output);
-    response["MOVES"].push_back({step++, unsorted});
 }
 
 /// @brief The main function for radix sort.
@@ -118,13 +123,12 @@ void countingSort(indexPixel &unsorted, int place, json &response)
         count[(item.first / place) % 10]++;
     for (int i = 1; i < 10; i++)
         count[i] += count[i - 1];
-    response["COUNT ARRAY"] = count;
+    response["COUNT ARRAY"] = std::vector<int>(count, count + 10);
     for (int i = static_cast<int>(unsorted.size()) - 1; i >= 0; i--)
     {
         int digit = (unsorted[i].first / place) % 10;
         output[--count[digit]] = std::move(unsorted[i]);
     }
-
     unsorted = std::move(output);
 }
 
@@ -142,6 +146,8 @@ void RadixSort(indexPixel &unsorted, json &response, StreamClass &stream)
     for (int place = 1; max / place > 0; place *= 10)
     {
         countingSort(unsorted, place, response);
+        if (place > max / 10)
+            break;
     }
     stream.sendChunk(std::move(response));
     response.clear();
