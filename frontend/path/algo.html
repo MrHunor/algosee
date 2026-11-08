@@ -84,6 +84,13 @@
                 timeComplexity:"O(E log V); where V = number of Verticles (=nodes) and E = number of edges",
                 spaceComplexity:"O(V)"
             },
+            astar: {
+                name: "A*",
+                description: "A* is a best-first search that finds a cheapest path from a start to a goal. For every node it adds the cost already paid to reach it (g) to an estimate of the remaining cost to the goal (h) and always expands the node with the lowest sum. As long as the estimate never overestimates the real cost (on this grid: Manhattan distance and a minimum tile cost of 1), A* is guaranteed to return an optimal path, while usually exploring far fewer tiles than Dijkstra. It combines Dijkstra's guarantee with the goal-directed behaviour of greedy best-first search.",
+                wikiUrl: "https://en.wikipedia.org/wiki/A*_search_algorithm",
+                timeComplexity:"O(E) in the best case with a good heuristic, O(b^d) in the worst case; where b = branching factor and d = depth of the solution",
+                spaceComplexity:"O(V); all discovered nodes are kept in memory"
+            },
             bibfs: {
                 name: "Bidirectional Breadth first search",
                 description: "Bidirectional search is a graph search algorithm that finds a shortest path from an initial vertex to a goal vertex in a directed graph. It runs two simultaneous searches: one forward from the initial state, and one backward from the goal, stopping when the two meet. The reason for this approach is that in many cases it is faster: for instance, in a simplified model of search problem complexity in which both searches expand a tree with branching factor b, and the distance from start to goal is d, each of the two searches has complexity O(bd/2) (in Big O notation), and the sum of these two search times is much less than the O(bd) complexity that would result from a single search from the beginning to the goal.",

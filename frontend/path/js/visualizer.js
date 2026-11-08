@@ -11,11 +11,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1.2. Backend-URL over central config
     const backendBase = getBackendBase();
 
+        // frontend key -> backend algo name (see src/defs/implemented.h)
+    const apiAlgoNames = {
+        bfs: 'BFS',
+        dfs: 'DFS',
+        bibfs: 'BIBFS',
+        dij: 'dijkstra',
+        astar: 'ASTAR',
+        greedy: 'GBFS',
+        bf: 'bellman-ford'
+    };
+
+    // tile values sent to the backend (matches the tool buttons):
+    // -1 = wall, 1 = default, 5 = hard. 0 is NOT allowed for A*.
+    // Unweighted algos get the same map, backend treats -1 as blocked.
+    const TILE_WALL = -1;
+    const TILE_DEFAULT = 1;
+    const TILE_HARD = 5;
+
     // 2. title adjust 
     const algoNames = {
         bfs: "Breadth First Search",
         dfs: "Depth First Search",
         dij: "Dijkstra",
+        astar: "A*",
         bibfs: "Bidirectional BFS",
         greedy: "Greedy Best-First-Search",
         jps: "Jump Point Search",
@@ -120,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 container.appendChild(cell);
-                currentRow.push(0); // base-value 0 (passable for boolean algos)
+                currentRow.push(TILE_DEFAULT);
             }
             grid.push(currentRow);
         }
@@ -142,14 +161,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (currentTool === 'wall') {
         cell.classList.add('wall');
-        grid[r][c] = 1; // 1 = blocked (true for boolean algos)
+        grid[r][c] = TILE_WALL;
         } 
         else if (currentTool === 'cost-1') {
-        grid[r][c] = 0; // 0 = passable (false for boolean algos)
+        grid[r][c] = TILE_DEFAULT;
         } 
         else if (currentTool === 'cost-5') {
         cell.classList.add('cost-5');
-        grid[r][c] = 1; // 1 = blocked (true for boolean algos)
+        grid[r][c] = TILE_HARD;
         }
     }
 
@@ -163,8 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
    // 8. start button handler
     if (startBtn) {
         startBtn.addEventListener('click', async () => {
-            let apiAlgo = algoKey.toUpperCase();
-            if (algoKey === 'dij' || algoKey === 'dijkstra') apiAlgo = 'dijkstra';
+              const apiAlgo = apiAlgoNames[algoKey] || algoKey.toUpperCase();
 
             const backendUrl = `${backendBase}/pathalgo?algo=${apiAlgo}`;
 
@@ -173,6 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (speedSlider) speedSlider.disabled = true;
             if (stopBtn) stopBtn.disabled = false;
             isCancelled = false;
+            clearVisualization();
 
             const payload = {
                 MAP: grid,
@@ -204,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 if (data.PATH) {
+                    await visualizeExploration(data);
                     await visualizePath(data.PATH);
                 }
 
@@ -237,5 +257,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function visualizePath(path) {
         await playSuccessPath(path);
+    }
+
+        // removes colours of the previous run (walls, start and goal stay)
+    function clearVisualization() {
+        document.querySelectorAll('.grid-cell.visited, .grid-cell.path')
+            .forEach(cell => cell.classList.remove('visited', 'path'));
+    }
+
+    // Backend 2D arrays are sometimes [row][col] (SEARCHMAP of BFS/DFS/BiBFS) and sometimes
+    // transposed [col][row] (DISTANCE, SEARCHMAP of Bellman-Ford).
+    // The grid is not square (ROWS != COLS), so the array length tells them apart.
+    function getExploredCells(data) {
+        const source = (data.SEARCHMAP && data.SEARCHMAP.length) ? data.SEARCHMAP : data.DISTANCE;
+        if (!source || !source.length) return [];
+
+        const transposed = source.length === COLS; // [col][row]
+        const cells = [];
+        for (let a = 0; a < source.length; a++) {
+            for (let b = 0; b < source[a].length; b++) {
+                const value = source[a][b];
+                                // unexplored = -1 (BFS/DFS/BiBFS), INT_MAX = 2147483647 (main backend)
+                // or uint64 max ~1.8e19 (development backend)
+                if (value < 0 || value >= 2147483647) continue;
+                cells.push({ r: transposed ? b : a, c: transposed ? a : b, order: value });
+            }
+        }
+        cells.sort((x, y) => x.order - y.order);
+        return cells;
+    }
+
+    // colours explored tiles one by one (before the path is drawn)
+    async function visualizeExploration(data) {
+        const cells = getExploredCells(data);
+        const delay = Math.max(2, animationSpeed / 10);
+
+        for (let k = 0; k < cells.length; k++) {
+            if (isCancelled) return;
+
+            const { r, c } = cells[k];
+            const cell = document.querySelector(`[data-row='${r}'][data-col='${c}']`);
+            if (cell && !cell.classList.contains('start') && !cell.classList.contains('goal')) {
+                cell.classList.add('visited');
+                if (k % 5 === 0) playTone(200 + k);
+            }
+
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
     }
 });
