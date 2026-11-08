@@ -69,12 +69,15 @@ class StreamClass
 };
 
 /**
+ * @brief Create a Lamda to pass to httplib::cpp set contentprovider
  *
+ * @param stream A shared_ptr to a StreamClass to create the Chunk Provider for (lifetime
+ * dynamically managed because of shared_ptr)
  *
+ * @throws The lamda creator function never, the lamda itself should also never throw
  *
- *
- *
- * */
+ * @returns A lamda that takes a size_t and a httplib::Datasink as arguments
+ */
 httplib::ContentProviderWithoutLength MakeChunkProvider(
     std::shared_ptr<StreamClass> stream);
 #endif
