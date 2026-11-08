@@ -22,6 +22,7 @@
 #include "CLI/CLI.hpp"
 #include "build_info.h"
 #include "defs/general.h"
+#include "defs/ratelimits.h"
 #include "defs/types.h"
 #include "exception/exception.h"
 #include "logger/logger.h"
@@ -131,7 +132,8 @@ int main(int argc, char *argv[])
         server.Options("(/pathalgo)", serverOptionHandler);
         server.Options("(/status)", serverOptionHandler);
 
-        server.set_payload_max_length(10000000);
+        
+        server.set_payload_max_length(PAYLOAD_MAXSIZE_BYTES);
 
         //--------------------------IMAGE-----------------------------------------------------------
         server.Post("/image", [&](const httplib::Request &req, httplib::Response &res) {

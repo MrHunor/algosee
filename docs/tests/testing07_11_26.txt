@@ -75,5 +75,52 @@ Main processes terminated with: code=killed, status=15/TERM
 Seems to have occured around heap sort image 
 
 Now testing with AI suggested limits
+Testing with: 1eb18adf8000d8ce300392dacc453dddbee0fb5e
+#define MAX_ELEMENT_COUNT_SORT                                                           \
+    2500 // you could customise this for every algo, but thats a future issue
+         // (Issue #38)
+
+#define MAX_ELEMENT_COUNT_SELECTION 3600000
+#define MAX_ELEMENT_COUNT_BOGO 8
+#define MAX_ELEMENT_COUNT_BUBBLE 2703
+#define MAX_ELEMENT_COUNT_QUICK 2703
+#define MAX_ELEMENT_COUNT_MERGE 163000
+#define MAX_ELEMENT_COUNT_COUNTING 12300000
+#define MAX_ELEMENT_COUNT_CYCLE 1800000
+#define MAX_ELEMENT_COUNT_RADIX MAX_ELEMENT_COUNT_SORT
+#define MAX_ELEMENT_COUNT_HEAP 4802
+#define HIGHEST_ELEMENT_COUNTING 1000000
+
+#define MAX_ELEMENT_COUNT_PATH 1480000
+#define MAX_ELEMENT_COUNT_BFS MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_DIJKSTRA MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_DFS MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_BIBFS MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_ASTAR MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_GBFS MAX_ELEMENT_COUNT_PATH
+#define MAX_ELEMENT_COUNT_BELLMAN_FORD MAX_ELEMENT_COUNT_PATH
+#define HIGHEST_ELEMENT_PATH std::numeric_limits<int>::max() - 1
+
+#define MAX_PIXEL_COUNT_IMAGE 1000000
+
+#define MAX_NODE_COUNT_PATH_WEIGHTED 2700000
+#define MAX_NODE_COUNT_PATH_UNWEIGHTED 10900000 
+
+Command:"
+sudo systemd-run \
+        --wait \
+        --pipe \
+        --collect \
+        --working-directory="$PWD" \
+        --unit="benchmark-$(date +%s)" \
+        -p MemoryAccounting=yes \
+        -p IOAccounting=yes \
+        -p TasksAccounting=yes \
+        -p MemoryMax=512M \
+        -p MemorySwapMax=0 \
+        -p RuntimeMaxSec=600 \
+        /usr/bin/time -v -- "$PWD/algosee" -vvvv"
+
+Outcome: I had to cancel this because merge was taking logner then a minute, restoring to save limits now (but memory never ran out).
 
 
