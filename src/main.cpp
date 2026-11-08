@@ -132,7 +132,6 @@ int main(int argc, char *argv[])
         server.Options("(/pathalgo)", serverOptionHandler);
         server.Options("(/status)", serverOptionHandler);
 
-        
         server.set_payload_max_length(PAYLOAD_MAXSIZE_BYTES);
 
         //--------------------------IMAGE-----------------------------------------------------------

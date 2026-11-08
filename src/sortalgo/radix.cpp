@@ -41,7 +41,8 @@ int getMax(std::vector<int> &unsorted, int n)
     return max;
 }
 
-/// @brief Counting sort algorithm for radix sort, sorts the vector based on the digit represented by place.
+/// @brief Counting sort algorithm for radix sort, sorts the vector based on the digit
+/// represented by place.
 /// @param unsorted the unsorted vector to be sorted
 /// @param place the digit place to sort by
 /// @param response the respose json objet
@@ -71,13 +72,15 @@ void countingSort(std::vector<int> &unsorted, int place, json &response, int ste
 /// @param stream the stream class to send the response to
 void RadixSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
 {
-    if (unsorted.size() <= 1) return;
+    if (unsorted.size() <= 1)
+        return;
 
     const int max = getMax(unsorted, unsorted.size());
     for (int place = 1; max / place > 0;)
     {
         countingSort(unsorted, place, response, 0);
-        if (place > max / 10) break;
+        if (place > max / 10)
+            break;
         place *= 10;
     }
     stream.sendChunk(std::move(response));
@@ -100,18 +103,18 @@ int getMax(indexPixel &unsorted, int n)
     return max;
 }
 
-
 /// @brief Counting sort algorithm for radix sort, sorts the indexPixels
 /// @param unsorted the unsorted indexPixels to be sorted
 /// @param place the digit place to sort by (the first element of the indexPixel pair)
 /// @param response the respose json objet
-void countingSort(indexPixel& unsorted, int place, json &response)
+void countingSort(indexPixel &unsorted, int place, json &response)
 {
-    if (unsorted.size() <= 1) return;
+    if (unsorted.size() <= 1)
+        return;
 
     std::vector<indexPixel::value_type> output(unsorted.size());
     int count[10] = {};
-    for (const auto& item : unsorted)
+    for (const auto &item : unsorted)
         count[(item.first / place) % 10]++;
     for (int i = 1; i < 10; i++)
         count[i] += count[i - 1];
@@ -131,7 +134,8 @@ void countingSort(indexPixel& unsorted, int place, json &response)
 /// @param stream the stream class to send the response to
 void RadixSort(indexPixel &unsorted, json &response, StreamClass &stream)
 {
-    if (unsorted.size() <= 1) return;
+    if (unsorted.size() <= 1)
+        return;
 
     const int max = getMax(unsorted, unsorted.size());
 

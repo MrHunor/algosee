@@ -149,7 +149,7 @@ const std::vector<std::pair<std::string, uint16_t>> testCasesPathfindingGraph{
     {"DFS", 100},
     {"DFS", 200},
     {"DFS", 500},
-    {"DFS", MAX_ELEMENT_COUNT_DFS-1},
+    {"DFS", MAX_ELEMENT_COUNT_DFS - 1},
 
     {"BIBFS", 50},
     {"BIBFS", 100},

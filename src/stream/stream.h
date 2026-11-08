@@ -17,6 +17,14 @@
  *   along with this program.(root/LICENSE)  If not, see
  * <https://www.gnu.org/licenses/>.
  */
+/**
+ * @file 
+ *
+ * @brief 
+ *
+ *
+ *
+ * */
 #ifndef STREAM_H
 #define STREAM_H
 #include "../defs/general.h"
