@@ -447,7 +447,7 @@ footer a:hover {
 
 .grid-cell.wall {
     background-color: #64748b;
-    border-color: #475569;
+    border-color: #6287ba;
 }
 
 .grid-cell.visited {
@@ -520,6 +520,22 @@ footer a:hover {
     background-color: #3b82f6;
     color: #ffffff;
     border-color: #3b82f6;
+}
+
+.grid-cell.start,
+.grid-cell.goal {
+    cursor: grab;
+}
+
+.path-message {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    background-color: rgba(239, 68, 68, 0.12);
+    border: 1px solid #ef4444;
+    color: #fca5a5;
+    font-size: 0.95rem;
+    text-align: center;
 }
 
 .grid-cell.cost-5 {

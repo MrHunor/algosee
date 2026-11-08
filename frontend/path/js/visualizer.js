@@ -54,6 +54,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const speedSlider = document.getElementById('speed-slider');
     const speedValSpan = document.getElementById('speed-val');
     const stopBtn = document.getElementById('stop-btn');
+    const messageBox = document.getElementById('path-message');
+
+    function showMessage(text) {
+        if (!messageBox) return;
+        messageBox.innerText = text;
+        messageBox.hidden = false;
+    }
+
+    function hideMessage() {
+        if (messageBox) messageBox.hidden = true;
+    }
 
     let animationSpeed = 200;
     let isCancelled = false;
@@ -108,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let startPos = { r: 7, c: 4 };
     let goalPos = { r: 7, c: 20 };
     let isMouseDown = false;
-
+    let dragging = null; // 'start', 'goal' or null
     function generateGrid() {
         if (!container) return;
         container.innerHTML = '';
@@ -129,13 +140,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     cell.classList.add('goal');
                 }
 
-                cell.addEventListener('mousedown', () => {
+                                cell.addEventListener('mousedown', () => {
                     isMouseDown = true;
+
+                    // grab start/goal instead of drawing (not while an algorithm is running)
+                    if (startBtn && !startBtn.disabled) {
+                        if (r === startPos.r && c === startPos.c) { dragging = 'start'; clearVisualization(); return; }
+                        if (r === goalPos.r && c === goalPos.c) { dragging = 'goal'; clearVisualization(); return; }
+                    }
                     handleCellInteraction(r, c);
                 });
 
                 cell.addEventListener('mouseover', () => {
-                    if (isMouseDown) handleCellInteraction(r, c);
+                    if (!isMouseDown) return;
+                    if (dragging) moveMarker(dragging, r, c);
+                    else handleCellInteraction(r, c);
                 });
 
                 container.appendChild(cell);
@@ -145,9 +164,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    document.addEventListener('mouseup', () => {
+        document.addEventListener('mouseup', () => {
         isMouseDown = false;
+        dragging = null;
     });
+
+    // moves the start or goal marker to another tile
+    function moveMarker(type, r, c) {
+        const pos = (type === 'start') ? startPos : goalPos;
+        const other = (type === 'start') ? goalPos : startPos;
+
+        if (r === pos.r && c === pos.c) return;       // already there
+        if (r === other.r && c === other.c) return;   // other marker is on this tile
+
+        const oldCell = document.querySelector(`[data-row='${pos.r}'][data-col='${pos.c}']`);
+        const newCell = document.querySelector(`[data-row='${r}'][data-col='${c}']`);
+        if (!oldCell || !newCell) return;
+
+        oldCell.classList.remove(type);
+        newCell.classList.remove('wall', 'cost-5', 'visited', 'path');
+        newCell.classList.add(type);
+
+        grid[r][c] = TILE_DEFAULT; // start and goal tiles are always passable
+        pos.r = r;
+        pos.c = c;
+    }
 
     function handleCellInteraction(r, c) {
         if ((r === startPos.r && c === startPos.c) || (r === goalPos.r && c === goalPos.c)) {
@@ -192,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (stopBtn) stopBtn.disabled = false;
             isCancelled = false;
             clearVisualization();
-
+            hideMessage();
             const payload = {
                 MAP: grid,
                 START: [startPos.c, startPos.r],
@@ -229,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             } catch (error) {
                 console.error("Connection-Error:", error);
-                alert(error.message);
+                showMessage(error instanceof TypeError ? 'Server not reachable. Is the backend running?' : error.message);
             } finally {
                 startBtn.disabled = false;
                 if (resetBtn) resetBtn.disabled = false;
