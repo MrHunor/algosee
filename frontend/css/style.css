@@ -388,6 +388,7 @@ footer {
     text-align: center;
     padding: 20px;
     margin-top: auto; 
+    border-radius: 15px
 }
 
 footer ul {
