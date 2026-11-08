@@ -20,7 +20,6 @@
 #include "../defs/general.h"
 #include "../defs/types.h"
 #include "../stream/stream.h"
-
 #include <algorithm>
 #include <nlohmann/json.hpp>
 #include <utility>
@@ -37,7 +36,7 @@ int getMax(std::vector<int> &unsorted, int n)
     return max;
 }
 
-void countingSort(std::vector<int> &unsorted, int place, json &response, int step)
+void countingSort(std::vector<int> &unsorted, int place, json &response, int step, StreamClass &stream)
 {
     std::vector<int> output(unsorted.size());
     int count[10] = {};
@@ -51,10 +50,11 @@ void countingSort(std::vector<int> &unsorted, int place, json &response, int ste
         int digit = (std::abs(unsorted[i]) / place) % 10;
         output[--count[digit]] = unsorted[i];
     }
-
     unsorted = std::move(output);
 
-    response["MOVES"].push_back({step, unsorted});
+    response["COUNT ARRAY"] = count;
+    stream.sendChunk(std::move(response));
+    response.clear();
 }
 
 void RadixSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
@@ -66,7 +66,7 @@ void RadixSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
     int i = 0;
     for (int place = 1; max / place > 0;)
     {
-        countingSort(unsorted, place, response, 0);
+        countingSort(unsorted, place, response, 0, stream);
 
         if (place > max / 10)
             break;

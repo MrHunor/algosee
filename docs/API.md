@@ -75,7 +75,7 @@ It will return the default keys defined in 0. and some other keys depending on t
 - ***Bubble***:
   - 'MOVES' containing a array of integer pairs representing the indexes of the values array to swap    
 - ***Counting***:
-  - 'COUNT ARRAY' contains an array which represents the values array in the format of countarr[n]=number of occurences of the number n in the values array  
+  - 'COUNT ARRAY' contains an array which represents the values array in the format of countarr[n]=number of occurences of the number n in the values array 
 - ***Cycle***:
   - 'SWAPED' contains an array of inegers paris represeting the number thats being swaped INTO the array and the index of the element in the values array thats being swaped OUT (and being used as the next element to sort)  
 - **Heap**
@@ -86,8 +86,12 @@ It will return the default keys defined in 0. and some other keys depending on t
   - 'SORTED (LEFT,RIGHT)' contains an array of two elements, first being the sorted left part of the array, and secondly the sorted right part of the array  
   - 'MERGED (LEFT,RIGHT,RESULT)' contains an array of three elements, first being the left area of the soon to be merged array, secondly the right area and finally the result of the merge  
 - ***Quick***:
-  - 'MOVES' [*see bubble*](#L76)  
+  - 'MOVES' [*see bubble*](#L76)
 - ***Selection***:
+  - 'MOVES' [*see bubble*](#L76)
+- ***Radix***:
+  - 'COUNT ARRAY' [*see counting*](#L78)
+- ***Intro***:
   - 'MOVES' [*see bubble*](#L76)
 
 
