@@ -71,7 +71,7 @@ Current plans invlove Streaming and more, have a look [here](https://github.com/
 ## Workflow:
 1. Currently a visitor on https://mrhunor.github.io/algosee is shown the newest version of the fronend (./frontend).
 2. Via clicking on any algorithm they are sending a status request to the backend server (algosee.onrender.com), depending on its outcome the frontend displays a loading screen in the time of the server waking up.
-3. By pressing the "start" button on the viszulizer.html they are sending a html POST request [like this](#To-test-the-backend-sorting-online-(linux)) to the backend.
+3. By pressing the "start" button on the viszulizer.html they are sending a html POST request to the backend.
 4. The backend extracts the algorithm Name from the URL and performs the sorting.
 5. The backend return the sorted array, a set of instructions on how to visulise the sorting and metadata like backend version and time in nanoseconds.
 6. The frontend visulises the instructions returned by the backend.
@@ -92,6 +92,7 @@ Other uses include:
 - help with concept mapping
 - help with code cleanup
 - said coderabbit made Issues
+I, **@vilmos45**, have used AI to check for unexpected bugs, and test my code.
 
 For anyone looking to contribute we would ask them to follow the line we provided
 
