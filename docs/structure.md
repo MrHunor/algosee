@@ -8,3 +8,17 @@
 - `./frontend` -> TBD (Issue #243)
 - `./src` Root Folder of the backend source code
   - `/defs` Contains general defintions for the Backend (e.g. limits)
+  - `/exception` Contains the header that defines the custom exception class
+  - `/logger` Contains headers related to the usage of the custom logger class
+  - `/pathalgo` Contains the code and declarations of all implemented pathfinding algorithms
+  - `/routing` Contains the code and declarations for all diffrent API endpoints and pre-/postflight handling
+  - `/sortalgo` Contains the code and declarations of all implemented (number/image) sorting algorithms
+  - `/stream` Contains the ContentProvider Lamda and the custom stream class used to stream to a client
+  - `/utils` Root folder of utility function
+    - `/general` Contains general utility functions (who could have thought)
+    - `/image` Contains image utility functions 
+    - `/pathalgo` Contains pathfinding algorithms utility functions
+    - `/sortalgo` Contains sorting algorithms utility functions 
+  - `/validate` Root folder of functions used to validate http requests from a client
+    - `/image` Contains function declaration and defintion for validating input related to image sorting
+    - `path` Contains function declaration and defintion for validating input related to pathfinding algorithms

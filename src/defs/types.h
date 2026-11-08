@@ -24,20 +24,21 @@
 #include <chrono>
 #include <vector>
 
-typedef std::vector<std::vector<uint32_t>> GraphUnweighted;
+using GraphUnweighted = std::vector<std::vector<uint32_t>>;
 
-typedef std::vector<std::vector<std::pair<uint32_t, uint32_t>>> GraphWeighted;
+using GraphWeighted = std::vector<std::vector<std::pair<uint32_t, uint32_t>>>;
 
-typedef std::vector<std::vector<int32_t>> MapInt;
+using MapInt = std::vector<std::vector<int32_t>>;
 
-typedef std::vector<std::vector<bool>> MapBool;
+using MapBool = std::vector<std::vector<bool>>;
 
-typedef std::vector<
-    std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string>>
-    clientListType; // time and IP
+using clientListType = std::vector<
+    std::pair<std::chrono::time_point<std::chrono::system_clock>, std::string>>;
+// time and IP
 
-typedef unsigned char colour;
-struct pixel
+using colour = unsigned char ;
+
+struct pixel//out of place? no this needs declaration because indexPixel uses it 
 {
     colour R;
     colour G;
@@ -45,7 +46,7 @@ struct pixel
     colour A;
 };
 
-typedef std::vector<std::pair<int, pixel>> indexPixel; // Index, Pixel
+using indexPixel = std::vector<std::pair<int, pixel>>;
 
 struct rawImage
 {
