@@ -1,30 +1,3 @@
-## Project structure:
-- `./assets` Contains images for this ReadME
-- `./benchmarks` Contains the benchmark script and results
-- `./frontend` Root folder of the Frontend side
-   -> `/assets/` Contains global images for `/frontend/`
-   -> `/css/` contains global css file
-   -> Global HTML files (loading;index/landing)
-   -> `/path/`
-      ->`/js` contains visualizer.js
-      ->html files
-   ->`/picsort/`
-      ->`/js/` "
-      -> html
-   ->`/sorting/`
-      ->`/js/`
-         -> compare.js main.js visualizer.js
-      ->html files
-
-- `./src` Root folder of the Backend side
-   -> `pathalgo` Contains pathfinding algorithms
-   -> `/server/` Contains server logic
-   -> `/sortalgo/` Contains sorting algorithms
-   -> `/utils/` Contains usefull tools
-   -> `/` Contains main.cpp
-- `/` Contains all files needed for building the executable as well as this readME and the LICENSE file
-
-
 ## To build the Project:
 **DISCLAIMER: Technically, this project could build on any platform but it has not been tested (obviously). The compilation has been verified on Linux Mint, CachyOS, Fedora and Windows 11.**
 0. `cmake --version` >= **4.4.3**

@@ -25,5 +25,6 @@ Currently the following Algorithms are implemented:
 | Bidirectional Breadth first search (BIBFS) | Supported |
 | A* | Supported |
 | Greedy Best-First-Search (GBFS) | Supported |
+| Bellman-Ford | Supported |
 
 *Tip: You can view the defintion of these algorithms in [src/defs/implemented.h](./../src/defs/implemented.h)*
