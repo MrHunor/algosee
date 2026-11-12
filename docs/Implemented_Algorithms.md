@@ -12,8 +12,10 @@ Currently the following Algorithms are implemented:
 | Merge     | Supported |
 | Counting  | Supported |
 | Cycle Sort | Supported |
-| Heap Sort | Supported |
+| Heap Sort  | Supported |
 | Radix Sort | Supported |
+| Miracle Sort | TBD |
+| Intro Sort | Not tested |
 
 ### Pathfinding
 

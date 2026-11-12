@@ -26,13 +26,11 @@
 #include "../defs/general.h"
 #include "../defs/types.h"
 #include "../stream/stream.h"
-
 #include <algorithm>
 #include <nlohmann/json.hpp>
 #include <utility>
 #include <vector>
 //working with long long, so it can handle INT_MIN
-//the 
 
 /// @brief Returns the maximum value in the vector.
 /// @param unsorted the vector to find the maximum value in
@@ -54,7 +52,8 @@ int getMax(std::vector<long long> &unsorted, int n)
 /// @param unsorted the unsorted vector to be sorted
 /// @param place the digit place to sort by
 /// @param response the respose json objet
-void countingSort(std::vector<long long> &unsorted, int place, json &response)
+/// @param stream the stream class to send the response to
+void countingSort(std::vector<long long> &unsorted, int place, json &response, StreamClass &stream)
 {
     std::vector<long long> output(unsorted.size());
     int count[10] = {};
@@ -64,6 +63,8 @@ void countingSort(std::vector<long long> &unsorted, int place, json &response)
     for (int i = 1; i < 10; i++)
         count[i] += count[i - 1];
     response["COUNT ARRAY"] = std::vector<int>(count, count + 10);
+    stream.sendChunk(std::move(response));
+    response.clear();
     for (int i = (int)(unsorted.size()) - 1; i >= 0; i--)
     {
         int digit = (unsorted[i] / place) % 10;
@@ -72,7 +73,11 @@ void countingSort(std::vector<long long> &unsorted, int place, json &response)
     unsorted = std::move(output);
 }
 
-void Sort(std::vector<long long> &values, json &response)
+/// @brief A part of the radix sort, but I've put it into a function, bc it's better, than repeating code
+/// @param values the long long vector, to be sorted
+/// @param response the response json object
+/// @param stream the stream class to send the response to
+void Sort(std::vector<long long> &values, json &response, StreamClass &stream)
 {
     if (values.empty())
         return;
@@ -81,7 +86,7 @@ void Sort(std::vector<long long> &values, json &response)
 
     for (int place = 1; max / place > 0;)
     {
-        countingSort(values, place, response);
+        countingSort(values, place, response, stream);
 
         if (place > max / 10)
             break;
@@ -110,8 +115,8 @@ void RadixSort(std::vector<int> &unsorted, json &response, StreamClass &stream)
             positive.push_back(value);
     }
 
-    Sort(negative, response);
-    Sort(positive, response);
+    Sort(negative, response, stream);
+    Sort(positive, response, stream);
 
     int i = 0;
 
@@ -145,7 +150,8 @@ int getMax(indexPixel &unsorted, int n)
 /// @param unsorted the unsorted indexPixels to be sorted
 /// @param place the digit place to sort by (the first element of the indexPixel pair)
 /// @param response the respose json objet
-void countingSort(indexPixel &unsorted, int place, json &response)
+/// @param stream the stream class to send the response to
+void countingSort(indexPixel &unsorted, int place, json &response, StreamClass &stream)
 {
     if (unsorted.size() <= 1)
         return;
@@ -157,6 +163,8 @@ void countingSort(indexPixel &unsorted, int place, json &response)
     for (int i = 1; i < 10; i++)
         count[i] += count[i - 1];
     response["COUNT ARRAY"] = std::vector<int>(count, count + 10);
+    stream.sendChunk(std::move(response));
+    response.clear();
     for (int i = static_cast<int>(unsorted.size()) - 1; i >= 0; i--)
     {
         int digit = (unsorted[i].first / place) % 10;
@@ -178,7 +186,7 @@ void RadixSort(indexPixel &unsorted, json &response, StreamClass &stream)
 
     for (int place = 1; max / place > 0; place *= 10)
     {
-        countingSort(unsorted, place, response);
+        countingSort(unsorted, place, response, stream);
         if (place > max / 10)
             break;
     }
