@@ -53,4 +53,5 @@ void QuickSort(indexPixel &unsorted, int low, int high, json &response,
                StreamClass &stream);
 void RadixSort(indexPixel &unsorted, json &response, StreamClass &stream);
 void SelectionSort(indexPixel &unsorted, json &response, StreamClass &stream);
+
 #endif

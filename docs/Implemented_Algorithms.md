@@ -12,8 +12,10 @@ Currently the following Algorithms are implemented:
 | Merge     | Supported |
 | Counting  | Supported |
 | Cycle Sort | Supported |
-| Heap Sort | Supported |
+| Heap Sort  | Supported |
 | Radix Sort | Supported |
+| Miracle Sort | TBD |
+| Intro Sort | Not tested |
 
 ### Pathfinding
 
@@ -25,5 +27,6 @@ Currently the following Algorithms are implemented:
 | Bidirectional Breadth first search (BIBFS) | Supported |
 | A* | Supported |
 | Greedy Best-First-Search (GBFS) | Supported |
+| Bellman-Ford | Supported |
 
 *Tip: You can view the defintion of these algorithms in [src/defs/implemented.h](./../src/defs/implemented.h)*

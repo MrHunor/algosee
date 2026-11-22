@@ -147,6 +147,59 @@ function generateArrays() {
 resetBtn.addEventListener('click', generateArrays);
 generateArrays();
 
+// fetches /sortalgo and aggregates the NDJSON stream (one JSON object per line),
+// same format that sorting/js/visualizer.js handles
+async function fetchSortData(algoKey, values) {
+    let res;
+    try {
+        res = await fetch(`${backendBase}/sortalgo?algo=${algoKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ values: [...values] })
+        });
+    } catch (err) {
+        throw new Error(`${algoKey}: server not reachable (${err.message})`);
+    }
+
+    const responseText = await res.text();
+
+    if (!res.ok) {
+        let msg = responseText;
+        try {
+            const parsed = JSON.parse(responseText);
+            msg = (typeof parsed === 'string') ? parsed : (parsed.ERROR || msg);
+        } catch (_) {}
+        throw new Error(`${algoKey}: HTTP ${res.status}${msg ? ' - ' + msg : ''}`);
+    }
+
+    const aggregatedData = {
+        TRIES: [],
+        "MERGED (LEFT,RIGHT,RESULT)": [],
+        SORTED: [],
+        MOVES: [],
+        SWAPED: []
+    };
+
+    for (const line of responseText.split('\n')) {
+        if (line.trim() === '') continue;
+        const record = JSON.parse(line);
+
+        if (record.ERRORCODE) {
+            throw new Error(`${algoKey}: ${record.ERROR || 'worker error'} (code ${record.ERRORCODE})`);
+        }
+        if (record.TIME !== undefined) aggregatedData.TIME = record.TIME;
+        if (record.TRIES) aggregatedData.TRIES.push(...record.TRIES);
+        if (record["MERGED (LEFT,RIGHT,RESULT)"]) {
+            aggregatedData["MERGED (LEFT,RIGHT,RESULT)"].push(...record["MERGED (LEFT,RIGHT,RESULT)"]);
+        }
+        if (record.SORTED) aggregatedData.SORTED.push(...record.SORTED);
+        if (record.MOVES) aggregatedData.MOVES.push(...record.MOVES);
+        if (record.SWAPED) aggregatedData.SWAPED.push(...record.SWAPED);
+    }
+
+    return aggregatedData;
+}
+
 // startbutton logic (send both req parallel)
 startBtn.addEventListener('click', async () => {
     if ((algoKey1 === 'bogo' || algoKey2 === 'bogo') && baseArray.length > 10) {
@@ -165,23 +218,11 @@ startBtn.addEventListener('click', async () => {
     document.getElementById('time-val-2').innerText = '-';
 
     try {
-            const [res1, res2] = await Promise.all([
-        fetch(`${backendBase}/sortalgo?algo=${algoKey1}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ values: [...baseArray] })
-        }),
-        fetch(`${backendBase}/sortalgo?algo=${algoKey2}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ values: [...baseArray] })
-        })
+        // send both requests in parallel, parse NDJSON stream of each
+        const [data1, data2] = await Promise.all([
+            fetchSortData(algoKey1, baseArray),
+            fetchSortData(algoKey2, baseArray)
         ]);
-
-        if (!res1.ok || !res2.ok) throw new Error('Error with backend communication.');
-
-        const data1 = await res1.json();
-        const data2 = await res2.json();
 
         if (data1.TIME !== undefined) {
             document.getElementById('time-val-1').innerText = (data1.TIME / 1_000_000).toFixed(2);
@@ -198,7 +239,7 @@ startBtn.addEventListener('click', async () => {
 
     } catch (error) {
         console.error("Connectionerror:", error);
-        alert("Error while connecting to backend");
+        alert(`Error while connecting to backend: ${error.message}`);
     } finally {
         startBtn.disabled = false;
         resetBtn.disabled = false;

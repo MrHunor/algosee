@@ -34,7 +34,8 @@ The implementation will roughly follow the order given in the table.
 | Cycle Sort | Supported |
 | Heap Sort  | Supported |
 | Radix Sort | Supported |
-| Intro Sort | TBD |
+| Miracle Sort | TBD |
+| Intro Sort | Not tested |
 
 -> More ideas? Suggest them [here](https://github.com/MrHunor/algosee/issues)
 

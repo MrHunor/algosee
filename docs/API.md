@@ -43,25 +43,30 @@ The limits endpoint can be used to get the maximum Size of elements that a algor
 It takes not URL arguments or Body, as it is also a GET request.
 It returns all keys documented in 0. and:
 ***Sorting:***
-- 'MAX_ELEMENT_COUNT_SORT'
-- 'MAX_ELEMENT_COUNT_SELECTION'
-- 'MAX_ELEMENT_COUNT_BOGO'
-- 'MAX_ELEMENT_COUNT_BUBBLE'
-- 'MAX_ELEMENT_COUNT_QUICK'
-- 'MAX_ELEMENT_COUNT_MERGE'
-- 'MAX_ELEMENT_COUNT_COUNTING'
-- 'MAX_ELEMENT_COUNT_CYCLE'
-- 'MAX_ELEMENT_COUNT_HEAP'
-- 'HIGHEST_ELEMENT_COUNTING'  
+  - 'MAX_ELEMENT_COUNT_SORT'
+  - 'MAX_ELEMENT_COUNT_SELECTION'
+  - 'MAX_ELEMENT_COUNT_BOGO'
+  - 'MAX_ELEMENT_COUNT_BUBBLE'
+  - 'MAX_ELEMENT_COUNT_QUICK'
+  - 'MAX_ELEMENT_COUNT_MERGE'
+  - 'MAX_ELEMENT_COUNT_COUNTING'
+  - 'MAX_ELEMENT_COUNT_CYCLE'
+  - 'MAX_ELEMENT_COUNT_HEAP'
+  - 'MAX_ELEMENT_COUNT_RADIX'
+  - 'MAX_ELEMENT_COUNT_INTRO'
+  - 'HIGHEST_ELEMENT_COUNTING'  
 ***Pathfinding:***
-- 'MAX_ELEMENT_COUNT_BFS'
-- 'MAX_ELEMENT_COUNT_DIJKSTRA'
-- 'MAX_ELEMENT_COUNT_DFS'
-- 'MAX_ELEMENT_COUNT_BIBFS'
-- 'MAX_ELEMENT_COUNT_ASTAR'
-- 'MAX_ELEMENT_COUNT_GBFS'
+  - 'MAX_ELEMENT_COUNT_BFS'
+  - 'MAX_ELEMENT_COUNT_DIJKSTRA'
+  - 'MAX_ELEMENT_COUNT_DFS'
+  - 'MAX_ELEMENT_COUNT_BIBFS'
+  - 'MAX_ELEMENT_COUNT_ASTAR'
+  - 'MAX_ELEMENT_COUNT_GBFS'
+  - 'MAX_ELEMENT_COUNT_BELLMAN_FORD'
+  - 'MAX_NODE_COUNT_PATH_WEIGHTED'
+  - 'MAX_NODE_COUNT_PATH_UNWEIGHT'
 ***Image:***
-- 'MAX_PIXEL_COUNT_IMAGE'
+  - 'MAX_PIXEL_COUNT_IMAGE'
 
 *Tip: You can view the defintion of these keys in [src/routing/limits.cpp](../src/routing/limits.cpp)*
 
@@ -75,7 +80,7 @@ It will return the default keys defined in 0. and some other keys depending on t
 - ***Bubble***:
   - 'MOVES' containing a array of integer pairs representing the indexes of the values array to swap    
 - ***Counting***:
-  - 'COUNT ARRAY' contains an array which represents the values array in the format of countarr[n]=number of occurences of the number n in the values array  
+  - 'COUNT ARRAY' contains an array which represents the values array in the format of countarr[n]=number of occurences of the number n in the values array 
 - ***Cycle***:
   - 'SWAPED' contains an array of inegers paris represeting the number thats being swaped INTO the array and the index of the element in the values array thats being swaped OUT (and being used as the next element to sort)  
 - **Heap**
@@ -86,8 +91,12 @@ It will return the default keys defined in 0. and some other keys depending on t
   - 'SORTED (LEFT,RIGHT)' contains an array of two elements, first being the sorted left part of the array, and secondly the sorted right part of the array  
   - 'MERGED (LEFT,RIGHT,RESULT)' contains an array of three elements, first being the left area of the soon to be merged array, secondly the right area and finally the result of the merge  
 - ***Quick***:
-  - 'MOVES' [*see bubble*](#L76)  
+  - 'MOVES' [*see bubble*](#L76)
 - ***Selection***:
+  - 'MOVES' [*see bubble*](#L76)
+- ***Radix***:
+  - 'COUNT ARRAY' [*see counting*](#L78)
+- ***Intro***:
   - 'MOVES' [*see bubble*](#L76)
 
 

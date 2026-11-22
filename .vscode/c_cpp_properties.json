@@ -10,6 +10,22 @@
             "cStandard": "gnu23",
             "cppStandard": "gnu++17",
             "intelliSenseMode": "linux-gcc-x64"
+        },
+        {
+            "name": "windows",
+            "includePath": [
+                "d:/repos/algosee/**"
+            ],
+            "defines": [],
+            "cStandard": "gnu23",
+            "cppStandard": "gnu++17",
+            "compilerPath": "C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/g++.exe",
+            "mergeConfigurations": false,
+            "recursiveIncludes": {},
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true
+            }
         }
     ],
     "version": 4
