@@ -27,7 +27,6 @@
 #include <unordered_map>
 #include <vector>
 const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesImage{
-
     {"selection", {5, 5}},
     {"selection", {15, 12}},
     {"selection", {25, 25}},
@@ -78,11 +77,19 @@ const std::vector<std::pair<std::string, std::pair<int, int>>> testCasesImage{
     {"bogo", {2, 3}},
     {"bogo", {sqrt(MAX_ELEMENT_COUNT_BOGO) - 1, sqrt(MAX_ELEMENT_COUNT_BOGO) - 1}},
 
+
+    {"intro", {5, 5}},
+    {"intro", {15, 12}},
+    {"intro", {25, 25}},
+    {"intro", {25, 12}},
+    {"intro", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}},
+
     {"radix", {5, 5}},
     {"radix", {15, 12}},
     {"radix", {25, 25}},
     {"radix", {25, 12}},
-    {"radix", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}}};
+    {"radix", {sqrt(MAX_PIXEL_COUNT_IMAGE) - 1, sqrt(MAX_PIXEL_COUNT_IMAGE) - 1}}
+};
 
 const std::vector<std::pair<std::string, std::pair<uint8_t, uint8_t>>>
     testCasesPathfindingMap{{"BFS", {10, 5}},
@@ -130,45 +137,45 @@ const std::vector<std::pair<std::string, std::pair<uint8_t, uint8_t>>>
 const std::vector<std::pair<std::string, uint16_t>> testCasesPathfindingGraph{
     {"BFS", 50},
     {"BFS", 100},
-    {"BFS", 4500},
-    {"BFS", 37500},
-    {"BFS", MAX_NODE_COUNT_PATH_UNWEIGHTED - 1},
+    {"BFS", 200},
+    {"BFS", 500},
+    {"BFS", MAX_ELEMENT_COUNT_BFS - 1},
 
     {"dijkstra", 50},
     {"dijkstra", 100},
-    {"dijkstra", 4500},
-    {"dijkstra", 37500},
-    {"dijkstra", MAX_NODE_COUNT_PATH_WEIGHTED - 1},
+    {"dijkstra", 200},
+    {"dijkstra", 500},
+    {"dijkstra", MAX_ELEMENT_COUNT_DIJKSTRA - 1},
 
     {"DFS", 50},
     {"DFS", 100},
-    {"DFS", 4500},
-    {"DFS", 37500},
-    {"DFS", MAX_NODE_COUNT_PATH_UNWEIGHTED-1},
+    {"DFS", 200},
+    {"DFS", 500},
+    {"DFS", MAX_ELEMENT_COUNT_DFS - 1},
 
     {"BIBFS", 50},
     {"BIBFS", 100},
-    {"BIBFS", 4500},
-    {"BIBFS", 37500},
-    {"BIBFS", MAX_NODE_COUNT_PATH_UNWEIGHTED - 1},
+    {"BIBFS", 200},
+    {"BIBFS", 500},
+    {"BIBFS", MAX_ELEMENT_COUNT_BIBFS - 1},
 
     {"ASTAR", 50},
     {"ASTAR", 100},
-    {"ASTAR", 4500},
-    {"ASTAR", 37500},
-    {"ASTAR", MAX_NODE_COUNT_PATH_WEIGHTED - 1},
+    {"ASTAR", 200},
+    {"ASTAR", 500},
+    {"ASTAR", MAX_ELEMENT_COUNT_ASTAR - 1},
 
     {"GBFS", 50},
     {"GBFS", 100},
-    {"GBFS", 4500},
-    {"GBFS", 50},
-    {"GBFS", MAX_NODE_COUNT_PATH_WEIGHTED - 1},
+    {"GBFS", 200},
+    {"GBFS", 500},
+    {"GBFS", MAX_ELEMENT_COUNT_GBFS - 1},
 
     {"bellman-ford", 50},
     {"bellman-ford", 100},
-    {"bellman-ford", 4500},
-    {"bellman-ford", 50},
-    {"bellman-ford", MAX_NODE_COUNT_PATH_WEIGHTED - 1}};
+    {"bellman-ford", 200},
+    {"bellman-ford", 500},
+    {"bellman-ford", MAX_ELEMENT_COUNT_GBFS - 1}};
 
 const std::vector<std::pair<std::string, int>> testCasesSorting{
 
@@ -223,7 +230,13 @@ const std::vector<std::pair<std::string, int>> testCasesSorting{
     {"radix", 25},
     {"radix", 100},
     {"radix", 1000},
-    {"radix", MAX_ELEMENT_COUNT_SORT - 1}};
+    {"radix", MAX_ELEMENT_COUNT_SORT - 1},
+
+    {"intro", 5},
+    {"intro", 25},
+    {"intro", 100},
+    {"intro", 1000},
+    {"intro", MAX_ELEMENT_COUNT_SORT - 1}};
 
 const std::unordered_map<std::string, std::vector<std::string>>
     implementedAlgoExpectedResponseType{
@@ -237,6 +250,8 @@ const std::unordered_map<std::string, std::vector<std::string>>
         {"cycle", {"SWAPED", "SORTED"}},
         {"bogo", {"TRIES", "SORTED"}},
         {"heap", {"HEAP", "ARRAY"}},
+        {"radix", {"COUNT ARRAY", "MOVES", "SORTED"}},
+        {"intro", {"MOVES", "SORTED"}},
 
         {"BFS", {"VISITED", "SEARCHMAP", "PATH"}},
         {"dijkstra", {"DISTANCE", "PATH"}},

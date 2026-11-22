@@ -35,7 +35,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 
-project(algosee VERSION 0.82 LANGUAGES CXX)
+project(algosee VERSION 1.0 LANGUAGES CXX)
 
 
 set(CMAKE_CXX_STANDARD 23)

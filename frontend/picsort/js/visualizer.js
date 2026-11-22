@@ -29,12 +29,14 @@ const imageUpload = document.getElementById('image-upload');
 const startBtn = document.getElementById('start-btn');
 const resetBtn = document.getElementById('reset-btn');
 const stopBtn = document.getElementById('stop-btn');
-
 const sourceCanvas = document.getElementById('source-canvas');
 const sourceCtx = sourceCanvas.getContext('2d');
 const targetCanvas = document.getElementById('target-canvas');
 const targetCtx = targetCanvas.getContext('2d');
+const speedSlider = document.getElementById('speed-slider'); 
+const speedValSpan = document.getElementById('speed-val'); 
 
+let animationSpeed = 200; 
 // state
 let uploadedImage = null;
 let isCancelled = false;
@@ -88,6 +90,14 @@ imageUpload.addEventListener('change', (e) => {
     img.src = url;
 });
 
+// speed listener
+if (speedSlider) {
+    speedSlider.addEventListener('input', (e) => {
+        animationSpeed = parseInt(e.target.value);
+        speedValSpan.innerText = animationSpeed;
+    });
+}
+
 // reset
 resetBtn.addEventListener('click', () => {
     isCancelled = true;
@@ -122,6 +132,7 @@ startBtn.addEventListener('click', async () => {
     startBtn.disabled = true;
     resetBtn.disabled = true;
     imageUpload.disabled = true;
+    if (speedSlider) speedSlider.disabled = true;
     stopBtn.disabled = false;
     isCancelled = false;
     abortController = new AbortController();
@@ -195,6 +206,7 @@ startBtn.addEventListener('click', async () => {
         startBtn.disabled = false;
         resetBtn.disabled = false;
         imageUpload.disabled = false;
+        if (speedSlider) speedSlider.disabled = false;
         stopBtn.disabled = true;
     }
 });
@@ -307,19 +319,23 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// plays `total` steps over ~ANIMATION_MS; several steps per frame, one draw per frame
+// plays steps based on animationSpeed slider
 function playSteps(total, apply, stepMs, width, height) {
     return new Promise((resolve) => {
         if (total === 0) { resolve(); return; }
-        const frameMs = Math.max(16.7, stepMs);
-        const frames = Math.max(1, Math.round(ANIMATION_MS / frameMs));
+        
+        const targetDuration = animationSpeed * 20; 
+        const currentStepMs = stepMs || (targetDuration / total);
+        const frameMs = Math.max(16.7, currentStepMs);
+        const frames = Math.max(1, Math.round(targetDuration / frameMs));
         const perFrame = Math.max(1, Math.ceil(total / frames));
+        
         let pos = 0;
         let last = 0;
 
         function frame(ts) {
             if (isCancelled) { resolve(); return; }
-            if (stepMs && ts - last < stepMs) { requestAnimationFrame(frame); return; }
+            if (currentStepMs >= 16.7 && ts - last < currentStepMs) { requestAnimationFrame(frame); return; }
             last = ts;
             const end = Math.min(pos + perFrame, total);
             for (; pos < end; pos++) apply(pos);
@@ -397,7 +413,7 @@ async function playRun(width, height) {
         // every try is a complete state
         case 'bogo':
             total = run.tries.length;
-            stepMs = 60;
+            stepMs = animationSpeed; 
             apply = (k) => {
                 const state = run.tries[k];
                 for (let j = 0; j < state.length; j++) writePixel(j, state[j][0]);

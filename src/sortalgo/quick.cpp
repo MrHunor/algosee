@@ -73,7 +73,6 @@ void QuickSort(std::vector<int> &unsorted, int low, int high, json &response,
 // is being modified
 int FindQuickSortPivot(indexPixel &unsorted, int low, int high, json &response)
 {
-    int index;
     int pivot = unsorted[high].first;
     int lowerPivotIndexBoundry = low - 1;
     for (int i = low; i < high; i++)

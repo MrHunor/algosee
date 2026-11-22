@@ -14,8 +14,8 @@
 ::
 ::   You should have received a copy of the GNU General Public License
 ::   along with this program.(root/LICENSE)  If not, see <https://www.gnu.org/licenses/>.
-@echo on
-setlocal EnableExtensions
+::@echo on
+::setlocal EnableExtensions
 
 conan install . -of build -pr:h default -pr:b default -s build_type=Release --build=missing || exit /b 1
 cmake --preset conan-default || exit /b 1

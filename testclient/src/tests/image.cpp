@@ -46,7 +46,6 @@ void runImageTest(std::vector<run> &exitMessage, StateClass &state)
 
             img.width = currentrun.mapSize.first;
             img.height = currentrun.mapSize.second;
-            img.channels = 4;
             img.size = img.width * img.height * img.channels;
             state.out("Making img in memory", 0);
             img.data = makeRandomImage(img.width, img.height);

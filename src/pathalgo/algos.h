@@ -53,25 +53,6 @@
 std::vector<std::pair<int, int>> ASTAR(const MapInt &map, const std::pair<int, int> start,
                                        const std::pair<int, int> goal, json &response);
 
-/**
- * @brief Run a Bi Directional Breadth first search on A Map
- *
- * @param map A MapBool object in the format map[x][y]=true/false, with true meaning
- * blocked and false meaning passable
- *
- * @param start A std::pair of integers containing the cooridnates of the start in format
- * {x,y}
- *
- * @param goal A std::pair of integers containing the cooridnates of the goal in format
- * {x,y}
- *
- * @throws Hopefully never
- *
- * @returns The Path in format of a step to step by x,y
- */
-std::vector<std::pair<int, int>> BIBFS(const MapBool &map,
-                                       const std::pair<int, int> start,
-                                       const std::pair<int, int> goal, json &response);
 std::vector<std::pair<int, int>> Bellman_Ford(const MapInt &map,
                                               std::pair<int, int> start,
                                               std::pair<int, int> goal, json &response);
@@ -98,6 +79,26 @@ std::vector<std::pair<int, int>> BreadthFirstSearch(const MapBool &map,
                                                     json &response);
 
 /**
+ * @brief Run a Bi Directional Breadth first search on A Map
+ *
+ * @param map A MapBool object in the format map[x][y]=true/false, with true meaning
+ * blocked and false meaning passable
+ *
+ * @param start A std::pair of integers containing the cooridnates of the start in format
+ * {x,y}
+ *
+ * @param goal A std::pair of integers containing the cooridnates of the goal in format
+ * {x,y}
+ *
+ * @throws Hopefully never
+ *
+ * @returns The Path in format of a step to step by x,y
+ */
+std::vector<std::pair<int, int>> BIBFS(const MapBool &map,
+                                       const std::pair<int, int> start,
+                                       const std::pair<int, int> goal, json &response);
+
+/**
  * @brief Run a Depth First search on A Map
  *
  * @param map A MapBool object in the format map[x][y]=true/false, with true meaning
@@ -117,9 +118,6 @@ std::vector<std::pair<int, int>> DepthFirstSearch(const MapBool &map,
                                                   const std::pair<int, int> start,
                                                   const std::pair<int, int> goal,
                                                   json &response);
-
-std::vector<int> Bellman_Ford(const GraphWeighted &graph, int start, int goal,
-                              json &response);
 
 /**
  * @brief Run the Djikstra algorithm on a Map
@@ -160,6 +158,15 @@ std::vector<std::pair<int, int>> GBFS(const MapInt &map, const std::pair<int, in
 
 //--------------------GRAPH BASED---------------------------------------------
 
+std::vector<int> ASTAR(const GraphWeighted &graph, const int start, const int goal,
+                       json &response);
+
+std::vector<int> Bellman_Ford(const GraphWeighted &graph, int start, int goal,
+                              json &response);
+
+std::vector<int> BIBFS(const GraphUnweighted &graph, const int start, const int goal,
+                       json &response);
+
 /**
  * @brief Execute a BreadFirst Search on a given graph
  *
@@ -183,13 +190,7 @@ std::vector<std::pair<int, int>> GBFS(const MapInt &map, const std::pair<int, in
  * */
 std::vector<int> BreadthFirstSearch(const GraphUnweighted &graph, const int start,
                                     const int goal, json &response);
-
-std::vector<int> ASTAR(const GraphWeighted &graph, const int start, const int goal,
-                       json &response);
-
-std::vector<int> BIBFS(const GraphUnweighted &graph, const int start, const int goal,
-                       json &response);
-
+                                    
 std::vector<int> DepthFirstSearch(const GraphUnweighted &graph, const int start,
                                   const int goal, json &response);
 
