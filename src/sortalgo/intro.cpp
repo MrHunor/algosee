@@ -30,6 +30,7 @@
 #include <nlohmann/json.hpp>
 #include <utility>
 #include <vector>
+#include "../utils/image/image.h"
 
 /// @brief an insertion sort for the intro sort algorithm, sorts between the begin and end
 /// pointers
@@ -53,7 +54,7 @@ void InsertionSort(std::vector<int> &unsorted, json &response, int *begin, int *
             j--;
         }
         unsorted[j + 1] = key;
-        response["MOVES"].push_back({i, unsorted});
+        response["MOVES"].push_back({j+1, i});
     }
 }
 
@@ -87,8 +88,7 @@ int FindQuickSortPivot2(std::vector<int> &unsorted, int low, int high, json &res
 /// @param high to where to quicksort
 /// @param response the response json
 /// @param stream the stream class to send the response to
-void QuickSort2(std::vector<int> &unsorted, int low, int high, json &response,
-                StreamClass &stream) // same naming as previously
+void QuickSort2(std::vector<int> &unsorted, int low, int high, json &response, StreamClass &stream) // same naming as previously
 {
     if (response["MOVES"].size() > 1000)
     {
@@ -112,17 +112,12 @@ int *MedianOfThree(int *a, int *b, int *c)
 {
     if (*a < *b)
     {
-        if (*b < *c)
-            return b;
-        if (*a < *c)
-            return c;
+        if (*b < *c) return b;
+        if (*a < *c) return c;
         return a;
     }
-
-    if (*a < *c)
-        return a;
-    if (*b < *c)
-        return c;
+    if (*a < *c) return a;
+    if (*b < *c) return c;
     return b;
 }
 
@@ -175,6 +170,12 @@ void IntroSortUtil(std::vector<int> &unsorted, json &response, int *begin, int *
     {
         std::make_heap(begin, end + 1);
         std::sort_heap(begin, end + 1);
+        {
+            std::vector<int> heap(begin, end + 1);
+            response["HEAP"].push_back(std::move(heap));
+            std::vector<int> arr(end + 1, end);
+            response["ARRAY"].push_back(std::move(arr));
+        }
         return;
     }
 
@@ -234,22 +235,16 @@ void InsertionSort(indexPixel &unsorted, indexPixel::value_type *begin, indexPix
 /// @param b the second pointer
 /// @param c the third pointer
 /// @return the pointer to the median value, of the three imputs, an indexPixel
-indexPixel::value_type *MedianOfThree(indexPixel::value_type *a,
-                                      indexPixel::value_type *b,
-                                      indexPixel::value_type *c)
+indexPixel::value_type *MedianOfThree(indexPixel::value_type *a, indexPixel::value_type *b, indexPixel::value_type *c)
 {
     if (a->first < b->first)
     {
-        if (b->first < c->first)
-            return b;
-        if (a->first < c->first)
-            return c;
+        if (b->first < c->first) return b;
+        if (a->first < c->first) return c;
         return a;
     }
-    if (a->first < c->first)
-        return a;
-    if (b->first < c->first)
-        return c;
+    if (a->first < c->first) return a;
+    if (b->first < c->first) return c;
     return b;
 }
 
@@ -268,14 +263,14 @@ indexPixel::value_type *Partition(indexPixel::value_type *begin, indexPixel::val
         if (current->first < pivot->first)
         {
             std::swap(*current, *store);
-            response["MOVES"].push_back({current->first - begin->first, store->first});
+            response["MOVES"].push_back({current->first - begin->first, store->first - begin->first});
             stream.sendChunk(std::move(response));
             response.clear();
             ++store;
         }
     }
     std::swap(*store, *end);
-    response["MOVES"].push_back({store->first - begin->first, store->first});
+    response["MOVES"].push_back({store->first - begin->first, store->first - begin->first});
     stream.sendChunk(std::move(response));
     response.clear();
     return store;
@@ -306,6 +301,12 @@ void IntroSortUtil(indexPixel &unsorted, json &response, indexPixel::value_type 
 
         std::make_heap(begin, end + 1, comp);
         std::sort_heap(begin, end + 1, comp);
+        {//lowkey just copied from heap.cpp
+            indexPixel heap(begin, end + 1);
+            response["HEAP"].push_back(IndexPixelArrToJson(std::move(heap)));
+            indexPixel arr(end+1, end);
+            response["ARRAY"].push_back(IndexPixelArrToJson(std::move(arr)));
+        }
         return;
     }
 
